@@ -32,33 +32,35 @@ export default function Container({ data }: { data: BibleInstance }) {
 
   return (
     <>
-      <Select defaultValue={selectedBook} onValueChange={(value) => setSelectedBook(value)}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select a bible" />
-        </SelectTrigger>
-        <SelectContent>
-          {books.map((book) => (
-            <SelectItem value={book} key={book}>
-              {book}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <Select
-        defaultValue={'' + selectedChapter}
-        onValueChange={(value) => setSelectedChapter(+value)}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select a chapter" />
-        </SelectTrigger>
-        <SelectContent>
-          {Array.from({ length: chapters?.length || 0 }, (_, i) => (
-            <SelectItem value={`${i + 1}`} key={i}>
-              {i + 1}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex gap-[4px]">
+        <Select defaultValue={selectedBook} onValueChange={(value) => setSelectedBook(value)}>
+          <SelectTrigger className="w-[140px]">
+            <SelectValue placeholder="Select a bible" />
+          </SelectTrigger>
+          <SelectContent>
+            {books.map((book) => (
+              <SelectItem value={book} key={book}>
+                {book}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          defaultValue={'' + selectedChapter}
+          onValueChange={(value) => setSelectedChapter(+value)}
+        >
+          <SelectTrigger className="w-[80px]">
+            <SelectValue placeholder="Select a chapter" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: chapters?.length || 0 }, (_, i) => (
+              <SelectItem value={`${i + 1}`} key={i}>
+                {i + 1}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <select name="" id="" onChange={(e) => setSelectedVerse(+e.currentTarget.value)}>
         {Array.from({ length: verses?.length || 0 }, (_, i) => (
           <option value={i + 1} key={i}>
