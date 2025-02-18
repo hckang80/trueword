@@ -9,7 +9,7 @@ export default async function Home() {
 
   const data = await queryClient.fetchQuery({
     queryKey: ['bible'],
-    queryFn: () => fetcher<BibleInstance>(`/korean.json`)
+    queryFn: () => fetcher<BibleInstance>(`/korean.json`) // TODO: 언어별 분기 처리
   });
 
   return (
