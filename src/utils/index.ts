@@ -1,5 +1,8 @@
 export function fetcher<T>(url: string | URL | Request, init?: RequestInit): Promise<T> {
-  return fetch(`${process.env.BASE_URL}${url}`, {
+  const getUrl =
+    typeof url === 'string' && !url.startsWith('http') ? `${process.env.BASE_URL}${url}` : url;
+
+  return fetch(getUrl, {
     headers: {
       'Content-Type': 'application/json'
     },
