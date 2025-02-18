@@ -1,62 +1,45 @@
 'use client';
 
 import { BibleInstance } from '@/@types';
-import { useMemo, useState } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
+import { useCallback, useMemo, useState } from 'react';
+import BookSelect from './BookSelect';
+import ChapterSelect from './ChapterSelect';
 
 export default function Container({ data }: { data: BibleInstance }) {
-  const books = data.books.map(({ name }) => name);
+  const books = useMemo(() => data.books.map(({ name }) => name), [data.books]);
 
   const [selectedBook, setSelectedBook] = useState('창세기');
 
   const chapters = useMemo(
-    () => data.books.find((book) => book.name === selectedBook)?.chapters,
-    [selectedBook]
+    () => data.books.find((book) => book.name === selectedBook)?.chapters || [],
+    [data.books, selectedBook]
   );
 
   const [selectedChapter, setSelectedChapter] = useState(1);
 
   const verses = useMemo(
-    () => chapters?.find((chapter) => chapter.chapter === selectedChapter)?.verses,
-    [books, selectedChapter]
+    () => chapters.find((chapter) => chapter.chapter === selectedChapter)?.verses,
+    [chapters, selectedChapter]
   );
+
+  const handleBookChange = useCallback((value: string) => {
+    setSelectedBook(value);
+    setSelectedChapter(1);
+  }, []);
+
+  const handleChapterChange = useCallback((value: number) => {
+    setSelectedChapter(value);
+  }, []);
 
   return (
     <>
       <div className="flex gap-[4px]">
-        <Select defaultValue={selectedBook} onValueChange={(value) => setSelectedBook(value)}>
-          <SelectTrigger className="w-[140px]">
-            <SelectValue placeholder="Select a bible" />
-          </SelectTrigger>
-          <SelectContent>
-            {books.map((book) => (
-              <SelectItem value={book} key={book}>
-                {book}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select
-          defaultValue={'' + selectedChapter}
-          onValueChange={(value) => setSelectedChapter(+value)}
-        >
-          <SelectTrigger className="w-[80px]">
-            <SelectValue placeholder="Select a chapter" />
-          </SelectTrigger>
-          <SelectContent>
-            {Array.from({ length: chapters?.length || 0 }, (_, i) => (
-              <SelectItem value={`${i + 1}`} key={i}>
-                {i + 1}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <BookSelect books={books} selectedBook={selectedBook} onChange={handleBookChange} />
+        <ChapterSelect
+          chaptersCount={chapters.length}
+          selectedChapter={selectedChapter}
+          onChange={handleChapterChange}
+        />
       </div>
 
       <div>
