@@ -13,7 +13,6 @@ import {
 export default function Container({ data }: { data: BibleInstance }) {
   const books = data.books.map(({ name }) => name);
 
-  console.log({ data, books });
   const [selectedBook, setSelectedBook] = useState('창세기');
 
   const chapters = useMemo(
@@ -27,8 +26,6 @@ export default function Container({ data }: { data: BibleInstance }) {
     () => chapters?.find((chapter) => chapter.chapter === selectedChapter)?.verses,
     [books, selectedChapter]
   );
-
-  const [selectedVerse, setSelectedVerse] = useState(1);
 
   return (
     <>
@@ -61,15 +58,7 @@ export default function Container({ data }: { data: BibleInstance }) {
           </SelectContent>
         </Select>
       </div>
-      <select name="" id="" onChange={(e) => setSelectedVerse(+e.currentTarget.value)}>
-        {Array.from({ length: verses?.length || 0 }, (_, i) => (
-          <option value={i + 1} key={i}>
-            {i + 1}
-          </option>
-        ))}
-      </select>
-      <br />
-      {selectedBook}({chapters?.length}) {selectedChapter}:{selectedVerse}
+
       <div>
         {verses?.map((verse) => (
           <p key={verse.verse}>
