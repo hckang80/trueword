@@ -1,11 +1,16 @@
 import { Suspense } from 'react';
 import Container from './_container';
 import { BibleInstance } from '@/@types';
+import { fetcher } from '@/utils';
+import { QueryClient } from '@tanstack/react-query';
 
 export default async function Home() {
-  const data: BibleInstance = await fetch('https://api.getbible.net/v2/korean.json').then((res) =>
-    res.json()
-  );
+  const queryClient = new QueryClient();
+
+  const data = await queryClient.fetchQuery({
+    queryKey: ['bible'],
+    queryFn: () => fetcher<BibleInstance>(`/korean.json`)
+  });
 
   return (
     <div className="min-h-screen p-8 font-[family-name:var(--font-geist-sans)]">
