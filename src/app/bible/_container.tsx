@@ -27,7 +27,7 @@ export default function Container({
 
   const { data } = useQuery({
     queryKey: ['bible', selectedTranslation],
-    queryFn: () => fetcher<BibleInstance>(`/v2/${selectedTranslation?.abbreviation}.json`),
+    queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
     initialData
   });
 

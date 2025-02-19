@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/v2/:path*',
+        source: '/api/:path*',
         destination: 'https://api.getbible.net/v2/:path*'
       }
     ];
