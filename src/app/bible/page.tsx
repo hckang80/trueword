@@ -22,7 +22,7 @@ export default async function Bible() {
   return (
     <div className="min-h-screen p-[20px] font-[family-name:var(--font-geist-sans)]">
       <Suspense fallback={<div>Loading...</div>}>
-        <Container data={data} />
+        <Container translations={translationsByLanguage} data={data} />
       </Suspense>
     </div>
   );

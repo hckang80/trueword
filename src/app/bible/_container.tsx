@@ -1,11 +1,18 @@
 'use client';
 
-import { BibleInstance } from '@/@types';
+import { BibleInstance, Transition } from '@/@types';
 import { useCallback, useMemo, useState } from 'react';
 import BookSelect from './BookSelect';
 import ChapterSelect from './ChapterSelect';
 
-export default function Container({ data }: { data: BibleInstance }) {
+export default function Container({
+  translations,
+  data
+}: {
+  translations: Transition[];
+  data: BibleInstance;
+}) {
+  console.log({ translations, data });
   const books = useMemo(() => data.books.map(({ name }) => name), [data.books]);
   const [DEFAULT_BOOK] = books;
   const DEFAULT_CHAPTER = 1;
