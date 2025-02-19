@@ -31,19 +31,19 @@ export default function Container({
     initialData
   });
 
-  const books = useMemo(() => data.books.map(({ name }) => name), [data.books]);
+  const books = useMemo(() => data.books.map(({ name }) => name), [data]);
   const [DEFAULT_BOOK] = books;
   const DEFAULT_CHAPTER = 1;
 
   const [selectedBook, setSelectedBook] = useState(DEFAULT_BOOK);
 
   useEffect(() => {
-    setSelectedBook(DEFAULT_BOOK);
-  }, [data]);
+    handleBookChange(DEFAULT_BOOK);
+  }, [DEFAULT_BOOK]);
 
   const chapters = useMemo(
     () => data.books.find((book) => book.name === selectedBook)?.chapters || [],
-    [data.books, selectedBook]
+    [data, selectedBook]
   );
 
   const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
