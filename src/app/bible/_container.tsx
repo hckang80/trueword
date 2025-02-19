@@ -90,8 +90,6 @@ export default function Container({
         </Select>
       </div>
 
-      <pre>{JSON.stringify(selectedTranslation, null, 2)}</pre>
-
       <div>
         {verses?.map((verse) => (
           <p key={verse.verse}>
