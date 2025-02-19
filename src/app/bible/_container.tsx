@@ -16,7 +16,7 @@ import { fetcher } from '@/lib/utils';
 
 export default function Container({
   translations,
-  data
+  data: initialData
 }: {
   translations: Transition[];
   data: BibleInstance;
@@ -25,13 +25,13 @@ export default function Container({
     translations[0]
   );
 
-  const { data: bible } = useQuery({
+  const { data } = useQuery({
     queryKey: ['bible', selectedTranslation],
     queryFn: () => fetcher<BibleInstance>(`/v2/${selectedTranslation?.abbreviation}.json`),
-    initialData: data
+    initialData
   });
 
-  console.log({ translations, data, bible });
+  console.log({ translations, data });
   const books = useMemo(() => data.books.map(({ name }) => name), [data.books]);
   const [DEFAULT_BOOK] = books;
   const DEFAULT_CHAPTER = 1;
