@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import Container from './_container';
 import { BibleInstance, Transition } from '@/@types';
-import { fetcher } from '@/utils';
 import { QueryClient } from '@tanstack/react-query';
+import { fetcher } from '@/lib/utils';
 
 export default async function Bible() {
   const queryClient = new QueryClient();
