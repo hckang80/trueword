@@ -11,6 +11,8 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { useQuery } from '@tanstack/react-query';
+import { fetcher } from '@/lib/utils';
 
 export default function Container({
   translations,
@@ -19,7 +21,17 @@ export default function Container({
   translations: Transition[];
   data: BibleInstance;
 }) {
-  console.log({ translations, data });
+  const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
+    translations[0]
+  );
+
+  const { data: bible } = useQuery({
+    queryKey: ['bible', selectedTranslation],
+    queryFn: () => fetcher<BibleInstance>(`/v2/${selectedTranslation?.abbreviation}.json`),
+    initialData: data
+  });
+
+  console.log({ translations, data, bible });
   const books = useMemo(() => data.books.map(({ name }) => name), [data.books]);
   const [DEFAULT_BOOK] = books;
   const DEFAULT_CHAPTER = 1;
@@ -32,10 +44,6 @@ export default function Container({
   );
 
   const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
-
-  const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
-    translations[0]
-  );
 
   const verses = useMemo(
     () => chapters.find((chapter) => chapter.chapter === selectedChapter)?.verses,
