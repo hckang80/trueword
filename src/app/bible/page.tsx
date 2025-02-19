@@ -12,11 +12,11 @@ export default async function Bible() {
     queryFn: () => fetcher<Record<string, Transition>>(`/translations.json`)
   });
 
-  const koreanBible = Object.values(translations).filter(({ lang }) => lang === 'ko');
+  const translationsByLanguage = Object.values(translations).filter(({ lang }) => lang === 'ko');
 
   const data = await queryClient.fetchQuery({
     queryKey: ['bible'],
-    queryFn: () => fetcher<BibleInstance>(koreanBible[0].url)
+    queryFn: () => fetcher<BibleInstance>(translationsByLanguage[0].url)
   });
 
   return (
