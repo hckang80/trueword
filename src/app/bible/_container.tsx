@@ -62,7 +62,7 @@ export default function Container({
     setSelectedChapter(value);
   }, []);
 
-  const handleChange = (value: string) => {
+  const handleTranslationChange = (value: string) => {
     setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
   };
 
@@ -76,7 +76,7 @@ export default function Container({
           onChange={handleChapterChange}
         />
 
-        <Select value={selectedTranslation?.abbreviation} onValueChange={handleChange}>
+        <Select value={selectedTranslation?.abbreviation} onValueChange={handleTranslationChange}>
           <SelectTrigger className="w-[240px]">
             <SelectValue placeholder="Select a translation" />
           </SelectTrigger>
