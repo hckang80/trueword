@@ -1,9 +1,16 @@
 'use client';
 
-import { BibleInstance, Transition } from '@/@types';
+import type { BibleInstance, Transition } from '@/@types';
 import { useCallback, useMemo, useState } from 'react';
 import BookSelect from './BookSelect';
 import ChapterSelect from './ChapterSelect';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 export default function Container({
   translations,
@@ -26,6 +33,10 @@ export default function Container({
 
   const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
 
+  const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
+    translations[0]
+  );
+
   const verses = useMemo(
     () => chapters.find((chapter) => chapter.chapter === selectedChapter)?.verses,
     [chapters, selectedChapter]
@@ -40,6 +51,10 @@ export default function Container({
     setSelectedChapter(value);
   }, []);
 
+  const handleChange = (value: string) => {
+    setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
+  };
+
   return (
     <>
       <div className="flex gap-[4px]">
@@ -49,7 +64,22 @@ export default function Container({
           selectedChapter={selectedChapter}
           onChange={handleChapterChange}
         />
+
+        <Select value={selectedTranslation?.abbreviation} onValueChange={handleChange}>
+          <SelectTrigger className="w-[240px]">
+            <SelectValue placeholder="Select a translation" />
+          </SelectTrigger>
+          <SelectContent>
+            {translations.map(({ abbreviation, description }) => (
+              <SelectItem value={abbreviation} key={abbreviation}>
+                {description}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
+
+      <pre>{JSON.stringify(selectedTranslation, null, 2)}</pre>
 
       <div>
         {verses?.map((verse) => (
