@@ -24,7 +24,7 @@ const BookSelect: React.FC<BookSelectProps> = ({ books, selectedBook, onChange }
   );
 
   return (
-    <Select defaultValue={selectedBook} onValueChange={handleChange}>
+    <Select value={selectedBook} onValueChange={handleChange}>
       <SelectTrigger className="w-[140px]">
         <SelectValue placeholder="Select a bible" />
       </SelectTrigger>
