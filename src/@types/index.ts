@@ -20,3 +20,13 @@ export interface Verse {
   verse: number;
   text: string;
 }
+
+export interface Transition {
+  abbreviation: string;
+  description: string;
+  lang: string;
+  language: string;
+  distribution_versification: string;
+  url: string;
+  sha: string;
+}
