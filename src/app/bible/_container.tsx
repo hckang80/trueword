@@ -2,8 +2,6 @@
 
 import type { BibleInstance, Transition } from '@/@types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import BookSelect from './BookSelect';
-import ChapterSelect from './ChapterSelect';
 import {
   Select,
   SelectContent,
@@ -11,6 +9,17 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
+} from '@/components/ui/drawer';
+
+import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { fetcher } from '@/lib/utils';
 
@@ -69,12 +78,36 @@ export default function Container({
   return (
     <>
       <div className="flex gap-[4px]">
-        <BookSelect books={books} selectedBook={selectedBook} onChange={handleBookChange} />
-        <ChapterSelect
-          chaptersCount={chapters.length}
-          selectedChapter={selectedChapter}
-          onChange={handleChapterChange}
-        />
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button>{`${selectedBook} ${selectedChapter}`}</Button>
+          </DrawerTrigger>
+          <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
+            <DrawerHeader className="overflow-y-auto">
+              <DrawerTitle className="hidden">Bible</DrawerTitle>
+              <DrawerDescription asChild>
+                <div className="text-left">
+                  {books.map((book) => (
+                    <details name="books" key={book}>
+                      <summary onClick={() => handleBookChange(book)}>{book}</summary>
+                      <div>
+                        <ol className="grid grid-cols-5 gap-[4px]">
+                          {Array.from({ length: chapters.length }, (_, i) => (
+                            <li key={i}>
+                              <DrawerClose asChild>
+                                <button onClick={() => handleChapterChange(i + 1)}>{i + 1}</button>
+                              </DrawerClose>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </DrawerDescription>
+            </DrawerHeader>
+          </DrawerContent>
+        </Drawer>
 
         <Select value={selectedTranslation?.abbreviation} onValueChange={handleTranslationChange}>
           <SelectTrigger className="w-[240px]">
