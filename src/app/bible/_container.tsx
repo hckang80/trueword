@@ -46,30 +46,26 @@ export default function Container({
   const DEFAULT_CHAPTER = 1;
 
   const [selectedBook, setSelectedBook] = useState(DEFAULT_BOOK);
+  const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
+
+  const resetBook = useCallback((book: string, chapter: number) => {
+    setSelectedBook(book);
+    setSelectedChapter(chapter);
+  }, []);
 
   useEffect(() => {
-    handleBookChange(DEFAULT_BOOK);
-  }, [DEFAULT_BOOK]);
+    resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
+  }, [resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
 
   const chapters = useMemo(
     () => books.find((book) => book.name === selectedBook)?.chapters || [],
     [books, selectedBook]
   );
 
-  const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
-
   const verses = useMemo(
     () => chapters.find((chapter) => chapter.chapter === selectedChapter)?.verses,
     [chapters, selectedChapter]
   );
-
-  const handleBookChange = useCallback((value: string) => {
-    setSelectedBook(value);
-  }, []);
-
-  const handleChapterChange = useCallback((value: number) => {
-    setSelectedChapter(value);
-  }, []);
 
   const handleTranslationChange = (value: string) => {
     setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
@@ -87,7 +83,7 @@ export default function Container({
               <DrawerTitle className="hidden">Bible</DrawerTitle>
               <DrawerDescription asChild>
                 <div className="text-left">
-                  {books.map(({ name: book, chapters }) => (
+                  {books.map(({ name: book, chapters: { length } }) => (
                     <details
                       name="books"
                       key={book}
@@ -98,13 +94,12 @@ export default function Container({
                       </summary>
                       <div>
                         <ol className="grid grid-cols-5 gap-[4px]">
-                          {Array.from({ length: chapters.length }, (_, i) => (
+                          {Array.from({ length }, (_, i) => (
                             <li key={i}>
                               <DrawerClose asChild>
                                 <button
                                   onClick={() => {
-                                    handleBookChange(book);
-                                    handleChapterChange(i + 1);
+                                    resetBook(book, i + 1);
                                   }}
                                 >
                                   {i + 1}
