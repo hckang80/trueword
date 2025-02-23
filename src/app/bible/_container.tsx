@@ -64,7 +64,6 @@ export default function Container({
 
   const handleBookChange = useCallback((value: string) => {
     setSelectedBook(value);
-    setSelectedChapter(DEFAULT_CHAPTER);
   }, []);
 
   const handleChapterChange = useCallback((value: number) => {
@@ -87,12 +86,9 @@ export default function Container({
               <DrawerTitle className="hidden">Bible</DrawerTitle>
               <DrawerDescription asChild>
                 <div className="text-left">
-                  {books.map((book) => (
+                  {data.books.map(({ name: book, chapters }) => (
                     <details name="books" key={book}>
-                      <summary
-                        className={cn(book === selectedBook ? 'font-bold' : '')}
-                        onClick={() => handleBookChange(book)}
-                      >
+                      <summary className={cn(book === selectedBook ? 'font-bold' : '')}>
                         {book}
                       </summary>
                       <div>
@@ -100,7 +96,14 @@ export default function Container({
                           {Array.from({ length: chapters.length }, (_, i) => (
                             <li key={i}>
                               <DrawerClose asChild>
-                                <button onClick={() => handleChapterChange(i + 1)}>{i + 1}</button>
+                                <button
+                                  onClick={() => {
+                                    handleBookChange(book);
+                                    handleChapterChange(i + 1);
+                                  }}
+                                >
+                                  {i + 1}
+                                </button>
                               </DrawerClose>
                             </li>
                           ))}
