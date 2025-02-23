@@ -92,22 +92,19 @@ export default function Container({
                       <summary className={cn(book === selectedBook ? 'font-bold' : '')}>
                         {book}
                       </summary>
-                      <div>
-                        <ol className="grid grid-cols-5 gap-[4px]">
-                          {Array.from({ length }, (_, i) => (
-                            <li key={i}>
-                              <DrawerClose asChild>
-                                <button
-                                  onClick={() => {
-                                    resetBook(book, i + 1);
-                                  }}
-                                >
-                                  {i + 1}
-                                </button>
-                              </DrawerClose>
-                            </li>
-                          ))}
-                        </ol>
+                      <div className="grid grid-cols-5 gap-[4px]">
+                        {Array.from({ length }, (_, i) => (
+                          <DrawerClose key={i} asChild>
+                            <Button
+                              variant="outline"
+                              onClick={() => {
+                                resetBook(book, i + 1);
+                              }}
+                            >
+                              {i + 1}
+                            </Button>
+                          </DrawerClose>
+                        ))}
                       </div>
                     </details>
                   ))}
