@@ -21,7 +21,7 @@ import {
 
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '@/lib/utils';
+import { cn, fetcher } from '@/lib/utils';
 
 export default function Container({
   translations,
@@ -89,7 +89,12 @@ export default function Container({
                 <div className="text-left">
                   {books.map((book) => (
                     <details name="books" key={book}>
-                      <summary onClick={() => handleBookChange(book)}>{book}</summary>
+                      <summary
+                        className={cn(book === selectedBook ? 'font-bold' : '')}
+                        onClick={() => handleBookChange(book)}
+                      >
+                        {book}
+                      </summary>
                       <div>
                         <ol className="grid grid-cols-5 gap-[4px]">
                           {Array.from({ length: chapters.length }, (_, i) => (
