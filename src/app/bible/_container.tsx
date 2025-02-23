@@ -34,14 +34,15 @@ export default function Container({
     translations[0]
   );
 
-  const { data } = useQuery({
+  const {
+    data: { books }
+  } = useQuery({
     queryKey: ['bible', selectedTranslation],
     queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
     initialData
   });
 
-  const books = useMemo(() => data.books.map(({ name }) => name), [data]);
-  const [DEFAULT_BOOK] = books;
+  const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
   const [selectedBook, setSelectedBook] = useState(DEFAULT_BOOK);
@@ -51,8 +52,8 @@ export default function Container({
   }, [DEFAULT_BOOK]);
 
   const chapters = useMemo(
-    () => data.books.find((book) => book.name === selectedBook)?.chapters || [],
-    [data, selectedBook]
+    () => books.find((book) => book.name === selectedBook)?.chapters || [],
+    [books, selectedBook]
   );
 
   const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
@@ -86,7 +87,7 @@ export default function Container({
               <DrawerTitle className="hidden">Bible</DrawerTitle>
               <DrawerDescription asChild>
                 <div className="text-left">
-                  {data.books.map(({ name: book, chapters }) => (
+                  {books.map(({ name: book, chapters }) => (
                     <details
                       name="books"
                       key={book}
