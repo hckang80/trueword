@@ -87,7 +87,11 @@ export default function Container({
               <DrawerDescription asChild>
                 <div className="text-left">
                   {data.books.map(({ name: book, chapters }) => (
-                    <details name="books" key={book}>
+                    <details
+                      name="books"
+                      key={book}
+                      className="transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
+                    >
                       <summary className={cn(book === selectedBook ? 'font-bold' : '')}>
                         {book}
                       </summary>
