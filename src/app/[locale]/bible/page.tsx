@@ -3,6 +3,7 @@ import Container from './_container';
 import { BibleInstance, Transition } from '@/@types';
 import { QueryClient } from '@tanstack/react-query';
 import { fetcher } from '@/lib/utils';
+import { LoaderCircle } from 'lucide-react';
 
 export default async function Bible({
   params,
@@ -45,7 +46,13 @@ export default async function Bible({
 
   return (
     <div className="min-h-screen p-[20px] font-[family-name:var(--font-geist-sans)]">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="text-center">
+            <LoaderCircle className="animate-spin" />
+          </div>
+        }
+      >
         <Container translations={translationsByLanguage} data={data} />
       </Suspense>
     </div>
