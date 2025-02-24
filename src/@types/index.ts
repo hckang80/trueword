@@ -26,9 +26,11 @@ export interface Transition {
   description: string;
   lang: string;
   language: string;
+  distribution_license: string;
   distribution_versification: string;
   url: string;
   sha: string;
+  translation: string;
 }
 
 export const locales = ['en', 'ko'];

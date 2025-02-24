@@ -15,7 +15,17 @@ export default async function Bible({ params }: { params: Promise<{ locale: stri
   });
 
   const translationsByLanguage = Object.values(translations).filter(
-    ({ lang }) => lang === userLocale
+    ({ lang, distribution_license, distribution_versification }) => {
+      const conditions = {
+        lang: lang === userLocale,
+        license: ['Public Domain', 'Copyrighted; Free non-commercial distribution'].includes(
+          distribution_license
+        ),
+        versification: !!distribution_versification
+      };
+
+      return Object.values(conditions).every(Boolean);
+    }
   );
 
   const data = await queryClient.fetchQuery({

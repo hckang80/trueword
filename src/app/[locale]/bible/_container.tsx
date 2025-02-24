@@ -128,7 +128,7 @@ export default function Container({
               <DrawerTitle className="hidden">Translations</DrawerTitle>
               <DrawerDescription asChild>
                 <ul>
-                  {translations.map(({ distribution_versification, abbreviation, description }) => (
+                  {translations.map(({ distribution_versification, abbreviation, translation }) => (
                     <li key={abbreviation}>
                       <DrawerClose asChild>
                         <button
@@ -138,7 +138,7 @@ export default function Container({
                           )}
                           onClick={() => handleTranslationChange(abbreviation)}
                         >
-                          {`${distribution_versification}(${description})`}
+                          {`${distribution_versification}(${translation})`}
                         </button>
                       </DrawerClose>
                     </li>
