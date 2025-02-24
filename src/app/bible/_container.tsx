@@ -58,13 +58,16 @@ export default function Container({
   );
 
   const verses = useMemo(
-    () => chapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter)?.verses,
+    () =>
+      chapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter)?.verses || [],
     [chapters, selectedBookInstance.chapter]
   );
 
   const handleTranslationChange = (value: string) => {
     setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
   };
+
+  if (!selectedTranslation) return 'SELECTED_TRANSLATION is empty';
 
   return (
     <>
@@ -117,7 +120,7 @@ export default function Container({
 
         <Drawer>
           <DrawerTrigger asChild>
-            <Button>{selectedTranslation?.distribution_versification}</Button>
+            <Button>{selectedTranslation.distribution_versification}</Button>
           </DrawerTrigger>
           <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
             <DrawerHeader className="overflow-y-auto p-0">
@@ -130,7 +133,7 @@ export default function Container({
                         <button
                           className={cn(
                             'w-full p-[10px] text-left',
-                            abbreviation === selectedTranslation?.abbreviation ? 'font-bold' : ''
+                            abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
                           )}
                           onClick={() => handleTranslationChange(abbreviation)}
                         >
@@ -147,7 +150,7 @@ export default function Container({
       </div>
 
       <div>
-        {verses?.map((verse) => (
+        {verses.map((verse) => (
           <p key={verse.verse}>
             <sup>{verse.verse}</sup> {verse.text}
           </p>
