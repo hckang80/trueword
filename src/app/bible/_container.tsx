@@ -57,12 +57,12 @@ export default function Container({
     [books, selectedBookInstance]
   );
 
-  const selectedVerses = useMemo(
-    () =>
-      selectedChapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter)
-        ?.verses || [],
+  const selectedChapterInstance = useMemo(
+    () => selectedChapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter),
     [selectedChapters, selectedBookInstance]
   );
+  const selectedChapterName = selectedChapterInstance?.name || '';
+  const selectedVerses = selectedChapterInstance?.verses || [];
 
   const handleTranslationChange = (value: string) => {
     setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
@@ -75,7 +75,7 @@ export default function Container({
       <div className="flex gap-[4px]">
         <Drawer>
           <DrawerTrigger asChild>
-            <Button>{`${selectedBookInstance.book} ${selectedBookInstance.chapter}`}</Button>
+            <Button>{selectedChapterName}</Button>
           </DrawerTrigger>
           <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
             <DrawerHeader className="overflow-y-auto p-0">
