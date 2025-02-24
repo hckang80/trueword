@@ -121,18 +121,29 @@ export default function Container({
           </DrawerContent>
         </Drawer>
 
-        <Select value={selectedTranslation?.abbreviation} onValueChange={handleTranslationChange}>
-          <SelectTrigger className="w-[240px]">
-            <SelectValue placeholder="Select a translation" />
-          </SelectTrigger>
-          <SelectContent>
-            {translations.map(({ abbreviation, description }) => (
-              <SelectItem value={abbreviation} key={abbreviation}>
-                {description}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button>{selectedTranslation?.distribution_versification}</Button>
+          </DrawerTrigger>
+          <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
+            <DrawerHeader className="overflow-y-auto p-0">
+              <DrawerTitle className="hidden">Translations</DrawerTitle>
+              <DrawerDescription asChild>
+                <ul className="text-left">
+                  {translations.map(({ abbreviation, description }) => (
+                    <li key={abbreviation}>
+                      <DrawerClose asChild>
+                        <button onClick={() => handleTranslationChange(abbreviation)}>
+                          {description}
+                        </button>
+                      </DrawerClose>
+                    </li>
+                  ))}
+                </ul>
+              </DrawerDescription>
+            </DrawerHeader>
+          </DrawerContent>
+        </Drawer>
       </div>
 
       <div>
