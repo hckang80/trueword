@@ -1,5 +1,6 @@
 {
   "Common": {
-    "bible": "Bible"
+    "bible": "Bible",
+    "language": "Language"
   }
 }

@@ -15,8 +15,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { cn, fetcher } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Globe } from 'lucide-react';
 import Locales from './locales';
+import { useTranslations } from 'next-intl';
 
 type SelectedBook = {
   book: string;
@@ -97,6 +98,7 @@ function BookSelector() {
 
 function TranslationSelector() {
   const { translations, selectedTranslation, handleTranslationChange } = useBible();
+  const t = useTranslations('Common');
 
   return (
     <Drawer>
@@ -105,7 +107,13 @@ function TranslationSelector() {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
-          <Locales />
+          <div className="flex items-center justify-between p-[10px]">
+            <span className="flex items-center gap-[4px]">
+              <Globe />
+              {t('language')}
+            </span>
+            <Locales />
+          </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
