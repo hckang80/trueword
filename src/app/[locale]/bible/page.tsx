@@ -4,7 +4,9 @@ import { BibleInstance, Transition } from '@/@types';
 import { QueryClient } from '@tanstack/react-query';
 import { fetcher } from '@/lib/utils';
 
-export default async function Bible() {
+export default async function Bible({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: userLocale } = await params;
+
   const queryClient = new QueryClient();
 
   const translations = await queryClient.fetchQuery({
@@ -12,7 +14,9 @@ export default async function Bible() {
     queryFn: () => fetcher<Record<string, Transition>>(`/translations.json`)
   });
 
-  const translationsByLanguage = Object.values(translations).filter(({ lang }) => lang === 'ko');
+  const translationsByLanguage = Object.values(translations).filter(
+    ({ lang }) => lang === userLocale
+  );
 
   const data = await queryClient.fetchQuery({
     queryKey: ['bible'],
