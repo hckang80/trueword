@@ -129,12 +129,18 @@ export default function Container({
             <DrawerHeader className="overflow-y-auto p-0">
               <DrawerTitle className="hidden">Translations</DrawerTitle>
               <DrawerDescription asChild>
-                <ul className="text-left">
-                  {translations.map(({ abbreviation, description }) => (
+                <ul>
+                  {translations.map(({ distribution_versification, abbreviation, description }) => (
                     <li key={abbreviation}>
                       <DrawerClose asChild>
-                        <button onClick={() => handleTranslationChange(abbreviation)}>
-                          {description}
+                        <button
+                          className={cn(
+                            'w-full p-[10px] text-left',
+                            abbreviation === selectedTranslation?.abbreviation ? 'font-bold' : ''
+                          )}
+                          onClick={() => handleTranslationChange(abbreviation)}
+                        >
+                          {`${distribution_versification}(${description})`}
                         </button>
                       </DrawerClose>
                     </li>
