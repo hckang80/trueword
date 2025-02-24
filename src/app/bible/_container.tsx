@@ -77,8 +77,8 @@ export default function Container({
           <DrawerTrigger asChild>
             <Button>{selectedChapterName}</Button>
           </DrawerTrigger>
-          <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
-            <DrawerHeader className="overflow-y-auto p-0">
+          <DrawerContent>
+            <DrawerHeader className="p-0">
               <DrawerTitle className="hidden">Bible</DrawerTitle>
               <DrawerDescription asChild>
                 <div className="text-left">
@@ -123,8 +123,8 @@ export default function Container({
           <DrawerTrigger asChild>
             <Button>{selectedTranslation.distribution_versification}</Button>
           </DrawerTrigger>
-          <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
-            <DrawerHeader className="overflow-y-auto p-0">
+          <DrawerContent>
+            <DrawerHeader className="p-0">
               <DrawerTitle className="hidden">Translations</DrawerTitle>
               <DrawerDescription asChild>
                 <ul>
