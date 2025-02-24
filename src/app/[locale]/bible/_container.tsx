@@ -17,6 +17,125 @@ import { useQuery } from '@tanstack/react-query';
 import { cn, fetcher } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 
+type SelectedBook = {
+  book: string;
+  chapter: number;
+};
+
+function BookSelector({
+  books,
+  selectedChapterName,
+  resetBook,
+  selectedBook
+}: {
+  books: BibleInstance['books'];
+  selectedChapterName: string;
+  resetBook: (book: string, chapter: number) => void;
+  selectedBook: SelectedBook;
+}) {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button>{selectedChapterName}</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="p-0">
+          <DrawerTitle className="hidden">Bible</DrawerTitle>
+          <DrawerDescription asChild>
+            <div className="text-left">
+              {books.map(({ name: book, chapters: { length } }) => (
+                <details
+                  name="books"
+                  key={book}
+                  className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
+                >
+                  <summary
+                    className={cn(
+                      'flex justify-between p-[10px]',
+                      book === selectedBook.book ? 'font-bold' : ''
+                    )}
+                  >
+                    {book}
+                    <ChevronDown size={20} className="transition group-open:rotate-180" />
+                  </summary>
+                  <div className="grid grid-cols-5 gap-[4px] px-[10px]">
+                    {Array.from({ length }, (_, i) => (
+                      <DrawerClose key={i} asChild>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            resetBook(book, i + 1);
+                          }}
+                        >
+                          {i + 1}
+                        </Button>
+                      </DrawerClose>
+                    ))}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </DrawerDescription>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+function TranslationSelector({
+  translations,
+  selectedTranslation,
+  handleTranslationChange
+}: {
+  translations: Transition[];
+  selectedTranslation: Transition;
+  handleTranslationChange: (value: string) => void;
+}) {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button>{selectedTranslation.distribution_versification}</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="p-0">
+          <DrawerTitle className="hidden">Translations</DrawerTitle>
+          <DrawerDescription asChild>
+            <ul>
+              {translations.map(({ distribution_versification, abbreviation, translation }) => (
+                <li key={abbreviation}>
+                  <DrawerClose asChild>
+                    <button
+                      className={cn(
+                        'w-full p-[10px] text-left',
+                        abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
+                      )}
+                      onClick={() => handleTranslationChange(abbreviation)}
+                    >
+                      {`${distribution_versification}(${translation})`}
+                    </button>
+                  </DrawerClose>
+                </li>
+              ))}
+            </ul>
+          </DrawerDescription>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+function VerseList({ selectedVerses }: { selectedVerses: { verse: number; text: string }[] }) {
+  return (
+    <div>
+      {selectedVerses.map(({ verse, text }) => (
+        <p key={verse}>
+          <sup>{verse}</sup> {text}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export default function Container({
   translations,
   data: initialData
@@ -39,10 +158,10 @@ export default function Container({
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
-  const [selectedBookInstance, setSelectedBookInstance] = useState<{
-    book: string;
-    chapter: number;
-  }>({ book: DEFAULT_BOOK, chapter: DEFAULT_CHAPTER });
+  const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
+    book: DEFAULT_BOOK,
+    chapter: DEFAULT_CHAPTER
+  });
 
   const resetBook = useCallback((book: string, chapter: number) => {
     setSelectedBookInstance({ book, chapter });
@@ -61,6 +180,7 @@ export default function Container({
     () => selectedChapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter),
     [selectedChapters, selectedBookInstance]
   );
+
   const selectedChapterName = selectedChapterInstance?.name || '';
   const selectedVerses = selectedChapterInstance?.verses || [];
 
@@ -73,90 +193,19 @@ export default function Container({
   return (
     <>
       <div className="flex gap-[4px]">
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button>{selectedChapterName}</Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader className="p-0">
-              <DrawerTitle className="hidden">Bible</DrawerTitle>
-              <DrawerDescription asChild>
-                <div className="text-left">
-                  {books.map(({ name: book, chapters: { length } }) => (
-                    <details
-                      name="books"
-                      key={book}
-                      className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
-                    >
-                      <summary
-                        className={cn(
-                          'flex justify-between p-[10px]',
-                          book === selectedBookInstance.book ? 'font-bold' : ''
-                        )}
-                      >
-                        {book}
-                        <ChevronDown size={20} className="transition group-open:rotate-180" />
-                      </summary>
-                      <div className="grid grid-cols-5 gap-[4px] px-[10px]">
-                        {Array.from({ length }, (_, i) => (
-                          <DrawerClose key={i} asChild>
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                resetBook(book, i + 1);
-                              }}
-                            >
-                              {i + 1}
-                            </Button>
-                          </DrawerClose>
-                        ))}
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </DrawerDescription>
-            </DrawerHeader>
-          </DrawerContent>
-        </Drawer>
-
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button>{selectedTranslation.distribution_versification}</Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader className="p-0">
-              <DrawerTitle className="hidden">Translations</DrawerTitle>
-              <DrawerDescription asChild>
-                <ul>
-                  {translations.map(({ distribution_versification, abbreviation, translation }) => (
-                    <li key={abbreviation}>
-                      <DrawerClose asChild>
-                        <button
-                          className={cn(
-                            'w-full p-[10px] text-left',
-                            abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
-                          )}
-                          onClick={() => handleTranslationChange(abbreviation)}
-                        >
-                          {`${distribution_versification}(${translation})`}
-                        </button>
-                      </DrawerClose>
-                    </li>
-                  ))}
-                </ul>
-              </DrawerDescription>
-            </DrawerHeader>
-          </DrawerContent>
-        </Drawer>
+        <BookSelector
+          books={books}
+          selectedChapterName={selectedChapterName}
+          resetBook={resetBook}
+          selectedBook={selectedBookInstance}
+        />
+        <TranslationSelector
+          translations={translations}
+          selectedTranslation={selectedTranslation}
+          handleTranslationChange={handleTranslationChange}
+        />
       </div>
-
-      <div>
-        {selectedVerses.map(({ verse, text }) => (
-          <p key={verse}>
-            <sup>{verse}</sup> {text}
-          </p>
-        ))}
-      </div>
+      <VerseList selectedVerses={selectedVerses} />
     </>
   );
 }
