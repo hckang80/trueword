@@ -39,12 +39,13 @@ export default function Container({
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
-  const [selectedBook, setSelectedBook] = useState(DEFAULT_BOOK);
-  const [selectedChapter, setSelectedChapter] = useState(DEFAULT_CHAPTER);
+  const [selectedBookInstance, setSelectedBookInstance] = useState<{
+    book: string;
+    chapter: number;
+  }>({ book: DEFAULT_BOOK, chapter: DEFAULT_CHAPTER });
 
   const resetBook = useCallback((book: string, chapter: number) => {
-    setSelectedBook(book);
-    setSelectedChapter(chapter);
+    setSelectedBookInstance({ book, chapter });
   }, []);
 
   useEffect(() => {
@@ -52,13 +53,13 @@ export default function Container({
   }, [resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
 
   const chapters = useMemo(
-    () => books.find((book) => book.name === selectedBook)?.chapters || [],
-    [books, selectedBook]
+    () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
+    [books, selectedBookInstance.book]
   );
 
   const verses = useMemo(
-    () => chapters.find((chapter) => chapter.chapter === selectedChapter)?.verses,
-    [chapters, selectedChapter]
+    () => chapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter)?.verses,
+    [chapters, selectedBookInstance.chapter]
   );
 
   const handleTranslationChange = (value: string) => {
@@ -70,7 +71,7 @@ export default function Container({
       <div className="flex gap-[4px]">
         <Drawer>
           <DrawerTrigger asChild>
-            <Button>{`${selectedBook} ${selectedChapter}`}</Button>
+            <Button>{`${selectedBookInstance.book} ${selectedBookInstance.chapter}`}</Button>
           </DrawerTrigger>
           <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
             <DrawerHeader className="overflow-y-auto p-0">
@@ -86,7 +87,7 @@ export default function Container({
                       <summary
                         className={cn(
                           'flex justify-between p-[10px]',
-                          book === selectedBook ? 'font-bold' : ''
+                          book === selectedBookInstance.book ? 'font-bold' : ''
                         )}
                       >
                         {book}
