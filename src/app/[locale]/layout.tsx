@@ -37,7 +37,7 @@ export default async function LocaleLayout({
               <h1>{t('bible')}</h1>
               <Languages />
             </header>
-            {children}
+            <main>{children}</main>
           </NextIntlClientProvider>
         </Providers>
       </body>
