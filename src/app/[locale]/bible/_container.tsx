@@ -1,7 +1,7 @@
 'use client';
 
 import type { BibleInstance, Transition } from '@/@types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -22,17 +22,29 @@ type SelectedBook = {
   chapter: number;
 };
 
-function BookSelector({
-  books,
-  selectedChapterName,
-  resetBook,
-  selectedBook
-}: {
+type BibleContextType = {
   books: BibleInstance['books'];
   selectedChapterName: string;
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
-}) {
+  translations: Transition[];
+  selectedTranslation: Transition;
+  handleTranslationChange: (value: string) => void;
+  selectedVerses: { verse: number; text: string }[];
+};
+
+const BibleContext = createContext<BibleContextType | null>(null);
+
+function useBible() {
+  const context = useContext(BibleContext);
+  if (!context) throw new Error('useBible must be used within a BibleProvider');
+
+  return context;
+}
+
+function BookSelector() {
+  const { books, selectedChapterName, resetBook, selectedBook } = useBible();
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -82,15 +94,9 @@ function BookSelector({
   );
 }
 
-function TranslationSelector({
-  translations,
-  selectedTranslation,
-  handleTranslationChange
-}: {
-  translations: Transition[];
-  selectedTranslation: Transition;
-  handleTranslationChange: (value: string) => void;
-}) {
+function TranslationSelector() {
+  const { translations, selectedTranslation, handleTranslationChange } = useBible();
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -124,7 +130,9 @@ function TranslationSelector({
   );
 }
 
-function VerseList({ selectedVerses }: { selectedVerses: { verse: number; text: string }[] }) {
+function VerseList() {
+  const { selectedVerses } = useBible();
+
   return (
     <div>
       {selectedVerses.map(({ verse, text }) => (
@@ -188,24 +196,26 @@ export default function Container({
     setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
   };
 
-  if (!selectedTranslation) return 'SELECTED_TRANSLATION is empty';
+  if (!selectedTranslation) throw new Error('No translation selected');
 
   return (
-    <>
+    <BibleContext.Provider
+      value={{
+        books,
+        selectedChapterName,
+        resetBook,
+        selectedBook: selectedBookInstance,
+        translations,
+        selectedTranslation,
+        handleTranslationChange,
+        selectedVerses
+      }}
+    >
       <div className="flex gap-[4px]">
-        <BookSelector
-          books={books}
-          selectedChapterName={selectedChapterName}
-          resetBook={resetBook}
-          selectedBook={selectedBookInstance}
-        />
-        <TranslationSelector
-          translations={translations}
-          selectedTranslation={selectedTranslation}
-          handleTranslationChange={handleTranslationChange}
-        />
+        <BookSelector />
+        <TranslationSelector />
       </div>
-      <VerseList selectedVerses={selectedVerses} />
-    </>
+      <VerseList />
+    </BibleContext.Provider>
   );
 }
