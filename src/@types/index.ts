@@ -30,3 +30,5 @@ export interface Transition {
   url: string;
   sha: string;
 }
+
+export const locales = ['en', 'ko'];
