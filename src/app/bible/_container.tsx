@@ -52,15 +52,16 @@ export default function Container({
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
   }, [resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
 
-  const chapters = useMemo(
+  const selectedChapters = useMemo(
     () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
-    [books, selectedBookInstance.book]
+    [books, selectedBookInstance]
   );
 
-  const verses = useMemo(
+  const selectedVerses = useMemo(
     () =>
-      chapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter)?.verses || [],
-    [chapters, selectedBookInstance.chapter]
+      selectedChapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter)
+        ?.verses || [],
+    [selectedChapters, selectedBookInstance]
   );
 
   const handleTranslationChange = (value: string) => {
@@ -150,9 +151,9 @@ export default function Container({
       </div>
 
       <div>
-        {verses.map((verse) => (
-          <p key={verse.verse}>
-            <sup>{verse.verse}</sup> {verse.text}
+        {selectedVerses.map(({ verse, text }) => (
+          <p key={verse}>
+            <sup>{verse}</sup> {text}
           </p>
         ))}
       </div>
