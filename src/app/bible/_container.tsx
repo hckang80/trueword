@@ -22,6 +22,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { cn, fetcher } from '@/lib/utils';
+import { ChevronDown } from 'lucide-react';
 
 export default function Container({
   translations,
@@ -79,7 +80,7 @@ export default function Container({
             <Button>{`${selectedBook} ${selectedChapter}`}</Button>
           </DrawerTrigger>
           <DrawerContent className="max-h-[calc(100vh-50px)] max-h-[calc(100dvh-50px)]">
-            <DrawerHeader className="overflow-y-auto">
+            <DrawerHeader className="overflow-y-auto p-0">
               <DrawerTitle className="hidden">Bible</DrawerTitle>
               <DrawerDescription asChild>
                 <div className="text-left">
@@ -87,12 +88,18 @@ export default function Container({
                     <details
                       name="books"
                       key={book}
-                      className="transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
+                      className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
                     >
-                      <summary className={cn(book === selectedBook ? 'font-bold' : '')}>
+                      <summary
+                        className={cn(
+                          'flex justify-between p-[10px]',
+                          book === selectedBook ? 'font-bold' : ''
+                        )}
+                      >
                         {book}
+                        <ChevronDown size={20} className="transition group-open:rotate-180" />
                       </summary>
-                      <div className="grid grid-cols-5 gap-[4px]">
+                      <div className="grid grid-cols-5 gap-[4px] px-[10px]">
                         {Array.from({ length }, (_, i) => (
                           <DrawerClose key={i} asChild>
                             <Button
