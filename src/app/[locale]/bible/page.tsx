@@ -4,10 +4,18 @@ import { BibleInstance, Transition } from '@/@types';
 import { QueryClient } from '@tanstack/react-query';
 import { fetcher } from '@/lib/utils';
 
-export default async function Bible({ params }: { params: Promise<{ locale: string }> }) {
+export default async function Bible({
+  params,
+  searchParams
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ translatedVersion?: string }>;
+}) {
   const { locale: userLocale } = await params;
 
   const queryClient = new QueryClient();
+
+  const { translatedVersion = '' } = await searchParams;
 
   const translations = await queryClient.fetchQuery({
     queryKey: ['translations'],
@@ -17,7 +25,7 @@ export default async function Bible({ params }: { params: Promise<{ locale: stri
   const translationsByLanguage = Object.values(translations).filter(
     ({ lang, distribution_license, distribution_versification }) => {
       const conditions = {
-        lang: lang === userLocale,
+        lang: lang === (translatedVersion || userLocale),
         license: ['Public Domain', 'Copyrighted; Free non-commercial distribution'].includes(
           distribution_license
         ),
@@ -28,9 +36,11 @@ export default async function Bible({ params }: { params: Promise<{ locale: stri
     }
   );
 
+  const [defaultTranslation] = translationsByLanguage;
+
   const data = await queryClient.fetchQuery({
     queryKey: ['bible'],
-    queryFn: () => fetcher<BibleInstance>(translationsByLanguage[0].url)
+    queryFn: () => fetcher<BibleInstance>(defaultTranslation.url)
   });
 
   return (

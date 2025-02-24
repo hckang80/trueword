@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { cn, fetcher } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
+import Locales from './locales';
 
 type SelectedBook = {
   book: string;
@@ -104,6 +105,7 @@ function TranslationSelector() {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
+          <Locales />
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
@@ -151,9 +153,15 @@ export default function Container({
   translations: Transition[];
   data: BibleInstance;
 }) {
+  const [translation] = translations;
   const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
-    translations[0]
+    translation
   );
+
+  useEffect(() => {
+    // TODO: 바로 윗 줄 useState에서 selectedTranslation와 translations[0]의 데이터 동기화가 되지 않아 추가
+    setSelectedTranslation(translation);
+  }, [translation, setSelectedTranslation]);
 
   const {
     data: { books }
