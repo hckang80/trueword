@@ -32,9 +32,6 @@ export default async function LocaleLayout({
       <body className="antialiased">
         <Providers>
           <NextIntlClientProvider messages={messages}>
-            <header className="flex items-center justify-between p-[20px]">
-              <h1>{t('bible')}</h1>
-            </header>
             <main>{children}</main>
           </NextIntlClientProvider>
         </Providers>
