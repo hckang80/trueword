@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Bible',
@@ -19,7 +18,6 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Common' });
 
   if (!routing.locales.includes(locale)) {
     notFound();
