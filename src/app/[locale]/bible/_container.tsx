@@ -227,7 +227,7 @@ export default function Container({
         selectedVerses
       }}
     >
-      <div className="flex gap-[4px]">
+      <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector />
         <TranslationSelector />
       </div>
