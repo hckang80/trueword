@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { cn, fetcher } from '@/lib/utils';
-import { ChevronDown, Globe } from 'lucide-react';
+import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import Locales from './locales';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -97,7 +97,7 @@ function BookSelector() {
   );
 }
 
-function TranslationSelector() {
+function TranslationSelector({ isFetching }: { isFetching: boolean }) {
   const { translations, selectedTranslation, handleTranslationChange } = useBible();
   const t = useTranslations('Common');
 
@@ -113,7 +113,14 @@ function TranslationSelector() {
               <Globe />
               {t('language')}
             </span>
-            <Locales />
+            {isFetching ? (
+              <div className="flex items-center gap-[4px]">
+                <LoaderCircle className="animate-spin" size={16} />
+                Loading...
+              </div>
+            ) : (
+              <Locales />
+            )}
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
@@ -185,7 +192,8 @@ export default function Container({
   }, [translation, setSelectedTranslation]);
 
   const {
-    data: { books }
+    data: { books },
+    isFetching
   } = useQuery({
     queryKey: ['bible', selectedTranslation],
     queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
@@ -242,7 +250,7 @@ export default function Container({
     >
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector />
-        <TranslationSelector />
+        <TranslationSelector isFetching={isFetching} />
       </div>
       <VerseList />
     </BibleContext.Provider>
