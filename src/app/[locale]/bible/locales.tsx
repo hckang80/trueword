@@ -10,6 +10,7 @@ import {
 import { locales } from '@/@types';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { getLanguageFullName } from '@/lib/utils';
 
 export default function Locales() {
   const { locale } = useParams<{ locale: string }>();
@@ -25,15 +26,17 @@ export default function Locales() {
     setValue(locale);
   };
 
+  const translations = [...locales, 'ja'];
+
   return (
     <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className="w-[100px]">
+      <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
       <SelectContent>
-        {locales.map((locale) => (
-          <SelectItem value={locale} key={locale}>
-            {locale.toUpperCase()}
+        {translations.map((translation) => (
+          <SelectItem value={translation} key={translation}>
+            {getLanguageFullName(translation, locale)}
           </SelectItem>
         ))}
       </SelectContent>
