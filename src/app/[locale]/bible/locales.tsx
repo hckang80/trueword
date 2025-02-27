@@ -8,14 +8,13 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { locales } from '@/@types';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { getLanguageFullName } from '@/lib/utils';
 
 export default function Locales() {
   const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
-  const router = useRouter();
   const params = new URLSearchParams(location.search);
 
   const [value, setValue] = useState(params.get('translatedVersion') || locale);
