@@ -123,13 +123,18 @@ function TranslationSelector() {
                 <li key={abbreviation}>
                   <DrawerClose asChild>
                     <button
-                      className={cn(
-                        'w-full p-[10px] text-left',
-                        abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
-                      )}
+                      className={cn('w-full p-[10px] text-left')}
                       onClick={() => handleTranslationChange(abbreviation)}
                     >
-                      {`${distribution_versification}(${description})`}
+                      <em
+                        className={cn(
+                          'block text-[16px]',
+                          abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
+                        )}
+                      >
+                        {distribution_versification}
+                      </em>
+                      <span className="block text-[13px]">{description}</span>
                     </button>
                   </DrawerClose>
                 </li>
