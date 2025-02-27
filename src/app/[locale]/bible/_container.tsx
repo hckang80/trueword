@@ -175,7 +175,6 @@ export default function Container({
     translation
   );
 
-  // TODO: 바로 윗 줄 useState에서 selectedTranslation와 translation의 초기값이 다르게 찍혀서 해결을 위해 추가
   useEffect(() => {
     setSelectedTranslation(translation);
   }, [translation, setSelectedTranslation]);
