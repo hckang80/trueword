@@ -99,7 +99,6 @@ function BookSelector() {
 
 function TranslationSelector() {
   const { translations, selectedTranslation, handleTranslationChange } = useBible();
-  console.log({ translations });
   const t = useTranslations('Common');
 
   return (
