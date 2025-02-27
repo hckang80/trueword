@@ -113,14 +113,10 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
               <Globe />
               {t('language')}
             </span>
-            {isFetching ? (
-              <div className="flex items-center gap-[4px]">
-                <LoaderCircle className="animate-spin" size={16} />
-                Loading...
-              </div>
-            ) : (
+            <div className="flex items-center gap-[4px]">
+              {isFetching && <LoaderCircle className="animate-spin" size={16} />}
               <Locales />
-            )}
+            </div>
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
