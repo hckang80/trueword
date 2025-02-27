@@ -19,7 +19,7 @@ export function fetcher<T>(url: string | URL | Request, init?: RequestInit): Pro
   }).then((res) => res.json());
 }
 
-export function getLanguageFullName(langCode = 'string', locale = 'en') {
+export function getLanguageFullName(langCode: string, locale = 'en') {
   const displayNames = new Intl.DisplayNames([locale], { type: 'language' });
   return displayNames.of(langCode);
 }
