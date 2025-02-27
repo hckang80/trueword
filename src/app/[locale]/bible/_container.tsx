@@ -99,6 +99,7 @@ function BookSelector() {
 
 function TranslationSelector() {
   const { translations, selectedTranslation, handleTranslationChange } = useBible();
+  console.log({ translations });
   const t = useTranslations('Common');
 
   return (
@@ -118,7 +119,7 @@ function TranslationSelector() {
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
-              {translations.map(({ distribution_versification, abbreviation, translation }) => (
+              {translations.map(({ distribution_versification, abbreviation, description }) => (
                 <li key={abbreviation}>
                   <DrawerClose asChild>
                     <button
@@ -128,7 +129,7 @@ function TranslationSelector() {
                       )}
                       onClick={() => handleTranslationChange(abbreviation)}
                     >
-                      {`${distribution_versification}(${translation})`}
+                      {`${distribution_versification}(${description})`}
                     </button>
                   </DrawerClose>
                 </li>
