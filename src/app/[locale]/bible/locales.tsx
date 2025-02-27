@@ -21,7 +21,7 @@ export default function Locales() {
 
   const handleChange = (locale: string) => {
     params.set('translatedVersion', locale);
-    router.replace(`${pathname}?${params.toString()}`);
+    window.history.pushState(null, '', `${pathname}?${params.toString()}`);
     setValue(locale);
   };
 

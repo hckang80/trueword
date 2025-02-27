@@ -23,10 +23,9 @@ export default async function Bible({
     queryFn: () => fetcher<Record<string, Transition>>(`/translations.json`)
   });
 
-  const translationsByLanguage = Object.values(translations).filter(
-    ({ lang, distribution_license, distribution_versification }) => {
+  const validTranslations = Object.values(translations).filter(
+    ({ distribution_license, distribution_versification }) => {
       const conditions = {
-        lang: lang === (translatedVersion || userLocale),
         license: ['Public Domain', 'Copyrighted; Free non-commercial distribution'].includes(
           distribution_license
         ),
@@ -37,7 +36,9 @@ export default async function Bible({
     }
   );
 
-  const [defaultTranslation] = translationsByLanguage;
+  const [defaultTranslation] = validTranslations.filter(
+    ({ lang }) => lang === (translatedVersion || userLocale)
+  );
 
   const data = await queryClient.fetchQuery({
     queryKey: ['bible'],
@@ -53,7 +54,7 @@ export default async function Bible({
           </div>
         }
       >
-        <Container translations={translationsByLanguage} data={data} />
+        <Container translations={validTranslations} data={data} />
       </Suspense>
     </div>
   );

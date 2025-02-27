@@ -18,6 +18,7 @@ import { cn, fetcher } from '@/lib/utils';
 import { ChevronDown, Globe } from 'lucide-react';
 import Locales from './locales';
 import { useTranslations } from 'next-intl';
+import { useParams, useSearchParams } from 'next/navigation';
 
 type SelectedBook = {
   book: string;
@@ -155,12 +156,20 @@ function VerseList() {
 }
 
 export default function Container({
-  translations,
+  translations: validTranslations,
   data: initialData
 }: {
   translations: Transition[];
   data: BibleInstance;
 }) {
+  const params = useParams();
+  const { locale: userLocale } = params;
+  const searchParams = useSearchParams();
+  const translatedVersion = searchParams.get('translatedVersion');
+
+  const translations = validTranslations.filter(
+    ({ lang }) => lang === (translatedVersion || userLocale)
+  );
   const [translation] = translations;
   const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
     translation
