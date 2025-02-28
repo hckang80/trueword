@@ -9,3 +9,5 @@ PWA로 서비스함과 동시에 Tauri를 이용한 앱 패키징을 목표로 �
 - 상태 관리: React Query
 - UI Kit/Styling: shadcn/ui, Tailwind CSS
 - 패키지 매니저: PNPM
+
+25.2.18 ~
