@@ -14,7 +14,6 @@ import { useBible } from './Provider';
 
 export default function BibleLanguages() {
   const { translations, isChangingBookLanguage } = useBible();
-  const restTranslations = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
 
   const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
@@ -28,7 +27,13 @@ export default function BibleLanguages() {
     setValue(language);
   };
 
-  const languages = [...restTranslations];
+  const languages = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
+  const languagesWithLabel = languages
+    .map((language) => ({
+      language,
+      label: getLanguageFullName(language, locale)
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   return (
     <Select value={value} onValueChange={handleChange} disabled={isChangingBookLanguage}>
@@ -36,9 +41,9 @@ export default function BibleLanguages() {
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
       <SelectContent>
-        {languages.map((language) => (
+        {languagesWithLabel.map(({ language, label }) => (
           <SelectItem value={language} key={language}>
-            {getLanguageFullName(language, locale)}
+            {label}
           </SelectItem>
         ))}
       </SelectContent>
