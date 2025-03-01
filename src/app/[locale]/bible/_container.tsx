@@ -67,7 +67,7 @@ function BookSelector() {
     let rect: DOMRect | null = null;
 
     if (timeoutRefs.current[index]) {
-      clearTimeout(timeoutRefs.current[index]!);
+      clearTimeout(timeoutRefs.current[index]);
     }
 
     timeoutRefs.current[index] = setTimeout(() => {
