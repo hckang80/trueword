@@ -5,6 +5,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { fetcher } from '@/lib/utils';
 import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, translationsKeys } from '@/lib/queries';
+import { BibleProvider } from './Provider';
 
 export default async function Bible({
   params,
@@ -55,7 +56,9 @@ export default async function Bible({
           </div>
         }
       >
-        <Container translations={validTranslations} data={bible} />
+        <BibleProvider translations={validTranslations} data={bible}>
+          <Container />
+        </BibleProvider>
       </Suspense>
     </div>
   );

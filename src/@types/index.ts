@@ -34,3 +34,8 @@ export interface Transition {
 }
 
 export const locales = ['en', 'ko'];
+
+export interface SelectedBook {
+  book: string;
+  chapter: number;
+}

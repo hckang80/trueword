@@ -1,15 +1,6 @@
 'use client';
 
-import type { BibleInstance, Transition } from '@/@types';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -21,38 +12,11 @@ import {
 } from '@/components/ui/drawer';
 
 import { Button } from '@/components/ui/button';
-import { useQuery } from '@tanstack/react-query';
-import { cn, fetcher } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
-import { useParams, useSearchParams } from 'next/navigation';
-import { bibleKeys } from '@/lib/queries';
-
-type SelectedBook = {
-  book: string;
-  chapter: number;
-};
-
-type BibleContextType = {
-  books: BibleInstance['books'];
-  selectedChapterName: string;
-  resetBook: (book: string, chapter: number) => void;
-  selectedBook: SelectedBook;
-  translations: Transition[];
-  selectedTranslation: Transition;
-  handleTranslationChange: (value: string) => void;
-  selectedVerses: { verse: number; text: string }[];
-};
-
-const BibleContext = createContext<BibleContextType | null>(null);
-
-function useBible() {
-  const context = useContext(BibleContext);
-  if (!context) throw new Error('useBible must be used within a BibleProvider');
-
-  return context;
-}
+import { useBible } from './Provider';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -217,92 +181,16 @@ function VerseList() {
   );
 }
 
-export default function Container({
-  translations: validTranslations,
-  data: initialData
-}: {
-  translations: Transition[];
-  data: BibleInstance;
-}) {
-  const params = useParams();
-  const { locale: userLocale } = params;
-  const searchParams = useSearchParams();
-  const bibleLanguage = searchParams.get('bibleLanguage');
-
-  const translations = validTranslations.filter(
-    ({ lang }) => lang === (bibleLanguage || userLocale)
-  );
-  const [translation] = translations;
-  const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
-    translation
-  );
-
-  useEffect(() => {
-    setSelectedTranslation(translation);
-  }, [translation, setSelectedTranslation]);
-
-  const {
-    data: { books },
-    isFetching
-  } = useQuery({
-    ...bibleKeys.data(selectedTranslation),
-    queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
-    initialData
-  });
-
-  const [{ name: DEFAULT_BOOK }] = books;
-  const DEFAULT_CHAPTER = 1;
-
-  const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
-    book: DEFAULT_BOOK,
-    chapter: DEFAULT_CHAPTER
-  });
-
-  const resetBook = useCallback((book: string, chapter: number) => {
-    setSelectedBookInstance({ book, chapter });
-  }, []);
-
-  useEffect(() => {
-    resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
-  }, [resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
-
-  const selectedChapters = useMemo(
-    () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
-    [books, selectedBookInstance]
-  );
-
-  const selectedChapterInstance = useMemo(
-    () => selectedChapters.find((chapter) => chapter.chapter === selectedBookInstance.chapter),
-    [selectedChapters, selectedBookInstance]
-  );
-
-  const selectedChapterName = selectedChapterInstance?.name || '';
-  const selectedVerses = selectedChapterInstance?.verses || [];
-
-  const handleTranslationChange = (value: string) => {
-    setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
-  };
-
-  if (!selectedTranslation) throw new Error('No translation selected');
+export default function Container() {
+  const { isChangingBookLanguage } = useBible();
 
   return (
-    <BibleContext.Provider
-      value={{
-        books,
-        selectedChapterName,
-        resetBook,
-        selectedBook: selectedBookInstance,
-        translations,
-        selectedTranslation,
-        handleTranslationChange,
-        selectedVerses
-      }}
-    >
+    <>
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector />
-        <TranslationSelector isFetching={isFetching} />
+        <TranslationSelector isFetching={isChangingBookLanguage} />
       </div>
       <VerseList />
-    </BibleContext.Provider>
+    </>
   );
 }
