@@ -19,13 +19,13 @@ export default function BibleLanguages() {
 
   const [value, setValue] = useState(params.get('bibleLanguage') || locale);
 
-  const handleChange = (locale: string) => {
-    params.set('bibleLanguage', locale);
+  const handleChange = (language: string) => {
+    params.set('bibleLanguage', language);
     window.history.pushState(null, '', `${pathname}?${params.toString()}`);
-    setValue(locale);
+    setValue(language);
   };
 
-  const translations = [...locales, 'ja'];
+  const languages = [...locales, 'ja'];
 
   return (
     <Select value={value} onValueChange={handleChange}>
@@ -33,9 +33,9 @@ export default function BibleLanguages() {
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
       <SelectContent>
-        {translations.map((translation) => (
-          <SelectItem value={translation} key={translation}>
-            {getLanguageFullName(translation, locale)}
+        {languages.map((language) => (
+          <SelectItem value={language} key={language}>
+            {getLanguageFullName(language, locale)}
           </SelectItem>
         ))}
       </SelectContent>
