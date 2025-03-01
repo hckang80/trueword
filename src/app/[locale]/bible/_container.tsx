@@ -1,7 +1,15 @@
 'use client';
 
 import type { BibleInstance, Transition } from '@/@types';
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -48,6 +56,46 @@ function useBible() {
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
 
+  const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
+  const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
+
+  const adjustPosition = (index: number) => {
+    const details = detailsRefs.current[index];
+    if (!details || !details.open) return;
+
+    const viewportHeight = window.innerHeight;
+    let rect: DOMRect | null = null;
+
+    if (timeoutRefs.current[index]) {
+      clearTimeout(timeoutRefs.current[index]!);
+    }
+
+    timeoutRefs.current[index] = setTimeout(() => {
+      rect = details.getBoundingClientRect();
+
+      const isOutside = rect.bottom > viewportHeight;
+
+      if (isOutside) {
+        details.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end'
+        });
+      }
+
+      timeoutRefs.current[index] = null;
+    }, 100);
+  };
+
+  useEffect(() => {
+    const timeouts = { ...timeoutRefs.current };
+
+    return () => {
+      Object.values(timeouts).forEach((timeout) => {
+        if (timeout) clearTimeout(timeout);
+      });
+    };
+  }, []);
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -58,11 +106,15 @@ function BookSelector() {
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
-              {books.map(({ name: book, chapters: { length } }) => (
+              {books.map(({ name: book, chapters: { length } }, index) => (
                 <details
                   name="books"
+                  ref={(el) => {
+                    detailsRefs.current[index] = el;
+                  }}
                   key={book}
                   className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
+                  onToggle={() => adjustPosition(index)}
                 >
                   <summary
                     className={cn(
