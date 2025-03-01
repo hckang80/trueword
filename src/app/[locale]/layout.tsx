@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Providers from './providers';
+import Providers from './QueryProvider';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';

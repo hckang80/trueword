@@ -12,7 +12,7 @@ import { useParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { getLanguageFullName } from '@/lib/utils';
 
-export default function Locales() {
+export default function BibleLanguages() {
   const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
   const params = new URLSearchParams(location.search);

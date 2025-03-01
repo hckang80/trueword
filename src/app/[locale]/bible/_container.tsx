@@ -24,7 +24,7 @@ import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { cn, fetcher } from '@/lib/utils';
 import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
-import Locales from './locales';
+import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import { bibleKeys } from '@/lib/queries';
@@ -169,7 +169,7 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
             </span>
             <div className="flex items-center gap-[4px]">
               {isFetching && <LoaderCircle className="animate-spin" size={16} />}
-              <Locales />
+              <BibleLanguages />
             </div>
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
