@@ -173,10 +173,10 @@ export default function Container({
   const params = useParams();
   const { locale: userLocale } = params;
   const searchParams = useSearchParams();
-  const translatedVersion = searchParams.get('translatedVersion');
+  const bibleLanguage = searchParams.get('bibleLanguage');
 
   const translations = validTranslations.filter(
-    ({ lang }) => lang === (translatedVersion || userLocale)
+    ({ lang }) => lang === (bibleLanguage || userLocale)
   );
   const [translation] = translations;
   const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(

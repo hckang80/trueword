@@ -10,13 +10,13 @@ export default async function Bible({
   searchParams
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ translatedVersion?: string }>;
+  searchParams: Promise<{ bibleLanguage?: string }>;
 }) {
   const { locale: userLocale } = await params;
 
   const queryClient = new QueryClient();
 
-  const { translatedVersion = '' } = await searchParams;
+  const { bibleLanguage = '' } = await searchParams;
 
   const translations = await queryClient.fetchQuery({
     queryKey: ['translations'],
@@ -37,7 +37,7 @@ export default async function Bible({
   );
 
   const [defaultTranslation] = validTranslations.filter(
-    ({ lang }) => lang === (translatedVersion || userLocale)
+    ({ lang }) => lang === (bibleLanguage || userLocale)
   );
 
   const data = await queryClient.fetchQuery({

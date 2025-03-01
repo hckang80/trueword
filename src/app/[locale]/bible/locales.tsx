@@ -17,10 +17,10 @@ export default function Locales() {
   const pathname = usePathname();
   const params = new URLSearchParams(location.search);
 
-  const [value, setValue] = useState(params.get('translatedVersion') || locale);
+  const [value, setValue] = useState(params.get('bibleLanguage') || locale);
 
   const handleChange = (locale: string) => {
-    params.set('translatedVersion', locale);
+    params.set('bibleLanguage', locale);
     window.history.pushState(null, '', `${pathname}?${params.toString()}`);
     setValue(locale);
   };
