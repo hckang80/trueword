@@ -65,12 +65,13 @@ function BookSelector() {
 
     const viewportHeight = window.innerHeight;
     let rect: DOMRect | null = null;
+    let timeout = timeoutRefs.current[index];
 
-    if (timeoutRefs.current[index]) {
-      clearTimeout(timeoutRefs.current[index]);
+    if (timeout) {
+      clearTimeout(timeout);
     }
 
-    timeoutRefs.current[index] = setTimeout(() => {
+    timeout = setTimeout(() => {
       rect = details.getBoundingClientRect();
 
       const isOutside = rect.bottom > viewportHeight;
@@ -82,7 +83,7 @@ function BookSelector() {
         });
       }
 
-      timeoutRefs.current[index] = null;
+      timeout = null;
     }, 100);
   };
 
