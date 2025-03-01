@@ -4,6 +4,7 @@ import { BibleInstance, Transition } from '@/@types';
 import { QueryClient } from '@tanstack/react-query';
 import { fetcher } from '@/lib/utils';
 import { LoaderCircle } from 'lucide-react';
+import { bibleKeys, translationsKeys } from '@/lib/queries';
 
 export default async function Bible({
   params,
@@ -19,7 +20,7 @@ export default async function Bible({
   const { bibleLanguage = '' } = await searchParams;
 
   const translations = await queryClient.fetchQuery({
-    queryKey: ['translations'],
+    queryKey: translationsKeys._def,
     queryFn: () => fetcher<Record<string, Transition>>(`/translations.json`)
   });
 
@@ -41,7 +42,7 @@ export default async function Bible({
   );
 
   const bible = await queryClient.fetchQuery({
-    queryKey: ['bible'],
+    queryKey: bibleKeys._def,
     queryFn: () => fetcher<BibleInstance>(defaultTranslation.url)
   });
 

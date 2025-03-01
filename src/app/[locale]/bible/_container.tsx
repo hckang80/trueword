@@ -27,6 +27,7 @@ import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import Locales from './locales';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
+import { bibleKeys } from '@/lib/queries';
 
 type SelectedBook = {
   book: string;
@@ -244,7 +245,7 @@ export default function Container({
     data: { books },
     isFetching
   } = useQuery({
-    queryKey: ['bible', selectedTranslation],
+    ...bibleKeys.data(selectedTranslation),
     queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
     initialData
   });
