@@ -22,6 +22,7 @@ type BibleContextType = {
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
   translations: Transition[];
+  filteredTranslations: Transition[];
   selectedTranslation: Transition;
   handleTranslationChange: (value: string) => void;
   selectedVerses: { verse: number; text: string }[];
@@ -50,10 +51,10 @@ export function BibleProvider({
   const searchParams = useSearchParams();
   const bibleLanguage = searchParams.get('bibleLanguage');
 
-  const translations = validTranslations.filter(
-    ({ lang }) => lang === (bibleLanguage || userLocale)
-  );
-  const [translation] = translations;
+  const filteredTranslations = useMemo(() => {
+    return validTranslations.filter(({ lang }) => lang === (bibleLanguage || userLocale));
+  }, [validTranslations, bibleLanguage, userLocale]);
+  const [translation] = filteredTranslations;
   const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
     translation
   );
@@ -101,7 +102,9 @@ export function BibleProvider({
   const selectedVerses = selectedChapterInstance?.verses || [];
 
   const handleTranslationChange = (value: string) => {
-    setSelectedTranslation(() => translations.find(({ abbreviation }) => abbreviation === value));
+    setSelectedTranslation(() =>
+      filteredTranslations.find(({ abbreviation }) => abbreviation === value)
+    );
   };
 
   if (!selectedTranslation) throw new Error('No translation selected');
@@ -114,7 +117,8 @@ export function BibleProvider({
         selectedChapterName,
         resetBook,
         selectedBook: selectedBookInstance,
-        translations,
+        translations: validTranslations,
+        filteredTranslations: filteredTranslations,
         selectedTranslation,
         handleTranslationChange,
         selectedVerses

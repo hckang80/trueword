@@ -7,12 +7,15 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { locales } from '@/@types';
 import { useParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { getLanguageFullName } from '@/lib/utils';
+import { useBible } from './Provider';
 
 export default function BibleLanguages() {
+  const { translations } = useBible();
+  const restTranslations = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
+
   const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
   const params = new URLSearchParams(location.search);
@@ -25,7 +28,7 @@ export default function BibleLanguages() {
     setValue(language);
   };
 
-  const languages = [...locales, 'ja'];
+  const languages = [...restTranslations];
 
   return (
     <Select value={value} onValueChange={handleChange}>

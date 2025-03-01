@@ -116,7 +116,7 @@ function BookSelector() {
 }
 
 function TranslationSelector({ isFetching }: { isFetching: boolean }) {
-  const { translations, selectedTranslation, handleTranslationChange } = useBible();
+  const { filteredTranslations, selectedTranslation, handleTranslationChange } = useBible();
   const t = useTranslations('Common');
 
   return (
@@ -139,26 +139,28 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
-              {translations.map(({ distribution_versification, abbreviation, description }) => (
-                <li key={abbreviation}>
-                  <DrawerClose asChild>
-                    <button
-                      className={cn('w-full p-[10px] text-left')}
-                      onClick={() => handleTranslationChange(abbreviation)}
-                    >
-                      <em
-                        className={cn(
-                          'block text-[16px]',
-                          abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
-                        )}
+              {filteredTranslations.map(
+                ({ distribution_versification, abbreviation, description }) => (
+                  <li key={abbreviation}>
+                    <DrawerClose asChild>
+                      <button
+                        className={cn('w-full p-[10px] text-left')}
+                        onClick={() => handleTranslationChange(abbreviation)}
                       >
-                        {distribution_versification}
-                      </em>
-                      <span className="block text-[13px]">{description}</span>
-                    </button>
-                  </DrawerClose>
-                </li>
-              ))}
+                        <em
+                          className={cn(
+                            'block text-[16px]',
+                            abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
+                          )}
+                        >
+                          {distribution_versification}
+                        </em>
+                        <span className="block text-[13px]">{description}</span>
+                      </button>
+                    </DrawerClose>
+                  </li>
+                )
+              )}
             </ul>
           </DrawerDescription>
         </DrawerHeader>
