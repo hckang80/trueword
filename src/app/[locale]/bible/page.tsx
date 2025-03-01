@@ -40,7 +40,7 @@ export default async function Bible({
     ({ lang }) => lang === (bibleLanguage || userLocale)
   );
 
-  const data = await queryClient.fetchQuery({
+  const bible = await queryClient.fetchQuery({
     queryKey: ['bible'],
     queryFn: () => fetcher<BibleInstance>(defaultTranslation.url)
   });
@@ -54,7 +54,7 @@ export default async function Bible({
           </div>
         }
       >
-        <Container translations={validTranslations} data={data} />
+        <Container translations={validTranslations} data={bible} />
       </Suspense>
     </div>
   );
