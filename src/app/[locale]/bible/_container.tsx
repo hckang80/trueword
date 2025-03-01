@@ -80,7 +80,7 @@ function BookSelector() {
       if (isOutside) {
         details.scrollIntoView({
           behavior: 'smooth',
-          block: 'end'
+          block: 'nearest'
         });
       }
 
@@ -115,7 +115,7 @@ function BookSelector() {
                     detailsRefs.current[index] = el;
                   }}
                   key={book}
-                  className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[800px]"
+                  className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]"
                   onToggle={() => adjustPosition(index)}
                 >
                   <summary
