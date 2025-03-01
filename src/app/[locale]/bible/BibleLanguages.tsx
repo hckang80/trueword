@@ -13,7 +13,7 @@ import { getLanguageFullName } from '@/lib/utils';
 import { useBible } from './Provider';
 
 export default function BibleLanguages() {
-  const { translations } = useBible();
+  const { translations, isChangingBookLanguage } = useBible();
   const restTranslations = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
 
   const { locale } = useParams<{ locale: string }>();
@@ -31,7 +31,7 @@ export default function BibleLanguages() {
   const languages = [...restTranslations];
 
   return (
-    <Select value={value} onValueChange={handleChange}>
+    <Select value={value} onValueChange={handleChange} disabled={isChangingBookLanguage}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
