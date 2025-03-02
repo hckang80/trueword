@@ -28,12 +28,10 @@ export default function BibleLanguages() {
   };
 
   const languages = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
-  const languagesWithLabel = languages
-    .map((language) => ({
-      language,
-      label: getLanguageFullName(language, locale)
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  const languagesWithLabel = languages.map((language) => ({
+    language,
+    label: getLanguageFullName(language, language)
+  }));
 
   return (
     <Select value={value} onValueChange={handleChange} disabled={isChangingBookLanguage}>
