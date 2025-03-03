@@ -17,6 +17,7 @@ import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
+import { useSearchParams } from 'next/navigation';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -185,6 +186,8 @@ function VerseList() {
 
 export default function Container() {
   const { isChangingBookLanguage } = useBible();
+  const searchParams = useSearchParams();
+  const bibleLanguage = searchParams.get('bibleLanguage');
 
   return (
     <>
@@ -192,7 +195,11 @@ export default function Container() {
         <BookSelector />
         <TranslationSelector isFetching={isChangingBookLanguage} />
       </div>
-      <VerseList />
+      {bibleLanguage && isChangingBookLanguage ? (
+        <LoaderCircle className="animate-spin" size={16} />
+      ) : (
+        <VerseList />
+      )}
     </>
   );
 }
