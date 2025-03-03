@@ -59,10 +59,6 @@ export function BibleProvider({
     translation
   );
 
-  useEffect(() => {
-    setSelectedTranslation(translation);
-  }, [translation, setSelectedTranslation]);
-
   const {
     data: { books },
     isFetching
@@ -85,8 +81,9 @@ export function BibleProvider({
   }, []);
 
   useEffect(() => {
+    setSelectedTranslation(translation);
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
-  }, [resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
+  }, [translation, setSelectedTranslation, resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
 
   const selectedChapters = useMemo(
     () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
