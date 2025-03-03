@@ -18,6 +18,7 @@ import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
 import { useSearchParams } from 'next/navigation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -184,6 +185,16 @@ function VerseList() {
   );
 }
 
+export function SkeletonCard() {
+  return (
+    <div className="flex flex-col gap-[8px]">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <Skeleton className="h-4 w-full" key={i} />
+      ))}
+    </div>
+  );
+}
+
 export default function Container() {
   const { isChangingBookLanguage } = useBible();
   const searchParams = useSearchParams();
@@ -195,11 +206,7 @@ export default function Container() {
         <BookSelector />
         <TranslationSelector isFetching={isChangingBookLanguage} />
       </div>
-      {bibleLanguage && isChangingBookLanguage ? (
-        <LoaderCircle className="animate-spin" size={16} />
-      ) : (
-        <VerseList />
-      )}
+      {bibleLanguage && isChangingBookLanguage ? <SkeletonCard /> : <VerseList />}
     </>
   );
 }
