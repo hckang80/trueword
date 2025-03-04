@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -121,8 +121,10 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
   const { filteredTranslations, selectedTranslation, handleTranslationChange } = useBible();
   const t = useTranslations('Common');
 
+  const [open, setOpen] = useState(false);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button>{selectedTranslation.distribution_versification}</Button>
       </DrawerTrigger>
@@ -135,7 +137,7 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
             </span>
             <div className="flex items-center gap-[4px]">
               {isFetching && <LoaderCircle className="animate-spin" size={16} />}
-              <BibleLanguages />
+              <BibleLanguages setOpen={setOpen} />
             </div>
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
