@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { getLanguageFullName } from '@/lib/utils';
 import { useBible } from './Provider';
 
-export default function BibleLanguages() {
+export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
   const { translations, isChangingBookLanguage } = useBible();
 
   const { locale } = useParams<{ locale: string }>();
@@ -25,6 +25,7 @@ export default function BibleLanguages() {
     params.set('bibleLanguage', language);
     window.history.pushState(null, '', `${pathname}?${params.toString()}`);
     setValue(language);
+    setOpen(false);
   };
 
   const languages = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
