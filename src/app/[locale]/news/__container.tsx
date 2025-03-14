@@ -1,6 +1,7 @@
 'use client';
 
 import { useNews } from '@/features/news';
+import { toReadableDate } from '@/lib/utils';
 
 export default function NewsContainer() {
   const { data: news, isLoading, isError } = useNews();
@@ -29,7 +30,7 @@ export default function NewsContainer() {
               <div className="flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400">
                 <span>{item.source}</span>
                 <span className="mx-1.5 sm:mx-2">•</span>
-                <span>{item.pubDate}</span>
+                <span>{toReadableDate(new Date(item.pubDate))}</span>
               </div>
             </div>
             <div className="w-[120px] flex-shrink-0 rounded-lg overflow-hidden relative">
