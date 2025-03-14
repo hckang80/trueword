@@ -1,4 +1,4 @@
-import type { NewsItem } from '@/app/entities/news';
+import type { NewsItem } from '@/entities/news';
 import { useQuery } from '@tanstack/react-query';
 
 async function fetchNews(): Promise<NewsItem[]> {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useNews } from '@/app/features/news';
+import { useNews } from '@/features/news';
 
 export default function NewsContainer() {
   const { data: news, isLoading, isError } = useNews();
