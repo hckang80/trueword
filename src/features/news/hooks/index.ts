@@ -1,6 +1,7 @@
 import type { NewsItem } from '@/entities/news';
 import { useQuery } from '@tanstack/react-query';
 
+// TODO: AI로 생성한 보일러 플레이트 - 개선 필요
 async function fetchNews(): Promise<NewsItem[]> {
   const response = await fetch('/api/news');
   if (!response.ok) {

@@ -1,6 +1,7 @@
 import { parse } from 'rss-to-json';
 import type { NewsItem } from '../model';
 
+// TODO: AI로 생성한 보일러 플레이트 - 개선 필요
 export async function fetchRssFeed(feedUrl: string, sourceName: string): Promise<NewsItem[]> {
   try {
     const feed = await parse(feedUrl);
