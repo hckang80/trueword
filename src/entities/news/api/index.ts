@@ -1,1 +1,1 @@
-export * from './rssParser';
+export * from './fetchRssFeed';
