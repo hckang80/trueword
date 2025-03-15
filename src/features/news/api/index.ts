@@ -1,4 +1,4 @@
-import { fetcher } from '@/lib/utils';
+import { fetcher } from '@/shared';
 import type { NewsItem } from '@/entities/news';
 import { useQuery } from '@tanstack/react-query';
 

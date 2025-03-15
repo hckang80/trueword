@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import Container from './_container';
-import { BibleInstance, Transition } from '@/@types';
+import type { BibleInstance, Transition } from '@/entities/bible';
 import { QueryClient } from '@tanstack/react-query';
-import { fetcher } from '@/lib/utils';
+import { fetcher } from '@/shared';
 import { LoaderCircle } from 'lucide-react';
-import { bibleKeys, translationsKeys } from '@/lib/queries';
+import { bibleKeys, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
 
 export default async function Bible({

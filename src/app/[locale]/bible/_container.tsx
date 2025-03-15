@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/drawer';
 
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared';
 import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';

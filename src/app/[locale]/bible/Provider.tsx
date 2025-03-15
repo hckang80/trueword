@@ -1,8 +1,8 @@
 'use client';
 
-import type { BibleInstance, SelectedBook, Transition } from '@/@types';
-import { bibleKeys } from '@/lib/queries';
-import { fetcher } from '@/lib/utils';
+import type { BibleInstance, SelectedBook, Transition } from '@/entities/bible';
+import { bibleKeys } from '@/shared';
+import { fetcher } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearchParams } from 'next/navigation';
 import {
