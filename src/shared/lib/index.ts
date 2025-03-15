@@ -2,10 +2,11 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Transition } from '@/entities/bible';
 import { createQueryKeys } from '@lukemorales/query-key-factory';
+import { DEFAULT_LOCALE } from '..';
 
 export function toReadableDate(
   date: Date,
-  locales: Intl.LocalesArgument = 'en',
+  locales: Intl.LocalesArgument = DEFAULT_LOCALE,
   options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
