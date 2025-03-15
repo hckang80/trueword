@@ -5,6 +5,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import ProgressBar from './ProgressBar';
+import { isSupportedLocale } from '@/shared';
 
 export const metadata: Metadata = {
   title: 'Bible',
@@ -20,7 +21,7 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale)) {
+  if (!isSupportedLocale(locale) || !routing.locales.includes(locale)) {
     notFound();
   }
 
