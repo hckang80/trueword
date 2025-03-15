@@ -1,6 +1,7 @@
 import type { RSSFeed, RSSItem } from '../model';
 import axios from 'axios';
 import Parser from 'rss-parser';
+import { extractThumbnail } from '..';
 
 export async function fetchRssFeed(feedUrl: string, sourceName: string) {
   try {
@@ -22,6 +23,7 @@ export async function fetchRssFeed(feedUrl: string, sourceName: string) {
         link,
         description,
         pubDate: (pubDate || '').replace('KST', ''),
+        thumbnail: extractThumbnail(item),
         source: sourceName,
         guid: guid || link
       };
