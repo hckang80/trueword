@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/select';
 import { useParams, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
-import { getLanguageFullName } from '@/lib/utils';
 import { useBible } from './Provider';
+import { getLanguageFullName } from '@/features/bible';
 
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
   const { translations, isChangingBookLanguage } = useBible();

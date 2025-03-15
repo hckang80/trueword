@@ -1,7 +1,7 @@
 'use client';
 
 import { useNews } from '@/features/news';
-import { toReadableDate } from '@/lib/utils';
+import { toReadableDate } from '@/shared';
 import Image from 'next/image';
 
 export default function NewsContainer() {
