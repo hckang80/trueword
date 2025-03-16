@@ -5,7 +5,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import ProgressBar from './ProgressBar';
-import { isSupportedLocale } from '@/shared';
+import { BottomNavigation, isSupportedLocale } from '@/shared';
 
 export const metadata: Metadata = {
   title: 'Bible',
@@ -34,6 +34,7 @@ export default async function LocaleLayout({
         <Providers>
           <NextIntlClientProvider messages={messages}>
             <main>{children}</main>
+            <BottomNavigation />
           </NextIntlClientProvider>
         </Providers>
       </body>

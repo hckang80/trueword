@@ -203,12 +203,12 @@ export default function Container() {
   const bibleLanguage = searchParams.get('bibleLanguage');
 
   return (
-    <>
+    <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector />
         <TranslationSelector isFetching={isChangingBookLanguage} />
       </div>
       {bibleLanguage && isChangingBookLanguage ? <SkeletonCard /> : <VerseList />}
-    </>
+    </div>
   );
 }

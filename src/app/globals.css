@@ -1,9 +1,72 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @layer base {
   :root {
+    --navbar-height: 56px;
+    --global-inset: 20px;
+
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -66,131 +129,138 @@
     @apply bg-background text-foreground;
   }
 }
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-ul,
-ol,
-menu,
-li,
-figure,
-figcaption,
-blockquote,
-dl,
-dd {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  scroll-behavior: smooth;
-  text-rendering: optimizeSpeed;
-  font: 15px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-  color: var(--foreground);
-  background: var(--background);
-}
-
-ul,
-ol,
-menu {
-  list-style: none;
-}
-
-img,
-svg {
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 100%;
-  height: auto;
-  border: 0;
-}
-
-select {
-  height: 36px;
-  border: 1px solid hsl(var(--input));
-  border-radius: 6px;
-  padding-inline: 8px;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 #0000000d;
-}
-
-a {
-  display: inline-block;
-  color: inherit;
-  text-decoration: none;
-}
-
-address,
-em,
-i {
-  font-style: normal;
-}
-
-button {
-  box-sizing: border-box;
-
-  &:focus-visible {
-    outline: 1px auto -webkit-focus-ring-color;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
-  &:not(:disabled) {
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  ul,
+  ol,
+  menu,
+  li,
+  figure,
+  figcaption,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
+      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    color: var(--foreground);
+    background: var(--background);
+  }
+
+  ul,
+  ol,
+  menu {
+    list-style: none;
+  }
+
+  img,
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    border: 0;
+  }
+
+  select {
+    height: 36px;
+    border: 1px solid hsl(var(--input));
+    border-radius: 6px;
+    padding-inline: 8px;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 #0000000d;
+  }
+
+  a {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  address,
+  em,
+  i {
+    font-style: normal;
+  }
+
+  button {
+    box-sizing: border-box;
+
+    &:focus-visible {
+      outline: 1px auto -webkit-focus-ring-color;
+    }
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a,
+  button,
+  label {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  label {
     cursor: pointer;
   }
-}
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
+  table[class] {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+  }
 
-a,
-button,
-label {
-  -webkit-tap-highlight-color: transparent;
-}
+  summary {
+    cursor: pointer;
 
-label {
-  cursor: pointer;
-}
+    &::-webkit-details-marker,
+    &::marker {
+      display: none;
+      content: '';
+    }
+  }
 
-table[class] {
-  table-layout: fixed;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-summary {
-  cursor: pointer;
-
-  &::-webkit-details-marker,
-  &::marker {
-    display: none;
-    content: '';
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+main:has(+ .global-nav) {
+  margin-bottom: var(--navbar-height);
 }

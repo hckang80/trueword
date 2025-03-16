@@ -48,18 +48,16 @@ export default async function Bible({
   });
 
   return (
-    <div className="min-h-screen p-[20px] font-[family-name:var(--font-geist-sans)]">
-      <Suspense
-        fallback={
-          <div className="text-center">
-            <LoaderCircle className="animate-spin" />
-          </div>
-        }
-      >
-        <BibleProvider translations={validTranslations} data={bible}>
-          <Container />
-        </BibleProvider>
-      </Suspense>
-    </div>
+    <Suspense
+      fallback={
+        <div className="text-center">
+          <LoaderCircle className="animate-spin" />
+        </div>
+      }
+    >
+      <BibleProvider translations={validTranslations} data={bible}>
+        <Container />
+      </BibleProvider>
+    </Suspense>
   );
 }

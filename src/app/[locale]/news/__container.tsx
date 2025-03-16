@@ -12,7 +12,7 @@ export default function NewsContainer() {
     return <div className="text-center py-10 text-red-500">뉴스를 불러오는 데 실패했습니다.</div>;
 
   return (
-    <div className="p-[20px]">
+    <div className="p-[var(--global-inset)]">
       {news.map((item) => (
         <article key={item.guid}>
           <a
@@ -34,7 +34,7 @@ export default function NewsContainer() {
                 <span>{toReadableDate(new Date(item.pubDate))}</span>
               </div>
             </div>
-            <div className="w-[120px] flex-shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
+            <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
               {/* TODO: 최적화 안되는 이미지가 있어서 unoptimized 임시 추가 */}
               <Image
                 src={item.thumbnail || '/blank.png'}
