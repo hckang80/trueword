@@ -34,7 +34,7 @@ export default function NewsContainer() {
                 <span>{toReadableDate(new Date(item.pubDate))}</span>
               </div>
             </div>
-            <div className="w-[120px] flex-shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
+            <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
               {/* TODO: 최적화 안되는 이미지가 있어서 unoptimized 임시 추가 */}
               <Image
                 src={item.thumbnail || '/blank.png'}
