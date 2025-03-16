@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import axios from 'axios';
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,8 +19,11 @@ export async function POST(request: NextRequest) {
     const summary = result.response.text();
 
     return NextResponse.json({ summary });
-  } catch (error: any) {
+  } catch (
     // TODO: error: unknown type으로 개선 필요
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any
+  ) {
     console.error('Error summarizing content:', error?.response?.data || error);
     return NextResponse.json(
       { message: 'Error summarizing content', error: error?.response?.data || error.message },
