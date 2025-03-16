@@ -14,8 +14,8 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center justify-center grow py-2 ${
-        isActive ? 'text-primary' : 'text-gray-500'
+      className={`flex flex-col  grow py-2 text-center ${
+        isActive ? 'text-primary' : 'text-gray-400'
       }`}
     >
       <div className="mb-1">{icon}</div>
@@ -32,17 +32,17 @@ export const BottomNavigation = () => {
   };
 
   return (
-    <nav className="fixed bottom-0 w-full border-t border-gray-200 flex justify-center items-center">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around h-16 shadow-lg">
       <NavItem
         href="/bible"
-        icon={<Book size={24} className={isActive('/bible') ? 'text-primary' : 'text-gray-500'} />}
+        icon={<Book size={24} className={isActive('/bible') ? 'text-primary' : 'text-gray-400'} />}
         text="성경"
         isActive={isActive('/bible')}
       />
       <NavItem
         href="/news"
         icon={
-          <Newspaper size={24} className={isActive('/news') ? 'text-primary' : 'text-gray-500'} />
+          <Newspaper size={24} className={isActive('/news') ? 'text-primary' : 'text-gray-400'} />
         }
         text="뉴스"
         isActive={isActive('/news')}
