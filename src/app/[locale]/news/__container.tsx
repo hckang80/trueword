@@ -12,7 +12,7 @@ export default function NewsContainer() {
     return <div className="text-center py-10 text-red-500">뉴스를 불러오는 데 실패했습니다.</div>;
 
   return (
-    <div className="p-[20px]">
+    <div className="p-[var(--global-inset)]">
       {news.map((item) => (
         <article key={item.guid}>
           <a

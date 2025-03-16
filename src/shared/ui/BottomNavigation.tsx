@@ -14,7 +14,7 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
   return (
     <Link
       href={href}
-      className={`flex flex-col  grow py-2 text-center ${
+      className={`flex flex-col grow h-[var(--navbar-height)] justify-center items-center ${
         isActive ? 'text-primary' : 'text-gray-400'
       }`}
     >
@@ -32,7 +32,7 @@ export const BottomNavigation = () => {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around h-16 shadow-lg">
+    <nav className="global-nav fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around shadow-lg">
       <NavItem
         href="/bible"
         icon={<Book size={24} className={isActive('/bible') ? 'text-primary' : 'text-gray-400'} />}
