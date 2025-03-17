@@ -5,10 +5,10 @@ import { toReadableDate } from '@/shared';
 import Image from 'next/image';
 
 export default function NewsContainer() {
-  const { data: news, isLoading, isError } = useNews();
+  const { data: news = [], isLoading, isError } = useNews();
 
   if (isLoading) return <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
-  if (isError || !news)
+  if (isError)
     return <div className="text-center py-10 text-red-500">뉴스를 불러오는 데 실패했습니다.</div>;
 
   return (
