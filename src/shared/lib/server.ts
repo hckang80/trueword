@@ -12,6 +12,7 @@ export async function getOrigin(): Promise<string> {
 
     return `${protocol}://${host}`;
   } catch (error) {
+    console.error(error);
     return `http://${DEFAULT_HOST}`;
   }
 }
