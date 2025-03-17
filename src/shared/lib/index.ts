@@ -1,9 +1,8 @@
+export * from './query-keys';
 export * from './server';
 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Transition } from '@/entities/bible';
-import { createQueryKeys } from '@lukemorales/query-key-factory';
 import { DEFAULT_LOCALE } from '..';
 
 export function toReadableDate(
@@ -35,12 +34,3 @@ export function fetcher<T>(url: string | URL | Request, init?: RequestInit): Pro
     ...init
   }).then((res) => res.json());
 }
-
-// https://github.com/lukemorales/query-key-factory#readme
-export const bibleKeys = createQueryKeys('bible', {
-  data: (translation: Transition | undefined) => [translation]
-});
-
-export const translationsKeys = createQueryKeys('translations');
-
-export const newsKeys = createQueryKeys('news');
