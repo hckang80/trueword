@@ -1,3 +1,5 @@
+export * from './server';
+
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Transition } from '@/entities/bible';
