@@ -1,4 +1,4 @@
-import { fetcher, getOrigin } from '@/shared';
+import { fetcher, getOrigin, newsKeys } from '@/shared';
 import type { NewsItem } from '@/entities/news';
 import { useQuery } from '@tanstack/react-query';
 
@@ -8,7 +8,7 @@ export async function fetchNews(): Promise<NewsItem[]> {
 
 export function useNews() {
   return useQuery<NewsItem[]>({
-    queryKey: ['news'],
+    queryKey: newsKeys._def,
     queryFn: fetchNews,
     staleTime: 1000 * 60 * 15
   });

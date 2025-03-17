@@ -42,3 +42,5 @@ export const bibleKeys = createQueryKeys('bible', {
 });
 
 export const translationsKeys = createQueryKeys('translations');
+
+export const newsKeys = createQueryKeys('news');
