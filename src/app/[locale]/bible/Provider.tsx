@@ -63,7 +63,7 @@ export function BibleProvider({
     data: { books },
     isFetching
   } = useQuery({
-    ...bibleKeys.data(selectedTranslation),
+    ...bibleKeys.data(selectedTranslation?.abbreviation || ''),
     queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
     initialData
   });

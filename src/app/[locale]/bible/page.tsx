@@ -1,12 +1,10 @@
 import { Suspense } from 'react';
 import Container from './_container';
-import type { BibleInstance } from '@/entities/bible';
 import { QueryClient } from '@tanstack/react-query';
-import { fetcher } from '@/shared';
 import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
-import { fetchTranslations } from '@/features/bible';
+import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
 
 export default async function Bible({
   params,
@@ -43,9 +41,9 @@ export default async function Bible({
     ({ lang }) => lang === (bibleLanguage || userLocale)
   );
 
-  const bible = await queryClient.fetchQuery({
-    queryKey: bibleKeys._def,
-    queryFn: () => fetcher<BibleInstance>(defaultTranslation.url)
+  const { data: bible } = await queryClient.fetchQuery({
+    ...bibleKeys.data(defaultTranslation.abbreviation),
+    queryFn: () => fetchTranslationsByLanguage(defaultTranslation.abbreviation)
   });
 
   return (
