@@ -1,11 +1,12 @@
 import { Suspense } from 'react';
 import Container from './_container';
-import type { BibleInstance, Transition } from '@/entities/bible';
+import type { BibleInstance } from '@/entities/bible';
 import { QueryClient } from '@tanstack/react-query';
 import { fetcher } from '@/shared';
 import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
+import { fetchTranslations } from '@/features/bible';
 
 export default async function Bible({
   params,
@@ -20,9 +21,9 @@ export default async function Bible({
 
   const { bibleLanguage = '' } = await searchParams;
 
-  const translations = await queryClient.fetchQuery({
+  const { data: translations } = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
-    queryFn: () => fetcher<Record<string, Transition>>(`/translations.json`)
+    queryFn: fetchTranslations
   });
 
   const validTranslations = Object.values(translations).filter(
