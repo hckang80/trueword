@@ -1,4 +1,3 @@
-import type { Transition } from '@/entities/bible';
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 
 // https://github.com/lukemorales/query-key-factory#readme
