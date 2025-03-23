@@ -1,3 +1,5 @@
+export * from './axiosInstance';
+
 export const isSupportedLocale = (locale: string): locale is 'en' | 'ko' => {
   return ['en', 'ko'].includes(locale);
 };

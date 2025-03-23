@@ -1,8 +1,8 @@
 import axios, { type AxiosError } from 'axios';
-import { getOrigin, type ErrorResponse } from '..';
+import type { ErrorResponse } from '..';
 
 export const axiosInstance = axios.create({
-  baseURL: await getOrigin(),
+  baseURL: process.env.NEXT_SITE_URL,
   timeout: 5000
 });
 
