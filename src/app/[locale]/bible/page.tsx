@@ -41,7 +41,7 @@ export default async function Bible({
     ({ lang }) => lang === (bibleLanguage || userLocale)
   );
 
-  const { data: bible } = await queryClient.fetchQuery({
+  const bible = await queryClient.fetchQuery({
     ...bibleKeys.data(defaultTranslation.abbreviation),
     queryFn: () => fetchTranslationsByLanguage(defaultTranslation.abbreviation)
   });

@@ -1,4 +1,4 @@
-import { BibleInstance, Transition } from '@/entities/bible';
+import type { BibleInstance, Transition } from '@/entities/bible';
 import { axiosInstance } from '@/shared';
 
 export async function fetchTranslations() {
@@ -8,7 +8,7 @@ export async function fetchTranslations() {
 }
 
 export async function fetchTranslationsByLanguage(abbreviation: string) {
-  const data = await axiosInstance<BibleInstance>(`/translations/${abbreviation}`);
+  const { data } = await axiosInstance<BibleInstance>(`/translations/${abbreviation}`);
 
   return data;
 }

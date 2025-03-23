@@ -1,8 +1,8 @@
 'use client';
 
 import type { BibleInstance, SelectedBook, Transition } from '@/entities/bible';
+import { fetchTranslationsByLanguage } from '@/features/bible';
 import { bibleKeys } from '@/shared';
-import { fetcher } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearchParams } from 'next/navigation';
 import {
@@ -64,7 +64,7 @@ export function BibleProvider({
     isFetching
   } = useQuery({
     ...bibleKeys.data(selectedTranslation?.abbreviation || ''),
-    queryFn: () => fetcher<BibleInstance>(`/api/${selectedTranslation?.abbreviation}.json`),
+    queryFn: () => fetchTranslationsByLanguage(selectedTranslation?.abbreviation || ''),
     initialData
   });
 
