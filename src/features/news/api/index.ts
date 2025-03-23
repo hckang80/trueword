@@ -1,9 +1,10 @@
-import { fetcher, getOrigin, newsKeys } from '@/shared';
+import { axiosInstance, newsKeys } from '@/shared';
 import type { NewsItem } from '@/entities/news';
 import { useQuery } from '@tanstack/react-query';
 
 export async function fetchNews(): Promise<NewsItem[]> {
-  return await fetcher<NewsItem[]>(`${await getOrigin()}/api/news`);
+  const { data } = await axiosInstance<NewsItem[]>('/api/news');
+  return data;
 }
 
 export function useNews() {
