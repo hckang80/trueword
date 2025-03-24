@@ -16,7 +16,7 @@ export async function fetchRssFeed(feedUrl: string, sourceName: string) {
     const feed = await parser.parseString(response.data);
 
     return feed.items.map((item) => {
-      const { title, link, description, pubDate, guid } = item;
+      const { title, link, description, pubDate } = item;
 
       return {
         title,
@@ -25,7 +25,7 @@ export async function fetchRssFeed(feedUrl: string, sourceName: string) {
         pubDate: (pubDate || '').replace('KST', ''),
         thumbnail: extractThumbnail(item),
         source: sourceName,
-        guid: guid || link
+        guid: sourceName + link.split('/').pop()
       };
     });
   } catch (error) {

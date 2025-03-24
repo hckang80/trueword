@@ -5,6 +5,7 @@ import { NewsItem as TNewsItem } from '@/entities/news';
 import { toReadableDate } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
+import { Link, usePathname } from '@/i18n/routing';
 
 const NewsLoading = () => <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
 
@@ -38,10 +39,8 @@ NewsItemMeta.displayName = 'NewsItemMeta';
 
 const NewsItem = memo(({ item }: { item: TNewsItem }) => (
   <article>
-    <a
-      href={item.link}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`${usePathname()}/${item.guid}`}
       className="group flex items-center justify-between gap-[8px] visited:text-purple-600 p-[20px] border border-gray-200 rounded-lg mb-4"
     >
       <div>
@@ -56,7 +55,7 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
         <NewsItemMeta source={item.source} pubDate={item.pubDate} />
       </div>
       <NewsImage src={item.thumbnail || '/blank.png'} />
-    </a>
+    </Link>
   </article>
 ));
 NewsItem.displayName = 'NewsItem';
