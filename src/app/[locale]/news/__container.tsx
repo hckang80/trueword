@@ -40,7 +40,7 @@ NewsItemMeta.displayName = 'NewsItemMeta';
 const NewsItem = memo(({ item }: { item: TNewsItem }) => (
   <article>
     <Link
-      href={`${usePathname()}/${item.guid}`}
+      href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
       className="group flex items-center justify-between gap-[8px] visited:text-purple-600 p-[20px] border border-gray-200 rounded-lg mb-4"
     >
       <div>
