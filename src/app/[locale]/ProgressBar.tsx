@@ -8,7 +8,9 @@ import 'nprogress/nprogress.css';
 NProgress.configure({ showSpinner: false });
 
 export default function ProgressBar() {
-  !NProgress.isStarted() && NProgress.start();
+  if (!NProgress.isStarted()) {
+    NProgress.start();
+  }
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
