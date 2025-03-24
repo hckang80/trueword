@@ -59,5 +59,6 @@ export interface NewsItem {
   pubDate: string;
   thumbnail?: string;
   source: string;
+  sourceEng: string;
   guid: string;
 }

@@ -26,7 +26,8 @@ export async function fetchRssFeed(feedUrl: string, sourceName: Record<Locale, s
         pubDate: (pubDate || '').replace('KST', ''),
         thumbnail: extractThumbnail(item),
         source: sourceName.ko,
-        guid: sourceName.en + link.split('/').pop()
+        sourceEng: sourceName.en,
+        guid: link.split('/').pop()
       };
     });
   } catch (error) {
