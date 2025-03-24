@@ -2,8 +2,9 @@ import type { RSSFeed, RSSItem } from '../model';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '..';
+import { Locale } from '@/shared';
 
-export async function fetchRssFeed(feedUrl: string, sourceName: string) {
+export async function fetchRssFeed(feedUrl: string, sourceName: Record<Locale, string>) {
   try {
     const response = await axios.get<string>(feedUrl);
 
@@ -16,7 +17,7 @@ export async function fetchRssFeed(feedUrl: string, sourceName: string) {
     const feed = await parser.parseString(response.data);
 
     return feed.items.map((item) => {
-      const { title, link, description, pubDate, guid } = item;
+      const { title, link, description, pubDate } = item;
 
       return {
         title,
@@ -24,8 +25,9 @@ export async function fetchRssFeed(feedUrl: string, sourceName: string) {
         description,
         pubDate: (pubDate || '').replace('KST', ''),
         thumbnail: extractThumbnail(item),
-        source: sourceName,
-        guid: guid || link
+        source: sourceName.ko,
+        sourceEng: sourceName.en,
+        guid: link.split('/').pop()
       };
     });
   } catch (error) {
