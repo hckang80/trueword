@@ -22,7 +22,7 @@
     "clsx": "^2.1.1",
     "jsdom": "^26.0.0",
     "lucide-react": "^0.475.0",
-    "next": "15.1.7",
+    "next": "^15.2.3",
     "next-intl": "^3.26.5",
     "nprogress": "^0.2.0",
     "react": "^19.0.0",
@@ -42,7 +42,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.1.7",
+    "eslint-config-next": "^15.2.3",
     "postcss": "^8",
     "tailwindcss": "^4.0.14",
     "typescript": "^5"
