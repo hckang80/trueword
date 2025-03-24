@@ -1,4 +1,4 @@
-import { newsKeys } from '@/shared';
+import { axiosInstance, newsKeys } from '@/shared';
 import { fetchNews } from '@/features/news';
 import { QueryClient } from '@tanstack/react-query';
 
@@ -15,5 +15,18 @@ export default async function NewsIdPage({ params }: { params: Promise<{ source:
 
   const newsById = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
 
-  return <pre>{JSON.stringify(newsById, null, 2)}</pre>;
+  if (!newsById) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
+
+  const scrapeResponse = await axiosInstance.post<{ content: string; title: string }>(
+    '/api/scrape',
+    { url: newsById.link }
+  );
+  const { content, title } = scrapeResponse.data;
+
+  const summarizeResponse = await axiosInstance.post<{ summary: string }>('/api/summarize', {
+    content,
+    title
+  });
+
+  return <div>{summarizeResponse.data.summary}</div>;
 }
