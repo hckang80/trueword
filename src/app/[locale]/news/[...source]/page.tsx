@@ -1,6 +1,7 @@
 import { axiosInstance, newsKeys } from '@/shared';
 import { fetchNews } from '@/features/news';
 import { QueryClient } from '@tanstack/react-query';
+import Container from './__container';
 
 export default async function NewsIdPage({ params }: { params: Promise<{ source: string[] }> }) {
   const queryClient = new QueryClient();
@@ -23,10 +24,10 @@ export default async function NewsIdPage({ params }: { params: Promise<{ source:
   );
   const { content, title } = scrapeResponse.data;
 
-  const summarizeResponse = await axiosInstance.post<{ summary: string }>('/api/summarize', {
+  const { data } = await axiosInstance.post<{ summary: string }>('/api/summarize', {
     content,
     title
   });
 
-  return <div>{summarizeResponse.data.summary}</div>;
+  return <Container data={data.summary} />;
 }
