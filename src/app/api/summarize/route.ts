@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Content is required' }, { status: 400 });
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+    const genAI = new GoogleGenerativeAI(process.env.LLM_API_KEY || '');
 
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const prompt = `다음 게시글을 간결하게 요약해주세요. 주요 제목, 내용 등을 마크다운 문법으로 가독성 있게 요약해 주세요. :
