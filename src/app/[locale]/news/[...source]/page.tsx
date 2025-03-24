@@ -29,5 +29,5 @@ export default async function NewsIdPage({ params }: { params: Promise<{ source:
     title
   });
 
-  return <Container data={data.summary} />;
+  return <Container summary={data.summary} news={newsById} />;
 }
