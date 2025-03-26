@@ -2,25 +2,35 @@ import { axiosInstance, newsKeys } from '@/shared';
 import { fetchNews } from '@/features/news';
 import { QueryClient } from '@tanstack/react-query';
 import Container from './__container';
+import type { Metadata, ResolvingMetadata } from 'next';
 
-export default async function NewsIdPage({ params }: { params: Promise<{ source: string[] }> }) {
-  const queryClient = new QueryClient();
-  const {
-    source: [source, id]
-  } = await params;
+type Props = { params: Promise<{ source: string[] }> };
 
-  const news = await queryClient.fetchQuery({
-    queryKey: newsKeys._def,
-    queryFn: fetchNews
-  });
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const previousTitle = (await parent).title;
 
-  const newsById = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
+  const { source } = await params;
 
-  if (!newsById) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
+  const newsBySource = await NewsBySource(source);
+
+  return {
+    title: `${newsBySource?.title} - ${previousTitle?.absolute}`
+  };
+}
+
+export default async function NewsIdPage({ params }: Props) {
+  const { source } = await params;
+
+  const newsBySource = await NewsBySource(source);
+
+  if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
 
   const scrapeResponse = await axiosInstance.post<{ content: string; title: string }>(
     '/api/scrape',
-    { url: newsById.link }
+    { url: newsBySource.link }
   );
   const { content, title } = scrapeResponse.data;
 
@@ -29,5 +39,18 @@ export default async function NewsIdPage({ params }: { params: Promise<{ source:
     title
   });
 
-  return <Container summary={data.summary} news={newsById} />;
+  return <Container summary={data.summary} news={newsBySource} />;
+}
+
+async function NewsBySource([source, id]: string[]) {
+  const queryClient = new QueryClient();
+
+  const news = await queryClient.fetchQuery({
+    queryKey: newsKeys._def,
+    queryFn: fetchNews
+  });
+
+  const newsBySource = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
+
+  return newsBySource;
 }

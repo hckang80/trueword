@@ -2,5 +2,9 @@
   "Common": {
     "bible": "Bible",
     "language": "Language"
+  },
+  "Meta": {
+    "title": "True Word",
+    "description": "Your comprehensive platform for the latest Bible news, Christian insights, and spiritual perspectives from around the world"
   }
 }

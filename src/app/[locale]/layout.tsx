@@ -1,16 +1,22 @@
 import type { Metadata } from 'next';
 import Providers from './QueryProvider';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import ProgressBar from './ProgressBar';
 import { BottomNavigation, isSupportedLocale } from '@/shared';
 
-export const metadata: Metadata = {
-  title: 'Bible',
-  description: 'Bible'
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('Meta');
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    keywords:
+      '성경, 기독교, 말씀, 신앙, 종교 뉴스, Bible, Christian news, Scripture, Faith, Spirituality'
+  };
+}
 
 export default async function LocaleLayout({
   children,
