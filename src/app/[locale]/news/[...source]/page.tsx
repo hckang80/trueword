@@ -42,7 +42,7 @@ export default async function NewsIdPage({ params }: Props) {
   return <Container summary={data.summary} news={newsBySource} />;
 }
 
-export async function NewsBySource([source, id]: string[]) {
+async function NewsBySource([source, id]: string[]) {
   const queryClient = new QueryClient();
 
   const news = await queryClient.fetchQuery({
