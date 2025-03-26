@@ -7,28 +7,24 @@ import type { Metadata, ResolvingMetadata } from 'next';
 type Props = { params: Promise<{ source: string[] }> };
 
 export async function generateMetadata(
-  _props: Props,
+  { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const previousTitle = (await parent).title;
 
+  const { source } = await params;
+
+  const newsById = await NewsBySource(source);
+
   return {
-    title: `News - ${previousTitle?.absolute}`
+    title: `${newsById?.title} - ${previousTitle?.absolute}`
   };
 }
 
 export default async function NewsIdPage({ params }: Props) {
-  const queryClient = new QueryClient();
-  const {
-    source: [source, id]
-  } = await params;
+  const { source } = await params;
 
-  const news = await queryClient.fetchQuery({
-    queryKey: newsKeys._def,
-    queryFn: fetchNews
-  });
-
-  const newsById = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
+  const newsById = await NewsBySource(source);
 
   if (!newsById) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
 
@@ -44,4 +40,17 @@ export default async function NewsIdPage({ params }: Props) {
   });
 
   return <Container summary={data.summary} news={newsById} />;
+}
+
+export async function NewsBySource([source, id]: string[]) {
+  const queryClient = new QueryClient();
+
+  const news = await queryClient.fetchQuery({
+    queryKey: newsKeys._def,
+    queryFn: fetchNews
+  });
+
+  const newsById = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
+
+  return newsById;
 }
