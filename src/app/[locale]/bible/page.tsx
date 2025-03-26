@@ -5,14 +5,25 @@ import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
 import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
+import type { Metadata, ResolvingMetadata } from 'next';
 
-export default async function Bible({
-  params,
-  searchParams
-}: {
+type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ bibleLanguage?: string }>;
-}) {
+};
+
+export async function generateMetadata(
+  _props: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const previousTitle = (await parent).title;
+
+  return {
+    title: `Bible - ${previousTitle?.absolute}`
+  };
+}
+
+export default async function Bible({ params, searchParams }: Props) {
   const { locale: userLocale } = await params;
 
   const queryClient = new QueryClient();

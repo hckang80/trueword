@@ -2,8 +2,22 @@ import { axiosInstance, newsKeys } from '@/shared';
 import { fetchNews } from '@/features/news';
 import { QueryClient } from '@tanstack/react-query';
 import Container from './__container';
+import type { Metadata, ResolvingMetadata } from 'next';
 
-export default async function NewsIdPage({ params }: { params: Promise<{ source: string[] }> }) {
+type Props = { params: Promise<{ source: string[] }> };
+
+export async function generateMetadata(
+  _props: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const previousTitle = (await parent).title;
+
+  return {
+    title: `News - ${previousTitle?.absolute}`
+  };
+}
+
+export default async function NewsIdPage({ params }: Props) {
   const queryClient = new QueryClient();
   const {
     source: [source, id]
