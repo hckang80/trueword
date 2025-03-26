@@ -2,5 +2,9 @@
   "Common": {
     "bible": "성경",
     "language": "언어"
+  },
+  "Meta": {
+    "title": "True Word",
+    "description": "최신 성경 뉴스, 기독교 현장 소식, 성경 해석과 통찰을 제공하는 종합 정보 플랫폼"
   }
 }
