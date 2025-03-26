@@ -14,23 +14,23 @@ export async function generateMetadata(
 
   const { source } = await params;
 
-  const newsById = await NewsBySource(source);
+  const newsBySource = await NewsBySource(source);
 
   return {
-    title: `${newsById?.title} - ${previousTitle?.absolute}`
+    title: `${newsBySource?.title} - ${previousTitle?.absolute}`
   };
 }
 
 export default async function NewsIdPage({ params }: Props) {
   const { source } = await params;
 
-  const newsById = await NewsBySource(source);
+  const newsBySource = await NewsBySource(source);
 
-  if (!newsById) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
+  if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
 
   const scrapeResponse = await axiosInstance.post<{ content: string; title: string }>(
     '/api/scrape',
-    { url: newsById.link }
+    { url: newsBySource.link }
   );
   const { content, title } = scrapeResponse.data;
 
@@ -39,7 +39,7 @@ export default async function NewsIdPage({ params }: Props) {
     title
   });
 
-  return <Container summary={data.summary} news={newsById} />;
+  return <Container summary={data.summary} news={newsBySource} />;
 }
 
 export async function NewsBySource([source, id]: string[]) {
@@ -50,7 +50,7 @@ export async function NewsBySource([source, id]: string[]) {
     queryFn: fetchNews
   });
 
-  const newsById = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
+  const newsBySource = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
 
-  return newsById;
+  return newsBySource;
 }
