@@ -5,7 +5,7 @@ import type { NewsItem } from '@/entities/news';
 import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import DOMPurify from 'dompurify';
 
 export default function NewsIdContainer({
   summary,
@@ -14,6 +14,10 @@ export default function NewsIdContainer({
   summary: string;
   news: NewsItem;
 }) {
+  const sanitizedData = () => ({
+    __html: DOMPurify.sanitize(summary)
+  });
+
   return (
     <article className="p-[var(--global-inset)]">
       <NewsHeader title={title} source={source} pubDate={pubDate} />
@@ -22,7 +26,7 @@ export default function NewsIdContainer({
         <p className="mb-[10px] text-xs text-muted-foreground">
           이 글은 AI가 원문을 분석하여 핵심 내용을 요약한 것입니다.
         </p>
-        <ReactMarkdown>{summary}</ReactMarkdown>
+        <div className="news-summary" dangerouslySetInnerHTML={sanitizedData()} />
       </div>
 
       <div className="flex justify-center gap-[4px] mt-[20px]">
