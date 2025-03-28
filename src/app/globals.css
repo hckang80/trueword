@@ -137,6 +137,11 @@
     }
     h2 {
       font-weight: bold;
+      margin: 0 0 5px;
+    }
+    ul {
+      list-style: disc;
+      padding-left: 20px;
     }
   }
 }

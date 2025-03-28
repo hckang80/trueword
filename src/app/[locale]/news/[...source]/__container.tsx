@@ -15,7 +15,7 @@ export default function NewsIdContainer({
   news: NewsItem;
 }) {
   const sanitizedData = () => ({
-    __html: DOMPurify.sanitize(summary)
+    __html: DOMPurify.sanitize(summary.replace(/`{3,}/g, '').replace('html', ''))
   });
 
   return (
