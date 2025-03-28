@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const genAI = new GoogleGenerativeAI(process.env.LLM_API_KEY || '');
 
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const prompt = `다음 게시글의 제목과 주요 내용 등을 간단헤게 요약해주세요. 마크다운 금지! 시맨틱 요소만 사용하세요. :
+    const prompt = `다음 게시글의 제목과 주요 내용 등을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :
 
     ${content}`;
     const result = await model.generateContent([prompt]);
