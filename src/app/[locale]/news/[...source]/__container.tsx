@@ -1,8 +1,10 @@
 'use client';
 
+import { buttonVariants } from '@/components/ui/button';
 import type { NewsItem } from '@/entities/news';
+import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
-import Link from 'next/link';
+import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 export default function NewsIdContainer({
@@ -23,8 +25,13 @@ export default function NewsIdContainer({
         <ReactMarkdown>{summary}</ReactMarkdown>
       </div>
 
-      <div className="text-center mt-[20px]">
-        <Link className="underline" href={link} target="_blank" rel="noopener noreferrer">
+      <div className="flex justify-center gap-[4px] mt-[20px]">
+        <Link href="/news" className={buttonVariants({ variant: 'secondary' })}>
+          <Undo2 />
+          목록으로
+        </Link>
+        <Link href={link} target="_blank" rel="noopener noreferrer" className={buttonVariants()}>
+          <SquareArrowOutUpRight />
           기사 원문 보기
         </Link>
       </div>
