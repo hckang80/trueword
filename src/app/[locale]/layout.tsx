@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import ProgressBar from './ProgressBar';
 import { BottomNavigation, isSupportedLocale } from '@/shared';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -43,6 +44,7 @@ export default async function LocaleLayout({
             <BottomNavigation />
           </NextIntlClientProvider>
         </Providers>
+        {process.env.NODE_ENV !== 'development' && <GoogleAnalytics gaId="G-P43JHSZ9K8" />}
       </body>
     </html>
   );
