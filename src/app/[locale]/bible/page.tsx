@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Container from './_container';
+import Container from './__container';
 import { QueryClient } from '@tanstack/react-query';
 import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, supportedTranslations, translationsKeys } from '@/shared';
