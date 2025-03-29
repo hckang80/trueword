@@ -17,7 +17,6 @@ import { ChevronDown, Globe, Loader2 } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
-import { useSearchParams } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function BookSelector() {
@@ -201,8 +200,6 @@ export function SkeletonCard() {
 
 export default function Container() {
   const { isChangingBookLanguage } = useBible();
-  const searchParams = useSearchParams();
-  const bibleLanguage = searchParams.get('bibleLanguage');
 
   return (
     <div className="p-[var(--global-inset)]">
@@ -210,7 +207,7 @@ export default function Container() {
         <BookSelector />
         <TranslationSelector isFetching={isChangingBookLanguage} />
       </div>
-      {bibleLanguage && isChangingBookLanguage ? <SkeletonCard /> : <VerseList />}
+      <VerseList />
     </div>
   );
 }
