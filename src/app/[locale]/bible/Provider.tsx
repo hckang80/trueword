@@ -81,7 +81,7 @@ export function BibleProvider({
   }, []);
 
   useEffect(() => {
-    setSelectedTranslation(translation);
+    if (bibleLanguage) setSelectedTranslation(translation);
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
   }, [translation, setSelectedTranslation, resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
 
