@@ -13,7 +13,7 @@ import {
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/shared';
-import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
+import { ChevronDown, Globe, Loader2 } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
@@ -126,7 +126,10 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button>{selectedTranslation.distribution_versification}</Button>
+        <Button variant="outline" disabled={isFetching}>
+          {isFetching && <Loader2 className="animate-spin" />}
+          {selectedTranslation.distribution_versification}
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
@@ -136,7 +139,6 @@ function TranslationSelector({ isFetching }: { isFetching: boolean }) {
               {t('language')}
             </span>
             <div className="flex items-center gap-[4px]">
-              {isFetching && <LoaderCircle className="animate-spin" size={16} />}
               <BibleLanguages setOpen={setOpen} />
             </div>
           </div>
