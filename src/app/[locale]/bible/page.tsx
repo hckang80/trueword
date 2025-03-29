@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import Container from './_container';
 import { QueryClient } from '@tanstack/react-query';
 import { LoaderCircle } from 'lucide-react';
-import { bibleKeys, translationsKeys } from '@/shared';
+import { bibleKeys, supportedTranslations, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
 import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
@@ -36,8 +36,9 @@ export default async function Bible({ params, searchParams }: Props) {
   });
 
   const validTranslations = Object.values(translations).filter(
-    ({ distribution_license, distribution_versification }) => {
+    ({ distribution_license, distribution_versification, language }) => {
       const conditions = {
+        language: supportedTranslations.includes(language),
         license: ['Public Domain', 'Copyrighted; Free non-commercial distribution'].includes(
           distribution_license
         ),
