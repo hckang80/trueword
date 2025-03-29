@@ -126,6 +126,11 @@
     display: inline-block;
   }
 
+  [role='button'],
+  button {
+    cursor: pointer;
+  }
+
   main:has(+ .global-nav) {
     margin-bottom: var(--navbar-height);
   }
