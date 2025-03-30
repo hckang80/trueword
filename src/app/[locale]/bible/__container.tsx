@@ -116,8 +116,13 @@ function BookSelector() {
   );
 }
 
-function TranslationSelector({ isFetching }: { isFetching: boolean }) {
-  const { filteredTranslations, selectedTranslation, handleTranslationChange } = useBible();
+function TranslationSelector() {
+  const {
+    filteredTranslations,
+    selectedTranslation,
+    handleTranslationChange,
+    isChangingBookLanguage: isFetching
+  } = useBible();
   const t = useTranslations('Common');
 
   const [open, setOpen] = useState(false);
@@ -199,13 +204,11 @@ export function SkeletonCard() {
 }
 
 export default function Container() {
-  const { isChangingBookLanguage } = useBible();
-
   return (
     <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector />
-        <TranslationSelector isFetching={isChangingBookLanguage} />
+        <TranslationSelector />
       </div>
       <VerseList />
     </div>
