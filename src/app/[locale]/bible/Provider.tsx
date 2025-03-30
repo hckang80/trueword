@@ -51,16 +51,16 @@ export function BibleProvider({
   const { locale: userLocale } = params;
   const searchParams = useSearchParams();
   const bibleLanguage = searchParams.get('bibleLanguage');
-
+  const validLanguage = bibleLanguage || userLocale;
   const filteredTranslations = useMemo(() => {
-    return validTranslations.filter(({ lang }) => lang === (bibleLanguage || userLocale));
+    return validTranslations.filter(({ lang }) => lang === validLanguage);
   }, [validTranslations, bibleLanguage, userLocale]);
   const [translation] = filteredTranslations;
   const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
     translation
   );
   const previousDataRef = useRef<BibleInstance>(initialData);
-  const previousBibleLanguageRef = useRef(bibleLanguage || userLocale);
+  const previousBibleLanguageRef = useRef(validLanguage);
   const {
     data: { books },
     isFetching
