@@ -12,6 +12,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react';
 
@@ -58,14 +59,18 @@ export function BibleProvider({
   const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
     translation
   );
-
+  const previousDataRef = useRef<BibleInstance>(initialData);
   const {
     data: { books },
     isFetching
   } = useQuery({
     ...bibleKeys.data(selectedTranslation?.abbreviation || ''),
-    queryFn: () => fetchTranslationsByLanguage(selectedTranslation?.abbreviation || ''),
-    initialData
+    queryFn: async () => {
+      const data = await fetchTranslationsByLanguage(selectedTranslation?.abbreviation || '');
+      previousDataRef.current = data;
+      return data;
+    },
+    initialData: previousDataRef.current
   });
 
   const [{ name: DEFAULT_BOOK }] = books;
