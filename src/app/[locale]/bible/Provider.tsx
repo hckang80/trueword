@@ -60,6 +60,7 @@ export function BibleProvider({
     translation
   );
   const previousDataRef = useRef<BibleInstance>(initialData);
+  const previousBibleLanguageRef = useRef(bibleLanguage || userLocale);
   const {
     data: { books },
     isFetching
@@ -68,6 +69,7 @@ export function BibleProvider({
     queryFn: async () => {
       const data = await fetchTranslationsByLanguage(selectedTranslation?.abbreviation || '');
       previousDataRef.current = data;
+      previousBibleLanguageRef.current = bibleLanguage || '';
       return data;
     },
     initialData: previousDataRef.current
@@ -86,7 +88,9 @@ export function BibleProvider({
   }, []);
 
   useEffect(() => {
-    if (bibleLanguage) setSelectedTranslation(translation);
+    if (previousBibleLanguageRef.current !== bibleLanguage) {
+      setSelectedTranslation(translation);
+    }
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
   }, [translation, setSelectedTranslation, resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
 
