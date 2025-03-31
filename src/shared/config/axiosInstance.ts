@@ -3,7 +3,7 @@ import type { ErrorResponse } from '..';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_SITE_URL,
-  timeout: 5000
+  timeout: 8000
 });
 
 axiosInstance.interceptors.request.use(
