@@ -9,14 +9,16 @@ export async function GET() {
         url: 'https://www.christiantoday.co.kr/rss',
         name: {
           ko: '크리스천투데이',
-          en: 'christiantoday'
+          en: 'christiantoday',
+          zh: 'christiantoday'
         }
       },
       {
         url: 'https://www.christiandaily.co.kr/rss',
         name: {
           ko: '기독일보',
-          en: 'christiandaily'
+          en: 'christiandaily',
+          zh: 'christiandaily'
         }
       }
     ];
