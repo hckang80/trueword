@@ -2,9 +2,8 @@ import type { RSSFeed, RSSItem } from '../model';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '..';
-import { Locale } from '@/shared';
 
-export async function fetchRssFeed(feedUrl: string, sourceName: Record<Locale, string>) {
+export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, string>) {
   try {
     const response = await axios.get<string>(feedUrl);
 

@@ -1,24 +1,21 @@
 import { fetchRssFeed } from '@/entities/news';
-import type { Locale } from '@/shared';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const rssFeeds: { url: string; name: Record<Locale, string> }[] = [
+    const rssFeeds: { url: string; name: Record<string, string> }[] = [
       {
         url: 'https://www.christiantoday.co.kr/rss',
         name: {
           ko: '크리스천투데이',
-          en: 'christiantoday',
-          zh: 'christiantoday'
+          en: 'christiantoday'
         }
       },
       {
         url: 'https://www.christiandaily.co.kr/rss',
         name: {
           ko: '기독일보',
-          en: 'christiandaily',
-          zh: 'christiandaily'
+          en: 'christiandaily'
         }
       }
     ];
