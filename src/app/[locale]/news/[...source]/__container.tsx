@@ -1,6 +1,6 @@
 'use client';
 
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/shared/components/ui/button';
 import type { NewsItem } from '@/entities/news';
 import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';

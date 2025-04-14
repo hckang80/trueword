@@ -9,15 +9,15 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/components/ui/drawer';
+} from '@/shared/components/ui/drawer';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared';
 import { ChevronDown, Globe, Loader2 } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
