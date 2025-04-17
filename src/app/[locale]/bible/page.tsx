@@ -30,7 +30,7 @@ export default async function Bible({ params, searchParams }: Props) {
 
   const { bibleLanguage = '' } = await searchParams;
 
-  const { data: translations } = await queryClient.fetchQuery({
+  const translations = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
     queryFn: fetchTranslations
   });
