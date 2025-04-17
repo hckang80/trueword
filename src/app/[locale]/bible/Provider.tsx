@@ -116,6 +116,7 @@ export function BibleProvider({
   if (!selectedTranslation) throw new Error('No translation selected');
 
   return (
+    // Context를 작게 분리하거나 Store를 사용하도록 개편 필요. 리랜더링 이슈
     <BibleContext.Provider
       value={{
         books,
