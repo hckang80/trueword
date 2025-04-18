@@ -54,7 +54,7 @@ export function BibleProvider({
   const validLanguage = bibleLanguage || userLocale;
   const localizedTranslationVersions = useMemo(() => {
     return translationVersions.filter(({ lang }) => lang === validLanguage);
-  }, [translationVersions, bibleLanguage, userLocale]);
+  }, [translationVersions, validLanguage]);
   const [translation] = localizedTranslationVersions;
   const [selectedTranslationVersion, setSelectedTranslation] = useState<
     TransitionVersion | undefined
@@ -94,7 +94,14 @@ export function BibleProvider({
       setSelectedTranslation(translation);
     }
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
-  }, [translation, setSelectedTranslation, resetBook, DEFAULT_BOOK, DEFAULT_CHAPTER]);
+  }, [
+    bibleLanguage,
+    translation,
+    setSelectedTranslation,
+    resetBook,
+    DEFAULT_BOOK,
+    DEFAULT_CHAPTER
+  ]);
 
   const selectedChapters = useMemo(
     () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
