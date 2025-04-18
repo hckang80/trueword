@@ -1,6 +1,6 @@
 'use client';
 
-import type { BibleInstance, SelectedBook, Transition } from '@/entities/bible';
+import type { BibleInstance, SelectedBook, TransitionVersion } from '@/entities/bible';
 import { fetchTranslationsByLanguage } from '@/features/bible';
 import { bibleKeys } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
@@ -22,9 +22,9 @@ type BibleContextType = {
   selectedChapterName: string;
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
-  translations: Transition[];
-  filteredTranslations: Transition[];
-  selectedTranslation: Transition;
+  translationVersions: TransitionVersion[];
+  localizedTranslationVersions: TransitionVersion[];
+  selectedTranslationVersion: TransitionVersion;
   handleTranslationChange: (value: string) => void;
   selectedVerses: { verse: number; text: string }[];
 };
@@ -40,11 +40,11 @@ export function useBible() {
 
 export function BibleProvider({
   children,
-  translations: validTranslations,
+  translationVersions,
   data: initialData
 }: {
   children: ReactNode;
-  translations: Transition[];
+  translationVersions: TransitionVersion[];
   data: BibleInstance;
 }) {
   const params = useParams();
@@ -52,22 +52,24 @@ export function BibleProvider({
   const searchParams = useSearchParams();
   const bibleLanguage = searchParams.get('bibleLanguage');
   const validLanguage = bibleLanguage || userLocale;
-  const filteredTranslations = useMemo(() => {
-    return validTranslations.filter(({ lang }) => lang === validLanguage);
-  }, [validTranslations, bibleLanguage, userLocale]);
-  const [translation] = filteredTranslations;
-  const [selectedTranslation, setSelectedTranslation] = useState<Transition | undefined>(
-    translation
-  );
+  const localizedTranslationVersions = useMemo(() => {
+    return translationVersions.filter(({ lang }) => lang === validLanguage);
+  }, [translationVersions, bibleLanguage, userLocale]);
+  const [translation] = localizedTranslationVersions;
+  const [selectedTranslationVersion, setSelectedTranslation] = useState<
+    TransitionVersion | undefined
+  >(translation);
   const previousDataRef = useRef<BibleInstance>(initialData);
   const previousBibleLanguageRef = useRef(validLanguage);
   const {
     data: { books },
     isFetching
   } = useQuery({
-    ...bibleKeys.data(selectedTranslation?.abbreviation || ''),
+    ...bibleKeys.data(selectedTranslationVersion?.abbreviation || ''),
     queryFn: async () => {
-      const data = await fetchTranslationsByLanguage(selectedTranslation?.abbreviation || '');
+      const data = await fetchTranslationsByLanguage(
+        selectedTranslationVersion?.abbreviation || ''
+      );
       previousDataRef.current = data;
       previousBibleLanguageRef.current = bibleLanguage || '';
       return data;
@@ -109,11 +111,11 @@ export function BibleProvider({
 
   const handleTranslationChange = (value: string) => {
     setSelectedTranslation(() =>
-      filteredTranslations.find(({ abbreviation }) => abbreviation === value)
+      localizedTranslationVersions.find(({ abbreviation }) => abbreviation === value)
     );
   };
 
-  if (!selectedTranslation) throw new Error('No translation selected');
+  if (!selectedTranslationVersion) throw new Error('No translation selected');
 
   return (
     // Context를 작게 분리하거나 Store를 사용하도록 개편 필요. 리랜더링 이슈
@@ -124,9 +126,9 @@ export function BibleProvider({
         selectedChapterName,
         resetBook,
         selectedBook: selectedBookInstance,
-        translations: validTranslations,
-        filteredTranslations: filteredTranslations,
-        selectedTranslation,
+        translationVersions,
+        localizedTranslationVersions,
+        selectedTranslationVersion,
         handleTranslationChange,
         selectedVerses
       }}

@@ -30,12 +30,12 @@ export default async function Bible({ params, searchParams }: Props) {
 
   const { bibleLanguage = '' } = await searchParams;
 
-  const translations = await queryClient.fetchQuery({
+  const translationVersions = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
     queryFn: fetchTranslations
   });
 
-  const validTranslations = Object.values(translations).filter(
+  const availableTranslationVersions = Object.values(translationVersions).filter(
     ({ distribution_license, distribution_versification, language }) => {
       const conditions = {
         language: supportedTranslations.includes(language),
@@ -49,7 +49,7 @@ export default async function Bible({ params, searchParams }: Props) {
     }
   );
 
-  const [defaultTranslation] = validTranslations.filter(
+  const [defaultTranslation] = availableTranslationVersions.filter(
     ({ lang }) => lang === (bibleLanguage || userLocale)
   );
 
@@ -66,7 +66,7 @@ export default async function Bible({ params, searchParams }: Props) {
         </div>
       }
     >
-      <BibleProvider translations={validTranslations} data={bible}>
+      <BibleProvider translationVersions={availableTranslationVersions} data={bible}>
         <Container />
       </BibleProvider>
     </Suspense>

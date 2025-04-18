@@ -118,8 +118,8 @@ function BookSelector() {
 
 function TranslationSelector() {
   const {
-    filteredTranslations,
-    selectedTranslation,
+    localizedTranslationVersions,
+    selectedTranslationVersion,
     handleTranslationChange,
     isChangingBookLanguage: isFetching
   } = useBible();
@@ -132,7 +132,7 @@ function TranslationSelector() {
       <DrawerTrigger asChild>
         <Button variant="outline" disabled={isFetching}>
           {isFetching && <Loader2 className="animate-spin" />}
-          {selectedTranslation.distribution_versification}
+          {selectedTranslationVersion.distribution_versification}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -149,7 +149,7 @@ function TranslationSelector() {
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
-              {filteredTranslations.map(
+              {localizedTranslationVersions.map(
                 ({ distribution_versification, abbreviation, description }) => (
                   <li key={abbreviation}>
                     <DrawerClose asChild>
@@ -160,7 +160,9 @@ function TranslationSelector() {
                         <em
                           className={cn(
                             'block text-[16px]',
-                            abbreviation === selectedTranslation.abbreviation ? 'font-bold' : ''
+                            abbreviation === selectedTranslationVersion.abbreviation
+                              ? 'font-bold'
+                              : ''
                           )}
                         >
                           {distribution_versification}
