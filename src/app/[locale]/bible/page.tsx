@@ -44,7 +44,7 @@ export default async function Bible({ params, searchParams }: Props) {
 
   const [defaultTranslation] = localizedTranslationVersions;
 
-  const bible = await queryClient.fetchQuery({
+  queryClient.prefetchQuery({
     ...bibleKeys.data(defaultTranslation.abbreviation),
     queryFn: () => fetchTranslationsByLanguage(defaultTranslation.abbreviation)
   });
@@ -58,7 +58,7 @@ export default async function Bible({ params, searchParams }: Props) {
       }
     >
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <BibleProvider data={bible}>
+        <BibleProvider>
           <Container />
         </BibleProvider>
       </HydrationBoundary>

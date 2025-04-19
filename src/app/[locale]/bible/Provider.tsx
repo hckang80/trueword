@@ -12,7 +12,6 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from 'react';
 
@@ -36,13 +35,7 @@ export function useBible() {
   return context;
 }
 
-export function BibleProvider({
-  children,
-  data: initialData
-}: {
-  children: ReactNode;
-  data: BibleInstance;
-}) {
+export function BibleProvider({ children }: { children: ReactNode }) {
   const params = useParams<{ locale: string }>();
   const { locale: userLocale } = params;
   const searchParams = useSearchParams();
@@ -57,26 +50,14 @@ export function BibleProvider({
   const [selectedTranslationVersion, setSelectedTranslation] = useState<
     TransitionVersion | undefined
   >(translation);
-  const previousDataRef = useRef<BibleInstance>(initialData);
-  const previousBibleLanguageRef = useRef(validLanguage);
 
-  const {
-    data: { books },
-    isFetching
-  } = useQuery({
+  const { data, isFetching } = useQuery({
     ...bibleKeys.data(selectedTranslationVersion?.abbreviation || ''),
-    queryFn: async () => {
-      const data = await fetchTranslationsByLanguage(
-        selectedTranslationVersion?.abbreviation || ''
-      );
-      previousDataRef.current = data;
-      previousBibleLanguageRef.current = bibleLanguage || '';
-      return data;
-    },
-    initialData: previousDataRef.current,
+    queryFn: () => fetchTranslationsByLanguage(selectedTranslationVersion?.abbreviation || ''),
     staleTime: 1000 * 60 * 5
   });
 
+  const { books } = data || { books: [{ name: '', nr: 0, chapters: [] }] };
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
