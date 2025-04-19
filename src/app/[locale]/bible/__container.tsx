@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -132,7 +132,7 @@ function TranslationSelector() {
   const { locale } = useParams<{ locale: string }>();
   const language = bibleLanguage || locale;
 
-  const { data: localizedTranslationVersions = [], isFetching: fetching } = useQuery({
+  const { data: localizedTranslationVersions = [] } = useQuery({
     ...translationsKeys.data(language),
     queryFn: () => getLocalizedTranslationVersions(language),
     staleTime: 1000 * 60 * 5

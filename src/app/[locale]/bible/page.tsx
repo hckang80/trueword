@@ -4,11 +4,7 @@ import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query
 import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
-import {
-  fetchTranslations,
-  fetchTranslationsByLanguage,
-  getLocalizedTranslationVersions
-} from '@/features/bible';
+import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {

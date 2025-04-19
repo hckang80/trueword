@@ -8,7 +8,7 @@ import {
   SelectValue
 } from '@/shared/components/ui/select';
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useBible } from './Provider';
 import { fetchTranslations, getLanguageFullName } from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
