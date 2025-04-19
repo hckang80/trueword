@@ -1,8 +1,8 @@
 'use client';
 
 import type { BibleInstance, SelectedBook, TransitionVersion } from '@/entities/bible';
-import { fetchTranslationsByLanguage } from '@/features/bible';
-import { bibleKeys } from '@/shared';
+import { fetchTranslationsByLanguage, getLocalizedTranslationVersions } from '@/features/bible';
+import { bibleKeys, translationsKeys } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearchParams } from 'next/navigation';
 import {
@@ -22,7 +22,6 @@ type BibleContextType = {
   selectedChapterName: string;
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
-  translationVersions: TransitionVersion[];
   localizedTranslationVersions: TransitionVersion[];
   selectedTranslationVersion: TransitionVersion;
   handleTranslationChange: (value: string) => void;
@@ -40,27 +39,28 @@ export function useBible() {
 
 export function BibleProvider({
   children,
-  translationVersions,
   data: initialData
 }: {
   children: ReactNode;
-  translationVersions: TransitionVersion[];
   data: BibleInstance;
 }) {
-  const params = useParams();
+  const params = useParams<{ locale: string }>();
   const { locale: userLocale } = params;
   const searchParams = useSearchParams();
   const bibleLanguage = searchParams.get('bibleLanguage');
   const validLanguage = bibleLanguage || userLocale;
-  const localizedTranslationVersions = useMemo(() => {
-    return translationVersions.filter(({ lang }) => lang === validLanguage);
-  }, [translationVersions, validLanguage]);
+  const { data: localizedTranslationVersions = [] } = useQuery({
+    ...translationsKeys.data(validLanguage),
+    queryFn: () => getLocalizedTranslationVersions(validLanguage),
+    staleTime: 1000 * 60 * 5
+  });
   const [translation] = localizedTranslationVersions;
   const [selectedTranslationVersion, setSelectedTranslation] = useState<
     TransitionVersion | undefined
   >(translation);
   const previousDataRef = useRef<BibleInstance>(initialData);
   const previousBibleLanguageRef = useRef(validLanguage);
+
   const {
     data: { books },
     isFetching
@@ -74,7 +74,8 @@ export function BibleProvider({
       previousBibleLanguageRef.current = bibleLanguage || '';
       return data;
     },
-    initialData: previousDataRef.current
+    initialData: previousDataRef.current,
+    staleTime: 1000 * 60 * 5
   });
 
   const [{ name: DEFAULT_BOOK }] = books;
@@ -133,7 +134,6 @@ export function BibleProvider({
         selectedChapterName,
         resetBook,
         selectedBook: selectedBookInstance,
-        translationVersions,
         localizedTranslationVersions,
         selectedTranslationVersion,
         handleTranslationChange,

@@ -5,6 +5,8 @@ export const bibleKeys = createQueryKeys('bible', {
   data: (translation: string) => [translation]
 });
 
-export const translationsKeys = createQueryKeys('translations');
+export const translationsKeys = createQueryKeys('translations', {
+  data: (language: string) => [language]
+});
 
 export const newsKeys = createQueryKeys('news');
