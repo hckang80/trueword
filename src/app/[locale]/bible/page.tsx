@@ -1,7 +1,5 @@
-import { Suspense } from 'react';
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
 import { bibleKeys, translationsKeys } from '@/shared';
 import { BibleProvider } from './Provider';
 import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
@@ -50,18 +48,10 @@ export default async function Bible({ params, searchParams }: Props) {
   });
 
   return (
-    <Suspense
-      fallback={
-        <div className="text-center">
-          <LoaderCircle className="animate-spin" />
-        </div>
-      }
-    >
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <BibleProvider>
-          <Container />
-        </BibleProvider>
-      </HydrationBoundary>
-    </Suspense>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <BibleProvider>
+        <Container />
+      </BibleProvider>
+    </HydrationBoundary>
   );
 }

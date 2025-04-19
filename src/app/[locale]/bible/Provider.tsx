@@ -4,6 +4,7 @@ import type { BibleInstance, SelectedBook, TransitionVersion } from '@/entities/
 import { fetchTranslationsByLanguage, getLocalizedTranslationVersions } from '@/features/bible';
 import { bibleKeys, translationsKeys } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
+import { LoaderCircle } from 'lucide-react';
 import { useParams, useSearchParams } from 'next/navigation';
 import {
   createContext,
@@ -111,7 +112,13 @@ export function BibleProvider({ children }: { children: ReactNode }) {
         selectedVerses
       }}
     >
-      {children}
+      {isFetching ? (
+        <div className="center-absolute">
+          <LoaderCircle className="animate-spin" />
+        </div>
+      ) : (
+        children
+      )}
     </BibleContext.Provider>
   );
 }
