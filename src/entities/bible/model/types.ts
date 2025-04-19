@@ -21,7 +21,7 @@ export interface Verse {
   text: string;
 }
 
-export interface Transition {
+export interface TransitionVersion {
   abbreviation: string;
   description: string;
   lang: string;

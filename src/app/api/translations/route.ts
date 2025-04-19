@@ -1,10 +1,10 @@
-import type { Transition } from '@/entities/bible';
+import type { TransitionVersion } from '@/entities/bible';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const { data } = await axios.get<{ data: Record<string, Transition> }>(
+    const { data } = await axios.get<{ data: Record<string, TransitionVersion> }>(
       `${process.env.API_BASE_URL}/translations.json`
     );
 

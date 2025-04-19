@@ -13,7 +13,7 @@ import { useBible } from './Provider';
 import { getLanguageFullName } from '@/features/bible';
 
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
-  const { translations, isChangingBookLanguage } = useBible();
+  const { translationVersions, isChangingBookLanguage } = useBible();
 
   const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
@@ -33,7 +33,7 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
     [pathname, setOpen]
   );
 
-  const languages = [...new Set([...Object.values(translations).map(({ lang }) => lang)])];
+  const languages = [...new Set([...Object.values(translationVersions).map(({ lang }) => lang)])];
   const languagesWithLabel = languages.map((language) => ({
     language,
     label: getLanguageFullName(language, language)
