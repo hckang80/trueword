@@ -12,14 +12,13 @@ import {
 } from '@/shared/components/ui/drawer';
 
 import { Button } from '@/shared/components/ui/button';
-import { cn, translationsKeys } from '@/shared';
+import { cn } from '@/shared';
 import { ChevronDown, Globe } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import { getLocalizedTranslationVersions } from '@/features/bible';
-import { useQuery } from '@tanstack/react-query';
+import { useLocalizedTranslationVersions } from '@/features/bible';
 import { useParams, useSearchParams } from 'next/navigation';
 
 function BookSelector() {
@@ -128,11 +127,7 @@ function TranslationSelector() {
   const { locale } = useParams<{ locale: string }>();
   const language = bibleLanguage || locale;
 
-  const { data: localizedTranslationVersions = [] } = useQuery({
-    ...translationsKeys.data(language),
-    queryFn: () => getLocalizedTranslationVersions(language),
-    staleTime: 1000 * 60 * 5
-  });
+  const { data: localizedTranslationVersions = [] } = useLocalizedTranslationVersions(language);
 
   const [open, setOpen] = useState(false);
 
