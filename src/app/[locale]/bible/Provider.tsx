@@ -1,9 +1,10 @@
 'use client';
 
 import type { BibleInstance, SelectedBook, TransitionVersion } from '@/entities/bible';
-import { fetchTranslationsByLanguage } from '@/features/bible';
+import { fetchTranslationsByLanguage, useLocalizedTranslationVersions } from '@/features/bible';
 import { bibleKeys } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
+import { LoaderCircle } from 'lucide-react';
 import { useParams, useSearchParams } from 'next/navigation';
 import {
   createContext,
@@ -12,18 +13,14 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from 'react';
 
 type BibleContextType = {
   books: BibleInstance['books'];
-  isChangingBookLanguage: boolean;
   selectedChapterName: string;
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
-  translationVersions: TransitionVersion[];
-  localizedTranslationVersions: TransitionVersion[];
   selectedTranslationVersion: TransitionVersion;
   handleTranslationChange: (value: string) => void;
   selectedVerses: { verse: number; text: string }[];
@@ -38,45 +35,26 @@ export function useBible() {
   return context;
 }
 
-export function BibleProvider({
-  children,
-  translationVersions,
-  data: initialData
-}: {
-  children: ReactNode;
-  translationVersions: TransitionVersion[];
-  data: BibleInstance;
-}) {
-  const params = useParams();
+export function BibleProvider({ children }: { children: ReactNode }) {
+  const params = useParams<{ locale: string }>();
   const { locale: userLocale } = params;
   const searchParams = useSearchParams();
   const bibleLanguage = searchParams.get('bibleLanguage');
   const validLanguage = bibleLanguage || userLocale;
-  const localizedTranslationVersions = useMemo(() => {
-    return translationVersions.filter(({ lang }) => lang === validLanguage);
-  }, [translationVersions, validLanguage]);
+  const { data: localizedTranslationVersions = [] } =
+    useLocalizedTranslationVersions(validLanguage);
   const [translation] = localizedTranslationVersions;
   const [selectedTranslationVersion, setSelectedTranslation] = useState<
     TransitionVersion | undefined
   >(translation);
-  const previousDataRef = useRef<BibleInstance>(initialData);
-  const previousBibleLanguageRef = useRef(validLanguage);
-  const {
-    data: { books },
-    isFetching
-  } = useQuery({
+
+  const { data, isFetching } = useQuery({
     ...bibleKeys.data(selectedTranslationVersion?.abbreviation || ''),
-    queryFn: async () => {
-      const data = await fetchTranslationsByLanguage(
-        selectedTranslationVersion?.abbreviation || ''
-      );
-      previousDataRef.current = data;
-      previousBibleLanguageRef.current = bibleLanguage || '';
-      return data;
-    },
-    initialData: previousDataRef.current
+    queryFn: () => fetchTranslationsByLanguage(selectedTranslationVersion?.abbreviation || ''),
+    staleTime: 1000 * 60 * 5
   });
 
+  const { books } = data || { books: [{ name: '', nr: 0, chapters: [] }] };
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
@@ -90,18 +68,10 @@ export function BibleProvider({
   }, []);
 
   useEffect(() => {
-    if (bibleLanguage && previousBibleLanguageRef.current !== bibleLanguage) {
-      setSelectedTranslation(translation);
-    }
+    if (!translation) return;
+    setSelectedTranslation(translation);
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
-  }, [
-    bibleLanguage,
-    translation,
-    setSelectedTranslation,
-    resetBook,
-    DEFAULT_BOOK,
-    DEFAULT_CHAPTER
-  ]);
+  }, [translation, resetBook, DEFAULT_BOOK]);
 
   const selectedChapters = useMemo(
     () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
@@ -129,18 +99,21 @@ export function BibleProvider({
     <BibleContext.Provider
       value={{
         books,
-        isChangingBookLanguage: isFetching,
         selectedChapterName,
         resetBook,
         selectedBook: selectedBookInstance,
-        translationVersions,
-        localizedTranslationVersions,
         selectedTranslationVersion,
         handleTranslationChange,
         selectedVerses
       }}
     >
-      {children}
+      {isFetching ? (
+        <div className="center-absolute">
+          <LoaderCircle className="animate-spin" />
+        </div>
+      ) : (
+        children
+      )}
     </BibleContext.Provider>
   );
 }

@@ -7,21 +7,24 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/shared/components/ui/select';
-import { useParams, usePathname } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
-import { useBible } from './Provider';
-import { getLanguageFullName } from '@/features/bible';
+import { useParams, usePathname, useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
+import { fetchTranslations, getLanguageFullName } from '@/features/bible';
+import { useQuery } from '@tanstack/react-query';
+import { translationsKeys } from '@/shared';
 
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
-  const { translationVersions, isChangingBookLanguage } = useBible();
-
-  const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const bibleLanguage = searchParams.get('bibleLanguage');
+  const { locale } = useParams<{ locale: string }>();
+  const value = bibleLanguage || locale;
 
-  const value = useMemo(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('bibleLanguage') || locale;
-  }, [locale]);
+  const { data: translationVersions = [] } = useQuery({
+    queryKey: translationsKeys._def,
+    queryFn: fetchTranslations,
+    staleTime: 1000 * 60 * 5
+  });
 
   const handleChange = useCallback(
     (language: string) => {
@@ -40,7 +43,7 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
   }));
 
   return (
-    <Select value={value} onValueChange={handleChange} disabled={isChangingBookLanguage}>
+    <Select value={value} onValueChange={handleChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>

@@ -13,11 +13,13 @@ import {
 
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared';
-import { ChevronDown, Globe, Loader2 } from 'lucide-react';
+import { ChevronDown, Globe } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
 import { Skeleton } from '@/shared/components/ui/skeleton';
+import { useLocalizedTranslationVersions } from '@/features/bible';
+import { useParams, useSearchParams } from 'next/navigation';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -117,23 +119,22 @@ function BookSelector() {
 }
 
 function TranslationSelector() {
-  const {
-    localizedTranslationVersions,
-    selectedTranslationVersion,
-    handleTranslationChange,
-    isChangingBookLanguage: isFetching
-  } = useBible();
+  const { selectedTranslationVersion, handleTranslationChange } = useBible();
   const t = useTranslations('Common');
+
+  const searchParams = useSearchParams();
+  const bibleLanguage = searchParams.get('bibleLanguage');
+  const { locale } = useParams<{ locale: string }>();
+  const language = bibleLanguage || locale;
+
+  const { data: localizedTranslationVersions = [] } = useLocalizedTranslationVersions(language);
 
   const [open, setOpen] = useState(false);
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" disabled={isFetching}>
-          {isFetching && <Loader2 className="animate-spin" />}
-          {selectedTranslationVersion.distribution_versification}
-        </Button>
+        <Button variant="outline">{selectedTranslationVersion.distribution_versification}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
