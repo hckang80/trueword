@@ -13,7 +13,7 @@ import {
 
 import { Button } from '@/shared/components/ui/button';
 import { cn, translationsKeys } from '@/shared';
-import { ChevronDown, Globe, Loader2 } from 'lucide-react';
+import { ChevronDown, Globe } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
@@ -120,11 +120,7 @@ function BookSelector() {
 }
 
 function TranslationSelector() {
-  const {
-    selectedTranslationVersion,
-    handleTranslationChange,
-    isChangingBookLanguage: isFetching
-  } = useBible();
+  const { selectedTranslationVersion, handleTranslationChange } = useBible();
   const t = useTranslations('Common');
 
   const searchParams = useSearchParams();
@@ -143,10 +139,7 @@ function TranslationSelector() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" disabled={isFetching}>
-          {isFetching && <Loader2 className="animate-spin" />}
-          {selectedTranslationVersion.distribution_versification}
-        </Button>
+        <Button variant="outline">{selectedTranslationVersion.distribution_versification}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">

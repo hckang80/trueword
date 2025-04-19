@@ -18,7 +18,6 @@ import {
 
 type BibleContextType = {
   books: BibleInstance['books'];
-  isChangingBookLanguage: boolean;
   selectedChapterName: string;
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
@@ -103,7 +102,6 @@ export function BibleProvider({ children }: { children: ReactNode }) {
     <BibleContext.Provider
       value={{
         books,
-        isChangingBookLanguage: isFetching,
         selectedChapterName,
         resetBook,
         selectedBook: selectedBookInstance,

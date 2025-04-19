@@ -9,14 +9,11 @@ import {
 } from '@/shared/components/ui/select';
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-import { useBible } from './Provider';
 import { fetchTranslations, getLanguageFullName } from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
 import { translationsKeys } from '@/shared';
 
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
-  const { isChangingBookLanguage } = useBible();
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const bibleLanguage = searchParams.get('bibleLanguage');
@@ -46,7 +43,7 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
   }));
 
   return (
-    <Select value={value} onValueChange={handleChange} disabled={isChangingBookLanguage}>
+    <Select value={value} onValueChange={handleChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
