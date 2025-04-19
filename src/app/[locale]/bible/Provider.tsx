@@ -22,7 +22,6 @@ type BibleContextType = {
   selectedChapterName: string;
   resetBook: (book: string, chapter: number) => void;
   selectedBook: SelectedBook;
-  localizedTranslationVersions: TransitionVersion[];
   selectedTranslationVersion: TransitionVersion;
   handleTranslationChange: (value: string) => void;
   selectedVerses: { verse: number; text: string }[];
@@ -91,18 +90,10 @@ export function BibleProvider({
   }, []);
 
   useEffect(() => {
-    if (bibleLanguage && previousBibleLanguageRef.current !== bibleLanguage) {
-      setSelectedTranslation(translation);
-    }
+    if (!translation) return;
+    setSelectedTranslation(translation);
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
-  }, [
-    bibleLanguage,
-    translation,
-    setSelectedTranslation,
-    resetBook,
-    DEFAULT_BOOK,
-    DEFAULT_CHAPTER
-  ]);
+  }, [translation, resetBook, DEFAULT_BOOK]);
 
   const selectedChapters = useMemo(
     () => books.find((book) => book.name === selectedBookInstance.book)?.chapters || [],
@@ -134,7 +125,6 @@ export function BibleProvider({
         selectedChapterName,
         resetBook,
         selectedBook: selectedBookInstance,
-        localizedTranslationVersions,
         selectedTranslationVersion,
         handleTranslationChange,
         selectedVerses

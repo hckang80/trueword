@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/shared/components/ui/select';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { useBible } from './Provider';
 import { fetchTranslations, getLanguageFullName } from '@/features/bible';
@@ -17,13 +17,11 @@ import { translationsKeys } from '@/shared';
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
   const { isChangingBookLanguage } = useBible();
 
-  const { locale } = useParams<{ locale: string }>();
   const pathname = usePathname();
-
-  const value = useMemo(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('bibleLanguage') || locale;
-  }, [locale]);
+  const searchParams = useSearchParams();
+  const bibleLanguage = searchParams.get('bibleLanguage');
+  const { locale } = useParams<{ locale: string }>();
+  const value = bibleLanguage || locale;
 
   const { data: translationVersions = [] } = useQuery({
     queryKey: translationsKeys._def,

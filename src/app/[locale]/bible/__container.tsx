@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -12,12 +12,15 @@ import {
 } from '@/shared/components/ui/drawer';
 
 import { Button } from '@/shared/components/ui/button';
-import { cn } from '@/shared';
+import { cn, translationsKeys } from '@/shared';
 import { ChevronDown, Globe, Loader2 } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
 import { Skeleton } from '@/shared/components/ui/skeleton';
+import { getLocalizedTranslationVersions } from '@/features/bible';
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useSearchParams } from 'next/navigation';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -118,12 +121,22 @@ function BookSelector() {
 
 function TranslationSelector() {
   const {
-    localizedTranslationVersions,
     selectedTranslationVersion,
     handleTranslationChange,
     isChangingBookLanguage: isFetching
   } = useBible();
   const t = useTranslations('Common');
+
+  const searchParams = useSearchParams();
+  const bibleLanguage = searchParams.get('bibleLanguage');
+  const { locale } = useParams<{ locale: string }>();
+  const language = bibleLanguage || locale;
+
+  const { data: localizedTranslationVersions = [], isFetching: fetching } = useQuery({
+    ...translationsKeys.data(language),
+    queryFn: () => getLocalizedTranslationVersions(language),
+    staleTime: 1000 * 60 * 5
+  });
 
   const [open, setOpen] = useState(false);
 
