@@ -12,13 +12,19 @@ import {
 } from '@/shared/components/ui/drawer';
 
 import { Button } from '@/shared/components/ui/button';
-import { cn } from '@/shared';
-import { ChevronDown, Globe } from 'lucide-react';
+import { bibleKeys, cn } from '@/shared';
+import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import { useBibleLanguage, useLocalizedTranslationVersions } from '@/features/bible';
+import {
+  useBibleStore,
+  useBibleLanguage,
+  useLocalizedTranslationVersions,
+  fetchTranslationsByLanguage
+} from '@/features/bible';
+import { useQuery } from '@tanstack/react-query';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -202,6 +208,58 @@ export function SkeletonCard() {
 }
 
 export default function Container() {
+  const language = useBibleLanguage();
+  const { data: localizedTranslationVersions = [undefined] } =
+    useLocalizedTranslationVersions(language);
+  const [translationVersion] = localizedTranslationVersions;
+  const {
+    selectedTranslationVersion,
+    setSelectedTranslationVersion,
+    selectedBookInstance,
+    setSelectedBookInstance
+  } = useBibleStore();
+
+  const getVersionId = (selectedTranslationVersion || translationVersion)?.abbreviation || '';
+
+  const { data: bibleInstance } = useQuery({
+    ...bibleKeys.data(getVersionId),
+    queryFn: () => fetchTranslationsByLanguage(getVersionId),
+    enabled: !!getVersionId,
+    staleTime: 1000 * 60 * 5
+  });
+
+  const isLoading = !bibleInstance || !translationVersion;
+
+  const { books } = bibleInstance || { books: [{ name: '', nr: 0, chapters: [] }] };
+  const [{ name: DEFAULT_BOOK }] = books;
+  const DEFAULT_CHAPTER = 1;
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    setSelectedBookInstance({
+      book: DEFAULT_BOOK,
+      chapter: DEFAULT_CHAPTER
+    });
+    setSelectedTranslationVersion(translationVersion);
+  }, [
+    DEFAULT_BOOK,
+    isLoading,
+    translationVersion,
+    setSelectedTranslationVersion,
+    ,
+    setSelectedBookInstance
+  ]);
+
+  console.log({ isLoading, translationVersion, selectedTranslationVersion, selectedBookInstance });
+
+  if (isLoading)
+    return (
+      <div className="center-absolute">
+        <LoaderCircle className="animate-spin" />
+      </div>
+    );
+
   return (
     <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
