@@ -7,18 +7,15 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/shared/components/ui/select';
-import { useParams, usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
-import { fetchTranslations, getLanguageFullName } from '@/features/bible';
+import { fetchTranslations, getLanguageFullName, useBibleLanguage } from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
 import { translationsKeys } from '@/shared';
 
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const bibleLanguage = searchParams.get('bibleLanguage');
-  const { locale } = useParams<{ locale: string }>();
-  const value = bibleLanguage || locale;
+  const value = useBibleLanguage();
 
   const { data: translationVersions = [] } = useQuery({
     queryKey: translationsKeys._def,

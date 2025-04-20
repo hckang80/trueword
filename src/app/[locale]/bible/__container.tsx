@@ -18,8 +18,7 @@ import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
 import { useBible } from './Provider';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import { useLocalizedTranslationVersions } from '@/features/bible';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useBibleLanguage, useLocalizedTranslationVersions } from '@/features/bible';
 
 function BookSelector() {
   const { books, selectedChapterName, resetBook, selectedBook } = useBible();
@@ -121,11 +120,7 @@ function BookSelector() {
 function TranslationSelector() {
   const { selectedTranslationVersion, handleTranslationChange } = useBible();
   const t = useTranslations('Common');
-
-  const searchParams = useSearchParams();
-  const bibleLanguage = searchParams.get('bibleLanguage');
-  const { locale } = useParams<{ locale: string }>();
-  const language = bibleLanguage || locale;
+  const language = useBibleLanguage();
 
   const { data: localizedTranslationVersions = [] } = useLocalizedTranslationVersions(language);
 

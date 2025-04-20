@@ -1,11 +1,14 @@
 'use client';
 
 import type { BibleInstance, SelectedBook, TransitionVersion } from '@/entities/bible';
-import { fetchTranslationsByLanguage, useLocalizedTranslationVersions } from '@/features/bible';
+import {
+  fetchTranslationsByLanguage,
+  useBibleLanguage,
+  useLocalizedTranslationVersions
+} from '@/features/bible';
 import { bibleKeys } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { LoaderCircle } from 'lucide-react';
-import { useParams, useSearchParams } from 'next/navigation';
 import {
   createContext,
   type ReactNode,
@@ -36,11 +39,7 @@ export function useBible() {
 }
 
 export function BibleProvider({ children }: { children: ReactNode }) {
-  const params = useParams<{ locale: string }>();
-  const { locale: userLocale } = params;
-  const searchParams = useSearchParams();
-  const bibleLanguage = searchParams.get('bibleLanguage');
-  const validLanguage = bibleLanguage || userLocale;
+  const validLanguage = useBibleLanguage();
   const { data: localizedTranslationVersions = [] } =
     useLocalizedTranslationVersions(validLanguage);
   const [translation] = localizedTranslationVersions;
