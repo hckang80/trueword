@@ -281,8 +281,6 @@ export default function Container() {
     setSelectedBookInstance({ book, chapter });
   };
 
-  console.log({ isLoading, translationVersion, selectedTranslationVersion, selectedBookInstance });
-
   if (isLoading)
     return (
       <div className="center-absolute">
