@@ -43,7 +43,7 @@ export function BibleProvider({ children }: { children: ReactNode }) {
   const { data: localizedTranslationVersions = [] } =
     useLocalizedTranslationVersions(validLanguage);
   const [translation] = localizedTranslationVersions;
-  const [selectedTranslationVersion, setSelectedTranslation] = useState<
+  const [selectedTranslationVersion, setSelectedTranslationVersion] = useState<
     TransitionVersion | undefined
   >(translation);
 
@@ -68,7 +68,7 @@ export function BibleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!translation) return;
-    setSelectedTranslation(translation);
+    setSelectedTranslationVersion(translation);
     resetBook(DEFAULT_BOOK, DEFAULT_CHAPTER);
   }, [translation, resetBook, DEFAULT_BOOK]);
 
@@ -86,7 +86,7 @@ export function BibleProvider({ children }: { children: ReactNode }) {
   const selectedVerses = selectedChapterInstance?.verses || [];
 
   const handleTranslationChange = (value: string) => {
-    setSelectedTranslation(() =>
+    setSelectedTranslationVersion(() =>
       localizedTranslationVersions.find(({ abbreviation }) => abbreviation === value)
     );
   };
