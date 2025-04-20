@@ -12,17 +12,31 @@ import {
 } from '@/shared/components/ui/drawer';
 
 import { Button } from '@/shared/components/ui/button';
-import { cn } from '@/shared';
-import { ChevronDown, Globe } from 'lucide-react';
+import { bibleKeys, cn } from '@/shared';
+import { ChevronDown, Globe, LoaderCircle } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
-import { useBible } from './Provider';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import { useBibleLanguage, useLocalizedTranslationVersions } from '@/features/bible';
+import {
+  useBibleStore,
+  useBibleLanguage,
+  useLocalizedTranslationVersions,
+  fetchTranslationsByLanguage
+} from '@/features/bible';
+import { useQuery } from '@tanstack/react-query';
+import type { Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
 
-function BookSelector() {
-  const { books, selectedChapterName, resetBook, selectedBook } = useBible();
-
+function BookSelector({
+  books,
+  selectedChapterName,
+  selectedBook,
+  resetBook
+}: {
+  books: Book[];
+  selectedChapterName: string;
+  selectedBook: SelectedBook;
+  resetBook: (book: string, chapter: number) => void;
+}) {
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
 
@@ -117,8 +131,13 @@ function BookSelector() {
   );
 }
 
-function TranslationSelector() {
-  const { selectedTranslationVersion, handleTranslationChange } = useBible();
+function TranslationSelector({
+  selectedTranslationVersion,
+  handleTranslationVersionChange
+}: {
+  selectedTranslationVersion: TransitionVersion;
+  handleTranslationVersionChange: (value: string) => void;
+}) {
   const t = useTranslations('Common');
   const language = useBibleLanguage();
 
@@ -151,7 +170,7 @@ function TranslationSelector() {
                     <DrawerClose asChild>
                       <button
                         className={cn('w-full p-[10px] text-left')}
-                        onClick={() => handleTranslationChange(abbreviation)}
+                        onClick={() => handleTranslationVersionChange(abbreviation)}
                       >
                         <em
                           className={cn(
@@ -177,9 +196,7 @@ function TranslationSelector() {
   );
 }
 
-function VerseList() {
-  const { selectedVerses } = useBible();
-
+function VerseList({ selectedVerses }: { selectedVerses: Verse[] }) {
   return (
     <div>
       {selectedVerses.map(({ verse, text }) => (
@@ -202,13 +219,92 @@ export function SkeletonCard() {
 }
 
 export default function Container() {
+  const language = useBibleLanguage();
+  const { data: localizedTranslationVersions = [] } = useLocalizedTranslationVersions(language);
+  const [translationVersion] = localizedTranslationVersions;
+  const {
+    selectedTranslationVersion,
+    setSelectedTranslationVersion,
+    selectedBookInstance,
+    setSelectedBookInstance
+  } = useBibleStore();
+
+  const getVersionId = (selectedTranslationVersion || translationVersion)?.abbreviation || '';
+
+  const { data: bibleInstance } = useQuery({
+    ...bibleKeys.data(getVersionId),
+    queryFn: () => fetchTranslationsByLanguage(getVersionId),
+    enabled: !!getVersionId,
+    staleTime: 1000 * 60 * 5
+  });
+
+  const isLoading = !bibleInstance || !translationVersion;
+
+  const { books } = bibleInstance || { books: [{ name: '', nr: 0, chapters: [] }] };
+  const [{ name: DEFAULT_BOOK }] = books;
+  const DEFAULT_CHAPTER = 1;
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    setSelectedBookInstance({
+      book: DEFAULT_BOOK,
+      chapter: DEFAULT_CHAPTER
+    });
+    setSelectedTranslationVersion(translationVersion);
+  }, [
+    DEFAULT_BOOK,
+    isLoading,
+    translationVersion,
+    setSelectedTranslationVersion,
+    ,
+    setSelectedBookInstance
+  ]);
+
+  const selectedChapters =
+    books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];
+  const selectedChapterInstance = selectedChapters.find(
+    (chapter) => chapter.chapter === selectedBookInstance.chapter
+  );
+  const selectedChapterName = selectedChapterInstance?.name || '';
+  const selectedVerses = selectedChapterInstance?.verses || [];
+
+  const handleTranslationVersionChange = (value: string) => {
+    const transitionVersion = localizedTranslationVersions.find(
+      ({ abbreviation }) => abbreviation === value
+    );
+    if (!transitionVersion) return;
+    setSelectedTranslationVersion(transitionVersion);
+  };
+
+  const resetBook = (book: string, chapter: number) => {
+    setSelectedBookInstance({ book, chapter });
+  };
+
+  if (isLoading)
+    return (
+      <div className="center-absolute">
+        <LoaderCircle className="animate-spin" />
+      </div>
+    );
+
   return (
     <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
-        <BookSelector />
-        <TranslationSelector />
+        <BookSelector
+          books={books}
+          selectedChapterName={selectedChapterName}
+          selectedBook={selectedBookInstance}
+          resetBook={resetBook}
+        />
+        {selectedTranslationVersion && (
+          <TranslationSelector
+            selectedTranslationVersion={selectedTranslationVersion}
+            handleTranslationVersionChange={handleTranslationVersionChange}
+          />
+        )}
       </div>
-      <VerseList />
+      <VerseList selectedVerses={selectedVerses} />
     </div>
   );
 }
