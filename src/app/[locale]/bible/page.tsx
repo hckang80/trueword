@@ -1,7 +1,6 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { bibleKeys, translationsKeys } from '@/shared';
-import { BibleProvider } from './Provider';
 import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 
@@ -49,9 +48,7 @@ export default async function Bible({ params, searchParams }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <BibleProvider>
-        <Container />
-      </BibleProvider>
+      <Container />
     </HydrationBoundary>
   );
 }
