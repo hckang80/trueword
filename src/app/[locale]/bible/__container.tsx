@@ -229,12 +229,13 @@ export default function Container() {
     setSelectedBookInstance
   } = useBibleStore();
 
-  const getVersionId = (selectedTranslationVersion || translationVersion)?.abbreviation || '';
+  const getTranslationVersion = selectedTranslationVersion || translationVersion;
+  const getTranslationVersionId = getTranslationVersion.abbreviation || '';
 
   const { data: bibleInstance } = useQuery({
-    ...bibleKeys.data(getVersionId),
-    queryFn: () => fetchTranslationsByLanguage(getVersionId),
-    enabled: !!getVersionId,
+    ...bibleKeys.data(getTranslationVersionId),
+    queryFn: () => fetchTranslationsByLanguage(getTranslationVersionId),
+    enabled: !!getTranslationVersionId,
     staleTime: 1000 * 60 * 5
   });
 
@@ -251,13 +252,12 @@ export default function Container() {
       book: DEFAULT_BOOK,
       chapter: DEFAULT_CHAPTER
     });
-    setSelectedTranslationVersion(translationVersion);
+    setSelectedTranslationVersion(getTranslationVersion);
   }, [
     DEFAULT_BOOK,
     isLoading,
-    translationVersion,
+    getTranslationVersion,
     setSelectedTranslationVersion,
-    ,
     setSelectedBookInstance
   ]);
 
