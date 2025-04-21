@@ -37,7 +37,7 @@ export default async function Bible({ params }: Props) {
 
   const [defaultTranslation] = localizedTranslationVersions;
 
-  queryClient.prefetchQuery({
+  await queryClient.prefetchQuery({
     ...bibleKeys.data(defaultTranslation.abbreviation),
     queryFn: () => fetchBibleInstance(defaultTranslation.abbreviation)
   });
