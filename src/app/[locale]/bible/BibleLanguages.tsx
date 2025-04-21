@@ -8,7 +8,7 @@ import {
   SelectValue
 } from '@/shared/components/ui/select';
 import {
-  fetchTranslations,
+  fetchTranslationVersions,
   getLanguageFullName,
   useBibleLanguage,
   useBibleStore
@@ -22,7 +22,7 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
 
   const { data: translationVersions = [] } = useQuery({
     queryKey: translationsKeys._def,
-    queryFn: fetchTranslations,
+    queryFn: fetchTranslationVersions,
     staleTime: 1000 * 60 * 5
   });
 
