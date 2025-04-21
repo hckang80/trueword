@@ -2,6 +2,8 @@ import type { SelectedBook, TransitionVersion } from '@/entities/bible';
 import { create } from 'zustand';
 
 interface BibleStore {
+  bibleLanguage: string;
+  setBibleLanguage: (language: string) => void;
   selectedTranslationVersion?: TransitionVersion;
   setSelectedTranslationVersion: (transitionVersion: TransitionVersion) => void;
   selectedBookInstance: SelectedBook;
@@ -9,6 +11,10 @@ interface BibleStore {
 }
 
 export const useBibleStore = create<BibleStore>((set, get) => ({
+  bibleLanguage: '',
+  setBibleLanguage: (language: string) => {
+    set({ bibleLanguage: language });
+  },
   selectedTranslationVersion: undefined,
   setSelectedTranslationVersion: (transitionVersion) => {
     set({ selectedTranslationVersion: transitionVersion });

@@ -223,6 +223,7 @@ export default function Container() {
   const { data: localizedTranslationVersions = [] } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
   const {
+    bibleLanguage,
     selectedTranslationVersion,
     setSelectedTranslationVersion,
     selectedBookInstance,
@@ -254,12 +255,18 @@ export default function Container() {
     });
     setSelectedTranslationVersion(getTranslationVersion);
   }, [
-    DEFAULT_BOOK,
     isLoading,
+    DEFAULT_BOOK,
     getTranslationVersion,
     setSelectedTranslationVersion,
     setSelectedBookInstance
   ]);
+
+  useEffect(() => {
+    if (!translationVersion) return;
+
+    setSelectedTranslationVersion(translationVersion);
+  }, [bibleLanguage, setSelectedTranslationVersion, translationVersion]);
 
   const selectedChapters =
     books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];

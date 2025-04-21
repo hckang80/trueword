@@ -7,14 +7,17 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/shared/components/ui/select';
-import { usePathname } from 'next/navigation';
-import { useCallback } from 'react';
-import { fetchTranslations, getLanguageFullName, useBibleLanguage } from '@/features/bible';
+import {
+  fetchTranslations,
+  getLanguageFullName,
+  useBibleLanguage,
+  useBibleStore
+} from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
 import { translationsKeys } from '@/shared';
 
 export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
-  const pathname = usePathname();
+  const { setBibleLanguage } = useBibleStore();
   const value = useBibleLanguage();
 
   const { data: translationVersions = [] } = useQuery({
@@ -23,15 +26,10 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
     staleTime: 1000 * 60 * 5
   });
 
-  const handleChange = useCallback(
-    (language: string) => {
-      const params = new URLSearchParams(window.location.search);
-      params.set('bibleLanguage', language);
-      window.history.pushState(null, '', `${pathname}?${params.toString()}`);
-      setOpen(false);
-    },
-    [pathname, setOpen]
-  );
+  const handleChange = (language: string) => {
+    setBibleLanguage(language);
+    setOpen(false);
+  };
 
   const languages = [...new Set([...Object.values(translationVersions).map(({ lang }) => lang)])];
   const languagesWithLabel = languages.map((language) => ({

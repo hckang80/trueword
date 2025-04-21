@@ -20,14 +20,10 @@ export async function generateMetadata(
   };
 }
 
-export default async function Bible({ params, searchParams }: Props) {
-  const { locale: userLocale } = await params;
+export default async function Bible({ params }: Props) {
+  const { locale: language } = await params;
 
   const queryClient = new QueryClient();
-
-  const { bibleLanguage = '' } = await searchParams;
-
-  const language = bibleLanguage || userLocale;
 
   const translationVersions = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
