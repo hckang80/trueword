@@ -222,13 +222,10 @@ export default function Container() {
   const language = useBibleLanguage();
   const { data: localizedTranslationVersions = [] } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-  const {
-    bibleLanguage,
-    selectedTranslationVersion,
-    setSelectedTranslationVersion,
-    selectedBookInstance,
-    setSelectedBookInstance
-  } = useBibleStore();
+  const { bibleLanguage } = useBibleStore();
+
+  const [selectedTranslationVersion, setSelectedTranslationVersion] =
+    useState<TransitionVersion>(translationVersion);
 
   const getTranslationVersion = selectedTranslationVersion || translationVersion;
   const getTranslationVersionId = getTranslationVersion.abbreviation || '';
@@ -245,6 +242,11 @@ export default function Container() {
   const { books } = bibleInstance || { books: [{ name: '', nr: 0, chapters: [] }] };
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
+
+  const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
+    book: DEFAULT_BOOK,
+    chapter: DEFAULT_CHAPTER
+  });
 
   useEffect(() => {
     if (isLoading) return;
