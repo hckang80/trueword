@@ -21,7 +21,7 @@ import {
   useBibleStore,
   useBibleLanguage,
   useLocalizedTranslationVersions,
-  fetchTranslationsByLanguage
+  fetchBibleInstance
 } from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
 import type { Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
@@ -235,7 +235,7 @@ export default function Container() {
 
   const { data: bibleInstance } = useQuery({
     ...bibleKeys.data(getTranslationVersionId),
-    queryFn: () => fetchTranslationsByLanguage(getTranslationVersionId),
+    queryFn: () => fetchBibleInstance(getTranslationVersionId),
     enabled: !!getTranslationVersionId,
     staleTime: 1000 * 60 * 5
   });

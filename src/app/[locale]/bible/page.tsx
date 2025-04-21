@@ -1,7 +1,7 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { bibleKeys, translationsKeys } from '@/shared';
-import { fetchTranslations, fetchTranslationsByLanguage } from '@/features/bible';
+import { fetchTranslationVersions, fetchBibleInstance } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
@@ -27,7 +27,7 @@ export default async function Bible({ params }: Props) {
 
   const translationVersions = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
-    queryFn: fetchTranslations
+    queryFn: fetchTranslationVersions
   });
 
   const localizedTranslationVersions = await queryClient.fetchQuery({
@@ -39,7 +39,7 @@ export default async function Bible({ params }: Props) {
 
   queryClient.prefetchQuery({
     ...bibleKeys.data(defaultTranslation.abbreviation),
-    queryFn: () => fetchTranslationsByLanguage(defaultTranslation.abbreviation)
+    queryFn: () => fetchBibleInstance(defaultTranslation.abbreviation)
   });
 
   return (
