@@ -23,7 +23,7 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
   const { data: translationVersions = [] } = useQuery({
     queryKey: translationsKeys._def,
     queryFn: fetchTranslationVersions,
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   });
 
   const handleChange = (language: string) => {
