@@ -15,8 +15,15 @@ import {
 } from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
 import { translationsKeys } from '@/shared';
+import { TransitionVersion } from '@/entities/bible';
 
-export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
+export default function BibleLanguages({
+  setOpen,
+  setSelectedTranslationVersion
+}: {
+  setOpen: (open: boolean) => void;
+  setSelectedTranslationVersion: (value: TransitionVersion) => void;
+}) {
   const { setBibleLanguage } = useBibleStore();
   const value = useBibleLanguage();
 
@@ -27,7 +34,11 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
   });
 
   const handleChange = (language: string) => {
+    const translationVersion = translationVersions.find(({ lang }) => lang === language);
+    if (!translationVersion) return;
+
     setBibleLanguage(language);
+    setSelectedTranslationVersion(translationVersion);
     setOpen(false);
   };
 
