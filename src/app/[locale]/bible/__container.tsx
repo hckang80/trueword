@@ -20,7 +20,8 @@ import { Skeleton } from '@/shared/components/ui/skeleton';
 import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
-  fetchBibleInstance
+  fetchBibleInstance,
+  useBibleParamsChange
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import type { Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
@@ -142,12 +143,15 @@ function TranslationSelector({
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
 
+  const changeParams = useBibleParamsChange();
+
   const handleTranslationVersionChange = (value: string) => {
-    const transitionVersion = localizedTranslationVersions.find(
+    const translationVersion = localizedTranslationVersions.find(
       ({ abbreviation }) => abbreviation === value
     );
-    if (!transitionVersion) return;
-    setSelectedTranslationVersion(transitionVersion);
+    if (!translationVersion) return;
+    setSelectedTranslationVersion(translationVersion);
+    changeParams({ abbreviation: translationVersion.abbreviation });
   };
 
   return (
