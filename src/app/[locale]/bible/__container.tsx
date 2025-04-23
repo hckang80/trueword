@@ -225,14 +225,14 @@ export function SkeletonCard() {
 
 export default function Container() {
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams.toString());
   const language = useBibleLanguage();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-  const getTranslationVersionId = params.get('abbreviation') || translationVersion.abbreviation;
+  const getTranslationVersionId =
+    searchParams.get('abbreviation') || translationVersion.abbreviation;
 
   const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data(searchParams.toString()),
+    ...bibleKeys.data(getTranslationVersionId),
     queryFn: () => fetchBibleInstance(getTranslationVersionId),
     staleTime: Infinity
   });
