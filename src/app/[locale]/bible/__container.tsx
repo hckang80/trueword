@@ -230,7 +230,7 @@ export default function Container() {
   const { data: bibleInstance } = useSuspenseQuery({
     ...bibleKeys.data(searchParams.toString()),
     queryFn: () => fetchBibleInstance(getTranslationVersionId),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   });
 
   const { books } = bibleInstance;

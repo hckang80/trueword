@@ -6,6 +6,6 @@ export const useLocalizedTranslationVersions = (language: string) => {
   return useSuspenseQuery({
     ...translationsKeys.data(language),
     queryFn: () => getLocalizedTranslationVersions(language),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   });
 };
