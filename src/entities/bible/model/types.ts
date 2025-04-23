@@ -1,4 +1,6 @@
 export interface BibleInstance {
+  abbreviation: string;
+  distribution_versification: string;
   books: Book[];
 }
 
