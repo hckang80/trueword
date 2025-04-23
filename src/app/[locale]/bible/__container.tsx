@@ -20,10 +20,12 @@ import { Skeleton } from '@/shared/components/ui/skeleton';
 import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
-  fetchBibleInstance
+  fetchBibleInstance,
+  useBibleParamsChange
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
+import type { BibleInstance, Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
+import { useSearchParams } from 'next/navigation';
 
 function BookSelector({
   books,
@@ -132,28 +134,23 @@ function BookSelector({
 
 function TranslationSelector({
   localizedTranslationVersions,
-  selectedTranslationVersion,
-  setSelectedTranslationVersion
+  bibleInstance
 }: {
   localizedTranslationVersions: TransitionVersion[];
-  selectedTranslationVersion: TransitionVersion;
-  setSelectedTranslationVersion: (value: TransitionVersion) => void;
+  bibleInstance: BibleInstance;
 }) {
   const t = useTranslations('Common');
-  const [open, setOpen] = useState(false);
 
-  const handleTranslationVersionChange = (value: string) => {
-    const transitionVersion = localizedTranslationVersions.find(
-      ({ abbreviation }) => abbreviation === value
-    );
-    if (!transitionVersion) return;
-    setSelectedTranslationVersion(transitionVersion);
+  const changeParams = useBibleParamsChange();
+
+  const handleTranslationVersionChange = (abbreviation: string) => {
+    changeParams({ abbreviation });
   };
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="outline">{selectedTranslationVersion.distribution_versification}</Button>
+        <Button variant="outline">{bibleInstance.distribution_versification}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
@@ -163,10 +160,7 @@ function TranslationSelector({
               {t('language')}
             </span>
             <div className="flex items-center gap-[4px]">
-              <BibleLanguages
-                setOpen={setOpen}
-                setSelectedTranslationVersion={setSelectedTranslationVersion}
-              />
+              <BibleLanguages />
             </div>
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
@@ -175,24 +169,20 @@ function TranslationSelector({
               {localizedTranslationVersions.map(
                 ({ distribution_versification, abbreviation, description }) => (
                   <li key={abbreviation}>
-                    <DrawerClose asChild>
-                      <button
-                        className={cn('w-full p-[10px] text-left')}
-                        onClick={() => handleTranslationVersionChange(abbreviation)}
+                    <button
+                      className={cn('w-full p-[10px] text-left')}
+                      onClick={() => handleTranslationVersionChange(abbreviation)}
+                    >
+                      <em
+                        className={cn(
+                          'block text-[16px]',
+                          abbreviation === bibleInstance.abbreviation ? 'font-bold' : ''
+                        )}
                       >
-                        <em
-                          className={cn(
-                            'block text-[16px]',
-                            abbreviation === selectedTranslationVersion.abbreviation
-                              ? 'font-bold'
-                              : ''
-                          )}
-                        >
-                          {distribution_versification}
-                        </em>
-                        <span className="block text-[13px]">{description}</span>
-                      </button>
-                    </DrawerClose>
+                        {distribution_versification}
+                      </em>
+                      <span className="block text-[13px]">{description}</span>
+                    </button>
                   </li>
                 )
               )}
@@ -227,22 +217,20 @@ export function SkeletonCard() {
 }
 
 export default function Container() {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
   const language = useBibleLanguage();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-
-  const [selectedTranslationVersion, setSelectedTranslationVersion] = useState(translationVersion);
-
-  const getTranslationVersion = selectedTranslationVersion;
-  const getTranslationVersionId = getTranslationVersion.abbreviation || '';
+  const getTranslationVersionId = params.get('abbreviation') || translationVersion.abbreviation;
 
   const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data(getTranslationVersionId),
+    ...bibleKeys.data(searchParams.toString()),
     queryFn: () => fetchBibleInstance(getTranslationVersionId),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   });
 
-  const { books } = bibleInstance || { books: [{ name: '', nr: 0, chapters: [] }] };
+  const { books } = bibleInstance;
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
@@ -281,8 +269,7 @@ export default function Container() {
         />
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}
-          selectedTranslationVersion={getTranslationVersion}
-          setSelectedTranslationVersion={setSelectedTranslationVersion}
+          bibleInstance={bibleInstance}
         />
       </div>
       <VerseList selectedVerses={selectedVerses} />

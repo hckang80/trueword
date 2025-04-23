@@ -1,2 +1,2 @@
-export * from './use-client';
+export * from './use-bible';
 export * from './use-query';
