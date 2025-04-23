@@ -140,6 +140,7 @@ function TranslationSelector({
   bibleInstance: BibleInstance;
 }) {
   const t = useTranslations('Common');
+  const [open, setOpen] = useState(false);
 
   const changeParams = useBibleParamsChange();
 
@@ -147,8 +148,14 @@ function TranslationSelector({
     changeParams({ abbreviation });
   };
 
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [searchParams.toString()]);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline">{bibleInstance.distribution_versification}</Button>
       </DrawerTrigger>
