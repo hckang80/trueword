@@ -16,7 +16,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { translationsKeys } from '@/shared';
 
-export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) => void }) {
+export default function BibleLanguages() {
   const value = useBibleLanguage();
   const changeParams = useBibleParamsChange();
 
@@ -32,8 +32,6 @@ export default function BibleLanguages({ setOpen }: { setOpen: (open: boolean) =
   const handleChange = (language: string) => {
     const translationVersion = getTranslationVersion(language);
     if (!translationVersion) return;
-
-    setOpen(false);
 
     changeParams({ language, abbreviation: translationVersion.abbreviation });
   };

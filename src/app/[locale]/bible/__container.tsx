@@ -140,7 +140,6 @@ function TranslationSelector({
   bibleInstance: BibleInstance;
 }) {
   const t = useTranslations('Common');
-  const [open, setOpen] = useState(false);
 
   const changeParams = useBibleParamsChange();
 
@@ -149,7 +148,7 @@ function TranslationSelector({
   };
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer>
       <DrawerTrigger asChild>
         <Button variant="outline">{bibleInstance.distribution_versification}</Button>
       </DrawerTrigger>
@@ -161,7 +160,7 @@ function TranslationSelector({
               {t('language')}
             </span>
             <div className="flex items-center gap-[4px]">
-              <BibleLanguages setOpen={setOpen} />
+              <BibleLanguages />
             </div>
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
@@ -170,22 +169,20 @@ function TranslationSelector({
               {localizedTranslationVersions.map(
                 ({ distribution_versification, abbreviation, description }) => (
                   <li key={abbreviation}>
-                    <DrawerClose asChild>
-                      <button
-                        className={cn('w-full p-[10px] text-left')}
-                        onClick={() => handleTranslationVersionChange(abbreviation)}
+                    <button
+                      className={cn('w-full p-[10px] text-left')}
+                      onClick={() => handleTranslationVersionChange(abbreviation)}
+                    >
+                      <em
+                        className={cn(
+                          'block text-[16px]',
+                          abbreviation === bibleInstance.abbreviation ? 'font-bold' : ''
+                        )}
                       >
-                        <em
-                          className={cn(
-                            'block text-[16px]',
-                            abbreviation === bibleInstance.abbreviation ? 'font-bold' : ''
-                          )}
-                        >
-                          {distribution_versification}
-                        </em>
-                        <span className="block text-[13px]">{description}</span>
-                      </button>
-                    </DrawerClose>
+                        {distribution_versification}
+                      </em>
+                      <span className="block text-[13px]">{description}</span>
+                    </button>
                   </li>
                 )
               )}
