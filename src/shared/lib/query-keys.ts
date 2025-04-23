@@ -1,8 +1,7 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 
-// https://github.com/lukemorales/query-key-factory#readme
 export const bibleKeys = createQueryKeys('bible', {
-  data: (translation: string) => [translation]
+  data: (id: string) => [id]
 });
 
 export const translationsKeys = createQueryKeys('translations', {

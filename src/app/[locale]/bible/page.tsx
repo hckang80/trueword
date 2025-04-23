@@ -8,7 +8,7 @@ import { Suspense } from 'react';
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ bibleLanguage?: string }>;
+  searchParams: Promise<Partial<{ locale: string; abbreviation: string }>>;
 };
 
 export async function generateMetadata(
@@ -22,8 +22,9 @@ export async function generateMetadata(
   };
 }
 
-export default async function Bible({ params }: Props) {
+export default async function Bible({ params, searchParams }: Props) {
   const { locale: language } = await params;
+  const { abbreviation } = await searchParams;
 
   const queryClient = new QueryClient();
 
@@ -38,10 +39,11 @@ export default async function Bible({ params }: Props) {
   });
 
   const [defaultTranslation] = localizedTranslationVersions;
+  const getTranslationVersionId = abbreviation || defaultTranslation.abbreviation;
 
   await queryClient.prefetchQuery({
-    ...bibleKeys.data(defaultTranslation.abbreviation),
-    queryFn: () => fetchBibleInstance(defaultTranslation.abbreviation)
+    ...bibleKeys.data(getTranslationVersionId),
+    queryFn: () => fetchBibleInstance(getTranslationVersionId)
   });
 
   return (

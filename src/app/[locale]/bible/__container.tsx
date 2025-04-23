@@ -140,6 +140,7 @@ function TranslationSelector({
   bibleInstance: BibleInstance;
 }) {
   const t = useTranslations('Common');
+  const [open, setOpen] = useState(false);
 
   const changeParams = useBibleParamsChange();
 
@@ -147,8 +148,14 @@ function TranslationSelector({
     changeParams({ abbreviation });
   };
 
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [searchParams.get('abbreviation')]);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline">{bibleInstance.distribution_versification}</Button>
       </DrawerTrigger>
@@ -218,14 +225,14 @@ export function SkeletonCard() {
 
 export default function Container() {
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams.toString());
   const language = useBibleLanguage();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-  const getTranslationVersionId = params.get('abbreviation') || translationVersion.abbreviation;
+  const getTranslationVersionId =
+    searchParams.get('abbreviation') || translationVersion.abbreviation;
 
   const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data(searchParams.toString()),
+    ...bibleKeys.data(getTranslationVersionId),
     queryFn: () => fetchBibleInstance(getTranslationVersionId),
     staleTime: Infinity
   });
