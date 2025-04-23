@@ -8,4 +8,6 @@ export const translationsKeys = createQueryKeys('translations', {
   data: (language: string) => [language]
 });
 
-export const newsKeys = createQueryKeys('news');
+export const newsKeys = createQueryKeys('news', {
+  data: ([source, id]: string[]) => [source, id]
+});

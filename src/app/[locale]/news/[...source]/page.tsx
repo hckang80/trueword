@@ -15,7 +15,7 @@ export async function generateMetadata(
 
   const { source } = await params;
 
-  const newsBySource = await NewsBySource(source);
+  const { newsBySource } = await NewsBySource(source);
 
   return {
     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
@@ -23,29 +23,25 @@ export async function generateMetadata(
 }
 
 export default async function NewsIdPage({ params }: Props) {
-  const { source } = await params;
+  const { source: sources } = await params;
 
-  const newsBySource = await NewsBySource(source);
+  const { queryClient, newsBySource } = await NewsBySource(sources);
 
   if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
 
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
+  const scraped = await queryClient.fetchQuery({
     queryKey: ['scraped', newsBySource.link],
     queryFn: () => fetchScrapedContent(newsBySource.link)
   });
 
-  const scraped = await fetchScrapedContent(newsBySource.link);
-
   await queryClient.prefetchQuery({
-    queryKey: ['summary', scraped.content, scraped.title],
+    queryKey: ['summary', scraped.title],
     queryFn: () => fetchSummary({ content: scraped.content, title: scraped.title })
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container news={newsBySource} />
+      <Container />
     </HydrationBoundary>
   );
 }
@@ -54,11 +50,11 @@ async function NewsBySource([source, id]: string[]) {
   const queryClient = new QueryClient();
 
   const news = await queryClient.fetchQuery({
-    queryKey: newsKeys._def,
+    ...newsKeys.data([source, id]),
     queryFn: fetchNews
   });
 
   const newsBySource = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
 
-  return newsBySource;
+  return { queryClient, newsBySource };
 }

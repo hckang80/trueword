@@ -6,12 +6,15 @@ import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import DOMPurify from 'dompurify';
+import { useNewsBySource } from '@/features/news';
+import { useParams } from 'next/navigation';
 
-export default function NewsIdContainer({
-  news: { link, title, source, pubDate }
-}: {
-  news: NewsItem;
-}) {
+export default function NewsIdContainer() {
+  const { source: sources } = useParams<{ source: string[] }>();
+  const { data: news } = useNewsBySource(sources);
+
+  if (!news) return null;
+  const { link, title, source, pubDate } = news;
   const { data: scraped } = useScrapedContent(link);
   const {
     data: { summary }

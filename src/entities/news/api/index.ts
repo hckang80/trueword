@@ -29,7 +29,7 @@ export const useScrapedContent = (url: string) => {
 
 export const useSummary = (content: string, title: string) => {
   return useSuspenseQuery({
-    queryKey: ['summary', content, title],
+    queryKey: ['summary', title],
     queryFn: () => fetchSummary({ content, title }),
     staleTime: 1000 * 60 * 5
   });
