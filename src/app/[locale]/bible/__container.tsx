@@ -152,7 +152,7 @@ function TranslationSelector({
 
   useEffect(() => {
     setOpen(false);
-  }, [searchParams.toString()]);
+  }, [searchParams.get('abbreviation')]);
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
