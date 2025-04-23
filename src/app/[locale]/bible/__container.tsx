@@ -24,7 +24,8 @@ import {
   useBibleParamsChange
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
+import type { BibleInstance, Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
+import { useSearchParams } from 'next/navigation';
 
 function BookSelector({
   books,
@@ -133,31 +134,24 @@ function BookSelector({
 
 function TranslationSelector({
   localizedTranslationVersions,
-  selectedTranslationVersion,
-  setSelectedTranslationVersion
+  bibleInstance
 }: {
   localizedTranslationVersions: TransitionVersion[];
-  selectedTranslationVersion: TransitionVersion;
-  setSelectedTranslationVersion: (value: TransitionVersion) => void;
+  bibleInstance: BibleInstance;
 }) {
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
 
   const changeParams = useBibleParamsChange();
 
-  const handleTranslationVersionChange = (value: string) => {
-    const translationVersion = localizedTranslationVersions.find(
-      ({ abbreviation }) => abbreviation === value
-    );
-    if (!translationVersion) return;
-    setSelectedTranslationVersion(translationVersion);
-    changeParams({ abbreviation: translationVersion.abbreviation });
+  const handleTranslationVersionChange = (abbreviation: string) => {
+    changeParams({ abbreviation });
   };
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">{selectedTranslationVersion.distribution_versification}</Button>
+        <Button variant="outline">{bibleInstance.distribution_versification}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
@@ -167,10 +161,7 @@ function TranslationSelector({
               {t('language')}
             </span>
             <div className="flex items-center gap-[4px]">
-              <BibleLanguages
-                setOpen={setOpen}
-                setSelectedTranslationVersion={setSelectedTranslationVersion}
-              />
+              <BibleLanguages setOpen={setOpen} />
             </div>
           </div>
           <DrawerTitle className="hidden">Translations</DrawerTitle>
@@ -187,9 +178,7 @@ function TranslationSelector({
                         <em
                           className={cn(
                             'block text-[16px]',
-                            abbreviation === selectedTranslationVersion.abbreviation
-                              ? 'font-bold'
-                              : ''
+                            abbreviation === bibleInstance.abbreviation ? 'font-bold' : ''
                           )}
                         >
                           {distribution_versification}
@@ -231,22 +220,20 @@ export function SkeletonCard() {
 }
 
 export default function Container() {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
   const language = useBibleLanguage();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-
-  const [selectedTranslationVersion, setSelectedTranslationVersion] = useState(translationVersion);
-
-  const getTranslationVersion = selectedTranslationVersion;
-  const getTranslationVersionId = getTranslationVersion.abbreviation || '';
+  const getTranslationVersionId = params.get('abbreviation') || translationVersion.abbreviation;
 
   const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data(getTranslationVersionId),
+    ...bibleKeys.data(searchParams.toString()),
     queryFn: () => fetchBibleInstance(getTranslationVersionId),
     staleTime: 1000 * 60 * 5
   });
 
-  const { books } = bibleInstance || { books: [{ name: '', nr: 0, chapters: [] }] };
+  const { books } = bibleInstance;
   const [{ name: DEFAULT_BOOK }] = books;
   const DEFAULT_CHAPTER = 1;
 
@@ -285,8 +272,7 @@ export default function Container() {
         />
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}
-          selectedTranslationVersion={getTranslationVersion}
-          setSelectedTranslationVersion={setSelectedTranslationVersion}
+          bibleInstance={bibleInstance}
         />
       </div>
       <VerseList selectedVerses={selectedVerses} />
