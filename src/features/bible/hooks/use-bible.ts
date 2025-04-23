@@ -1,28 +1,30 @@
 'use client';
 
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
-import { useBibleStore } from '../model';
 
 export const useBibleLanguage = () => {
-  const { bibleLanguage } = useBibleStore();
-  const params = useParams<{ locale: string }>();
-  const { locale: userLocale } = params;
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+  const bibleLanguage = params.get('locale');
+  const routeParams = useParams<{ locale: string }>();
+  const { locale: userLocale } = routeParams;
+
   return bibleLanguage || userLocale;
 };
 
 export const useBibleParamsChange = () => {
-  const params = useParams<{ locale: string }>();
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+  const routeParams = useParams<{ locale: string }>();
   const pathname = usePathname();
 
   return ({
-    language = params.locale,
+    language = params.get('locale') || routeParams.locale,
     abbreviation
   }: {
     language?: string;
     abbreviation: string;
   }) => {
-    const params = new URLSearchParams(searchParams.toString());
     params.set('locale', language);
     params.set('abbreviation', abbreviation);
     window.history.pushState(null, '', `${pathname}?${params.toString()}`);
