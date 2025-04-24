@@ -11,9 +11,9 @@ import { useParams } from 'next/navigation';
 
 export default function NewsIdContainer() {
   const { source: sources } = useParams<{ source: string[] }>();
-  const { data: news } = useNewsBySource(sources);
+  const { data: news = { link: '', title: '', source: '', pubDate: '' } } =
+    useNewsBySource(sources);
 
-  if (!news) return null;
   const { link, title, source, pubDate } = news;
   const { data: scraped } = useScrapedContent(link);
   const {
