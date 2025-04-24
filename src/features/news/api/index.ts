@@ -7,6 +7,21 @@ export async function fetchNews(): Promise<NewsItem[]> {
   return data;
 }
 
+export async function fetchScrapedContent(url: string) {
+  const { data } = await axiosInstance.post<{ content: string; title: string }>('/api/scrape', {
+    url
+  });
+  return data;
+}
+
+export async function fetchSummary({ content, title }: { content: string; title: string }) {
+  const { data } = await axiosInstance.post<{ summary: string }>('/api/summarize', {
+    content,
+    title
+  });
+  return data;
+}
+
 export function useNews() {
   return useQuery<NewsItem[]>({
     queryKey: newsKeys._def,
@@ -22,5 +37,21 @@ export function useNewsBySource(sources: string[]) {
     ...newsKeys.data(sources),
     queryFn: fetchNews,
     select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
+  });
+}
+
+export function useScrapedContent(url: string) {
+  return useSuspenseQuery({
+    queryKey: ['scraped', url],
+    queryFn: () => fetchScrapedContent(url),
+    staleTime: 1000 * 60 * 5
+  });
+}
+
+export function useSummary(content: string, title: string) {
+  return useSuspenseQuery({
+    queryKey: ['summary', title],
+    queryFn: () => fetchSummary({ content, title }),
+    staleTime: 1000 * 60 * 5
   });
 }
