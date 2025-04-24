@@ -1,19 +1,25 @@
 'use client';
 
 import { buttonVariants } from '@/shared/components/ui/button';
-import type { NewsItem } from '@/entities/news';
+import { useScrapedContent, useSummary } from '@/entities/news';
 import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import DOMPurify from 'dompurify';
+import { useNewsBySource } from '@/features/news';
+import { useParams } from 'next/navigation';
 
-export default function NewsIdContainer({
-  summary,
-  news: { link, title, source, pubDate }
-}: {
-  summary: string;
-  news: NewsItem;
-}) {
+export default function NewsIdContainer() {
+  const { source: sources } = useParams<{ source: string[] }>();
+  const { data: news = { link: '', title: '', source: '', pubDate: '' } } =
+    useNewsBySource(sources);
+
+  const { link, title, source, pubDate } = news;
+  const { data: scraped } = useScrapedContent(link);
+  const {
+    data: { summary }
+  } = useSummary(scraped.content, scraped.title);
+
   const sanitizedData = () => ({
     __html: DOMPurify.sanitize(summary.replace(/`{3,}/g, '').replace('html', ''))
   });
