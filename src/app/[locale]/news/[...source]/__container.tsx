@@ -1,7 +1,7 @@
 'use client';
 
 import { buttonVariants } from '@/shared/components/ui/button';
-import { useScrapedContent, useSummary, type NewsItem } from '@/entities/news';
+import { useScrapedContent, useSummary } from '@/entities/news';
 import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
