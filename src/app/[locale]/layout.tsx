@@ -7,6 +7,8 @@ import { routing } from '@/i18n/routing';
 import ProgressBar from './ProgressBar';
 import { BottomNavigation, isSupportedLocale } from '@/shared';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { ThemeProvider } from './ThemeProvider';
+import { ModeToggle } from './ModeToggle';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -35,15 +37,23 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
-        <ProgressBar />
-        <Providers>
-          <NextIntlClientProvider messages={messages}>
-            <main>{children}</main>
-            <BottomNavigation />
-          </NextIntlClientProvider>
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ProgressBar />
+          <Providers>
+            <NextIntlClientProvider messages={messages}>
+              <ModeToggle />
+              <main>{children}</main>
+              <BottomNavigation />
+            </NextIntlClientProvider>
+          </Providers>
+        </ThemeProvider>
         {process.env.NODE_ENV !== 'development' && <GoogleAnalytics gaId="G-P43JHSZ9K8" />}
       </body>
     </html>
