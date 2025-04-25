@@ -5,11 +5,10 @@ import { useParams, usePathname, useSearchParams } from 'next/navigation';
 export const useBibleLanguage = () => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
-  const bibleLanguage = params.get('locale');
   const routeParams = useParams<{ locale: string }>();
   const { locale: userLocale } = routeParams;
 
-  return bibleLanguage || userLocale;
+  return params.get('translation') || userLocale;
 };
 
 export const useBibleParamsChange = () => {
@@ -19,13 +18,13 @@ export const useBibleParamsChange = () => {
   const pathname = usePathname();
 
   return ({
-    language = params.get('locale') || routeParams.locale,
+    language = params.get('translation') || routeParams.locale,
     abbreviation
   }: {
     language?: string;
     abbreviation: string;
   }) => {
-    params.set('locale', language);
+    params.set('translation', language);
     params.set('abbreviation', abbreviation);
     window.history.pushState(null, '', `${pathname}?${params.toString()}`);
   };
