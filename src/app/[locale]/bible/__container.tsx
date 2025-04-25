@@ -149,10 +149,11 @@ function TranslationSelector({
   };
 
   const searchParams = useSearchParams();
+  const abbreviation = searchParams.get('abbreviation');
 
   useEffect(() => {
     setOpen(false);
-  }, [searchParams.get('abbreviation')]);
+  }, [abbreviation]);
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
