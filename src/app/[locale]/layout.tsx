@@ -8,7 +8,7 @@ import ProgressBar from './ProgressBar';
 import { BottomNavigation, isSupportedLocale } from '@/shared';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from './ThemeProvider';
-import { ModeToggle } from './ModeToggle';
+import Header from './Header';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -48,7 +48,7 @@ export default async function LocaleLayout({
           <ProgressBar />
           <Providers>
             <NextIntlClientProvider messages={messages}>
-              <ModeToggle />
+              <Header />
               <main>{children}</main>
               <BottomNavigation />
             </NextIntlClientProvider>
