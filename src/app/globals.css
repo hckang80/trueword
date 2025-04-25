@@ -156,4 +156,25 @@
   .center-absolute {
     @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
   }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  .shimmer-text {
+    background: linear-gradient(
+        90deg,
+        var(--color-background) 0%,
+        var(--color-foreground) 20%,
+        var(--color-background) 40%
+      )
+      no-repeat 0 0/200% 100% padding-box text;
+    color: transparent;
+    animation: shimmer 6s infinite linear;
+  }
 }
