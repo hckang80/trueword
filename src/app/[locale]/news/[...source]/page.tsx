@@ -1,9 +1,8 @@
 import { newsKeys } from '@/shared';
-import { fetchNews } from '@/features/news';
+import { fetchNews, fetchScrapedContent, fetchSummary } from '@/features/news';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { fetchScrapedContent, fetchSummary } from '@/entities/news';
 
 type Props = { params: Promise<{ source: string[] }> };
 
