@@ -32,7 +32,7 @@ export const BottomNavigation = () => {
   };
 
   return (
-    <nav className="global-nav fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around shadow-lg">
+    <nav className="global-nav fixed bottom-0 left-0 right-0 bg-[var(--color-background)] border-t border-gray-200 flex items-center justify-around shadow-lg">
       <NavItem
         href="/bible"
         icon={<Book size={24} className={isActive('/bible') ? 'text-primary' : 'text-gray-400'} />}

@@ -27,11 +27,14 @@ export default function NewsIdContainer() {
     <article className="p-[var(--global-inset)]">
       <NewsHeader title={title} source={source} pubDate={pubDate} />
 
-      <div className="text-gray-700 bg-gray-100 p-[var(--global-inset)]">
+      <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
         <p className="mb-[10px] text-xs text-muted-foreground">
           이 글은 AI가 원문을 분석하여 핵심 내용을 요약한 것입니다.
         </p>
-        <div className="news-summary" dangerouslySetInnerHTML={sanitizedData()} />
+        <div
+          className="news-summary text-secondary-foreground"
+          dangerouslySetInnerHTML={sanitizedData()}
+        />
       </div>
 
       <div className="flex justify-center gap-[4px] mt-[20px]">
