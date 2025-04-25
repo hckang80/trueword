@@ -167,15 +167,13 @@
   }
 
   .shimmer-text {
-    /* text-shadow: 1px 1px 0 var(--color-foreground); */
     background: linear-gradient(
-      90deg,
-      var(--color-background) 0%,
-      var(--color-foreground) 20%,
-      var(--color-background) 40%
-    );
-    background-size: 200% 100%;
-    background-clip: text;
+        90deg,
+        var(--color-background) 0%,
+        var(--color-foreground) 20%,
+        var(--color-background) 40%
+      )
+      no-repeat 0 0/200% 100% padding-box text;
     color: transparent;
     animation: shimmer 6s infinite linear;
   }
