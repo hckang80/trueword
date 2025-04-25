@@ -26,7 +26,7 @@ export function useNews() {
   return useQuery<NewsItem[]>({
     queryKey: newsKeys._def,
     queryFn: fetchNews,
-    staleTime: 1000 * 60 * 15
+    staleTime: 1000 * 60 * 5
   });
 }
 
@@ -36,7 +36,8 @@ export function useNewsBySource(sources: string[]) {
   return useSuspenseQuery({
     ...newsKeys.data(sources),
     queryFn: fetchNews,
-    select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
+    select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source),
+    staleTime: 1000 * 60 * 5
   });
 }
 
