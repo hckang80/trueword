@@ -21,7 +21,7 @@ import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
   fetchBibleInstance,
-  useBibleParamsChange
+  useUpdateBibleParams
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import type { BibleInstance, Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
@@ -142,10 +142,10 @@ function TranslationSelector({
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
 
-  const changeParams = useBibleParamsChange();
+  const updateBibleParams = useUpdateBibleParams();
 
   const handleTranslationVersionChange = (abbreviation: string) => {
-    changeParams({ abbreviation });
+    updateBibleParams({ abbreviation });
   };
 
   const searchParams = useSearchParams();
