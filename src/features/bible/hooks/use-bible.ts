@@ -2,30 +2,34 @@
 
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
 
-export const useBibleLanguage = () => {
+const useBibleParams = () => {
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams.toString());
+  const urlSearchParams = new URLSearchParams(searchParams.toString());
+  const pathname = usePathname();
   const routeParams = useParams<{ locale: string }>();
-  const { locale: userLocale } = routeParams;
+  const { locale } = routeParams;
 
-  return params.get('translation') || userLocale;
+  return { urlSearchParams, pathname, locale };
 };
 
-export const useBibleParamsChange = () => {
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams.toString());
-  const routeParams = useParams<{ locale: string }>();
-  const pathname = usePathname();
+export const useBibleLanguage = () => {
+  const { urlSearchParams, locale } = useBibleParams();
+
+  return urlSearchParams.get('translation') || locale;
+};
+
+export const useUpdateBibleParams = () => {
+  const { urlSearchParams, pathname, locale } = useBibleParams();
 
   return ({
-    language = params.get('translation') || routeParams.locale,
+    language = urlSearchParams.get('translation') || locale,
     abbreviation
   }: {
     language?: string;
     abbreviation: string;
   }) => {
-    params.set('translation', language);
-    params.set('abbreviation', abbreviation);
-    window.history.pushState(null, '', `${pathname}?${params.toString()}`);
+    urlSearchParams.set('translation', language);
+    urlSearchParams.set('abbreviation', abbreviation);
+    window.history.pushState(null, '', `${pathname}?${urlSearchParams.toString()}`);
   };
 };

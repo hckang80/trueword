@@ -11,14 +11,14 @@ import {
   fetchTranslationVersions,
   getLanguageFullName,
   useBibleLanguage,
-  useBibleParamsChange
+  useUpdateBibleParams
 } from '@/features/bible';
 import { useQuery } from '@tanstack/react-query';
 import { translationsKeys } from '@/shared';
 
 export default function BibleLanguages() {
   const value = useBibleLanguage();
-  const changeParams = useBibleParamsChange();
+  const updateBibleParams = useUpdateBibleParams();
 
   const { data: translationVersions = [] } = useQuery({
     queryKey: translationsKeys._def,
@@ -33,7 +33,7 @@ export default function BibleLanguages() {
     const translationVersion = getTranslationVersion(language);
     if (!translationVersion) return;
 
-    changeParams({ language, abbreviation: translationVersion.abbreviation });
+    updateBibleParams({ language, abbreviation: translationVersion.abbreviation });
   };
 
   const languages = [...new Set([...Object.values(translationVersions).map(({ lang }) => lang)])];
