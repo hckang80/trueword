@@ -9,6 +9,7 @@ import { BottomNavigation, isSupportedLocale } from '@/shared';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from './ThemeProvider';
 import Header from './Header';
+import ErrorBoundary from './ErrorBoundary';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -39,21 +40,23 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ProgressBar />
-          <Providers>
-            <NextIntlClientProvider messages={messages}>
-              <Header />
-              <main>{children}</main>
-              <BottomNavigation />
-            </NextIntlClientProvider>
-          </Providers>
-        </ThemeProvider>
+        <ErrorBoundary>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ProgressBar />
+            <Providers>
+              <NextIntlClientProvider messages={messages}>
+                <Header />
+                <main>{children}</main>
+                <BottomNavigation />
+              </NextIntlClientProvider>
+            </Providers>
+          </ThemeProvider>
+        </ErrorBoundary>
         {process.env.NODE_ENV !== 'development' && <GoogleAnalytics gaId="G-P43JHSZ9K8" />}
       </body>
     </html>
