@@ -6,6 +6,7 @@ import { toReadableDate } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
 import { Link, usePathname } from '@/i18n/routing';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 const NewsLoading = () => <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
 
@@ -16,14 +17,17 @@ const NewsError = () => (
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
     {/* TODO: 최적화 안되는 이미지가 있어서 unoptimized 임시 추가 */}
-    <Image
-      src={src || '/blank.png'}
-      width={120}
-      height={63}
-      style={{ aspectRatio: '2/1.05' }}
-      alt=""
-      unoptimized
-    />
+
+    <ViewTransition name="news-thumbnail">
+      <Image
+        src={src || '/blank.png'}
+        width={120}
+        height={63}
+        style={{ aspectRatio: '2/1.05' }}
+        alt=""
+        unoptimized
+      />
+    </ViewTransition>
   </div>
 ));
 NewsImage.displayName = 'NewsImage';

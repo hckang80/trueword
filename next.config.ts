@@ -25,6 +25,9 @@ const nextConfig: NextConfig = {
     ],
     minimumCacheTTL: 60,
     formats: ['image/webp', 'image/avif']
+  },
+  experimental: {
+    viewTransition: true
   }
 };
 

@@ -7,13 +7,15 @@ import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function NewsIdContainer() {
   const { source: sources } = useParams<{ source: string[] }>();
-  const { data: news = { link: '', title: '', source: '', pubDate: '' } } =
+  const { data: news = { link: '', title: '', source: '', pubDate: '', thumbnail: '' } } =
     useNewsBySource(sources);
 
-  const { link, title, source, pubDate } = news;
+  const { link, title, source, pubDate, thumbnail } = news;
   const { data: scraped } = useScrapedContent(link);
   const {
     data: { summary }
@@ -26,6 +28,17 @@ export default function NewsIdContainer() {
   return (
     <article className="p-[var(--global-inset)]">
       <NewsHeader title={title} source={source} pubDate={pubDate} />
+
+      <ViewTransition name="news-thumbnail">
+        <Image
+          src={thumbnail || '/blank.png'}
+          width={500}
+          height={327}
+          alt=""
+          unoptimized
+          className="w-full"
+        />
+      </ViewTransition>
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
         <p className="mb-[10px] text-xs text-muted-foreground">
