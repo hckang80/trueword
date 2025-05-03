@@ -26,24 +26,22 @@ class ErrorBoundary extends React.Component<Props, State> {
     this.setState({ errorInfo });
   }
   render() {
-    if (this.state.hasError) {
-      return (
-        <div>
-          <h2>{this.state.error?.toString()}</h2>
-          {this.state.errorInfo && (
-            <details style={{ whiteSpace: 'pre-wrap' }}>
-              <summary>에러상세</summary>
-              {this.state.errorInfo.componentStack}
-            </details>
-          )}
-          <Button type="button" onClick={() => this.setState({ hasError: false })}>
-            Try again?
-          </Button>
-        </div>
-      );
-    }
+    if (!this.state.hasError) return this.props.children;
 
-    return this.props.children;
+    return (
+      <div>
+        <h2>{this.state.error?.toString()}</h2>
+        {this.state.errorInfo && (
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            <summary>에러상세</summary>
+            {this.state.errorInfo.componentStack}
+          </details>
+        )}
+        <Button type="button" onClick={() => this.setState({ hasError: false })}>
+          Try again?
+        </Button>
+      </div>
+    );
   }
 }
 
