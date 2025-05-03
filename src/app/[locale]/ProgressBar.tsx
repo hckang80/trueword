@@ -8,14 +8,13 @@ import 'nprogress/nprogress.css';
 NProgress.configure({ showSpinner: false });
 
 export default function ProgressBar() {
+  if (!NProgress.isStarted()) {
+    NProgress.start();
+  }
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (!NProgress.isStarted()) {
-      NProgress.start();
-    }
-
     const timer = setTimeout(() => NProgress.done(), 500);
 
     return () => clearTimeout(timer);
