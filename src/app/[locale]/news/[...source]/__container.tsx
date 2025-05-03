@@ -27,7 +27,9 @@ export default function NewsIdContainer() {
 
   return (
     <article className="p-[var(--global-inset)]">
-      <NewsHeader title={title} source={source} pubDate={pubDate} />
+      <ViewTransition name="news-header">
+        <NewsHeader title={title} source={source} pubDate={pubDate} />
+      </ViewTransition>
 
       <ViewTransition name="news-thumbnail">
         <Image

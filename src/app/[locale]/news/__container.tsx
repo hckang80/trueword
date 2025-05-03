@@ -18,16 +18,14 @@ const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
     {/* TODO: 최적화 안되는 이미지가 있어서 unoptimized 임시 추가 */}
 
-    <ViewTransition name="news-thumbnail">
-      <Image
-        src={src || '/blank.png'}
-        width={120}
-        height={63}
-        style={{ aspectRatio: '2/1.05' }}
-        alt=""
-        unoptimized
-      />
-    </ViewTransition>
+    <Image
+      src={src || '/blank.png'}
+      width={120}
+      height={63}
+      style={{ aspectRatio: '2/1.05' }}
+      alt=""
+      unoptimized
+    />
   </div>
 ));
 NewsImage.displayName = 'NewsImage';
@@ -47,18 +45,22 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
       href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
       className="group flex items-center justify-between gap-[8px] visited:text-purple-600 p-[20px] border border-gray-200 rounded-lg mb-4"
     >
-      <div>
-        <h1 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
-          <strong>{item.title}</strong>
-        </h1>
-        {item.description && (
-          <p className="text-gray-600 dark:text-gray-300 mb-3 text-xs sm:text-sm">
-            {item.description}
-          </p>
-        )}
-        <NewsItemMeta source={item.source} pubDate={item.pubDate} />
-      </div>
-      <NewsImage src={item.thumbnail || '/blank.png'} />
+      <ViewTransition name="news-header">
+        <div>
+          <h1 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
+            <strong>{item.title}</strong>
+          </h1>
+          {item.description && (
+            <p className="text-gray-600 dark:text-gray-300 mb-3 text-xs sm:text-sm">
+              {item.description}
+            </p>
+          )}
+          <NewsItemMeta source={item.source} pubDate={item.pubDate} />
+        </div>
+      </ViewTransition>
+      <ViewTransition name="news-thumbnail">
+        <NewsImage src={item.thumbnail || '/blank.png'} />
+      </ViewTransition>
     </Link>
   </article>
 ));
