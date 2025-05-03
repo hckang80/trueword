@@ -23,20 +23,14 @@ class ErrorBoundary extends React.Component<Props, State> {
     return { hasError: true, error };
   }
   componentDidCatch(_error: Error, errorInfo: React.ErrorInfo) {
-    this.setState({ errorInfo });
+    console.error(errorInfo.componentStack);
   }
   render() {
     if (!this.state.hasError) return this.props.children;
 
     return (
-      <div>
-        <h2>{this.state.error?.toString()}</h2>
-        {this.state.errorInfo && (
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            <summary>에러상세</summary>
-            {this.state.errorInfo.componentStack}
-          </details>
-        )}
+      <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
+        <p className="text-xl font-semibold mb-4">{this.state.error?.toString()}</p>
         <Button type="button" onClick={() => this.setState({ hasError: false })}>
           Try again?
         </Button>
