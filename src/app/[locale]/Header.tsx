@@ -1,8 +1,6 @@
 import { Button } from '@/shared/components/ui/button';
 import { ModeToggle } from './ModeToggle';
 import { Mail } from 'lucide-react';
-import Link from 'next/link';
-
 function Header() {
   return (
     <header className="flex justify-end gap-[4px] pl-[var(--global-inset)] pr-[var(--global-inset)] pt-[10px] pb-[10px] text-right">
