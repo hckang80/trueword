@@ -38,6 +38,7 @@ export default function NewsIdContainer() {
           height={327}
           alt=""
           unoptimized
+          priority
           className="w-full"
         />
       </ViewTransition>
