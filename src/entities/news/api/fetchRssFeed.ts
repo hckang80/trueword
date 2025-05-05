@@ -23,8 +23,8 @@ export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, s
 
     const feed = await parser.parseString(response.data);
 
-    return feed.items.map((item, index) => {
-      const { title, link, description, pubDate, guid } = item;
+    return feed.items.map((item) => {
+      const { title, link, description = '', pubDate, guid } = item;
 
       const parsedDate = pubDate ? new Date(pubDate.replace('KST', '')) : undefined;
 
