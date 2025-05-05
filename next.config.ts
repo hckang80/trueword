@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'images.christiandaily.co.kr'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.kcnp.com'
       }
     ],
     minimumCacheTTL: 60,
