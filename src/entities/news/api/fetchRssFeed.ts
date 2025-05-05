@@ -6,7 +6,11 @@ import { extractLastNumber } from '@/shared';
 
 export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, string>) {
   try {
-    const response = await axios.get<string>(feedUrl);
+    const response = await axios.get<string>(feedUrl, {
+      headers: {
+        'User-Agent': globalThis.navigator.userAgent
+      }
+    });
 
     const parser = new Parser<RSSFeed, RSSItem>({
       customFields: {
