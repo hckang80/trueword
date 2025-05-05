@@ -9,30 +9,26 @@ export interface RSSItem {
   categories?: string[];
   description?: string;
   guid?: string;
-
   media?: Array<{
     url: string;
     type: string;
     height?: string;
     width?: string;
   }>;
-
-  'media:thumbnail'?: Array<{
+  thumbnail?: Array<{
     $?: { url: string };
     url?: string;
   }>;
-
   enclosure?: {
     url: string;
     type: string;
     length?: string;
   };
-
+  'content:encoded'?: string;
   'itunes:image'?: {
     $?: { href: string };
     href?: string;
   };
-
   [key: string]: unknown;
 }
 
@@ -55,7 +51,7 @@ export interface RSSFeed {
 export interface NewsItem {
   title: string;
   link: string;
-  description?: string;
+  description: string;
   pubDate: string;
   thumbnail?: string;
   source: string;

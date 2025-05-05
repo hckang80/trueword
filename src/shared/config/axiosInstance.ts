@@ -3,6 +3,9 @@ import type { ErrorResponse } from '..';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_SITE_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  },
   timeout: 8000
 });
 

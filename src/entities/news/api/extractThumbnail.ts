@@ -1,4 +1,19 @@
 import { RSSItem } from '..';
+import { JSDOM } from 'jsdom';
+
+function extractFirstImageUrl(htmlContent: string): string | undefined {
+  if (!htmlContent) return;
+
+  try {
+    const dom = new JSDOM(htmlContent);
+    const imgElement: HTMLImageElement = dom.window.document.querySelector('img');
+
+    return imgElement.src;
+  } catch (error) {
+    console.error('이미지 추출 오류:', error);
+    return;
+  }
+}
 
 export const extractThumbnail = (item: RSSItem): string | undefined => {
   if (item.media?.length) {
@@ -9,13 +24,9 @@ export const extractThumbnail = (item: RSSItem): string | undefined => {
     }
   }
 
-  if (item['media:thumbnail']?.length) {
-    const [thumbnail] = item['media:thumbnail'];
-    if (typeof thumbnail === 'object' && thumbnail.$ && thumbnail.$.url) {
-      return thumbnail.$.url;
-    } else if (typeof thumbnail === 'object' && thumbnail.url) {
-      return thumbnail.url;
-    }
+  if (item['thumbnail']?.length) {
+    const [thumbnail] = item['thumbnail'];
+    return thumbnail.$?.url || thumbnail.url;
   }
 
   if (
@@ -25,6 +36,10 @@ export const extractThumbnail = (item: RSSItem): string | undefined => {
     item.enclosure.type.startsWith('image/')
   ) {
     return item.enclosure.url;
+  }
+
+  if (item['content:encoded']) {
+    return extractFirstImageUrl(item['content:encoded']);
   }
 
   const contentToCheck = item.contentEncoded || item.content || item.description || '';
