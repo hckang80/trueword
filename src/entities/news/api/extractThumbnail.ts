@@ -9,13 +9,9 @@ export const extractThumbnail = (item: RSSItem): string | undefined => {
     }
   }
 
-  if (item['media:thumbnail']?.length) {
-    const [thumbnail] = item['media:thumbnail'];
-    if (typeof thumbnail === 'object' && thumbnail.$ && thumbnail.$.url) {
-      return thumbnail.$.url;
-    } else if (typeof thumbnail === 'object' && thumbnail.url) {
-      return thumbnail.url;
-    }
+  if (item['thumbnail']?.length) {
+    const [thumbnail] = item['thumbnail'];
+    return thumbnail.$?.url || thumbnail.url;
   }
 
   if (

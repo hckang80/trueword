@@ -14,7 +14,10 @@ export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, s
 
     const parser = new Parser<RSSFeed, RSSItem>({
       customFields: {
-        item: [['media:content', 'media:thumbnail', { keepArray: true }]]
+        item: [
+          ['atom:published', 'pubDate'],
+          ['media:content', 'thumbnail', { keepArray: true }]
+        ]
       }
     });
 

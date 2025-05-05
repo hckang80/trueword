@@ -17,7 +17,7 @@ export interface RSSItem {
     width?: string;
   }>;
 
-  'media:thumbnail'?: Array<{
+  thumbnail?: Array<{
     $?: { url: string };
     url?: string;
   }>;
