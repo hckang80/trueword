@@ -31,17 +31,19 @@ export default function NewsIdContainer() {
         <NewsHeader title={title} source={source} pubDate={pubDate} />
       </ViewTransition>
 
-      <ViewTransition name="news-thumbnail">
-        <Image
-          src={thumbnail || '/blank.png'}
-          width={500}
-          height={327}
-          alt=""
-          unoptimized
-          priority
-          className="w-full"
-        />
-      </ViewTransition>
+      {thumbnail && (
+        <ViewTransition name="news-thumbnail">
+          <Image
+            src={thumbnail}
+            width={500}
+            height={327}
+            alt=""
+            unoptimized
+            priority
+            className="w-full"
+          />
+        </ViewTransition>
+      )}
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
         <p className="mb-[10px] text-xs text-muted-foreground">
