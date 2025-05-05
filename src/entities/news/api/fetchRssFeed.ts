@@ -2,6 +2,7 @@ import type { RSSFeed, RSSItem } from '../model';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '..';
+import { extractLastNumber } from '@/shared';
 
 export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, string>) {
   try {
@@ -15,18 +16,20 @@ export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, s
 
     const feed = await parser.parseString(response.data);
 
-    return feed.items.map((item) => {
-      const { title, link, description, pubDate } = item;
+    return feed.items.map((item, index) => {
+      const { title, link, description, pubDate, guid } = item;
+
+      const parsedDate = pubDate ? new Date(pubDate.replace('KST', '')) : undefined;
 
       return {
         title,
         link,
         description,
-        pubDate: (pubDate || '').replace('KST', ''),
+        pubDate: parsedDate?.toISOString() || '',
         thumbnail: extractThumbnail(item),
         source: sourceName.ko,
         sourceEng: sourceName.en,
-        guid: link.split('/').pop()
+        guid: extractLastNumber(guid || link)
       };
     });
   } catch (error) {
