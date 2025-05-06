@@ -30,7 +30,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 
     return (
       <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
-        <p className="text-xl font-semibold mb-4">{this.state.error?.toString()}</p>
+        <p className="text-xl font-semibold p-[20px]">{this.state.error?.toString()}</p>
         <Button type="button" onClick={() => window.location.reload()}>
           Try again
         </Button>
