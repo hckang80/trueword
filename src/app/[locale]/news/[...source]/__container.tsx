@@ -1,6 +1,6 @@
 'use client';
 
-import { buttonVariants } from '@/shared/components/ui/button';
+import { Button, buttonVariants } from '@/shared/components/ui/button';
 import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
@@ -56,10 +56,10 @@ export default function NewsIdContainer() {
       </div>
 
       <div className="flex justify-center gap-[4px] mt-[20px]">
-        <Link href="/news" className={buttonVariants({ variant: 'secondary' })}>
+        <Button variant="secondary" onClick={() => history.back()}>
           <Undo2 />
-          목록으로
-        </Link>
+          이전으로
+        </Button>
         <Link href={link} target="_blank" rel="noopener noreferrer" className={buttonVariants()}>
           <SquareArrowOutUpRight />
           기사 원문 보기
