@@ -159,10 +159,10 @@
 
   @keyframes shimmer {
     0% {
-      background-position: 200% 0;
+      background-position: 100% 0;
     }
     100% {
-      background-position: -200% 0;
+      background-position: -100% 0;
     }
   }
 
@@ -173,8 +173,8 @@
         var(--color-foreground) 20%,
         var(--color-background) 40%
       )
-      no-repeat 0 0/200% 100% padding-box text;
+      no-repeat 0 0/200% 100% text;
     color: transparent;
-    animation: shimmer 6s infinite linear;
+    animation: shimmer 4s infinite linear;
   }
 }
