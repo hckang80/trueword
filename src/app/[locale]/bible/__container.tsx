@@ -28,8 +28,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   CHAPTER_LENGTH,
   type BibleInstance,
-  type Book,
-  type SelectedBook,
   type TransitionVersion,
   type TranslationBooks,
   type Verse
@@ -45,7 +43,7 @@ function BookSelector({
   books: TranslationBooks;
   selectedChapterName: string;
   selectedBookName: string;
-  resetBook: (bookNumber: number, book: string, chapter: number) => void;
+  resetBook: (bookNumber: number, chapter: number) => void;
 }) {
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
@@ -123,7 +121,7 @@ function BookSelector({
                         <Button
                           variant="outline"
                           onClick={() => {
-                            resetBook(bookNumber, book, i + 1);
+                            resetBook(bookNumber, i + 1);
                           }}
                         >
                           {i + 1}
@@ -258,43 +256,18 @@ export default function Container() {
     staleTime: Infinity
   });
 
-  const { book_nr: bookNumber, book_name: DEFAULT_BOOK, chapter } = bibleInstance;
-  const DEFAULT_CHAPTER = 1;
-
-  // const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
-  //   bookNumber,
-  //   book: DEFAULT_BOOK,
-  //   chapter
-  // });
-
-  // useEffect(() => {
-  //   setSelectedBookInstance({
-  //     bookNumber,
-  //     book: DEFAULT_BOOK,
-  //     chapter
-  //   });
-  // }, [DEFAULT_BOOK]);
-
   const updateBibleParams = useUpdateBibleParams();
 
-  // const selectedChapters =
-  //   books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];
-  // const selectedChapterInstance = selectedChapters.find(
-  //   (chapter) => chapter.chapter === selectedBookInstance.chapter
-  // );
-  // const selectedChapterName = selectedChapterInstance?.name || '';
-  // const selectedVerses = selectedChapterInstance?.verses || [];
   const selectedBookName = bibleInstance.book_name;
   const selectedChapterName = bibleInstance.name || '';
   const selectedVerses = bibleInstance.verses;
 
-  const resetBook = (bookNumber: number, book: string, chapter: number) => {
+  const resetBook = (bookNumber: number, chapter: number) => {
     updateBibleParams({
       abbreviation: getTranslationVersionId,
       bookNumber,
       chapterNumber: chapter
     });
-    // setSelectedBookInstance({ bookNumber, book, chapter });
   };
 
   return (
