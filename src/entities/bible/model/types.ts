@@ -17,6 +17,7 @@ export interface BibleInstance {
   abbreviation: string;
   book_nr: number;
   book_name: string;
+  chapter: number;
   name: string;
   verses: Verse[];
 }
@@ -53,6 +54,7 @@ export interface TransitionVersion {
 }
 
 export interface SelectedBook {
+  bookNumber: number;
   book: string;
   chapter: number;
 }

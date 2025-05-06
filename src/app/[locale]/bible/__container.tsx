@@ -44,7 +44,7 @@ function BookSelector({
   books: TranslationBooks;
   selectedChapterName: string;
   selectedBook: SelectedBook;
-  resetBook: (book: string, chapter: number) => void;
+  resetBook: (bookNumber: number, book: string, chapter: number) => void;
 }) {
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
@@ -97,7 +97,7 @@ function BookSelector({
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
-              {Object.values(books).map(({ name: book }, index) => (
+              {Object.entries(books).map(([bookNumber, { name: book }], index) => (
                 <details
                   name="books"
                   ref={(el) => {
@@ -121,7 +121,7 @@ function BookSelector({
                       <Button
                         variant="outline"
                         onClick={() => {
-                          resetBook(book, 1);
+                          resetBook(Number(bookNumber), book, 1);
                         }}
                       >
                         {1}
@@ -249,10 +249,12 @@ export default function Container() {
   const [translationVersion] = localizedTranslationVersions;
   const getTranslationVersionId =
     searchParams.get('abbreviation') || translationVersion.abbreviation;
+  const getBookNumber = searchParams.get('bookNumber') || '1';
+  const getChapterNumber = searchParams.get('chapterNumber') || '1';
 
   const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data([getTranslationVersionId, '1', '1']),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1'),
+    ...bibleKeys.data([getTranslationVersionId, getBookNumber, getChapterNumber]),
+    queryFn: () => fetchBibleInstance(getTranslationVersionId, getBookNumber, getChapterNumber),
     staleTime: Infinity
   });
 
@@ -262,20 +264,24 @@ export default function Container() {
     staleTime: Infinity
   });
 
-  const { book_name: DEFAULT_BOOK } = bibleInstance;
+  const { book_nr: bookNumber, book_name: DEFAULT_BOOK, chapter } = bibleInstance;
   const DEFAULT_CHAPTER = 1;
 
   const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
+    bookNumber,
     book: DEFAULT_BOOK,
-    chapter: DEFAULT_CHAPTER
+    chapter
   });
 
   useEffect(() => {
     setSelectedBookInstance({
+      bookNumber,
       book: DEFAULT_BOOK,
-      chapter: DEFAULT_CHAPTER
+      chapter
     });
   }, [DEFAULT_BOOK]);
+
+  const updateBibleParams = useUpdateBibleParams();
 
   // const selectedChapters =
   //   books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];
@@ -287,8 +293,13 @@ export default function Container() {
   const selectedChapterName = bibleInstance.book_name || '';
   const selectedVerses = bibleInstance.verses;
 
-  const resetBook = (book: string, chapter: number) => {
-    setSelectedBookInstance({ book, chapter });
+  const resetBook = (bookNumber: number, book: string, chapter: number) => {
+    updateBibleParams({
+      abbreviation: getTranslationVersionId,
+      bookNumber,
+      chapterNumber: chapter
+    });
+    setSelectedBookInstance({ bookNumber, book, chapter });
   };
 
   return (
