@@ -1,3 +1,18 @@
+export interface TranslationBookInstance {
+  translation: string;
+  abbreviation: string;
+  lang: string;
+  language: string;
+  direction: string;
+  encoding: string;
+  nr: number;
+  name: string;
+  url: string;
+  sha: string;
+}
+
+export type TranslationBooks = Record<string, TranslationBookInstance>;
+
 export interface BibleInstance {
   abbreviation: string;
   book_nr: number;

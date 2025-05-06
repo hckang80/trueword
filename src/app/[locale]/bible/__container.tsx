@@ -21,10 +21,18 @@ import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
   fetchBibleInstance,
-  useUpdateBibleParams
+  useUpdateBibleParams,
+  fetchTranslationBooks
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { BibleInstance, Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
+import type {
+  BibleInstance,
+  Book,
+  SelectedBook,
+  TransitionVersion,
+  TranslationBooks,
+  Verse
+} from '@/entities/bible';
 import { useSearchParams } from 'next/navigation';
 
 function BookSelector({
@@ -33,7 +41,7 @@ function BookSelector({
   selectedBook,
   resetBook
 }: {
-  books: Book[];
+  books: TranslationBooks;
   selectedChapterName: string;
   selectedBook: SelectedBook;
   resetBook: (book: string, chapter: number) => void;
@@ -89,7 +97,7 @@ function BookSelector({
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
-              {books.map(({ name: book, chapters: { length } }, index) => (
+              {Object.values(books).map(({ name: book }, index) => (
                 <details
                   name="books"
                   ref={(el) => {
@@ -109,7 +117,17 @@ function BookSelector({
                     <ChevronDown size={20} className="transition group-open:rotate-180" />
                   </summary>
                   <div className="grid grid-cols-5 gap-[4px] px-[10px]">
-                    {Array.from({ length }, (_, i) => (
+                    <DrawerClose asChild>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          resetBook(book, 1);
+                        }}
+                      >
+                        {1}
+                      </Button>
+                    </DrawerClose>
+                    {/* {Array.from({ length }, (_, i) => (
                       <DrawerClose key={i} asChild>
                         <Button
                           variant="outline"
@@ -120,7 +138,7 @@ function BookSelector({
                           {i + 1}
                         </Button>
                       </DrawerClose>
-                    ))}
+                    ))} */}
                   </div>
                 </details>
               ))}
@@ -238,6 +256,12 @@ export default function Container() {
     staleTime: Infinity
   });
 
+  const { data: books } = useSuspenseQuery({
+    queryKey: [getTranslationVersionId],
+    queryFn: () => fetchTranslationBooks(getTranslationVersionId),
+    staleTime: Infinity
+  });
+
   const { book_name: DEFAULT_BOOK } = bibleInstance;
   const DEFAULT_CHAPTER = 1;
 
@@ -270,12 +294,12 @@ export default function Container() {
   return (
     <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
-        {/* <BookSelector
+        <BookSelector
           books={books}
           selectedChapterName={selectedChapterName}
           selectedBook={selectedBookInstance}
           resetBook={resetBook}
-        /> */}
+        />
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}
           bibleInstance={bibleInstance}

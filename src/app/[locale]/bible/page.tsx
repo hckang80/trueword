@@ -1,7 +1,11 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { bibleKeys, translationsKeys } from '@/shared';
-import { fetchTranslationVersions, fetchBibleInstance } from '@/features/bible';
+import {
+  fetchTranslationVersions,
+  fetchBibleInstance,
+  fetchTranslationBooks
+} from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { LoaderCircle } from 'lucide-react';
 import { Suspense } from 'react';
@@ -52,6 +56,11 @@ export default async function Bible({ params, searchParams }: Props) {
     queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1')
   });
   console.timeEnd('fetchBibleInstance');
+
+  await queryClient.prefetchQuery({
+    queryKey: [getTranslationVersionId],
+    queryFn: () => fetchTranslationBooks(getTranslationVersionId)
+  });
 
   return (
     <Suspense
