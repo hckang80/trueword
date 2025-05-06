@@ -45,6 +45,8 @@ function BookSelector({
   selectedBookName: string;
   resetBook: (bookNumber: number, chapter: number) => void;
 }) {
+  const [open, setOpen] = useState(false);
+
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
 
@@ -86,8 +88,16 @@ function BookSelector({
     };
   }, []);
 
+  const searchParams = useSearchParams();
+  const bookNumber = searchParams.get('bookNumber');
+  const chapterNumber = searchParams.get('chapterNumber');
+
+  useEffect(() => {
+    setOpen(false);
+  }, [bookNumber, chapterNumber]);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button>{selectedChapterName}</Button>
       </DrawerTrigger>
@@ -117,16 +127,15 @@ function BookSelector({
                   </summary>
                   <div className="grid grid-cols-5 gap-[4px] px-[10px]">
                     {Array.from({ length: CHAPTER_LENGTH[bookNumber] }, (_, i) => (
-                      <DrawerClose key={i} asChild>
-                        <Button
-                          variant="outline"
-                          onClick={() => {
-                            resetBook(bookNumber, i + 1);
-                          }}
-                        >
-                          {i + 1}
-                        </Button>
-                      </DrawerClose>
+                      <Button
+                        key={i}
+                        variant="outline"
+                        onClick={() => {
+                          resetBook(bookNumber, i + 1);
+                        }}
+                      >
+                        {i + 1}
+                      </Button>
                     ))}
                   </div>
                 </details>
