@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
