@@ -25,13 +25,14 @@ import {
   fetchTranslationBooks
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type {
-  BibleInstance,
-  Book,
-  SelectedBook,
-  TransitionVersion,
-  TranslationBooks,
-  Verse
+import {
+  CHAPTER_LENGTH,
+  type BibleInstance,
+  type Book,
+  type SelectedBook,
+  type TransitionVersion,
+  type TranslationBooks,
+  type Verse
 } from '@/entities/bible';
 import { useSearchParams } from 'next/navigation';
 
@@ -117,28 +118,18 @@ function BookSelector({
                     <ChevronDown size={20} className="transition group-open:rotate-180" />
                   </summary>
                   <div className="grid grid-cols-5 gap-[4px] px-[10px]">
-                    <DrawerClose asChild>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          resetBook(bookNumber, book, 1);
-                        }}
-                      >
-                        {1}
-                      </Button>
-                    </DrawerClose>
-                    {/* {Array.from({ length }, (_, i) => (
+                    {Array.from({ length: CHAPTER_LENGTH[bookNumber] }, (_, i) => (
                       <DrawerClose key={i} asChild>
                         <Button
                           variant="outline"
                           onClick={() => {
-                            resetBook(book, i + 1);
+                            resetBook(bookNumber, book, i + 1);
                           }}
                         >
                           {i + 1}
                         </Button>
                       </DrawerClose>
-                    ))} */}
+                    ))}
                   </div>
                 </details>
               ))}
