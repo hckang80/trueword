@@ -168,6 +168,9 @@ function TranslationSelector({
 
   const searchParams = useSearchParams();
   const abbreviation = searchParams.get('abbreviation');
+  const { distribution_versification: label } =
+    localizedTranslationVersions.find((version) => version.abbreviation === abbreviation) ||
+    localizedTranslationVersions[0];
 
   useEffect(() => {
     setOpen(false);
@@ -176,7 +179,7 @@ function TranslationSelector({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">{bibleInstance.distribution_versification}</Button>
+        <Button variant="outline">{label}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
