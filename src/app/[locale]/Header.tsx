@@ -8,6 +8,7 @@ function Header() {
       <Button variant="outline" size="icon" asChild>
         <a href="mailto:hckang80@gmail.com">
           <Mail />
+          <span className="sr-only">Send mail</span>
         </a>
       </Button>
       <ModeToggle />
