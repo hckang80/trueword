@@ -1,4 +1,4 @@
-import type { BibleInstance } from '@/entities/bible';
+import type { BibleChapterInstance } from '@/entities/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -10,7 +10,7 @@ export async function GET(
   const [abbr, bookNumber, chapterNumber] = source;
 
   try {
-    const { data } = await axios.get<{ data: BibleInstance }>(
+    const { data } = await axios.get<{ data: BibleChapterInstance }>(
       `${process.env.API_BASE_URL}/${abbr}/${bookNumber}/${chapterNumber}.json`
     );
 

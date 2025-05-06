@@ -27,7 +27,7 @@ import {
 import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   CHAPTER_LENGTH,
-  type BibleInstance,
+  type BibleChapterInstance,
   type TransitionVersion,
   type TranslationBooks,
   type Verse
@@ -150,10 +150,10 @@ function BookSelector({
 
 function TranslationSelector({
   localizedTranslationVersions,
-  bibleInstance
+  bibleChapterInstance
 }: {
   localizedTranslationVersions: TransitionVersion[];
-  bibleInstance: BibleInstance;
+  bibleChapterInstance: BibleChapterInstance;
 }) {
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
@@ -203,7 +203,7 @@ function TranslationSelector({
                       <em
                         className={cn(
                           'block text-[16px]',
-                          abbreviation === bibleInstance.abbreviation ? 'font-bold' : ''
+                          abbreviation === bibleChapterInstance.abbreviation ? 'font-bold' : ''
                         )}
                       >
                         {distribution_versification}
@@ -253,7 +253,7 @@ export default function Container() {
   const getBookNumber = searchParams.get('bookNumber') || '1';
   const getChapterNumber = searchParams.get('chapterNumber') || '1';
 
-  const { data: bibleInstance } = useSuspenseQuery({
+  const { data: bibleChapterInstance } = useSuspenseQuery({
     ...bibleKeys.data([getTranslationVersionId, getBookNumber, getChapterNumber]),
     queryFn: () => fetchBibleInstance(getTranslationVersionId, getBookNumber, getChapterNumber),
     staleTime: Infinity
@@ -267,9 +267,9 @@ export default function Container() {
 
   const updateBibleParams = useUpdateBibleParams();
 
-  const selectedBookName = bibleInstance.book_name;
-  const selectedChapterName = bibleInstance.name || '';
-  const selectedVerses = bibleInstance.verses;
+  const selectedBookName = bibleChapterInstance.book_name;
+  const selectedChapterName = bibleChapterInstance.name || '';
+  const selectedVerses = bibleChapterInstance.verses;
 
   const resetBook = (bookNumber: number, chapter: number) => {
     updateBibleParams({
@@ -290,7 +290,7 @@ export default function Container() {
         />
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}
-          bibleInstance={bibleInstance}
+          bibleChapterInstance={bibleChapterInstance}
         />
       </div>
       <VerseList selectedVerses={selectedVerses} />

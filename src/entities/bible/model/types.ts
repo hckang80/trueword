@@ -13,7 +13,7 @@ export interface TranslationBookInstance {
 
 export type TranslationBooks = Record<string, TranslationBookInstance>;
 
-export interface BibleInstance {
+export interface BibleChapterInstance {
   abbreviation: string;
   book_nr: number;
   book_name: string;
