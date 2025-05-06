@@ -233,13 +233,12 @@ export default function Container() {
     searchParams.get('abbreviation') || translationVersion.abbreviation;
 
   const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data(getTranslationVersionId),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId),
+    ...bibleKeys.data([getTranslationVersionId, '1', '1']),
+    queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1'),
     staleTime: Infinity
   });
 
-  const { books } = bibleInstance;
-  const [{ name: DEFAULT_BOOK }] = books;
+  const { book_name: DEFAULT_BOOK } = bibleInstance;
   const DEFAULT_CHAPTER = 1;
 
   const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
@@ -254,13 +253,15 @@ export default function Container() {
     });
   }, [DEFAULT_BOOK]);
 
-  const selectedChapters =
-    books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];
-  const selectedChapterInstance = selectedChapters.find(
-    (chapter) => chapter.chapter === selectedBookInstance.chapter
-  );
-  const selectedChapterName = selectedChapterInstance?.name || '';
-  const selectedVerses = selectedChapterInstance?.verses || [];
+  // const selectedChapters =
+  //   books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];
+  // const selectedChapterInstance = selectedChapters.find(
+  //   (chapter) => chapter.chapter === selectedBookInstance.chapter
+  // );
+  // const selectedChapterName = selectedChapterInstance?.name || '';
+  // const selectedVerses = selectedChapterInstance?.verses || [];
+  const selectedChapterName = bibleInstance.book_name || '';
+  const selectedVerses = bibleInstance.verses;
 
   const resetBook = (book: string, chapter: number) => {
     setSelectedBookInstance({ book, chapter });
@@ -269,12 +270,12 @@ export default function Container() {
   return (
     <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
-        <BookSelector
+        {/* <BookSelector
           books={books}
           selectedChapterName={selectedChapterName}
           selectedBook={selectedBookInstance}
           resetBook={resetBook}
-        />
+        /> */}
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}
           bibleInstance={bibleInstance}

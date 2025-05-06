@@ -4,13 +4,14 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ abbr: string }> }
+  { params }: { params: Promise<{ source: string[] }> }
 ) {
-  const { abbr } = await params;
+  const { source } = await params;
+  const [abbr, bookNumber, chapterNumber] = source;
 
   try {
     const { data } = await axios.get<{ data: BibleInstance }>(
-      `${process.env.API_BASE_URL}/${abbr}.json`
+      `${process.env.API_BASE_URL}/${abbr}/${bookNumber}/${chapterNumber}.json`
     );
 
     return NextResponse.json(data);

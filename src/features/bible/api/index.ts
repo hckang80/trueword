@@ -14,8 +14,14 @@ export async function fetchTranslationVersions() {
   return availableTranslationVersions(data);
 }
 
-export async function fetchBibleInstance(abbreviation: string) {
-  const { data } = await axiosInstance<BibleInstance>(`/translations/${abbreviation}`);
+export async function fetchBibleInstance(
+  abbreviation: string,
+  bookNumber: string,
+  chapterNumber: string
+) {
+  const { data } = await axiosInstance<BibleInstance>(
+    `/translations/${abbreviation}/${bookNumber}/${chapterNumber}`
+  );
 
   return data;
 }

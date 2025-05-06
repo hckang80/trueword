@@ -28,23 +28,30 @@ export default async function Bible({ params, searchParams }: Props) {
 
   const queryClient = new QueryClient();
 
+  console.time('translationVersions');
   const translationVersions = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
-    queryFn: fetchTranslationVersions
+    queryFn: fetchTranslationVersions,
+    staleTime: Infinity
   });
+  console.timeEnd('translationVersions');
 
+  console.time('localizedTranslationVersions');
   const localizedTranslationVersions = await queryClient.fetchQuery({
     ...translationsKeys.data(language),
     queryFn: () => translationVersions.filter(({ lang }) => lang === language)
   });
+  console.timeEnd('localizedTranslationVersions');
 
   const [defaultTranslation] = localizedTranslationVersions;
   const getTranslationVersionId = abbreviation || defaultTranslation.abbreviation;
 
+  console.time('fetchBibleInstance');
   await queryClient.prefetchQuery({
-    ...bibleKeys.data(getTranslationVersionId),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId)
+    ...bibleKeys.data([getTranslationVersionId, '1', '1']),
+    queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1')
   });
+  console.timeEnd('fetchBibleInstance');
 
   return (
     <Suspense
