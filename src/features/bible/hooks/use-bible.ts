@@ -23,13 +23,19 @@ export const useUpdateBibleParams = () => {
 
   return ({
     language = urlSearchParams.get('translation') || locale,
-    abbreviation
+    abbreviation,
+    bookNumber = 1,
+    chapterNumber = 1
   }: {
     language?: string;
     abbreviation: string;
+    bookNumber?: number;
+    chapterNumber?: number;
   }) => {
     urlSearchParams.set('translation', language);
     urlSearchParams.set('abbreviation', abbreviation);
+    urlSearchParams.set('bookNumber', '' + bookNumber);
+    urlSearchParams.set('chapterNumber', '' + chapterNumber);
     window.history.pushState(null, '', `${pathname}?${urlSearchParams.toString()}`);
   };
 };

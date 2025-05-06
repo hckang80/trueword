@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
@@ -21,23 +20,32 @@ import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
   fetchBibleInstance,
-  useUpdateBibleParams
+  useUpdateBibleParams,
+  fetchTranslationBooks
 } from '@/features/bible';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { BibleInstance, Book, SelectedBook, TransitionVersion, Verse } from '@/entities/bible';
+import {
+  CHAPTER_LENGTH,
+  type BibleChapterInstance,
+  type TransitionVersion,
+  type TranslationBooks,
+  type Verse
+} from '@/entities/bible';
 import { useSearchParams } from 'next/navigation';
 
 function BookSelector({
   books,
   selectedChapterName,
-  selectedBook,
+  selectedBookName,
   resetBook
 }: {
-  books: Book[];
+  books: TranslationBooks;
   selectedChapterName: string;
-  selectedBook: SelectedBook;
-  resetBook: (book: string, chapter: number) => void;
+  selectedBookName: string;
+  resetBook: (bookNumber: number, chapter: number) => void;
 }) {
+  const [open, setOpen] = useState(false);
+
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
 
@@ -79,8 +87,16 @@ function BookSelector({
     };
   }, []);
 
+  const searchParams = useSearchParams();
+  const bookNumber = searchParams.get('bookNumber');
+  const chapterNumber = searchParams.get('chapterNumber');
+
+  useEffect(() => {
+    setOpen(false);
+  }, [bookNumber, chapterNumber]);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button>{selectedChapterName}</Button>
       </DrawerTrigger>
@@ -89,7 +105,7 @@ function BookSelector({
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
-              {books.map(({ name: book, chapters: { length } }, index) => (
+              {Object.values(books).map(({ name: book, nr: bookNumber }, index) => (
                 <details
                   name="books"
                   ref={(el) => {
@@ -102,24 +118,23 @@ function BookSelector({
                   <summary
                     className={cn(
                       'flex justify-between p-[10px]',
-                      book === selectedBook.book ? 'font-bold' : ''
+                      book === selectedBookName ? 'font-bold' : ''
                     )}
                   >
                     {book}
                     <ChevronDown size={20} className="transition group-open:rotate-180" />
                   </summary>
                   <div className="grid grid-cols-5 gap-[4px] px-[10px]">
-                    {Array.from({ length }, (_, i) => (
-                      <DrawerClose key={i} asChild>
-                        <Button
-                          variant="outline"
-                          onClick={() => {
-                            resetBook(book, i + 1);
-                          }}
-                        >
-                          {i + 1}
-                        </Button>
-                      </DrawerClose>
+                    {Array.from({ length: CHAPTER_LENGTH[bookNumber] }, (_, i) => (
+                      <Button
+                        key={i}
+                        variant="outline"
+                        onClick={() => {
+                          resetBook(bookNumber, i + 1);
+                        }}
+                      >
+                        {i + 1}
+                      </Button>
                     ))}
                   </div>
                 </details>
@@ -134,10 +149,10 @@ function BookSelector({
 
 function TranslationSelector({
   localizedTranslationVersions,
-  bibleInstance
+  bibleChapterInstance
 }: {
   localizedTranslationVersions: TransitionVersion[];
-  bibleInstance: BibleInstance;
+  bibleChapterInstance: BibleChapterInstance;
 }) {
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
@@ -150,6 +165,9 @@ function TranslationSelector({
 
   const searchParams = useSearchParams();
   const abbreviation = searchParams.get('abbreviation');
+  const { distribution_versification: label } =
+    localizedTranslationVersions.find((version) => version.abbreviation === abbreviation) ||
+    localizedTranslationVersions[0];
 
   useEffect(() => {
     setOpen(false);
@@ -158,7 +176,7 @@ function TranslationSelector({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">{bibleInstance.distribution_versification}</Button>
+        <Button variant="outline">{label}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
@@ -184,7 +202,7 @@ function TranslationSelector({
                       <em
                         className={cn(
                           'block text-[16px]',
-                          abbreviation === bibleInstance.abbreviation ? 'font-bold' : ''
+                          abbreviation === bibleChapterInstance.abbreviation ? 'font-bold' : ''
                         )}
                       >
                         {distribution_versification}
@@ -231,39 +249,33 @@ export default function Container() {
   const [translationVersion] = localizedTranslationVersions;
   const getTranslationVersionId =
     searchParams.get('abbreviation') || translationVersion.abbreviation;
+  const getBookNumber = searchParams.get('bookNumber') || '1';
+  const getChapterNumber = searchParams.get('chapterNumber') || '1';
 
-  const { data: bibleInstance } = useSuspenseQuery({
-    ...bibleKeys.data(getTranslationVersionId),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId),
+  const { data: bibleChapterInstance } = useSuspenseQuery({
+    ...bibleKeys.data([getTranslationVersionId, getBookNumber, getChapterNumber]),
+    queryFn: () => fetchBibleInstance(getTranslationVersionId, getBookNumber, getChapterNumber),
     staleTime: Infinity
   });
 
-  const { books } = bibleInstance;
-  const [{ name: DEFAULT_BOOK }] = books;
-  const DEFAULT_CHAPTER = 1;
-
-  const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
-    book: DEFAULT_BOOK,
-    chapter: DEFAULT_CHAPTER
+  const { data: books } = useSuspenseQuery({
+    queryKey: [getTranslationVersionId],
+    queryFn: () => fetchTranslationBooks(getTranslationVersionId),
+    staleTime: Infinity
   });
 
-  useEffect(() => {
-    setSelectedBookInstance({
-      book: DEFAULT_BOOK,
-      chapter: DEFAULT_CHAPTER
+  const updateBibleParams = useUpdateBibleParams();
+
+  const selectedBookName = bibleChapterInstance.book_name;
+  const selectedChapterName = bibleChapterInstance.name || '';
+  const selectedVerses = bibleChapterInstance.verses;
+
+  const resetBook = (bookNumber: number, chapter: number) => {
+    updateBibleParams({
+      abbreviation: getTranslationVersionId,
+      bookNumber,
+      chapterNumber: chapter
     });
-  }, [DEFAULT_BOOK]);
-
-  const selectedChapters =
-    books.find((book) => book.name === selectedBookInstance.book)?.chapters || [];
-  const selectedChapterInstance = selectedChapters.find(
-    (chapter) => chapter.chapter === selectedBookInstance.chapter
-  );
-  const selectedChapterName = selectedChapterInstance?.name || '';
-  const selectedVerses = selectedChapterInstance?.verses || [];
-
-  const resetBook = (book: string, chapter: number) => {
-    setSelectedBookInstance({ book, chapter });
   };
 
   return (
@@ -272,12 +284,12 @@ export default function Container() {
         <BookSelector
           books={books}
           selectedChapterName={selectedChapterName}
-          selectedBook={selectedBookInstance}
+          selectedBookName={selectedBookName}
           resetBook={resetBook}
         />
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}
-          bibleInstance={bibleInstance}
+          bibleChapterInstance={bibleChapterInstance}
         />
       </div>
       <VerseList selectedVerses={selectedVerses} />

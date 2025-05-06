@@ -1,7 +1,11 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { bibleKeys, translationsKeys } from '@/shared';
-import { fetchTranslationVersions, fetchBibleInstance } from '@/features/bible';
+import {
+  fetchTranslationVersions,
+  fetchBibleInstance,
+  fetchTranslationBooks
+} from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { LoaderCircle } from 'lucide-react';
 import { Suspense } from 'react';
@@ -28,23 +32,36 @@ export default async function Bible({ params, searchParams }: Props) {
 
   const queryClient = new QueryClient();
 
+  console.time('translationVersions');
   const translationVersions = await queryClient.fetchQuery({
     queryKey: translationsKeys._def,
-    queryFn: fetchTranslationVersions
+    queryFn: fetchTranslationVersions,
+    staleTime: Infinity
   });
+  console.timeEnd('translationVersions');
 
+  console.time('localizedTranslationVersions');
   const localizedTranslationVersions = await queryClient.fetchQuery({
     ...translationsKeys.data(language),
     queryFn: () => translationVersions.filter(({ lang }) => lang === language)
   });
+  console.timeEnd('localizedTranslationVersions');
 
   const [defaultTranslation] = localizedTranslationVersions;
   const getTranslationVersionId = abbreviation || defaultTranslation.abbreviation;
 
-  await queryClient.prefetchQuery({
-    ...bibleKeys.data(getTranslationVersionId),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId)
-  });
+  console.time('fetchBibleInstance');
+  await Promise.all([
+    queryClient.prefetchQuery({
+      ...bibleKeys.data([getTranslationVersionId, '1', '1']),
+      queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1')
+    }),
+    queryClient.prefetchQuery({
+      queryKey: [getTranslationVersionId],
+      queryFn: () => fetchTranslationBooks(getTranslationVersionId)
+    })
+  ]);
+  console.timeEnd('fetchBibleInstance');
 
   return (
     <Suspense
