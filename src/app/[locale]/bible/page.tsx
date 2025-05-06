@@ -57,10 +57,12 @@ export default async function Bible({ params, searchParams }: Props) {
   });
   console.timeEnd('fetchBibleInstance');
 
+  console.time('fetchTranslationBooks');
   await queryClient.prefetchQuery({
     queryKey: [getTranslationVersionId],
     queryFn: () => fetchTranslationBooks(getTranslationVersionId)
   });
+  console.timeEnd('fetchTranslationBooks');
 
   return (
     <Suspense
