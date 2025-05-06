@@ -97,7 +97,7 @@ function BookSelector({
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
-              {Object.entries(books).map(([bookNumber, { name: book }], index) => (
+              {Object.values(books).map(({ name: book, nr: bookNumber }, index) => (
                 <details
                   name="books"
                   ref={(el) => {
@@ -121,7 +121,7 @@ function BookSelector({
                       <Button
                         variant="outline"
                         onClick={() => {
-                          resetBook(Number(bookNumber), book, 1);
+                          resetBook(bookNumber, book, 1);
                         }}
                       >
                         {1}
