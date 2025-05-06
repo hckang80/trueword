@@ -39,12 +39,12 @@ import { useSearchParams } from 'next/navigation';
 function BookSelector({
   books,
   selectedChapterName,
-  selectedBook,
+  selectedBookName,
   resetBook
 }: {
   books: TranslationBooks;
   selectedChapterName: string;
-  selectedBook: SelectedBook;
+  selectedBookName: string;
   resetBook: (bookNumber: number, book: string, chapter: number) => void;
 }) {
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
@@ -111,7 +111,7 @@ function BookSelector({
                   <summary
                     className={cn(
                       'flex justify-between p-[10px]',
-                      book === selectedBook.book ? 'font-bold' : ''
+                      book === selectedBookName ? 'font-bold' : ''
                     )}
                   >
                     {book}
@@ -261,19 +261,19 @@ export default function Container() {
   const { book_nr: bookNumber, book_name: DEFAULT_BOOK, chapter } = bibleInstance;
   const DEFAULT_CHAPTER = 1;
 
-  const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
-    bookNumber,
-    book: DEFAULT_BOOK,
-    chapter
-  });
+  // const [selectedBookInstance, setSelectedBookInstance] = useState<SelectedBook>({
+  //   bookNumber,
+  //   book: DEFAULT_BOOK,
+  //   chapter
+  // });
 
-  useEffect(() => {
-    setSelectedBookInstance({
-      bookNumber,
-      book: DEFAULT_BOOK,
-      chapter
-    });
-  }, [DEFAULT_BOOK]);
+  // useEffect(() => {
+  //   setSelectedBookInstance({
+  //     bookNumber,
+  //     book: DEFAULT_BOOK,
+  //     chapter
+  //   });
+  // }, [DEFAULT_BOOK]);
 
   const updateBibleParams = useUpdateBibleParams();
 
@@ -284,6 +284,7 @@ export default function Container() {
   // );
   // const selectedChapterName = selectedChapterInstance?.name || '';
   // const selectedVerses = selectedChapterInstance?.verses || [];
+  const selectedBookName = bibleInstance.book_name;
   const selectedChapterName = bibleInstance.name || '';
   const selectedVerses = bibleInstance.verses;
 
@@ -293,7 +294,7 @@ export default function Container() {
       bookNumber,
       chapterNumber: chapter
     });
-    setSelectedBookInstance({ bookNumber, book, chapter });
+    // setSelectedBookInstance({ bookNumber, book, chapter });
   };
 
   return (
@@ -302,7 +303,7 @@ export default function Container() {
         <BookSelector
           books={books}
           selectedChapterName={selectedChapterName}
-          selectedBook={selectedBookInstance}
+          selectedBookName={selectedBookName}
           resetBook={resetBook}
         />
         <TranslationSelector
