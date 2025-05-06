@@ -51,18 +51,17 @@ export default async function Bible({ params, searchParams }: Props) {
   const getTranslationVersionId = abbreviation || defaultTranslation.abbreviation;
 
   console.time('fetchBibleInstance');
-  await queryClient.prefetchQuery({
-    ...bibleKeys.data([getTranslationVersionId, '1', '1']),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1')
-  });
+  await Promise.all([
+    queryClient.prefetchQuery({
+      ...bibleKeys.data([getTranslationVersionId, '1', '1']),
+      queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1')
+    }),
+    queryClient.prefetchQuery({
+      queryKey: [getTranslationVersionId],
+      queryFn: () => fetchTranslationBooks(getTranslationVersionId)
+    })
+  ]);
   console.timeEnd('fetchBibleInstance');
-
-  console.time('fetchTranslationBooks');
-  await queryClient.prefetchQuery({
-    queryKey: [getTranslationVersionId],
-    queryFn: () => fetchTranslationBooks(getTranslationVersionId)
-  });
-  console.timeEnd('fetchTranslationBooks');
 
   return (
     <Suspense
