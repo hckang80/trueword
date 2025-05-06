@@ -293,7 +293,7 @@ export default function Container() {
   // );
   // const selectedChapterName = selectedChapterInstance?.name || '';
   // const selectedVerses = selectedChapterInstance?.verses || [];
-  const selectedChapterName = bibleInstance.book_name || '';
+  const selectedChapterName = bibleInstance.name || '';
   const selectedVerses = bibleInstance.verses;
 
   const resetBook = (bookNumber: number, book: string, chapter: number) => {
