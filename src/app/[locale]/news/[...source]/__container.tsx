@@ -4,7 +4,7 @@ import { Button, buttonVariants } from '@/shared/components/ui/button';
 import { Link } from '@/i18n/routing';
 import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
-import DOMPurify from 'dompurify';
+import sanitizeHtml from 'sanitize-html';
 import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
@@ -22,7 +22,7 @@ export default function NewsIdContainer() {
   } = useSummary(scraped.content, scraped.title);
 
   const sanitizedData = () => ({
-    __html: DOMPurify.sanitize(summary.replace(/`{3,}/g, '').replace('html', ''))
+    __html: sanitizeHtml(summary.replace(/`{3,}/g, '').replace('html', ''))
   });
 
   return (
