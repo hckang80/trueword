@@ -1,4 +1,4 @@
-import type { BibleChapterInstance, TransitionVersion, TranslationBooks } from '@/entities/bible';
+import type { BibleChapterInstance, TransitionVersion, TranslationBooks } from '@/features/bible';
 import { axiosInstance } from '@/shared';
 import { availableTranslationVersions } from '..';
 

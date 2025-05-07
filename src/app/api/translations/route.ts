@@ -1,4 +1,4 @@
-import type { TransitionVersion } from '@/entities/bible';
+import type { TransitionVersion } from '@/features/bible';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 

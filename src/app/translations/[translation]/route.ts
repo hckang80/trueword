@@ -1,4 +1,4 @@
-import type { TranslationBooks } from '@/entities/bible';
+import type { TranslationBooks } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 

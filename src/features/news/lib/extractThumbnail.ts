@@ -1,14 +1,15 @@
-import { RSSItem } from '..';
-import { JSDOM } from 'jsdom';
+import type { RSSItem } from '@/features/news';
+import { parse } from 'node-html-parser';
 
 function extractFirstImageUrl(htmlContent: string): string | undefined {
   if (!htmlContent) return;
 
   try {
-    const dom = new JSDOM(htmlContent);
-    const imgElement: HTMLImageElement | null = dom.window.document.querySelector('img');
-
-    return imgElement?.src;
+    const root = parse(htmlContent);
+    const firstImg = root.querySelector('img');
+    if (firstImg) {
+      return firstImg.getAttribute('src');
+    }
   } catch (error) {
     console.error('이미지 추출 오류:', error);
     return;

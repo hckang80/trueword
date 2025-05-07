@@ -1,4 +1,4 @@
-import { TransitionVersion } from '@/entities/bible';
+import { TransitionVersion } from '@/features/bible';
 import { DEFAULT_LOCALE, supportedTranslations } from '@/shared';
 
 export function getLanguageFullName(langCode: string, locale: string = DEFAULT_LOCALE) {

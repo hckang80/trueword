@@ -1,4 +1,4 @@
-import type { BibleChapterInstance } from '@/entities/bible';
+import type { BibleChapterInstance } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
