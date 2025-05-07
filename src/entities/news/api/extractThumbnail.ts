@@ -6,9 +6,9 @@ function extractFirstImageUrl(htmlContent: string): string | undefined {
 
   try {
     const dom = new JSDOM(htmlContent);
-    const imgElement: HTMLImageElement = dom.window.document.querySelector('img');
+    const imgElement: HTMLImageElement | null = dom.window.document.querySelector('img');
 
-    return imgElement.src;
+    return imgElement?.src;
   } catch (error) {
     console.error('이미지 추출 오류:', error);
     return;
