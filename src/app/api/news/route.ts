@@ -1,4 +1,4 @@
-import { fetchRssFeed } from '@/entities/news';
+import { fetchRssFeed } from '@/features/news';
 import { NextResponse } from 'next/server';
 
 export async function GET() {

@@ -1,7 +1,6 @@
 'use client';
 
-import { useNews } from '@/features/news';
-import { NewsItem as TNewsItem } from '@/entities/news';
+import { useNews, type NewsItem as TNewsItem } from '@/features/news';
 import { toReadableDate } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';

@@ -1,4 +1,4 @@
-import { RSSItem } from '..';
+import type { RSSItem } from '@/features/news';
 import { JSDOM } from 'jsdom';
 
 function extractFirstImageUrl(htmlContent: string): string | undefined {

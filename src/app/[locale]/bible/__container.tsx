@@ -30,7 +30,7 @@ import {
   type TransitionVersion,
   type TranslationBooks,
   type Verse
-} from '@/entities/bible';
+} from '@/features/bible';
 import { useSearchParams } from 'next/navigation';
 
 function BookSelector({

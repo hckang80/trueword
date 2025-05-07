@@ -1,6 +1,8 @@
 import { axiosInstance, newsKeys } from '@/shared';
-import type { NewsItem } from '@/entities/news';
+import type { NewsItem } from '@/features/news';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+
+export * from './fetchRssFeed';
 
 export async function fetchNews(): Promise<NewsItem[]> {
   const { data } = await axiosInstance<NewsItem[]>('/api/news');
