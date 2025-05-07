@@ -33,15 +33,16 @@ export default function NewsIdContainer() {
 
       {thumbnail && (
         <ViewTransition name={`thumbnail-${sources[0]}-${sources[1]}`}>
-          <Image
-            src={thumbnail}
-            width={500}
-            height={327}
-            alt=""
-            unoptimized
-            priority
-            className="w-full"
-          />
+          <div className="relative h-[300px]">
+            <Image
+              src={thumbnail}
+              alt=""
+              unoptimized
+              priority
+              fill
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
         </ViewTransition>
       )}
 
