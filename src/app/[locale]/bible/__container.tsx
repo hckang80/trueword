@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/drawer';
 
 import { Button } from '@/shared/components/ui/button';
-import { bibleKeys, cn } from '@/shared';
+import { cn } from '@/shared';
 import { ChevronDown, Globe } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
@@ -19,13 +19,10 @@ import { Skeleton } from '@/shared/components/ui/skeleton';
 import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
-  fetchBibleInstance,
   useUpdateBibleParams,
-  fetchTranslationBooks,
   useBibleChapterInstance,
   useTranslationBooks
 } from '@/features/bible';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   CHAPTER_LENGTH,
   type BibleChapterInstance,

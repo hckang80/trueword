@@ -1,12 +1,6 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import { bibleKeys, translationsKeys } from '@/shared';
 import {
-  fetchTranslationVersions,
-  fetchBibleInstance,
-  fetchTranslationBooks,
-  translationVersionsQueryOptions,
-  getLocalizedTranslationVersions,
   localizedTranslationVersionsQueryOptions,
   bibleChapterInstanceQueryOptions,
   translationBooksQueryOptions
