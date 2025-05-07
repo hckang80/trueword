@@ -45,7 +45,7 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
       href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
       className="group flex items-center justify-between gap-[8px] visited:text-purple-600 p-[20px] border border-gray-200 rounded-lg mb-4"
     >
-      <ViewTransition name={item.title}>
+      <ViewTransition name={`title-${item.sourceEng}-${item.guid}`}>
         <div>
           <h1 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
             <strong>{item.title}</strong>

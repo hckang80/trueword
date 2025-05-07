@@ -27,7 +27,7 @@ export default function NewsIdContainer() {
 
   return (
     <article className="p-[var(--global-inset)]">
-      <ViewTransition name={title}>
+      <ViewTransition name={`title-${sources[0]}-${sources[1]}`}>
         <NewsHeader title={title} source={source} pubDate={pubDate} />
       </ViewTransition>
 
