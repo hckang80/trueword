@@ -1,10 +1,9 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import { bibleKeys, translationsKeys } from '@/shared';
 import {
-  fetchTranslationVersions,
-  fetchBibleInstance,
-  fetchTranslationBooks
+  localizedTranslationVersionsQueryOptions,
+  bibleChapterInstanceQueryOptions,
+  translationBooksQueryOptions
 } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { LoaderCircle } from 'lucide-react';
@@ -32,29 +31,18 @@ export default async function Bible({ params, searchParams }: Props) {
 
   const queryClient = new QueryClient();
 
-  const translationVersions = await queryClient.fetchQuery({
-    queryKey: translationsKeys._def,
-    queryFn: fetchTranslationVersions,
-    staleTime: Infinity
-  });
-
-  const localizedTranslationVersions = await queryClient.fetchQuery({
-    ...translationsKeys.data(language),
-    queryFn: () => translationVersions.filter(({ lang }) => lang === language)
-  });
+  const localizedTranslationVersions = await queryClient.fetchQuery(
+    localizedTranslationVersionsQueryOptions(language)
+  );
 
   const [defaultTranslation] = localizedTranslationVersions;
   const getTranslationVersionId = abbreviation || defaultTranslation.abbreviation;
 
   await Promise.all([
-    queryClient.prefetchQuery({
-      ...bibleKeys.data([getTranslationVersionId, '1', '1']),
-      queryFn: () => fetchBibleInstance(getTranslationVersionId, '1', '1')
-    }),
-    queryClient.prefetchQuery({
-      queryKey: [getTranslationVersionId],
-      queryFn: () => fetchTranslationBooks(getTranslationVersionId)
-    })
+    queryClient.prefetchQuery(
+      bibleChapterInstanceQueryOptions([getTranslationVersionId, '1', '1'])
+    ),
+    queryClient.prefetchQuery(translationBooksQueryOptions(getTranslationVersionId))
   ]);
 
   return (

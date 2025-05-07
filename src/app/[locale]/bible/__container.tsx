@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/drawer';
 
 import { Button } from '@/shared/components/ui/button';
-import { bibleKeys, cn } from '@/shared';
+import { cn } from '@/shared';
 import { ChevronDown, Globe } from 'lucide-react';
 import BibleLanguages from './BibleLanguages';
 import { useTranslations } from 'next-intl';
@@ -19,11 +19,10 @@ import { Skeleton } from '@/shared/components/ui/skeleton';
 import {
   useBibleLanguage,
   useLocalizedTranslationVersions,
-  fetchBibleInstance,
   useUpdateBibleParams,
-  fetchTranslationBooks
+  useBibleChapterInstance,
+  useTranslationBooks
 } from '@/features/bible';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   CHAPTER_LENGTH,
   type BibleChapterInstance,
@@ -252,17 +251,13 @@ export default function Container() {
   const getBookNumber = searchParams.get('bookNumber') || '1';
   const getChapterNumber = searchParams.get('chapterNumber') || '1';
 
-  const { data: bibleChapterInstance } = useSuspenseQuery({
-    ...bibleKeys.data([getTranslationVersionId, getBookNumber, getChapterNumber]),
-    queryFn: () => fetchBibleInstance(getTranslationVersionId, getBookNumber, getChapterNumber),
-    staleTime: Infinity
-  });
+  const { data: bibleChapterInstance } = useBibleChapterInstance([
+    getTranslationVersionId,
+    getBookNumber,
+    getChapterNumber
+  ]);
 
-  const { data: books } = useSuspenseQuery({
-    queryKey: [getTranslationVersionId],
-    queryFn: () => fetchTranslationBooks(getTranslationVersionId),
-    staleTime: Infinity
-  });
+  const { data: books } = useTranslationBooks(getTranslationVersionId);
 
   const updateBibleParams = useUpdateBibleParams();
 

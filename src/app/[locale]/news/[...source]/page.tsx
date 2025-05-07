@@ -1,5 +1,8 @@
-import { newsKeys } from '@/shared';
-import { fetchNews, fetchScrapedContent, fetchSummary } from '@/features/news';
+import {
+  newsBySourceQueryOptions,
+  scrapedContentQueryOptions,
+  summaryQueryOptions
+} from '@/features/news';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
@@ -28,15 +31,9 @@ export default async function NewsIdPage({ params }: Props) {
 
   if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
 
-  const scraped = await queryClient.fetchQuery({
-    queryKey: ['scraped', newsBySource.link],
-    queryFn: () => fetchScrapedContent(newsBySource.link)
-  });
+  const scraped = await queryClient.fetchQuery(scrapedContentQueryOptions(newsBySource.link));
 
-  await queryClient.prefetchQuery({
-    queryKey: ['summary', scraped.title],
-    queryFn: () => fetchSummary({ content: scraped.content, title: scraped.title })
-  });
+  await queryClient.prefetchQuery(summaryQueryOptions(scraped.content, scraped.title));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -48,10 +45,7 @@ export default async function NewsIdPage({ params }: Props) {
 async function NewsBySource([source, id]: string[]) {
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery({
-    ...newsKeys.data([source, id]),
-    queryFn: fetchNews
-  });
+  const news = await queryClient.fetchQuery(newsBySourceQueryOptions([source, id]));
 
   const newsBySource = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
 
