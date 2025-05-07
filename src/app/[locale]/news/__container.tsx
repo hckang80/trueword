@@ -1,7 +1,6 @@
 'use client';
 
 import { useNews, type NewsItem as TNewsItem } from '@/features/news';
-import { toReadableDate } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
 import { Link, usePathname } from '@/i18n/routing';
@@ -34,7 +33,7 @@ const NewsItemMeta = memo(({ source, pubDate }: { source: string; pubDate: strin
   <div className="flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400">
     <span>{source}</span>
     <span className="mx-1.5 sm:mx-2">•</span>
-    <span>{toReadableDate(new Date(pubDate))}</span>
+    <span>{pubDate}</span>
   </div>
 ));
 NewsItemMeta.displayName = 'NewsItemMeta';

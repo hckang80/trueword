@@ -2,7 +2,6 @@
 
 import { Button, buttonVariants } from '@/shared/components/ui/button';
 import { Link } from '@/i18n/routing';
-import { toReadableDate } from '@/shared';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';
 import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news';
@@ -84,7 +83,7 @@ const NewsHeader = ({
     <div className="flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400">
       <span>{source}</span>
       <span className="mx-1.5 sm:mx-2">•</span>
-      <span>{toReadableDate(new Date(pubDate))}</span>
+      <span>{pubDate}</span>
     </div>
   </header>
 );
