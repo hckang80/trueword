@@ -1,6 +1,5 @@
-import { axiosInstance, newsKeys } from '@/shared';
+import { axiosInstance } from '@/shared';
 import type { NewsItem } from '@/features/news';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export * from './fetchRssFeed';
 
@@ -22,39 +21,4 @@ export async function fetchSummary({ content, title }: { content: string; title:
     title
   });
   return data;
-}
-
-export function useNews() {
-  return useQuery<NewsItem[]>({
-    queryKey: newsKeys._def,
-    queryFn: fetchNews,
-    staleTime: 1000 * 60 * 5
-  });
-}
-
-export function useNewsBySource(sources: string[]) {
-  const [source, id] = sources;
-
-  return useSuspenseQuery({
-    ...newsKeys.data(sources),
-    queryFn: fetchNews,
-    select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source),
-    staleTime: 1000 * 60 * 5
-  });
-}
-
-export function useScrapedContent(url: string) {
-  return useSuspenseQuery({
-    queryKey: ['scraped', url],
-    queryFn: () => fetchScrapedContent(url),
-    staleTime: 1000 * 60 * 5
-  });
-}
-
-export function useSummary(content: string, title: string) {
-  return useSuspenseQuery({
-    queryKey: ['summary', title],
-    queryFn: () => fetchSummary({ content, title }),
-    staleTime: 1000 * 60 * 5
-  });
 }

@@ -1,7 +1,6 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from '../news/__container';
-import { fetchNews } from '@/features/news';
-import { newsKeys } from '@/shared';
+import { newsQueryOptions } from '@/features/news';
 import type { Metadata, ResolvingMetadata } from 'next';
 
 export async function generateMetadata(
@@ -18,10 +17,7 @@ export async function generateMetadata(
 export default async function NewsPage() {
   const queryClient = new QueryClient();
 
-  await queryClient.fetchQuery({
-    queryKey: newsKeys._def,
-    queryFn: fetchNews
-  });
+  await queryClient.fetchQuery(newsQueryOptions);
 
   const dehydratedState = dehydrate(queryClient);
 
