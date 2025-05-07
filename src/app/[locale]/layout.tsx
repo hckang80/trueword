@@ -47,7 +47,7 @@ export default async function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <ProgressBar />
+            <ProgressBar color="var(--color-foreground)" showSpinner={false} />
             <Providers>
               <NextIntlClientProvider messages={messages}>
                 <Header />
