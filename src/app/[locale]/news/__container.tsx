@@ -46,7 +46,7 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
       href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
       className="group flex items-center justify-between gap-[8px] visited:text-purple-600 p-[20px] border border-gray-200 rounded-lg mb-4"
     >
-      <ViewTransition name="news-header">
+      <ViewTransition name={item.title}>
         <div>
           <h1 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
             <strong>{item.title}</strong>
@@ -59,7 +59,7 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
           <NewsItemMeta source={item.source} pubDate={item.pubDate} />
         </div>
       </ViewTransition>
-      <ViewTransition name="news-thumbnail">
+      <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
         <NewsImage src={item.thumbnail || '/blank.png'} />
       </ViewTransition>
     </Link>
