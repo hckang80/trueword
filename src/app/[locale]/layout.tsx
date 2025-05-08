@@ -51,7 +51,7 @@ export default async function LocaleLayout({
             <Providers>
               <NextIntlClientProvider messages={messages}>
                 <Header />
-                <main className="guild-line-layout">{children}</main>
+                <main className="guide-line-layout">{children}</main>
                 <BottomNavigation />
               </NextIntlClientProvider>
             </Providers>
