@@ -14,7 +14,8 @@ export const useBibleChapterInstance = (params: string[]) => {
 
 export const translationBooksQueryOptions = (getTranslationVersionId: string) => ({
   queryKey: [getTranslationVersionId],
-  queryFn: () => fetchTranslationBooks(getTranslationVersionId)
+  queryFn: () => fetchTranslationBooks(getTranslationVersionId),
+  staleTime: Infinity
 });
 export const useTranslationBooks = (getTranslationVersionId: string) => {
   return useSuspenseQuery(translationBooksQueryOptions(getTranslationVersionId));
