@@ -39,7 +39,7 @@ export default function NewsIdContainer() {
               unoptimized
               priority
               fill
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'cover' }}
             />
           </div>
         </ViewTransition>
