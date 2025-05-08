@@ -45,9 +45,9 @@ export async function GET() {
 
     const newsResults = await Promise.all(newsPromises);
 
-    const allNews = newsResults
-      .flat()
-      .toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+    const allNews = newsResults.flat().toSorted((a, b) => {
+      return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+    });
 
     return NextResponse.json(allNews);
   } catch (error) {

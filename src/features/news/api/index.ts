@@ -1,11 +1,12 @@
-import { axiosInstance } from '@/shared';
+import { axiosInstance, toReadableDate } from '@/shared';
 import type { NewsItem } from '@/features/news';
 
 export * from './fetchRssFeed';
 
 export async function fetchNews(): Promise<NewsItem[]> {
   const { data } = await axiosInstance<NewsItem[]>('/api/news');
-  return data;
+
+  return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate)) }));
 }
 
 export async function fetchScrapedContent(url: string) {
