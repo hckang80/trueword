@@ -3,7 +3,8 @@ import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query
 import {
   localizedTranslationVersionsQueryOptions,
   bibleChapterInstanceQueryOptions,
-  translationBooksQueryOptions
+  translationBooksQueryOptions,
+  translationVersionsQueryOptions
 } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { LoaderCircle } from 'lucide-react';
@@ -42,7 +43,8 @@ export default async function Bible({ params, searchParams }: Props) {
     queryClient.prefetchQuery(
       bibleChapterInstanceQueryOptions([getTranslationVersionId, '1', '1'])
     ),
-    queryClient.prefetchQuery(translationBooksQueryOptions(getTranslationVersionId))
+    queryClient.prefetchQuery(translationBooksQueryOptions(getTranslationVersionId)),
+    queryClient.prefetchQuery(translationVersionsQueryOptions)
   ]);
 
   return (
