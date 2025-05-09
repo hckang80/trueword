@@ -106,12 +106,5 @@ export default function NewsContainer() {
   if (isLoading) return <NewsLoading />;
   if (isError) return <NewsError />;
 
-  return (
-    <NewsList
-      data={data}
-      fetchNextPage={fetchNextPage}
-      hasNextPage={hasNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-    />
-  );
+  return <div>NEWS</div>;
 }
