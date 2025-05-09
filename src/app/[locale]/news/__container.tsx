@@ -80,9 +80,9 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
   <div className="p-[var(--global-inset)]">
     {data?.pages.map((page, pageIndex) => (
       <div key={pageIndex} style={{ display: 'contents' }}>
-        {page.documents.map((news) => (
+        {/* {page.documents.map((news) => (
           <NewsItem key={news.guid} item={news} />
-        ))}
+        ))} */}
       </div>
     ))}
     <InfiniteScrollTrigger
