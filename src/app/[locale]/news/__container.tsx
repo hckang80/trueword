@@ -13,12 +13,6 @@ import { Link, usePathname } from '@/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
 
-const NewsLoading = () => <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
-
-const NewsError = () => (
-  <div className="text-center py-10 text-red-500">뉴스를 불러오는 데 실패했습니다.</div>
-);
-
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
     <Image
@@ -71,14 +65,14 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
 NewsItem.displayName = 'NewsItem';
 
 interface NewsListProps {
-  data?: InfiniteData<NewsInstance>;
+  data: InfiniteData<NewsInstance>;
   fetchNextPage: () => void;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
 }
 const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }: NewsListProps) => (
   <div className="p-[var(--global-inset)]">
-    {data?.pages.map((page, pageIndex) => (
+    {data.pages.map((page, pageIndex) => (
       <div key={pageIndex} style={{ display: 'contents' }}>
         {page.documents.map((news) => (
           <NewsItem key={news.guid} item={news} />
@@ -96,12 +90,9 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
-  const { data: news = [], isLoading, isError } = useNews();
+  const { data: news } = useNews();
   const infiniteQuery = useInfiniteNews(news);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
-
-  if (isLoading) return <NewsLoading />;
-  if (isError) return <NewsError />;
 
   return (
     <NewsList
