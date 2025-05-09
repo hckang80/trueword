@@ -58,3 +58,14 @@ export interface NewsItem {
   sourceEng: string;
   guid: string;
 }
+
+export interface NewsMeta {
+  is_end: boolean;
+  pageable_count: number;
+  total_count: number;
+}
+
+export interface NewsInstance {
+  meta: NewsMeta;
+  documents: NewsItem[];
+}
