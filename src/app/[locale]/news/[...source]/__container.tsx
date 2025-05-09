@@ -6,7 +6,6 @@ import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';
 import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function NewsIdContainer() {
