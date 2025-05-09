@@ -96,9 +96,12 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
+  console.time('useNews');
   const { data: news = [], isLoading, isError } = useNews();
-  const infiniteQuery = useInfiniteNews(news);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
+  console.timeEnd('useNews');
+  console.time('useInfiniteNews');
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteNews(news);
+  console.timeEnd('useInfiniteNews');
 
   if (isLoading) return <NewsLoading />;
   if (isError) return <NewsError />;
