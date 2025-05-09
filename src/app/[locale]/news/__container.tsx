@@ -8,12 +8,6 @@ import { Link, usePathname } from '@/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
 
-const NewsLoading = () => <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
-
-const NewsError = () => (
-  <div className="text-center py-10 text-red-500">뉴스를 불러오는 데 실패했습니다.</div>
-);
-
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
     <Image
