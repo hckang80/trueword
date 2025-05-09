@@ -1,6 +1,6 @@
 import { newsKeys } from '@/shared';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { fetchNews, fetchScrapedContent, fetchSummary } from '../api';
+import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { fetchNews, fetchNewsSlice, fetchScrapedContent, fetchSummary } from '../api';
 import type { NewsItem } from '../model';
 
 export const newsQueryOptions = {
@@ -11,6 +11,19 @@ export const newsQueryOptions = {
 export function useNews() {
   return useSuspenseQuery<NewsItem[]>(newsQueryOptions);
 }
+
+export const useInfiniteNews = (allNews: NewsItem[]) => {
+  return useInfiniteQuery({
+    queryKey: ['news', allNews],
+    queryFn: ({ pageParam }) => fetchNewsSlice(allNews, pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      const { is_end: isListEnd } = lastPage.meta;
+      return isListEnd ? undefined : allPages.length + 1;
+    },
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 5
+  });
+};
 
 export function newsBySourceQueryOptions(sources: string[]) {
   return {

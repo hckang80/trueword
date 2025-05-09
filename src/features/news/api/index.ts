@@ -1,5 +1,6 @@
 import { axiosInstance, toReadableDate } from '@/shared';
 import type { NewsItem } from '@/features/news';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 export * from './fetchRssFeed';
 
@@ -8,6 +9,26 @@ export async function fetchNews(): Promise<NewsItem[]> {
 
   return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate)) }));
 }
+
+export const PAGE_SIZE = 10;
+export const fetchNewsSlice = async (allNews: NewsItem[], pageParam: number) => {
+  const { length: total_count } = allNews;
+  const pageable_count = total_count;
+  const startIndex = (pageParam - 1) * PAGE_SIZE;
+  const endIndex = startIndex + PAGE_SIZE;
+  const pageItems = allNews.slice(startIndex, endIndex);
+
+  const response = {
+    documents: pageItems,
+    meta: {
+      is_end: endIndex >= total_count,
+      pageable_count,
+      total_count
+    }
+  };
+
+  return Promise.resolve(response);
+};
 
 export async function fetchScrapedContent(url: string) {
   const { data } = await axiosInstance.post<{ content: string; title: string }>('/api/scrape', {

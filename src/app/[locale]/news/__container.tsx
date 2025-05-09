@@ -1,10 +1,17 @@
 'use client';
 
-import { useNews, type NewsItem as TNewsItem } from '@/features/news';
+import {
+  useInfiniteNews,
+  useNews,
+  type NewsInstance,
+  type NewsItem as TNewsItem
+} from '@/features/news';
+import { InfiniteScrollTrigger } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
 import { Link, usePathname } from '@/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
+import type { InfiniteData } from '@tanstack/react-query';
 
 const NewsLoading = () => <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
 
@@ -14,8 +21,6 @@ const NewsError = () => (
 
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
-    {/* TODO: 최적화 안되는 이미지가 있어서 unoptimized 임시 추가 */}
-
     <Image
       src={src || '/blank.png'}
       width={120}
@@ -65,20 +70,45 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
 ));
 NewsItem.displayName = 'NewsItem';
 
-const NewsList = memo(({ news }: { news: TNewsItem[] }) => (
+interface NewsListProps {
+  data?: InfiniteData<NewsInstance>;
+  fetchNextPage: () => void;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+}
+const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }: NewsListProps) => (
   <div className="p-[var(--global-inset)]">
-    {news.map((item) => (
-      <NewsItem key={item.guid} item={item} />
+    {data?.pages.map((page, pageIndex) => (
+      <div key={pageIndex} style={{ display: 'contents' }}>
+        {page.documents.map((news) => (
+          <NewsItem key={news.guid} item={news} />
+        ))}
+      </div>
     ))}
+    <InfiniteScrollTrigger
+      onIntersect={() => {
+        fetchNextPage();
+      }}
+      enabled={hasNextPage && !isFetchingNextPage}
+    />
   </div>
 ));
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
   const { data: news = [], isLoading, isError } = useNews();
+  const infiniteQuery = useInfiniteNews(news);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
 
   if (isLoading) return <NewsLoading />;
   if (isError) return <NewsError />;
 
-  return <NewsList news={news} />;
+  return (
+    <NewsList
+      data={data}
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+    />
+  );
 }
