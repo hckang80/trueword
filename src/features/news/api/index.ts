@@ -1,6 +1,5 @@
 import { axiosInstance, toReadableDate } from '@/shared';
 import type { NewsItem } from '@/features/news';
-import { useInfiniteQuery } from '@tanstack/react-query';
 
 export * from './fetchRssFeed';
 
