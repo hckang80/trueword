@@ -1,12 +1,23 @@
 'use client';
 
-import { type NewsInstance, type NewsItem as TNewsItem } from '@/features/news';
+import {
+  useInfiniteNews,
+  useNews,
+  type NewsInstance,
+  type NewsItem as TNewsItem
+} from '@/features/news';
 import { InfiniteScrollTrigger } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
 import { Link, usePathname } from '@/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
+
+const NewsLoading = () => <div className="text-center py-10">뉴스를 불러오는 중입니다...</div>;
+
+const NewsError = () => (
+  <div className="text-center py-10 text-red-500">뉴스를 불러오는 데 실패했습니다.</div>
+);
 
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
@@ -69,9 +80,9 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
   <div className="p-[var(--global-inset)]">
     {data?.pages.map((page, pageIndex) => (
       <div key={pageIndex} style={{ display: 'contents' }}>
-        {/* {page.documents.map((news) => (
+        {page.documents.map((news) => (
           <NewsItem key={news.guid} item={news} />
-        ))} */}
+        ))}
       </div>
     ))}
     <InfiniteScrollTrigger
@@ -85,15 +96,19 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
-  // console.time('useNews');
-  // const { data: news = [], isLoading, isError } = useNews();
-  // console.timeEnd('useNews');
-  // console.time('useInfiniteNews');
-  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteNews(news);
-  // console.timeEnd('useInfiniteNews');
+  const { data: news = [], isLoading, isError } = useNews();
+  const infiniteQuery = useInfiniteNews(news);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
 
-  // if (isLoading) return <NewsLoading />;
-  // if (isError) return <NewsError />;
+  if (isLoading) return <NewsLoading />;
+  if (isError) return <NewsError />;
 
-  return <div>NEWS</div>;
+  return (
+    <NewsList
+      data={data}
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+    />
+  );
 }
