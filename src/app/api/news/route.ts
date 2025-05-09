@@ -10,21 +10,21 @@ export async function GET() {
           ko: '크리스천투데이',
           en: 'christiantoday'
         }
-      },
-      {
-        url: 'https://www.christiandaily.co.kr/rss',
-        name: {
-          ko: '기독일보',
-          en: 'christiandaily'
-        }
-      },
-      {
-        url: 'https://kcnp.com/rss',
-        name: {
-          ko: '한국기독신문',
-          en: 'kcnp'
-        }
       }
+      // {
+      //   url: 'https://www.christiandaily.co.kr/rss',
+      //   name: {
+      //     ko: '기독일보',
+      //     en: 'christiandaily'
+      //   }
+      // },
+      // {
+      //   url: 'https://kcnp.com/rss',
+      //   name: {
+      //     ko: '한국기독신문',
+      //     en: 'kcnp'
+      //   }
+      // }
       // {
       //   url: 'https://www.knewsm.kr/rss/allArticle.xml',
       //   name: {
