@@ -19,9 +19,7 @@ export async function generateMetadata(
 export default async function NewsPage() {
   const queryClient = new QueryClient();
 
-  console.time('newsQueryOptions');
   await queryClient.prefetchQuery(newsQueryOptions);
-  console.timeEnd('newsQueryOptions');
 
   const dehydratedState = dehydrate(queryClient);
 
