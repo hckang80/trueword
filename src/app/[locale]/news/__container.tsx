@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  useInfiniteNews,
-  useNews,
-  type NewsInstance,
-  type NewsItem as TNewsItem
-} from '@/features/news';
+import { type NewsInstance, type NewsItem as TNewsItem } from '@/features/news';
 import { InfiniteScrollTrigger } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
@@ -96,15 +91,15 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
-  console.time('useNews');
-  const { data: news = [], isLoading, isError } = useNews();
-  console.timeEnd('useNews');
-  console.time('useInfiniteNews');
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteNews(news);
-  console.timeEnd('useInfiniteNews');
+  // console.time('useNews');
+  // const { data: news = [], isLoading, isError } = useNews();
+  // console.timeEnd('useNews');
+  // console.time('useInfiniteNews');
+  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteNews(news);
+  // console.timeEnd('useInfiniteNews');
 
-  if (isLoading) return <NewsLoading />;
-  if (isError) return <NewsError />;
+  // if (isLoading) return <NewsLoading />;
+  // if (isError) return <NewsError />;
 
   return <div>NEWS</div>;
 }
