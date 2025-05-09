@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from '../news/__container';
-import { newsQueryOptions } from '@/features/news';
+// import { newsQueryOptions } from '@/features/news';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';
 import { LoaderCircle } from 'lucide-react';
@@ -19,9 +19,9 @@ export async function generateMetadata(
 export default async function NewsPage() {
   const queryClient = new QueryClient();
 
-  console.time('newsQueryOptions');
-  await queryClient.prefetchQuery(newsQueryOptions);
-  console.timeEnd('newsQueryOptions');
+  // console.time('newsQueryOptions');
+  // await queryClient.prefetchQuery(newsQueryOptions);
+  // console.timeEnd('newsQueryOptions');
 
   const dehydratedState = dehydrate(queryClient);
 
