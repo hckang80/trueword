@@ -64,7 +64,7 @@ async function fetchFreshData() {
   const newsResults = await Promise.all(newsPromises);
   const allNews = newsResults
     .flat()
-    .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+    .toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
   await redis.set('rss_news', allNews, { ex: CACHE_TTL });
 
