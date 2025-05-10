@@ -3,7 +3,7 @@ import Providers from './QueryProvider';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import { routing } from '@/shared/i18n/routing';
 import ProgressBar from './ProgressBar';
 import { BottomNavigation, isSupportedLocale } from '@/shared';
 import { GoogleAnalytics } from '@next/third-parties/google';

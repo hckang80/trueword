@@ -1,7 +1,7 @@
 'use client';
 
 import { Book, Newspaper } from 'lucide-react';
-import { Link, usePathname } from '@/i18n/routing';
+import { Link, usePathname } from '@/shared/i18n/routing';
 
 interface NavItemProps {
   href: string;
