@@ -16,6 +16,32 @@
 
 ---
 
+## 📁 폴더 구조 및 설명
+
+FSD(Feature-Sliced Design)로 설계했습니다.
+```bash
+src/
+├── app/                          
+│   ├── [locale]/                 # 다국어 지원 라우트
+│   ├── api/                      # API 라우트
+│   └── translations/             # 동적 API 라우트
+├── features/                     # 기능 모듈
+│   └── bible/                    # 도메인 명칭 (bible, news...)
+│       ├── api/                  # 데이터 패칭 함수
+│       ├── hooks/                # 커스텀 훅, react-query
+│       ├── lib/                  # 유틸리티 함수 및 라이브러리
+│       └── model/                # 상수, 타입 정의
+└── shared/                       # 공용 모듈
+│   ├── components/               # UI 등 공통 컴포넌트
+│   ├── config/                   # Axios, 언어 설정
+│   ├── i18n/                     # 국제화
+│   ├── lib/                      # 유틸리티 함수 및 라이브러리
+│   └── types/                    # 타입 정의
+└── middleware/                   # 전역 미들웨어
+```
+
+---
+
 ## 📦 기타 리소스
 [제작 배경](https://velog.io/@_sky/%EC%83%9D%EC%A1%B4%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%82%AC%EC%9D%B4%EB%93%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EB%B0%9C%EA%B8%B0)
 
