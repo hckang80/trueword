@@ -32,5 +32,5 @@ export function fetcher<T>(url: string | URL | Request, init?: RequestInit): Pro
 
 export function extractLastNumber(url: string) {
   const match = url.match(/(\d+)(?:\/?)$/);
-  return match?.[1];
+  return match?.[1] || '';
 }
