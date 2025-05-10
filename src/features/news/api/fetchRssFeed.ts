@@ -1,10 +1,13 @@
-import type { RSSFeed, RSSItem } from '../model';
+import type { NewsItem, RSSFeed, RSSItem } from '../model';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
 import { extractLastNumber } from '@/shared';
 
-export async function fetchRssFeed(feedUrl: string, sourceName: Record<string, string>) {
+export async function fetchRssFeed(
+  feedUrl: string,
+  sourceName: Record<string, string>
+): Promise<NewsItem[]> {
   try {
     const response = await axios.get<string>(feedUrl, {
       headers: {
