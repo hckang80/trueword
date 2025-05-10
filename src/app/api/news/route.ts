@@ -7,22 +7,13 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
-const CACHE_TTL = 30 * 60;
-const STALE_TTL = 24 * 60 * 60;
+const CACHE_TTL = 24 * 60 * 60;
 
 export async function GET() {
   try {
     const cachedNews = await redis.get<NewsItem[]>('rss_news');
-    const lastUpdated = await redis.get<number>('rss_news_updated');
+    const allNews = cachedNews || (await fetchFreshData());
 
-    if (cachedNews) {
-      if (lastUpdated && Date.now() - lastUpdated > CACHE_TTL * 1000) {
-        revalidateData().catch(console.error);
-      }
-      return NextResponse.json(cachedNews);
-    }
-
-    const allNews = await fetchFreshData();
     return NextResponse.json(allNews);
   } catch (error) {
     console.error('Error fetching news:', error);
@@ -69,29 +60,13 @@ async function fetchFreshData() {
     // }
   ];
 
-  const newsPromises = rssFeeds.map((source) =>
-    Promise.race([
-      fetchRssFeed(source.url, source.name),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
-    ])
-  );
-
-  const newsResults = await Promise.allSettled(newsPromises);
+  const newsPromises = rssFeeds.map((source) => fetchRssFeed(source.url, source.name));
+  const newsResults = await Promise.all(newsPromises);
   const allNews = newsResults
-    .filter((result): result is PromiseFulfilledResult<NewsItem> => result.status === 'fulfilled')
-    .map((result) => result.value)
     .flat()
     .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
-  await Promise.all([
-    redis.set('rss_news', allNews, { ex: STALE_TTL }),
-    redis.set('rss_news_updated', Date.now(), { ex: STALE_TTL })
-  ]);
+  await redis.set('rss_news', allNews, { ex: CACHE_TTL });
 
   return allNews;
-}
-
-async function revalidateData() {
-  const freshData = await fetchFreshData();
-  return freshData;
 }
