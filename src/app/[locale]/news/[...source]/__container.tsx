@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, buttonVariants } from '@/shared/components/ui/button';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';
 import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news';

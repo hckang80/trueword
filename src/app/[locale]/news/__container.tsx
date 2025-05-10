@@ -9,7 +9,7 @@ import {
 import { InfiniteScrollTrigger } from '@/shared';
 import Image from 'next/image';
 import { memo } from 'react';
-import { Link, usePathname } from '@/i18n/routing';
+import { Link, usePathname } from '@/shared/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
 
