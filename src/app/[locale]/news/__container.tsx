@@ -21,8 +21,6 @@ const NewsImage = memo(({ src }: { src: string | null }) => (
       height={63}
       style={{ aspectRatio: '2/1.05' }}
       alt=""
-      unoptimized
-      priority
     />
   </div>
 ));
