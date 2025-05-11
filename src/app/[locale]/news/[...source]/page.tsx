@@ -6,6 +6,7 @@ import {
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
+import { getNewsItem } from '@/features/bible';
 
 type Props = { params: Promise<{ source: string[] }> };
 
@@ -15,9 +16,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const previousTitle = (await parent).title;
 
-  const { source } = await params;
+  const { source: sources } = await params;
 
-  const { newsBySource } = await NewsBySource(source);
+  const queryClient = new QueryClient();
+  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources));
+  const newsBySource = getNewsItem(news, sources);
 
   return {
     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
@@ -27,8 +30,9 @@ export async function generateMetadata(
 export default async function NewsIdPage({ params }: Props) {
   const { source: sources } = await params;
 
-  const { queryClient, newsBySource } = await NewsBySource(sources);
-
+  const queryClient = new QueryClient();
+  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources));
+  const newsBySource = getNewsItem(news, sources);
   if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
 
   const scraped = await queryClient.fetchQuery(scrapedContentQueryOptions(newsBySource.link));
@@ -40,14 +44,4 @@ export default async function NewsIdPage({ params }: Props) {
       <Container />
     </HydrationBoundary>
   );
-}
-
-async function NewsBySource([source, id]: string[]) {
-  const queryClient = new QueryClient();
-
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions([source, id]));
-
-  const newsBySource = news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
-
-  return { queryClient, newsBySource };
 }
