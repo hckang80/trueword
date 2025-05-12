@@ -1,4 +1,5 @@
 import { TransitionVersion } from '@/features/bible';
+import type { NewsItem } from '@/features/news';
 import { DEFAULT_LOCALE, supportedTranslations } from '@/shared';
 
 export function getLanguageFullName(langCode: string, locale: string = DEFAULT_LOCALE) {
@@ -21,4 +22,8 @@ export function availableTranslationVersions(
       return Object.values(conditions).every(Boolean);
     }
   );
+}
+
+export function getNewsItem(news: NewsItem[], [source, id]: string[]) {
+  return news.find(({ guid, sourceEng }) => guid === id && sourceEng && source);
 }

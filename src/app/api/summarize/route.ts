@@ -34,15 +34,8 @@ export async function POST(request: NextRequest) {
     await redis.set(key, summary);
 
     return NextResponse.json({ summary });
-  } catch (
-    // TODO: error: unknown type으로 개선 필요
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any
-  ) {
-    console.error('Error summarizing content:', error?.response?.data || error);
-    return NextResponse.json(
-      { message: 'Error summarizing content', error: error?.response?.data || error.message },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error('Error summarizing content:', error);
+    return NextResponse.json({ message: 'Error summarizing content' }, { status: 500 });
   }
 }
