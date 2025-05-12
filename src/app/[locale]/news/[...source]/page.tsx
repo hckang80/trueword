@@ -8,7 +8,7 @@ import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { getNewsItem } from '@/features/bible';
 
-type Props = { params: Promise<{ source: string[] }> };
+type Props = { params: Promise<{ locale: string; source: string[] }> };
 
 export async function generateMetadata(
   { params }: Props,
@@ -16,11 +16,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const previousTitle = (await parent).title;
 
-  const { source: sources } = await params;
+  const { locale, source: sources } = await params;
 
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources));
+  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
   const newsBySource = getNewsItem(news, sources);
 
   return {
@@ -29,11 +29,11 @@ export async function generateMetadata(
 }
 
 export default async function NewsIdPage({ params }: Props) {
-  const { source: sources } = await params;
+  const { locale, source: sources } = await params;
 
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources));
+  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
   const newsBySource = getNewsItem(news, sources);
 
   if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;

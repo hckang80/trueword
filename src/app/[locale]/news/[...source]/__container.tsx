@@ -10,9 +10,9 @@ import Image from 'next/image';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function NewsIdContainer() {
-  const { source: sources } = useParams<{ source: string[] }>();
+  const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
   const { data: news = { link: '', title: '', source: '', pubDate: '', thumbnail: '' } } =
-    useNewsBySource(sources);
+    useNewsBySource(sources, locale);
 
   const { link, title, source, pubDate, thumbnail } = news;
   const { data: scraped } = useScrapedContent(link);

@@ -3,10 +3,10 @@ import type { NewsItem } from '@/features/news';
 
 export * from './fetchRssFeed';
 
-export async function fetchNews(): Promise<NewsItem[]> {
+export async function fetchNews(locale: string): Promise<NewsItem[]> {
   const { data } = await axiosInstance<NewsItem[]>('/api/news');
 
-  return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate)) }));
+  return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate), locale) }));
 }
 
 export const PAGE_SIZE = 10;

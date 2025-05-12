@@ -12,6 +12,7 @@ import { memo } from 'react';
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
+import { useBibleParams } from '@/features/bible';
 
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
@@ -88,7 +89,8 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
-  const { data: news } = useNews();
+  const { locale } = useBibleParams();
+  const { data: news } = useNews(locale);
   const infiniteQuery = useInfiniteNews(news);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
 

@@ -5,6 +5,10 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';
 import { LoaderCircle } from 'lucide-react';
 
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
 export async function generateMetadata(
   _props: unknown,
   parent: ResolvingMetadata
@@ -16,10 +20,11 @@ export async function generateMetadata(
   };
 }
 
-export default async function NewsPage() {
+export default async function NewsPage({ params }: Props) {
+  const { locale } = await params;
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(newsQueryOptions);
+  await queryClient.prefetchQuery(newsQueryOptions(locale));
 
   const dehydratedState = dehydrate(queryClient);
 

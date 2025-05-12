@@ -3,13 +3,17 @@ import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-quer
 import { fetchNews, fetchNewsSlice, fetchScrapedContent, fetchSummary } from '../api';
 import type { NewsItem } from '../model';
 
-export const newsQueryOptions = {
-  queryKey: newsKeys._def,
-  queryFn: fetchNews,
-  staleTime: 1000 * 60 * 5
-};
-export function useNews() {
-  return useSuspenseQuery<NewsItem[]>(newsQueryOptions);
+export function newsQueryOptions(locale: string) {
+  return {
+    queryKey: newsKeys._def,
+    queryFn: () => fetchNews(locale),
+    staleTime: 1000 * 60 * 5
+  };
+}
+export function useNews(locale: string) {
+  return useSuspenseQuery<NewsItem[]>({
+    ...newsQueryOptions(locale)
+  });
 }
 
 export const useInfiniteNews = (allNews: NewsItem[]) => {
@@ -25,18 +29,18 @@ export const useInfiniteNews = (allNews: NewsItem[]) => {
   });
 };
 
-export function newsBySourceQueryOptions(sources: string[]) {
+export function newsBySourceQueryOptions(sources: string[], locale: string) {
   return {
     ...newsKeys.data(sources),
-    queryFn: fetchNews,
+    queryFn: () => fetchNews(locale),
     staleTime: 1000 * 60 * 5
   };
 }
-export function useNewsBySource(sources: string[]) {
+export function useNewsBySource(sources: string[], locale: string) {
   const [source, id] = sources;
 
   return useSuspenseQuery({
-    ...newsBySourceQueryOptions(sources),
+    ...newsBySourceQueryOptions(sources, locale),
     select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
   });
 }
