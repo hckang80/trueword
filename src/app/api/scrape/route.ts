@@ -8,6 +8,8 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
+const MIN_CONTENT_LENGTH = 100;
+
 export async function POST(request: NextRequest) {
   try {
     const { url } = await request.json();
@@ -57,19 +59,19 @@ export async function POST(request: NextRequest) {
 
     for (const selector of possibleContentSelectors) {
       const element = root.querySelector(selector);
-      if (element) {
-        element
-          .querySelectorAll(
-            'script, style, nav, header, footer, .comments, .sidebar, .ad, .advertisement'
-          )
-          .forEach((el) => el.remove());
+      if (!element) return;
 
-        content = element.text.trim();
-        if (content.length > 100) break;
-      }
+      element
+        .querySelectorAll(
+          'script, style, nav, header, footer, .comments, .sidebar, .ad, .advertisement'
+        )
+        .forEach((el) => el.remove());
+
+      content = element.text.trim();
+      if (MIN_CONTENT_LENGTH >= 100) break;
     }
 
-    if (!content || content.length < 100) {
+    if (!content || MIN_CONTENT_LENGTH < 100) {
       const body = root.querySelector('body');
       if (body) {
         body.querySelectorAll('script, style, nav, header, footer').forEach((el) => el.remove());
@@ -77,9 +79,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    content = content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim();
-
-    const result = { title, content };
+    const result = { title, content: content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
 
     await redis.set(key, result);
 
