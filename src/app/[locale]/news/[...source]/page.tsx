@@ -39,16 +39,15 @@ export default async function NewsIdPage({ params }: Props) {
 
   return (
     <>
-      {process.env.NODE_ENV !== 'production' && (
-        <div className="fixed bottom-4 right-4 bg-black/80 text-white p-3 rounded-lg text-xs z-50 max-w-xs">
-          <h4 className="font-bold mb-1">Server Timing:</h4>
-          <ul>
-            <li>News: {performanceMetrics.newsBySource}ms</li>
-            <li>Scrape: {performanceMetrics.scrapedContent}ms</li>
-            <li>Summary: {performanceMetrics.summary}ms</li>
-          </ul>
-        </div>
-      )}
+      <div className="fixed bottom-4 right-4 bg-black/80 text-white p-3 rounded-lg text-xs z-50 max-w-xs">
+        <h4 className="font-bold mb-1">Server Timing:</h4>
+        <ul>
+          <li>News: {performanceMetrics.newsBySource}ms</li>
+          <li>Scrape: {performanceMetrics.scrapedContent}ms</li>
+          <li>Summary: {performanceMetrics.summary}ms</li>
+        </ul>
+      </div>
+
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Container />
       </HydrationBoundary>
