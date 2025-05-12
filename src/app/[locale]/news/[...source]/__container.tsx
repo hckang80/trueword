@@ -11,20 +11,14 @@ import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function NewsIdContainer() {
   const { source: sources } = useParams<{ source: string[] }>();
-  console.time('useNewsBySource');
   const { data: news = { link: '', title: '', source: '', pubDate: '', thumbnail: '' } } =
     useNewsBySource(sources);
-  console.timeEnd('useNewsBySource');
 
   const { link, title, source, pubDate, thumbnail } = news;
-  console.time('useScrapedContent');
   const { data: scraped } = useScrapedContent(link);
-  console.timeEnd('useScrapedContent');
-  console.time('useSummary');
   const {
     data: { summary }
   } = useSummary(scraped.content, scraped.title);
-  console.timeEnd('useSummary');
 
   const sanitizedData = () => ({
     __html: sanitizeHtml(summary.replace(/`{3,}/g, '').replace('html', ''))
