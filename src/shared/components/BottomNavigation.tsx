@@ -2,6 +2,7 @@
 
 import { Book, Newspaper } from 'lucide-react';
 import { Link, usePathname } from '@/shared/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 interface NavItemProps {
   href: string;
@@ -19,12 +20,13 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
       }`}
     >
       <div className="mb-1">{icon}</div>
-      <span className="text-xs font-medium">{text}</span>
+      <span className="text-xs font-medium capitalize">{text}</span>
     </Link>
   );
 };
 
 export const BottomNavigation = () => {
+  const t = useTranslations('Common');
   const pathname = usePathname();
 
   const isActive = (path: string) => {
@@ -39,7 +41,7 @@ export const BottomNavigation = () => {
           icon={
             <Book size={24} className={isActive('/bible') ? 'text-primary' : 'text-gray-400'} />
           }
-          text="성경"
+          text={t('bible')}
           isActive={isActive('/bible')}
         />
         <NavItem
@@ -47,7 +49,7 @@ export const BottomNavigation = () => {
           icon={
             <Newspaper size={24} className={isActive('/news') ? 'text-primary' : 'text-gray-400'} />
           }
-          text="뉴스"
+          text={t('news')}
           isActive={isActive('/news')}
         />
       </div>

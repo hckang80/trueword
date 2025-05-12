@@ -1,7 +1,8 @@
 {
   "Common": {
     "bible": "성경",
-    "language": "언어"
+    "language": "언어",
+    "news": "뉴스"
   },
   "Meta": {
     "title": "True Word",
