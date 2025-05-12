@@ -180,7 +180,7 @@ function TranslationSelector({
       <DrawerContent>
         <DrawerHeader className="p-0">
           <div className="flex items-center justify-between p-[10px]">
-            <span className="flex items-center gap-[4px]">
+            <span className="flex items-center gap-[4px] capitalize">
               <Globe />
               {t('language')}
             </span>

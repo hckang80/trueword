@@ -20,7 +20,7 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
       }`}
     >
       <div className="mb-1">{icon}</div>
-      <span className="text-xs font-medium">{text}</span>
+      <span className="text-xs font-medium capitalize">{text}</span>
     </Link>
   );
 };
