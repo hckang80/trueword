@@ -1,7 +1,8 @@
 {
   "Common": {
-    "bible": "Bible",
-    "language": "Language"
+    "bible": "bible",
+    "language": "language",
+    "news": "news"
   },
   "Meta": {
     "title": "True Word",
