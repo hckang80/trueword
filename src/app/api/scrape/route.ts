@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
-import { Readability } from '@mozilla/readability';
-import { JSDOM } from 'jsdom';
+import { parse } from 'node-html-parser';
 import { Redis } from '@upstash/redis';
 
 const redis = new Redis({
@@ -20,15 +19,11 @@ export async function POST(request: NextRequest) {
     const key = `scrape:${url}`;
     const cached = await redis.get<{
       title: string | null | undefined;
-      textContent: string | null | undefined;
+      content: string | null | undefined;
     }>(key);
 
     if (cached) {
-      const { title, textContent: content } = cached;
-      return NextResponse.json({
-        title,
-        content
-      });
+      return NextResponse.json(cached);
     }
 
     const { data: html } = await axios.get(url, {
@@ -36,22 +31,59 @@ export async function POST(request: NextRequest) {
         'User-Agent': globalThis.navigator.userAgent
       }
     });
-    const dom = new JSDOM(html, { url });
-    const reader = new Readability(dom.window.document);
-    const article = reader.parse();
 
-    if (!article) {
-      return NextResponse.json({ message: 'Could not extract content' }, { status: 422 });
+    const root = parse(html);
+
+    let title =
+      root.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
+      root.querySelector('meta[name="twitter:title"]')?.getAttribute('content') ||
+      root.querySelector('title')?.text ||
+      '';
+
+    let content = '';
+
+    const possibleContentSelectors = [
+      'article',
+      '.article',
+      '.post',
+      '.content',
+      '#content',
+      '.article-content',
+      '.post-content',
+      '.entry-content',
+      'main',
+      '[role="main"]'
+    ];
+
+    for (const selector of possibleContentSelectors) {
+      const element = root.querySelector(selector);
+      if (element) {
+        element
+          .querySelectorAll(
+            'script, style, nav, header, footer, .comments, .sidebar, .ad, .advertisement'
+          )
+          .forEach((el) => el.remove());
+
+        content = element.text.trim();
+        if (content.length > 100) break;
+      }
     }
 
-    const { title, textContent: content } = article;
+    if (!content || content.length < 100) {
+      const body = root.querySelector('body');
+      if (body) {
+        body.querySelectorAll('script, style, nav, header, footer').forEach((el) => el.remove());
+        content = body.text.trim();
+      }
+    }
 
-    await redis.set(key, article);
+    content = content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim();
 
-    return NextResponse.json({
-      title,
-      content
-    });
+    const result = { title, content };
+
+    await redis.set(key, result);
+
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Error scraping URL:', error);
     return NextResponse.json({ message: 'Error scraping URL' }, { status: 500 });
