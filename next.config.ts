@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'www.christianitytoday.com'
+      },
+      {
+        protocol: 'https',
         hostname: 'images.christiantoday.co.kr'
       },
       {

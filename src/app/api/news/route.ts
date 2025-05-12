@@ -12,7 +12,8 @@ const CACHE_TTL = 24 * 60 * 60;
 export async function GET() {
   try {
     const cachedNews = await redis.get<NewsItem[]>('rss_news');
-    const allNews = cachedNews || (await fetchFreshData());
+    const allNews = await fetchFreshData();
+    // const allNews = cachedNews || (await fetchFreshData());
 
     return NextResponse.json(allNews);
   } catch (error) {
@@ -22,41 +23,38 @@ export async function GET() {
 }
 
 async function fetchFreshData() {
-  const rssFeeds: { url: string; name: Record<string, string> }[] = [
+  const rssFeeds: { url: string; name: Record<string, string>; locale: string }[] = [
     {
-      url: 'https://www.christiantoday.co.kr/rss',
+      url: 'https://www.christianitytoday.com/rss',
       name: {
-        ko: '크리스천투데이',
-        en: 'christiantoday'
-      }
-    },
-    {
-      url: 'https://www.christiandaily.co.kr/rss',
-      name: {
-        ko: '기독일보',
-        en: 'christiandaily'
-      }
-    },
-    {
-      url: 'https://kcnp.com/rss',
-      name: {
-        ko: '한국기독신문',
-        en: 'kcnp'
-      }
+        ko: 'christianitytoday',
+        en: 'christianitytoday'
+      },
+      locale: 'en'
     }
     // {
-    //   url: 'https://www.knewsm.kr/rss/allArticle.xml',
+    //   url: 'https://www.christiantoday.co.kr/rss',
     //   name: {
-    //     ko: '뉴스엠',
-    //     en: 'newsM'
-    //   }
-    // }
+    //     ko: '크리스천투데이',
+    //     en: 'christiantoday'
+    //   },
+    //   locale: 'ko'
+    // },
     // {
-    //   url: 'https://rss.nocutnews.co.kr/christian/news.xml',
+    //   url: 'https://www.christiandaily.co.kr/rss',
     //   name: {
-    //     ko: '크리스천 노컷뉴스',
-    //     en: 'nocutnews'
-    //   }
+    //     ko: '기독일보',
+    //     en: 'christiandaily'
+    //   },
+    //   locale: 'ko'
+    // },
+    // {
+    //   url: 'https://kcnp.com/rss',
+    //   name: {
+    //     ko: '한국기독신문',
+    //     en: 'kcnp'
+    //   },
+    //   locale: 'ko'
     // }
   ];
 
@@ -66,7 +64,7 @@ async function fetchFreshData() {
     .flat()
     .toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
-  await redis.set('rss_news', allNews, { ex: CACHE_TTL });
+  // await redis.set('rss_news', allNews, { ex: CACHE_TTL });
 
   return allNews;
 }
