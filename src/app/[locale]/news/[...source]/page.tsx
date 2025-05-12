@@ -5,9 +5,28 @@ import {
 } from '@/features/news';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
+import type { Metadata, ResolvingMetadata } from 'next';
 import { getNewsItem } from '@/features/bible';
 
 type Props = { params: Promise<{ source: string[] }> };
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const previousTitle = (await parent).title;
+
+  const { source: sources } = await params;
+
+  const queryClient = new QueryClient();
+
+  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources));
+  const newsBySource = getNewsItem(news, sources);
+
+  return {
+    title: `${newsBySource?.title} - ${previousTitle?.absolute}`
+  };
+}
 
 export default async function NewsIdPage({ params }: Props) {
   const { source: sources } = await params;
