@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     const root = parse(html);
 
-    let title =
+    const title =
       root.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
       root.querySelector('meta[name="twitter:title"]')?.getAttribute('content') ||
       root.querySelector('title')?.text ||
