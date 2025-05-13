@@ -50,9 +50,11 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
           <NewsItemMeta source={item.source} pubDate={item.pubDate} />
         </div>
       </ViewTransition>
-      <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
-        <NewsImage src={item.thumbnail || '/blank.png'} />
-      </ViewTransition>
+      {item.thumbnail && (
+        <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
+          <NewsImage src={item.thumbnail} />
+        </ViewTransition>
+      )}
     </Link>
   </article>
 ));
