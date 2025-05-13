@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { remotePatterns } from './src/shared/config';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./src/shared/i18n/request.ts');
@@ -13,24 +14,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'www.christianitytoday.com'
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.christiantoday.co.kr'
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.christiandaily.co.kr'
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.kcnp.com'
-      }
-    ],
+    remotePatterns,
     minimumCacheTTL: 60,
     formats: ['image/webp', 'image/avif']
   },
