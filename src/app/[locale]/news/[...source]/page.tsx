@@ -36,7 +36,7 @@ export default async function NewsIdPage({ params }: Props) {
   const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
   const newsBySource = getNewsItem(news, sources);
 
-  if (!newsBySource) return <p>찾으시는 뉴스 결과가 없습니다.</p>;
+  if (!newsBySource) return <p className="center-absolute">찾으시는 뉴스 결과가 없습니다.</p>;
 
   const scraped = await queryClient.fetchQuery(
     scrapedContentQueryOptions(newsBySource.link, newsBySource.description)
