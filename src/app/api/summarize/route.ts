@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Redis } from '@upstash/redis';
+import { DEFAULT_LOCALE } from '@/shared';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -9,12 +10,9 @@ const redis = new Redis({
 
 export async function POST(request: NextRequest) {
   try {
-    const locale = request.headers.get('Accept-Language');
+    const locale = request.headers.get('Accept-Language') || DEFAULT_LOCALE;
     const { content } = await request.json();
 
-    if (!locale || typeof locale !== 'string') {
-      return NextResponse.json({ message: 'Locale is required' }, { status: 400 });
-    }
     if (!content || typeof content !== 'string') {
       return NextResponse.json({ message: 'Content is required' }, { status: 400 });
     }
@@ -30,12 +28,12 @@ export async function POST(request: NextRequest) {
 
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    const promptText =
-      locale === 'en'
-        ? `Summarize the following article concisely, including the title and main content. Output in semantic HTML markup. Respond in English only:`
-        : `다음 게시글의 제목과 주요 내용 등을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :`;
+    const promptLocales: Record<string, string> = {
+      ko: '다음 게시글의 제목과 주요 내용 등을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :',
+      en: 'Summarize the following article concisely, including the title and main content. Output in semantic HTML markup. Respond in English only:'
+    };
 
-    const prompt = `${promptText}
+    const promptText = `${promptLocales[locale]}
 
     ${content}`;
 
@@ -46,7 +44,7 @@ export async function POST(request: NextRequest) {
     };
 
     const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      contents: [{ role: 'user', parts: [{ text: promptText }] }],
       generationConfig
     });
 
