@@ -14,7 +14,9 @@ export default function NewsIdContainer() {
   const { data: news = { link: '', title: '', source: '', pubDate: '', thumbnail: '' } } =
     useNewsBySource(sources, locale);
 
-  const { link, title, source, pubDate, thumbnail } = news;
+  const { link, title, source, pubDate, thumbnail = '' } = news;
+  const { origin, pathname } = new URL(thumbnail);
+  const originThumbnail = `${origin}${pathname}`;
   const { data: scraped } = useScrapedContent(link);
   const {
     data: { summary }
@@ -33,7 +35,7 @@ export default function NewsIdContainer() {
       {thumbnail && (
         <ViewTransition name={`thumbnail-${sources[0]}-${sources[1]}`}>
           <div className="relative h-[250px]">
-            <Image src={thumbnail} alt="" priority fill style={{ objectFit: 'cover' }} />
+            <Image src={originThumbnail} alt="" priority fill style={{ objectFit: 'cover' }} />
           </div>
         </ViewTransition>
       )}
