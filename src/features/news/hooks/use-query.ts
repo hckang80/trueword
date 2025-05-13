@@ -46,15 +46,15 @@ export function useNewsBySource(sources: string[], locale: string) {
   });
 }
 
-export function scrapedContentQueryOptions(url: string) {
+export function scrapedContentQueryOptions(url: string, description: string) {
   return {
     queryKey: ['scraped', url],
-    queryFn: () => fetchScrapedContent(url),
+    queryFn: () => fetchScrapedContent(url, description),
     staleTime: 1000 * 60 * 5
   };
 }
-export function useScrapedContent(url: string) {
-  return useSuspenseQuery(scrapedContentQueryOptions(url));
+export function useScrapedContent(url: string, description: string) {
+  return useSuspenseQuery(scrapedContentQueryOptions(url, description));
 }
 
 export function summaryQueryOptions(content: string, title: string, locale: string) {

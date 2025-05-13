@@ -29,9 +29,10 @@ export const fetchNewsSlice = async (allNews: NewsItem[], pageParam: number) => 
   return Promise.resolve(response);
 };
 
-export async function fetchScrapedContent(url: string) {
+export async function fetchScrapedContent(url: string, description: string) {
   const { data } = await axiosInstance.post<{ content: string; title: string }>('/api/scrape', {
-    url
+    url,
+    description
   });
   return data;
 }

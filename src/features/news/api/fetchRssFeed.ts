@@ -20,6 +20,7 @@ export async function fetchRssFeed(
       customFields: {
         item: [
           ['atom:published', 'pubDate'],
+          ['content:encoded', 'description'],
           ['media:content', 'thumbnail', { keepArray: true }]
         ]
       }

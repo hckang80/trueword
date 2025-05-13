@@ -11,13 +11,17 @@ import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export default function NewsIdContainer() {
   const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
-  const { data: news = { link: '', title: '', source: '', pubDate: '', thumbnail: '' } } =
-    useNewsBySource(sources, locale);
+  const {
+    data: news = { link: '', title: '', description: '', source: '', pubDate: '', thumbnail: '' }
+  } = useNewsBySource(sources, locale);
 
-  const { link, title, source, pubDate, thumbnail = '' } = news;
-  const { origin, pathname } = new URL(thumbnail);
-  const originThumbnail = `${origin}${pathname}`;
-  const { data: scraped } = useScrapedContent(link);
+  const { link, title, description, source, pubDate, thumbnail = '' } = news;
+  let originThumbnail = '';
+  try {
+    const { origin, pathname } = new URL(thumbnail);
+    originThumbnail = `${origin}${pathname}`;
+  } catch {}
+  const { data: scraped } = useScrapedContent(link, description);
   const {
     data: { summary }
   } = useSummary(scraped.content, scraped.title, locale);
@@ -32,7 +36,7 @@ export default function NewsIdContainer() {
         <NewsHeader title={title} source={source} pubDate={pubDate} />
       </ViewTransition>
 
-      {thumbnail && (
+      {originThumbnail && (
         <ViewTransition name={`thumbnail-${sources[0]}-${sources[1]}`}>
           <div className="relative h-[250px]">
             <Image src={originThumbnail} alt="" priority fill style={{ objectFit: 'cover' }} />

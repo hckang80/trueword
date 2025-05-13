@@ -12,7 +12,7 @@ const MIN_CONTENT_LENGTH = 100;
 
 export async function POST(request: NextRequest) {
   try {
-    const { url } = await request.json();
+    const { url, description } = await request.json();
 
     if (!url || typeof url !== 'string') {
       return NextResponse.json({ message: 'URL is required' }, { status: 400 });
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       root.querySelector('title')?.text ||
       '';
 
-    let content = '';
+    let content = description;
     const possibleContentSelectors = [
       'article',
       '.article',
