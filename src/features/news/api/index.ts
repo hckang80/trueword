@@ -3,10 +3,10 @@ import type { NewsItem } from '@/features/news';
 
 export * from './fetchRssFeed';
 
-export async function fetchNews(): Promise<NewsItem[]> {
+export async function fetchNews(locale: string): Promise<NewsItem[]> {
   const { data } = await axiosInstance<NewsItem[]>('/api/news');
 
-  return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate)) }));
+  return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate), locale) }));
 }
 
 export const PAGE_SIZE = 10;
@@ -29,17 +29,35 @@ export const fetchNewsSlice = async (allNews: NewsItem[], pageParam: number) => 
   return Promise.resolve(response);
 };
 
-export async function fetchScrapedContent(url: string) {
+export async function fetchScrapedContent(url: string, description: string) {
   const { data } = await axiosInstance.post<{ content: string; title: string }>('/api/scrape', {
-    url
+    url,
+    description
   });
   return data;
 }
 
-export async function fetchSummary({ content, title }: { content: string; title: string }) {
-  const { data } = await axiosInstance.post<{ summary: string }>('/api/summarize', {
-    content,
-    title
-  });
+export async function fetchSummary({
+  content,
+  title,
+  locale
+}: {
+  content: string;
+  title: string;
+  locale: string;
+}) {
+  const { data } = await axiosInstance.post<{ summary: string }>(
+    '/api/summarize',
+    {
+      content,
+      title
+    },
+    {
+      headers: {
+        'Accept-Language': locale,
+        'Content-Type': 'application/json'
+      }
+    }
+  );
   return data;
 }

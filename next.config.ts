@@ -1,3 +1,4 @@
+import { remotePatterns } from '@/entities/rss';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
@@ -13,20 +14,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.christiantoday.co.kr'
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.christiandaily.co.kr'
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.kcnp.com'
-      }
-    ],
+    remotePatterns,
     minimumCacheTTL: 60,
     formats: ['image/webp', 'image/avif']
   },

@@ -57,6 +57,7 @@ export interface NewsItem {
   source: string;
   sourceEng: string;
   guid: string;
+  locale: string;
 }
 
 export interface NewsMeta {

@@ -6,7 +6,8 @@ import { extractLastNumber } from '@/shared';
 
 export async function fetchRssFeed(
   feedUrl: string,
-  sourceName: Record<string, string>
+  sourceName: Record<string, string>,
+  locale: string
 ): Promise<NewsItem[]> {
   try {
     const response = await axios.get<string>(feedUrl, {
@@ -19,6 +20,7 @@ export async function fetchRssFeed(
       customFields: {
         item: [
           ['atom:published', 'pubDate'],
+          ['content:encoded', 'description'],
           ['media:content', 'thumbnail', { keepArray: true }]
         ]
       }
@@ -39,7 +41,8 @@ export async function fetchRssFeed(
         thumbnail: extractThumbnail(item),
         source: sourceName.ko,
         sourceEng: sourceName.en,
-        guid: extractLastNumber(guid || link)
+        guid: extractLastNumber(guid || link),
+        locale
       };
     });
   } catch (error) {

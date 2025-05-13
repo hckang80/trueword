@@ -2,7 +2,7 @@
 
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
 
-const useBibleParams = () => {
+export const useBibleParams = () => {
   const searchParams = useSearchParams();
   const urlSearchParams = new URLSearchParams(searchParams.toString());
   const pathname = usePathname();

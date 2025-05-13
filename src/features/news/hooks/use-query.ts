@@ -3,13 +3,18 @@ import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-quer
 import { fetchNews, fetchNewsSlice, fetchScrapedContent, fetchSummary } from '../api';
 import type { NewsItem } from '../model';
 
-export const newsQueryOptions = {
-  queryKey: newsKeys._def,
-  queryFn: fetchNews,
-  staleTime: 1000 * 60 * 5
-};
-export function useNews() {
-  return useSuspenseQuery<NewsItem[]>(newsQueryOptions);
+export function newsQueryOptions(locale: string) {
+  return {
+    queryKey: newsKeys._def,
+    queryFn: () => fetchNews(locale),
+    staleTime: 1000 * 60 * 5
+  };
+}
+export function useNews(locale: string) {
+  return useSuspenseQuery<NewsItem[]>({
+    ...newsQueryOptions(locale),
+    select: (news) => news.filter((item) => item.locale === locale)
+  });
 }
 
 export const useInfiniteNews = (allNews: NewsItem[]) => {
@@ -25,40 +30,40 @@ export const useInfiniteNews = (allNews: NewsItem[]) => {
   });
 };
 
-export function newsBySourceQueryOptions(sources: string[]) {
+export function newsBySourceQueryOptions(sources: string[], locale: string) {
   return {
     ...newsKeys.data(sources),
-    queryFn: fetchNews,
+    queryFn: () => fetchNews(locale),
     staleTime: 1000 * 60 * 5
   };
 }
-export function useNewsBySource(sources: string[]) {
+export function useNewsBySource(sources: string[], locale: string) {
   const [source, id] = sources;
 
   return useSuspenseQuery({
-    ...newsBySourceQueryOptions(sources),
+    ...newsBySourceQueryOptions(sources, locale),
     select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
   });
 }
 
-export function scrapedContentQueryOptions(url: string) {
+export function scrapedContentQueryOptions(url: string, description: string) {
   return {
     queryKey: ['scraped', url],
-    queryFn: () => fetchScrapedContent(url),
+    queryFn: () => fetchScrapedContent(url, description),
     staleTime: 1000 * 60 * 5
   };
 }
-export function useScrapedContent(url: string) {
-  return useSuspenseQuery(scrapedContentQueryOptions(url));
+export function useScrapedContent(url: string, description: string) {
+  return useSuspenseQuery(scrapedContentQueryOptions(url, description));
 }
 
-export function summaryQueryOptions(content: string, title: string) {
+export function summaryQueryOptions(content: string, title: string, locale: string) {
   return {
     queryKey: ['summary', title],
-    queryFn: () => fetchSummary({ content, title }),
+    queryFn: () => fetchSummary({ content, title, locale }),
     staleTime: 1000 * 60 * 5
   };
 }
-export function useSummary(content: string, title: string) {
-  return useSuspenseQuery(summaryQueryOptions(content, title));
+export function useSummary(content: string, title: string, locale: string) {
+  return useSuspenseQuery(summaryQueryOptions(content, title, locale));
 }

@@ -12,7 +12,7 @@ const MIN_CONTENT_LENGTH = 100;
 
 export async function POST(request: NextRequest) {
   try {
-    const { url } = await request.json();
+    const { url, description } = await request.json();
 
     if (!url || typeof url !== 'string') {
       return NextResponse.json({ message: 'URL is required' }, { status: 400 });
@@ -43,13 +43,13 @@ export async function POST(request: NextRequest) {
       '';
 
     let content = '';
-
     const possibleContentSelectors = [
       'article',
       '.article',
       '.post',
       '.content',
       '#content',
+      '.article-container',
       '.article-content',
       '.post-content',
       '.entry-content',
@@ -59,15 +59,16 @@ export async function POST(request: NextRequest) {
 
     for (const selector of possibleContentSelectors) {
       const element = root.querySelector(selector);
-      if (!element) return;
 
-      element
-        .querySelectorAll(
-          'script, style, nav, header, footer, .comments, .sidebar, .ad, .advertisement'
-        )
-        .forEach((el) => el.remove());
+      if (element) {
+        element
+          .querySelectorAll(
+            'script, style, nav, header, footer, .comments, .sidebar, .ad, .advertisement'
+          )
+          .forEach((el) => el.remove());
+        content = element.text.trim();
+      }
 
-      content = element.text.trim();
       if (MIN_CONTENT_LENGTH >= 100) break;
     }
 
@@ -78,6 +79,8 @@ export async function POST(request: NextRequest) {
         content = body.text.trim();
       }
     }
+
+    if (!content) content = description;
 
     const result = { title, content: content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
 

@@ -12,6 +12,7 @@ import { memo } from 'react';
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
+import { useBibleParams } from '@/features/bible';
 
 const NewsImage = memo(({ src }: { src: string | null }) => (
   <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
@@ -46,17 +47,14 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
           <h1 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
             <strong>{item.title}</strong>
           </h1>
-          {item.description && (
-            <p className="text-gray-600 dark:text-gray-300 mb-3 text-xs sm:text-sm">
-              {item.description}
-            </p>
-          )}
           <NewsItemMeta source={item.source} pubDate={item.pubDate} />
         </div>
       </ViewTransition>
-      <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
-        <NewsImage src={item.thumbnail || '/blank.png'} />
-      </ViewTransition>
+      {item.thumbnail && (
+        <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
+          <NewsImage src={item.thumbnail} />
+        </ViewTransition>
+      )}
     </Link>
   </article>
 ));
@@ -88,7 +86,8 @@ const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }:
 NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
-  const { data: news } = useNews();
+  const { locale } = useBibleParams();
+  const { data: news } = useNews(locale);
   const infiniteQuery = useInfiniteNews(news);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
 
