@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       root.querySelector('title')?.text ||
       '';
 
-    let content = description;
+    let content = '';
     const possibleContentSelectors = [
       'article',
       '.article',
@@ -79,6 +79,8 @@ export async function POST(request: NextRequest) {
         content = body.text.trim();
       }
     }
+
+    if (!content) content = description;
 
     const result = { title, content: content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
 
