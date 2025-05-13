@@ -12,7 +12,8 @@ export function newsQueryOptions(locale: string) {
 }
 export function useNews(locale: string) {
   return useSuspenseQuery<NewsItem[]>({
-    ...newsQueryOptions(locale)
+    ...newsQueryOptions(locale),
+    select: (news) => news.filter((item) => item.locale === locale)
   });
 }
 

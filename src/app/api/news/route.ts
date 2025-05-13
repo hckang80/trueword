@@ -24,7 +24,9 @@ export async function GET() {
 }
 
 async function fetchFreshData() {
-  const newsPromises = RSS_FEEDS.map((source) => fetchRssFeed(source.url, source.name));
+  const newsPromises = RSS_FEEDS.map((source) =>
+    fetchRssFeed(source.url, source.name, source.locale)
+  );
   const newsResults = await Promise.all(newsPromises);
   const allNews = newsResults
     .flat()
