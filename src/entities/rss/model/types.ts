@@ -8,6 +8,7 @@ export type RemotePattern = {
 
 export type RSSFeed = {
   url: string;
+  imageUrl?: string;
   name: RSSFeedName;
   locale: string;
 };

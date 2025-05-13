@@ -1,12 +1,12 @@
 import { type RemotePattern, RSS_FEEDS } from '../model';
 
-export const remotePatterns: RemotePattern[] = RSS_FEEDS.map(({ url }) => {
+export const remotePatterns: RemotePattern[] = RSS_FEEDS.map(({ url, imageUrl }) => {
   const { protocol: fullProtocol, hostname } = new URL(url);
   const protocol = fullProtocol.replace(':', '');
 
   return {
     ...(_isProtocol(protocol) && { protocol }),
-    hostname
+    hostname: imageUrl || hostname
   };
 });
 
