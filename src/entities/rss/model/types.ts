@@ -5,3 +5,11 @@ export type RemotePattern = {
   pathname?: string;
   search?: string;
 };
+
+export type RSSFeed = {
+  url: string;
+  name: RSSFeedName;
+  locale: string;
+};
+
+export type RSSFeedName = Record<string, string> & { en: string };
