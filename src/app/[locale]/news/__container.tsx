@@ -47,11 +47,6 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
           <h1 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
             <strong>{item.title}</strong>
           </h1>
-          {item.description && (
-            <p className="text-gray-600 dark:text-gray-300 mb-3 text-xs sm:text-sm">
-              {item.description}
-            </p>
-          )}
           <NewsItemMeta source={item.source} pubDate={item.pubDate} />
         </div>
       </ViewTransition>
