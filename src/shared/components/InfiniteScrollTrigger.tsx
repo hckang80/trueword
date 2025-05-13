@@ -32,5 +32,5 @@ export const InfiniteScrollTrigger = ({
     };
   }, [onIntersect, enabled]);
 
-  return <div ref={observerRef} style={{ height: 50 }} />;
+  return <div ref={observerRef} />;
 };
