@@ -41,6 +41,6 @@ src/
 
 ---
 
-## 📦 기타 리소스
+## 📦 기타
 
-[트러블 슈팅 등 작업 이슈](https://linen-blarney-a50.notion.site/1ab39938811b806e8f6ef1e82acbf390?v=1ab39938811b81428ba8000cc7650b8e)
+[프로젝트 제작 칸반](https://linen-blarney-a50.notion.site/1f239938811b808d80c4d53cbe2c0b77?v=1f239938811b81dfa7b4000c58951d3b)
