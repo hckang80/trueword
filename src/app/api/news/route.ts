@@ -9,12 +9,12 @@ const redis = new Redis({
 });
 
 const CACHE_TTL = 24 * 60 * 60;
+const CACHE_KEY = `${process.env.NODE_ENV.toUpperCase()}:rss_news`;
 
 export async function GET() {
   try {
-    const cachedNews = await redis.get<NewsItem[]>('rss_news');
-    const allNews = await fetchFreshData();
-    // const allNews = cachedNews || (await fetchFreshData());
+    const cachedNews = await redis.get<NewsItem[]>(CACHE_KEY);
+    const allNews = cachedNews || (await fetchFreshData());
 
     return NextResponse.json(allNews);
   } catch (error) {
@@ -30,7 +30,7 @@ async function fetchFreshData() {
     .flat()
     .toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
-  // await redis.set('rss_news', allNews, { ex: CACHE_TTL });
+  await redis.set(CACHE_KEY, allNews, { ex: CACHE_TTL });
 
   return allNews;
 }
