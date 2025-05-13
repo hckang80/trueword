@@ -36,10 +36,27 @@ export async function fetchScrapedContent(url: string) {
   return data;
 }
 
-export async function fetchSummary({ content, title }: { content: string; title: string }) {
-  const { data } = await axiosInstance.post<{ summary: string }>('/api/summarize', {
-    content,
-    title
-  });
+export async function fetchSummary({
+  content,
+  title,
+  locale
+}: {
+  content: string;
+  title: string;
+  locale: string;
+}) {
+  const { data } = await axiosInstance.post<{ summary: string }>(
+    '/api/summarize',
+    {
+      content,
+      title
+    },
+    {
+      headers: {
+        'Accept-Language': locale,
+        'Content-Type': 'application/json'
+      }
+    }
+  );
   return data;
 }

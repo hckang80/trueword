@@ -40,7 +40,7 @@ export default async function NewsIdPage({ params }: Props) {
 
   const scraped = await queryClient.fetchQuery(scrapedContentQueryOptions(newsBySource.link));
 
-  await queryClient.prefetchQuery(summaryQueryOptions(scraped.content, scraped.title));
+  await queryClient.prefetchQuery(summaryQueryOptions(scraped.content, scraped.title, locale));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

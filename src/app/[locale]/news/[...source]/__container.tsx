@@ -18,7 +18,7 @@ export default function NewsIdContainer() {
   const { data: scraped } = useScrapedContent(link);
   const {
     data: { summary }
-  } = useSummary(scraped.content, scraped.title);
+  } = useSummary(scraped.content, scraped.title, locale);
 
   const sanitizedData = () => ({
     __html: sanitizeHtml(summary.replace(/`{3,}/g, '').replace('html', ''))
