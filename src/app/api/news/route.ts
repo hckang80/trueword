@@ -1,7 +1,7 @@
 import { fetchRssFeed, NewsItem } from '@/features/news';
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
-import { RSS_FEEDS } from '@/shared';
+import { RSS_FEEDS } from '@/entities/rss';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

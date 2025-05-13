@@ -1,5 +1,5 @@
+import { remotePatterns } from '@/entities/rss';
 import type { NextConfig } from 'next';
-import { remotePatterns } from './src/shared/config';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./src/shared/i18n/request.ts');
