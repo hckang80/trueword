@@ -30,7 +30,7 @@ export interface RSSItem {
     $?: { href: string };
     href?: string;
   };
-  postId: string;
+  postId?: string;
   [key: string]: unknown;
 }
 
