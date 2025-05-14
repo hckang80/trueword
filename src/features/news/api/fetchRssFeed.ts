@@ -21,7 +21,7 @@ export async function fetchRssFeed(
         item: [
           ['post-id', 'postId'],
           ['atom:published', 'pubDate'],
-          ['content:encoded', 'description'],
+          ['content:encoded', 'fullContent'],
           ['media:content', 'thumbnail', { keepArray: true }]
         ]
       }
@@ -30,14 +30,14 @@ export async function fetchRssFeed(
     const feed = await parser.parseString(response.data);
 
     return feed.items.map((item) => {
-      const { title, link, description = '', pubDate, guid, postId } = item;
+      const { title, link, fullContent = '', description = '', pubDate, guid, postId } = item;
 
       const parsedDate = pubDate ? new Date(pubDate.replace('KST', '')) : undefined;
 
       return {
         title,
         link,
-        description,
+        description: fullContent || description,
         pubDate: parsedDate?.toISOString() || '',
         thumbnail: extractThumbnail(item),
         source: sourceName.ko,

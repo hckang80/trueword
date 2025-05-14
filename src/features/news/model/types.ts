@@ -25,6 +25,7 @@ export interface RSSItem {
     length?: string;
   };
   'content:encoded'?: string;
+  fullContent?: string;
   'itunes:image'?: {
     $?: { href: string };
     href?: string;
