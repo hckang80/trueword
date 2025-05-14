@@ -10,6 +10,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from './ThemeProvider';
 import Header from './Header';
 import ErrorBoundary from './ErrorBoundary';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -50,9 +51,11 @@ export default async function LocaleLayout({
             <ProgressBar color="var(--color-foreground)" showSpinner={false} />
             <Providers>
               <NextIntlClientProvider messages={messages}>
-                <Header />
-                <main className="guide-line-layout">{children}</main>
-                <BottomNavigation />
+                <ViewTransition>
+                  <Header />
+                  <main className="guide-line-layout">{children}</main>
+                  <BottomNavigation />
+                </ViewTransition>
               </NextIntlClientProvider>
             </Providers>
           </ThemeProvider>
