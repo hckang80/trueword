@@ -8,8 +8,10 @@ import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news'
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { unstable_ViewTransition as ViewTransition } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function NewsIdContainer() {
+  const t = useTranslations();
   const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
   const {
     data: news = { link: '', title: '', description: '', source: '', pubDate: '', thumbnail: '' }
@@ -45,9 +47,7 @@ export default function NewsIdContainer() {
       )}
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
-        <p className="mb-[10px] text-xs text-muted-foreground">
-          이 글은 AI가 원문을 분석하여 핵심 내용을 요약한 것입니다.
-        </p>
+        <p className="mb-[10px] text-xs text-muted-foreground">{t('News.aiSummary')}</p>
         <div
           className="news-summary text-secondary-foreground"
           dangerouslySetInnerHTML={sanitizedData()}
@@ -57,11 +57,11 @@ export default function NewsIdContainer() {
       <div className="flex justify-center gap-[4px] mt-[20px]">
         <Button variant="secondary" onClick={() => history.back()}>
           <Undo2 />
-          이전으로
+          {t('Common.back')}
         </Button>
         <Link href={link} target="_blank" rel="noopener noreferrer" className={buttonVariants()}>
           <SquareArrowOutUpRight />
-          기사 원문 보기
+          {t('News.viewFullArticle')}
         </Link>
       </div>
     </article>
