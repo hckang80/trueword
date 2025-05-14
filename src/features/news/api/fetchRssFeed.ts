@@ -19,6 +19,7 @@ export async function fetchRssFeed(
     const parser = new Parser<RSSFeed, RSSItem>({
       customFields: {
         item: [
+          ['post-id', 'postId'],
           ['atom:published', 'pubDate'],
           ['content:encoded', 'description'],
           ['media:content', 'thumbnail', { keepArray: true }]
@@ -29,7 +30,7 @@ export async function fetchRssFeed(
     const feed = await parser.parseString(response.data);
 
     return feed.items.map((item) => {
-      const { title, link, description = '', pubDate, guid } = item;
+      const { title, link, description = '', pubDate, guid, postId } = item;
 
       const parsedDate = pubDate ? new Date(pubDate.replace('KST', '')) : undefined;
 
@@ -41,7 +42,7 @@ export async function fetchRssFeed(
         thumbnail: extractThumbnail(item),
         source: sourceName.ko,
         sourceEng: sourceName.en,
-        guid: extractLastNumber(guid || link),
+        guid: extractLastNumber(postId || guid || link),
         locale
       };
     });

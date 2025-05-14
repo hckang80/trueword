@@ -29,6 +29,7 @@ export interface RSSItem {
     $?: { href: string };
     href?: string;
   };
+  postId: string;
   [key: string]: unknown;
 }
 
