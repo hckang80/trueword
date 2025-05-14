@@ -2,10 +2,16 @@
   "Common": {
     "bible": "성경",
     "language": "언어",
-    "news": "뉴스"
+    "news": "뉴스",
+    "back": "이전으로"
   },
   "Meta": {
     "title": "True Word",
     "description": "최신 성경 뉴스, 기독교 현장 소식, 성경 해석과 통찰을 제공하는 종합 정보 플랫폼"
+  },
+  "News": {
+    "viewFullArticle": "기사 원문 보기",
+    "aiSummary": "이 글은 AI가 원문을 분석하여 핵심 내용을 요약한 것입니다.",
+    "noNews": "찾으시는 뉴스 결과가 없습니다."
   }
 }
