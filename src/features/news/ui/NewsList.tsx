@@ -3,7 +3,7 @@
 import { InfiniteScrollTrigger } from '@/shared';
 import { InfiniteData } from '@tanstack/react-query';
 import { memo } from 'react';
-import { NewsInstance } from '../model';
+import type { NewsInstance } from '../model';
 import { NewsItem } from '.';
 
 interface NewsListProps {
