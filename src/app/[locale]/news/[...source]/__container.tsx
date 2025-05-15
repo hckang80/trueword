@@ -34,17 +34,15 @@ export default function NewsIdContainer() {
 
   return (
     <article className="p-[var(--global-inset)]">
-      <ViewTransition name={`title-${sources[0]}-${sources[1]}`}>
+      <ViewTransition name={`news-header-${sources[0]}-${sources[1]}`}>
         <NewsHeader title={title} source={source} pubDate={pubDate} />
-      </ViewTransition>
 
-      {thumbnail && (
-        <ViewTransition name={`thumbnail-${sources[0]}-${sources[1]}`}>
+        {thumbnail && (
           <div className="relative h-[250px]">
             <NewsImage src={thumbnail} />
           </div>
-        </ViewTransition>
-      )}
+        )}
+      </ViewTransition>
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
         <p className="mb-[10px] text-xs text-muted-foreground">{t('News.aiSummary')}</p>

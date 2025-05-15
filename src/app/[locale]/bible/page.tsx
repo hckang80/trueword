@@ -7,6 +7,8 @@ import {
   translationVersionsQueryOptions
 } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
+import { Suspense } from 'react';
+import { Loading } from '@/shared';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -46,8 +48,10 @@ export default async function Bible({ params, searchParams }: Props) {
   ]);
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container />
-    </HydrationBoundary>
+    <Suspense fallback={<Loading />}>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Container />
+      </HydrationBoundary>
+    </Suspense>
   );
 }
