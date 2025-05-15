@@ -10,7 +10,8 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from './ThemeProvider';
 import Header from './Header';
 import ErrorBoundary from './ErrorBoundary';
-import { unstable_ViewTransition as ViewTransition } from 'react';
+import { Suspense, unstable_ViewTransition as ViewTransition } from 'react';
+import { LoaderCircle } from 'lucide-react';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -51,11 +52,19 @@ export default async function LocaleLayout({
             <ProgressBar color="var(--color-foreground)" showSpinner={false} />
             <Providers>
               <NextIntlClientProvider messages={messages}>
-                <ViewTransition>
-                  <Header />
-                  <main className="guide-line-layout">{children}</main>
-                  <BottomNavigation />
-                </ViewTransition>
+                <Suspense
+                  fallback={
+                    <div className="center-absolute">
+                      <LoaderCircle className="animate-spin" />
+                    </div>
+                  }
+                >
+                  <ViewTransition>
+                    <Header />
+                    <main className="guide-line-layout">{children}</main>
+                    <BottomNavigation />
+                  </ViewTransition>
+                </Suspense>
               </NextIntlClientProvider>
             </Providers>
           </ThemeProvider>

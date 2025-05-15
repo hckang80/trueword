@@ -7,8 +7,6 @@ import {
   translationVersionsQueryOptions
 } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { LoaderCircle } from 'lucide-react';
-import { Suspense } from 'react';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -48,16 +46,8 @@ export default async function Bible({ params, searchParams }: Props) {
   ]);
 
   return (
-    <Suspense
-      fallback={
-        <div className="center-absolute">
-          <LoaderCircle className="animate-spin" />
-        </div>
-      }
-    >
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Container />
-      </HydrationBoundary>
-    </Suspense>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Container />
+    </HydrationBoundary>
   );
 }
