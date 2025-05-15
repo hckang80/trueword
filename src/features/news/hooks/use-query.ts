@@ -1,7 +1,7 @@
 import { newsKeys } from '@/shared';
 import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { fetchNews, fetchNewsSlice, fetchScrapedContent, fetchSummary } from '../api';
-import type { NewsItem } from '../model';
+import type { NewsItemType } from '../model';
 
 export function newsQueryOptions(locale: string) {
   return {
@@ -11,13 +11,13 @@ export function newsQueryOptions(locale: string) {
   };
 }
 export function useNews(locale: string) {
-  return useSuspenseQuery<NewsItem[]>({
+  return useSuspenseQuery<NewsItemType[]>({
     ...newsQueryOptions(locale),
     select: (news) => news.filter((item) => item.locale === locale)
   });
 }
 
-export const useInfiniteNews = (allNews: NewsItem[]) => {
+export const useInfiniteNews = (allNews: NewsItemType[]) => {
   return useSuspenseInfiniteQuery({
     queryKey: ['news', allNews],
     queryFn: ({ pageParam }) => fetchNewsSlice(allNews, pageParam),
