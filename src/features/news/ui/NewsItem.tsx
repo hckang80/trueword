@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 import { memo } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
 import { unstable_ViewTransition as ViewTransition } from 'react';
-import type { NewsItem as TNewsItem } from '../model';
+import type { NewsItemType } from '../model';
 
-const NewsItem = ({ item }: { item: TNewsItem }) => (
+const NewsItem = ({ item }: { item: NewsItemType }) => (
   <li>
     <Link
       href={`${usePathname()}/${item.sourceEng}/${item.guid}`}

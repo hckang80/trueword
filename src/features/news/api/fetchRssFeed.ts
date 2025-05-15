@@ -1,4 +1,4 @@
-import type { NewsItem, RSSFeed, RSSItem } from '../model';
+import type { NewsItemType, RSSFeed, RSSItem } from '../model';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
@@ -8,7 +8,7 @@ export async function fetchRssFeed(
   feedUrl: string,
   sourceName: Record<string, string>,
   locale: string
-): Promise<NewsItem[]> {
+): Promise<NewsItemType[]> {
   try {
     const response = await axios.get<string>(feedUrl, {
       headers: {

@@ -50,7 +50,7 @@ export interface RSSFeed {
   [key: string]: unknown;
 }
 
-export interface NewsItem {
+export interface NewsItemType {
   title: string;
   link: string;
   description: string;
@@ -70,5 +70,5 @@ export interface NewsMeta {
 
 export interface NewsInstance {
   meta: NewsMeta;
-  documents: NewsItem[];
+  documents: NewsItemType[];
 }

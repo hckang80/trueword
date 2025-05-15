@@ -1,16 +1,16 @@
 import { axiosInstance, toReadableDate } from '@/shared';
-import type { NewsItem } from '@/features/news';
+import type { NewsItemType } from '@/features/news';
 
 export * from './fetchRssFeed';
 
-export async function fetchNews(locale: string): Promise<NewsItem[]> {
-  const { data } = await axiosInstance<NewsItem[]>('/api/news');
+export async function fetchNews(locale: string): Promise<NewsItemType[]> {
+  const { data } = await axiosInstance<NewsItemType[]>('/api/news');
 
   return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate), locale) }));
 }
 
 export const PAGE_SIZE = 10;
-export const fetchNewsSlice = async (allNews: NewsItem[], pageParam: number) => {
+export const fetchNewsSlice = async (allNews: NewsItemType[], pageParam: number) => {
   const { length: total_count } = allNews;
   const pageable_count = total_count;
   const startIndex = (pageParam - 1) * PAGE_SIZE;
