@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { memo } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
