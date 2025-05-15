@@ -1,17 +1,7 @@
 'use client';
 
-import {
-  NewsImage,
-  useInfiniteNews,
-  useNews,
-  type NewsInstance,
-  type NewsItem as TNewsItem
-} from '@/features/news';
-import { InfiniteScrollTrigger } from '@/shared';
+import { NewsList, useInfiniteNews, useNews } from '@/features/news';
 import { memo } from 'react';
-import { Link, usePathname } from '@/shared/i18n/routing';
-import { unstable_ViewTransition as ViewTransition } from 'react';
-import type { InfiniteData } from '@tanstack/react-query';
 import { useBibleParams } from '@/features/bible';
 
 const NewsItemMeta = memo(({ source, pubDate }: { source: string; pubDate: string }) => (
@@ -22,57 +12,6 @@ const NewsItemMeta = memo(({ source, pubDate }: { source: string; pubDate: strin
   </div>
 ));
 NewsItemMeta.displayName = 'NewsItemMeta';
-
-const NewsItem = memo(({ item }: { item: TNewsItem }) => (
-  <li>
-    <Link
-      href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
-      className="group flex items-center justify-between gap-[8px] visited:text-purple-600 p-[20px] border border-gray-200 rounded-lg mb-4"
-    >
-      <ViewTransition name={`title-${item.sourceEng}-${item.guid}`}>
-        <div>
-          <h2 className="text-sm sm:text-base md:text-lg font-semibold mb-2 visited:not:text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
-            <strong>{item.title}</strong>
-          </h2>
-          <NewsItemMeta source={item.source} pubDate={item.pubDate} />
-        </div>
-      </ViewTransition>
-      {item.thumbnail && (
-        <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
-          <div className="relative w-[120px] h-[63px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
-            <NewsImage src={item.thumbnail} />
-          </div>
-        </ViewTransition>
-      )}
-    </Link>
-  </li>
-));
-NewsItem.displayName = 'NewsItem';
-
-interface NewsListProps {
-  data: InfiniteData<NewsInstance>;
-  fetchNextPage: () => void;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-}
-const NewsList = memo(({ data, fetchNextPage, hasNextPage, isFetchingNextPage }: NewsListProps) => (
-  <div className="p-[var(--global-inset)]">
-    {data.pages.map((page, pageIndex) => (
-      <ul key={pageIndex} style={{ display: 'contents' }}>
-        {page.documents.map((news) => (
-          <NewsItem key={news.guid} item={news} />
-        ))}
-      </ul>
-    ))}
-    <InfiniteScrollTrigger
-      onIntersect={() => {
-        fetchNextPage();
-      }}
-      enabled={hasNextPage && !isFetchingNextPage}
-    />
-  </div>
-));
-NewsList.displayName = 'NewsList';
 
 export default function NewsContainer() {
   const { locale } = useBibleParams();
