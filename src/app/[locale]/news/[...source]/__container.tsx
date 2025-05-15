@@ -4,9 +4,8 @@ import { Button, buttonVariants } from '@/shared/components/ui/button';
 import { Link } from '@/shared/i18n/routing';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';
-import { useNewsBySource, useScrapedContent, useSummary } from '@/features/news';
+import { NewsImage, useNewsBySource, useScrapedContent, useSummary } from '@/features/news';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import { useTranslations } from 'next-intl';
 
@@ -36,7 +35,7 @@ export default function NewsIdContainer() {
       {thumbnail && (
         <ViewTransition name={`thumbnail-${sources[0]}-${sources[1]}`}>
           <div className="relative h-[250px]">
-            <Image src={thumbnail} alt="" priority fill style={{ objectFit: 'cover' }} />
+            <NewsImage src={thumbnail} />
           </div>
         </ViewTransition>
       )}

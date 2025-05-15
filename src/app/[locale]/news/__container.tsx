@@ -1,25 +1,18 @@
 'use client';
 
 import {
+  NewsImage,
   useInfiniteNews,
   useNews,
   type NewsInstance,
   type NewsItem as TNewsItem
 } from '@/features/news';
 import { InfiniteScrollTrigger } from '@/shared';
-import Image from 'next/image';
 import { memo } from 'react';
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
 import { useBibleParams } from '@/features/bible';
-
-const NewsImage = memo(({ src }: { src: string }) => (
-  <div className="relative w-[120px] h-[63px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
-    <Image src={src} alt="" priority fill style={{ objectFit: 'cover' }} />
-  </div>
-));
-NewsImage.displayName = 'NewsImage';
 
 const NewsItemMeta = memo(({ source, pubDate }: { source: string; pubDate: string }) => (
   <div className="flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400">
@@ -46,7 +39,9 @@ const NewsItem = memo(({ item }: { item: TNewsItem }) => (
       </ViewTransition>
       {item.thumbnail && (
         <ViewTransition name={`thumbnail-${item.sourceEng}-${item.guid}`}>
-          <NewsImage src={item.thumbnail} />
+          <div className="relative w-[120px] h-[63px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
+            <NewsImage src={item.thumbnail} />
+          </div>
         </ViewTransition>
       )}
     </Link>
