@@ -10,7 +10,7 @@ import {
 import { getLanguageFullName, useBibleLanguage, useUpdateBibleParams } from '@/features/bible';
 import { useTranslationVersions } from '@/features/bible';
 
-export default function BibleLanguages() {
+function BibleLanguages() {
   const value = useBibleLanguage();
   const updateBibleParams = useUpdateBibleParams();
 
@@ -47,3 +47,5 @@ export default function BibleLanguages() {
     </Select>
   );
 }
+
+export default BibleLanguages;
