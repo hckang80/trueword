@@ -6,6 +6,8 @@
 다국어 성경과 크리스천 뉴스를 제공합니다.   
 신앙 생활과 관련한 기능을 점차 확대해나가는 중입니다.
 
+[[칸반보드 바로가기](https://linen-blarney-a50.notion.site/1f239938811b808d80c4d53cbe2c0b77?v=1f239938811b81dfa7b4000c58951d3b)]
+
 ---
 
 ## ✨ 주요 기능
@@ -28,7 +30,7 @@ src/
 │   ├── api/                      # 정적 API 라우트
 │   └── translations/             # 동적 API 라우트
 ├── entities/                     # 엔티티 모듈
-│   └── rss/                      # 엔티티 명칭 
+│   └── rss/                      # 엔티티 명칭 (이하 구조는 features > bible과 동일)
 ├── features/                     # 기능 모듈
 │   ├── bible/                    # 도메인 명칭 (bible, news...)
 │   │   ├── api/                  # 데이터 패칭 함수
