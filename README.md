@@ -25,14 +25,17 @@ FSD(Feature-Sliced Design)로 설계했습니다.
 src/
 ├── app/                          
 │   ├── [locale]/                 # 다국어 지원 라우트
-│   ├── api/                      # API 라우트
+│   ├── api/                      # 정적 API 라우트
 │   └── translations/             # 동적 API 라우트
+├── entities/                     # 엔티티 모듈
+│   └── rss/                      # 엔티티 명칭 
 ├── features/                     # 기능 모듈
-│   └── bible/                    # 도메인 명칭 (bible, news...)
-│       ├── api/                  # 데이터 패칭 함수
-│       ├── hooks/                # 커스텀 훅, react-query
-│       ├── lib/                  # 유틸리티 함수 및 라이브러리
-│       └── model/                # 상수, 타입 정의
+│   ├── bible/                    # 도메인 명칭 (bible, news...)
+│   │   ├── api/                  # 데이터 패칭 함수
+│   │   ├── hooks/                # 커스텀 훅, react-query
+│   │   ├── lib/                  # 유틸리티 함수 및 라이브러리
+│   │   └── model/                # 상수, 타입 정의
+│   └── news/          
 └── shared/                       # 공용 모듈
 │   ├── components/               # UI 등 공통 컴포넌트
 │   ├── config/                   # Axios, 언어 설정
