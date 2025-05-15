@@ -38,10 +38,10 @@ export default function NewsIdContainer() {
         <NewsHeader title={title} source={source} pubDate={pubDate} />
       </ViewTransition>
 
-      {originThumbnail && (
+      {thumbnail && (
         <ViewTransition name={`thumbnail-${sources[0]}-${sources[1]}`}>
           <div className="relative h-[250px]">
-            <Image src={originThumbnail} alt="" priority fill style={{ objectFit: 'cover' }} />
+            <Image src={thumbnail} alt="" priority fill style={{ objectFit: 'cover' }} />
           </div>
         </ViewTransition>
       )}

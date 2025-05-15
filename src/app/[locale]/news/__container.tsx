@@ -14,15 +14,9 @@ import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { InfiniteData } from '@tanstack/react-query';
 import { useBibleParams } from '@/features/bible';
 
-const NewsImage = memo(({ src }: { src: string | null }) => (
-  <div className="w-[120px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
-    <Image
-      src={src || '/blank.png'}
-      width={120}
-      height={63}
-      style={{ aspectRatio: '2/1.05' }}
-      alt=""
-    />
+const NewsImage = memo(({ src }: { src: string }) => (
+  <div className="relative w-[120px] h-[63px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
+    <Image src={src} alt="" priority fill style={{ objectFit: 'cover' }} />
   </div>
 ));
 NewsImage.displayName = 'NewsImage';

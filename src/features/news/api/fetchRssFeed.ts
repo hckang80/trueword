@@ -34,12 +34,20 @@ export async function fetchRssFeed(
 
       const parsedDate = pubDate ? new Date(pubDate.replace('KST', '')) : undefined;
 
+      let originThumbnail = '';
+      try {
+        const { origin, pathname } = new URL(extractThumbnail(item) || '');
+        originThumbnail = `${origin}${pathname}`;
+      } catch {
+        console.warn('확인 가능한 이미지 없음');
+      }
+
       return {
         title,
         link,
         description: fullContent || description,
         pubDate: parsedDate?.toISOString() || '',
-        thumbnail: extractThumbnail(item),
+        thumbnail: originThumbnail,
         source: sourceName.ko,
         sourceEng: sourceName.en,
         guid: extractLastNumber(postId || guid || link),
