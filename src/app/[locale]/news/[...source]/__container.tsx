@@ -18,11 +18,6 @@ export default function NewsIdContainer() {
   } = useNewsBySource(sources, locale);
 
   const { link, title, description, source, pubDate, thumbnail = '' } = news;
-  let originThumbnail = '';
-  try {
-    const { origin, pathname } = new URL(thumbnail);
-    originThumbnail = `${origin}${pathname}`;
-  } catch {}
   const { data: scraped } = useScrapedContent(link, description);
   const {
     data: { summary }
