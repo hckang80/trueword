@@ -34,6 +34,9 @@ function BookSelector({
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
 
+  const selectedChapterItem = (book: string, chapterNumber: number) =>
+    book === selectedBookName && selectedChapterNumber === chapterNumber;
+
   const adjustPosition = (index: number) => {
     const details = detailsRefs.current[index];
     if (!details || !details.open) return;
@@ -114,7 +117,7 @@ function BookSelector({
                       <Button
                         key={i}
                         variant="outline"
-                        disabled={book === selectedBookName && selectedChapterNumber === i + 1}
+                        disabled={selectedChapterItem(book, i + 1)}
                         onClick={() => {
                           resetBook(bookNumber, i + 1);
                         }}
