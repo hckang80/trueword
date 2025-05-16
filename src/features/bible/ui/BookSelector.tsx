@@ -13,19 +13,18 @@ import {
 import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { type TranslationBooks, CHAPTER_LENGTH } from '../model';
+import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
 
 function BookSelector({
   books,
-  selectedChapterName,
-  selectedBookName,
+  bibleChapterInstance,
   resetBook
 }: {
   books: TranslationBooks;
-  selectedChapterName: string;
-  selectedBookName: string;
+  bibleChapterInstance: BibleChapterInstance;
   resetBook: (bookNumber: number, chapter: number) => void;
 }) {
+  const { book_name: selectedBookName, name: selectedChapterName } = bibleChapterInstance;
   const [open, setOpen] = useState(false);
 
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});

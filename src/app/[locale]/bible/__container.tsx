@@ -32,8 +32,6 @@ export default function Container() {
 
   const updateBibleParams = useUpdateBibleParams();
 
-  const selectedBookName = bibleChapterInstance.book_name;
-  const selectedChapterName = bibleChapterInstance.name || '';
   const selectedVerses = bibleChapterInstance.verses;
 
   const resetBook = (bookNumber: number, chapter: number) => {
@@ -49,8 +47,7 @@ export default function Container() {
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector
           books={books}
-          selectedChapterName={selectedChapterName}
-          selectedBookName={selectedBookName}
+          bibleChapterInstance={bibleChapterInstance}
           resetBook={resetBook}
         />
         <TranslationSelector
