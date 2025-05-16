@@ -8,6 +8,8 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
+const CACHE_TTL = 24 * 60 * 60;
+
 const MIN_CONTENT_LENGTH = 100;
 
 export async function POST(request: NextRequest) {
@@ -84,7 +86,7 @@ export async function POST(request: NextRequest) {
 
     const result = { title, content: content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
 
-    await redis.set(key, result);
+    await redis.set(key, result, { ex: CACHE_TTL });
 
     return NextResponse.json(result);
   } catch (error) {

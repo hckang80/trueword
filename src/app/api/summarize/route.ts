@@ -8,6 +8,8 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
+const CACHE_TTL = 24 * 60 * 60;
+
 export async function POST(request: NextRequest) {
   try {
     const locale = request.headers.get('Accept-Language') || DEFAULT_LOCALE;
@@ -50,7 +52,7 @@ export async function POST(request: NextRequest) {
 
     const summary = result.response.text();
 
-    await redis.set(key, summary);
+    await redis.set(key, summary, { ex: CACHE_TTL });
 
     return NextResponse.json({ summary });
   } catch (error) {
