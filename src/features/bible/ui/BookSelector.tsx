@@ -13,23 +13,29 @@ import {
 import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { type TranslationBooks, CHAPTER_LENGTH } from '../model';
+import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
 
 function BookSelector({
   books,
-  selectedChapterName,
-  selectedBookName,
+  bibleChapterInstance,
   resetBook
 }: {
   books: TranslationBooks;
-  selectedChapterName: string;
-  selectedBookName: string;
+  bibleChapterInstance: BibleChapterInstance;
   resetBook: (bookNumber: number, chapter: number) => void;
 }) {
+  const {
+    book_name: selectedBookName,
+    name: selectedChapterName,
+    chapter: selectedChapterNumber
+  } = bibleChapterInstance;
   const [open, setOpen] = useState(false);
 
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
+
+  const selectedChapterItem = (book: string, chapterNumber: number) =>
+    book === selectedBookName && selectedChapterNumber === chapterNumber;
 
   const adjustPosition = (index: number) => {
     const details = detailsRefs.current[index];
@@ -111,6 +117,7 @@ function BookSelector({
                       <Button
                         key={i}
                         variant="outline"
+                        disabled={selectedChapterItem(book, i + 1)}
                         onClick={() => {
                           resetBook(bookNumber, i + 1);
                         }}
