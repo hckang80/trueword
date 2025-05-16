@@ -24,7 +24,11 @@ function BookSelector({
   bibleChapterInstance: BibleChapterInstance;
   resetBook: (bookNumber: number, chapter: number) => void;
 }) {
-  const { book_name: selectedBookName, name: selectedChapterName } = bibleChapterInstance;
+  const {
+    book_name: selectedBookName,
+    name: selectedChapterName,
+    chapter: selectedChapterNumber
+  } = bibleChapterInstance;
   const [open, setOpen] = useState(false);
 
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
@@ -110,6 +114,7 @@ function BookSelector({
                       <Button
                         key={i}
                         variant="outline"
+                        disabled={book === selectedBookName && selectedChapterNumber === i + 1}
                         onClick={() => {
                           resetBook(bookNumber, i + 1);
                         }}
