@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const promptLocales: Record<string, string> = {
-      ko: '다음 게시글의 제목과 주요 내용 등을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :',
-      en: 'Summarize the following article concisely, including the title and main content. Output in semantic HTML markup. Respond in English only:'
+      ko: '다음 게시글의 주요 내용을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :',
+      en: 'Summarize the following article concisely, including the main content. Output in semantic HTML markup. Respond in English only:'
     };
 
     const promptText = `${promptLocales[locale]}
