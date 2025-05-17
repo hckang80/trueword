@@ -8,7 +8,7 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
-const CACHE_TTL = 24 * 60 * 60;
+const CACHE_TTL = 6 * 60 * 60;
 const CACHE_KEY = `${process.env.NODE_ENV.toUpperCase()}:rss_news`;
 
 export async function GET() {
