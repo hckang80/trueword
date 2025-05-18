@@ -16,17 +16,24 @@ import { unstable_ViewTransition as ViewTransition } from 'react';
 import { useTranslations } from 'next-intl';
 
 export default function NewsIdContainer() {
+  console.log('RENDER');
   const t = useTranslations();
   const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
+  console.time('useNewsBySource');
   const {
     data: news = { link: '', title: '', description: '', source: '', pubDate: '', thumbnail: '' }
   } = useNewsBySource(sources, locale);
+  console.timeEnd('useNewsBySource');
 
   const { link, title, description, source, pubDate, thumbnail = '' } = news;
+  console.time('useScrapedContent');
   const { data: scraped } = useScrapedContent(link, description);
+  console.timeEnd('useScrapedContent');
+  console.time('useSummary');
   const {
     data: { summary }
   } = useSummary(scraped.content, scraped.title, locale);
+  console.timeEnd('useSummary');
 
   const sanitizedData = () => ({
     __html: sanitizeHtml(summary.replace(/`{3,}/g, '').replace('html', ''))
@@ -34,7 +41,7 @@ export default function NewsIdContainer() {
 
   return (
     <article className="p-[var(--global-inset)]">
-      <ViewTransition name={`news-header-${sources[0]}-${sources[1]}`}>
+      {/* <ViewTransition name={`news-header-${sources[0]}-${sources[1]}`}>
         <NewsHeader title={title} source={source} pubDate={pubDate} />
 
         {thumbnail && (
@@ -61,7 +68,7 @@ export default function NewsIdContainer() {
           <SquareArrowOutUpRight />
           {t('News.viewFullArticle')}
         </Link>
-      </div>
+      </div> */}
     </article>
   );
 }
