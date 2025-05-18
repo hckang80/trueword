@@ -34,7 +34,7 @@ export default function Container() {
 
   const selectedVerses = bibleChapterInstance.verses;
 
-  const resetBook = (bookNumber: number, chapter: number) => {
+  const changeBookChapter = (bookNumber: number, chapter: number) => {
     updateBibleParams({
       abbreviation: getTranslationVersionId,
       bookNumber,
@@ -48,7 +48,7 @@ export default function Container() {
         <BookSelector
           books={books}
           bibleChapterInstance={bibleChapterInstance}
-          resetBook={resetBook}
+          changeBookChapter={changeBookChapter}
         />
         <TranslationSelector
           localizedTranslationVersions={localizedTranslationVersions}

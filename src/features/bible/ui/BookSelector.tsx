@@ -18,11 +18,11 @@ import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../
 function BookSelector({
   books,
   bibleChapterInstance,
-  resetBook
+  changeBookChapter
 }: {
   books: TranslationBooks;
   bibleChapterInstance: BibleChapterInstance;
-  resetBook: (bookNumber: number, chapter: number) => void;
+  changeBookChapter: (bookNumber: number, chapter: number) => void;
 }) {
   const {
     book_name: selectedBookName,
@@ -119,7 +119,7 @@ function BookSelector({
                         variant="outline"
                         disabled={selectedChapterItem(book, i + 1)}
                         onClick={() => {
-                          resetBook(bookNumber, i + 1);
+                          changeBookChapter(bookNumber, i + 1);
                         }}
                       >
                         {i + 1}
