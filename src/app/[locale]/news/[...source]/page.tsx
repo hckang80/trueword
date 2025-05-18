@@ -35,20 +35,35 @@ export default async function NewsIdPage({ params }: Props) {
 
   const queryClient = new QueryClient();
 
+  const metrics = {
+    newsBySourceTime: 0,
+    scrapedContentTime: 0,
+    summaryTime: 0
+  };
+
+  const startNewsBySource = performance.now();
   const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
   const newsBySource = getNewsItem(news, sources);
+  metrics.newsBySourceTime = performance.now() - startNewsBySource;
 
   if (!newsBySource) return <p className="center-absolute">{t('noNews')}</p>;
 
+  const startScrapedContent = performance.now();
   const scraped = await queryClient.fetchQuery(
     scrapedContentQueryOptions(newsBySource.link, newsBySource.description)
   );
+  metrics.scrapedContentTime = performance.now() - startScrapedContent;
 
+  const startSummary = performance.now();
   await queryClient.prefetchQuery(summaryQueryOptions(scraped.content, scraped.title, locale));
+  metrics.summaryTime = performance.now() - startSummary;
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container />
+      <>
+        <Container />
+        <pre>{JSON.stringify(metrics, null, 2)}</pre>
+      </>
     </HydrationBoundary>
   );
 }
