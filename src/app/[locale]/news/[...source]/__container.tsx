@@ -41,7 +41,7 @@ export default function NewsIdContainer() {
 
   return (
     <article className="p-[var(--global-inset)]">
-      {/* <ViewTransition name={`news-header-${sources[0]}-${sources[1]}`}>
+      <ViewTransition name={`news-header-${sources[0]}-${sources[1]}`}>
         <NewsHeader title={title} source={source} pubDate={pubDate} />
 
         {thumbnail && (
@@ -68,7 +68,7 @@ export default function NewsIdContainer() {
           <SquareArrowOutUpRight />
           {t('News.viewFullArticle')}
         </Link>
-      </div> */}
+      </div>
     </article>
   );
 }
