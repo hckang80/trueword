@@ -1,12 +1,12 @@
 import {
   newsBySourceQueryOptions,
   scrapedContentQueryOptions,
-  summaryQueryOptions
+  summaryQueryOptions,
+  getNewsItem
 } from '@/features/news';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { getNewsItem } from '@/features/bible';
 import { getTranslations } from 'next-intl/server';
 
 type Props = { params: Promise<{ locale: string; source: string[] }> };
