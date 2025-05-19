@@ -1,8 +1,7 @@
 import {
   newsBySourceQueryOptions,
   scrapedContentQueryOptions,
-  summaryQueryOptions,
-  getNewsItem
+  summaryQueryOptions
 } from '@/features/news';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
@@ -21,8 +20,7 @@ export async function generateMetadata(
 
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
-  const newsBySource = getNewsItem(news, sources);
+  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
 
   return {
     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
@@ -42,8 +40,7 @@ export default async function NewsIdPage({ params }: Props) {
   };
 
   const startNewsBySource = performance.now();
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
-  const newsBySource = getNewsItem(news, sources);
+  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
   metrics.newsBySourceTime = performance.now() - startNewsBySource;
 
   if (!newsBySource) return <p className="center-absolute">{t('noNews')}</p>;
