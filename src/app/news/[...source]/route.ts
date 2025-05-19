@@ -1,15 +1,16 @@
-import { type NewsItemType, getNewsItem } from '@/features/news';
+import { fetchNews, getNewsItem } from '@/features/news';
 import { type NextRequest, NextResponse } from 'next/server';
-import { axiosInstance } from '@/shared';
+import { DEFAULT_LOCALE } from '@/shared';
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ source: string[] }> }
 ) {
+  const locale = request.headers.get('Accept-Language') || DEFAULT_LOCALE;
   const { source } = await params;
 
   try {
-    const { data: news } = await axiosInstance.get<NewsItemType[]>('/api/news');
+    const news = await fetchNews(locale);
 
     return NextResponse.json(getNewsItem(news, source));
   } catch (error) {
