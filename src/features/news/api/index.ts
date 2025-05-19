@@ -9,6 +9,12 @@ export async function fetchNews(locale: string): Promise<NewsItemType[]> {
   return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate), locale) }));
 }
 
+export async function fetchNewsItem([sourceName, guid]: string[]): Promise<NewsItemType> {
+  const { data } = await axiosInstance<NewsItemType>(`/news/${sourceName}/${guid}`);
+
+  return data;
+}
+
 export const PAGE_SIZE = 10;
 export const fetchNewsSlice = async (allNews: NewsItemType[], pageParam: number) => {
   const { length: total_count } = allNews;
