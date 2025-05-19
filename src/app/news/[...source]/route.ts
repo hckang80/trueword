@@ -1,5 +1,4 @@
-import { NewsItemType } from '@/features/news';
-import { getNewsItem } from '@/features/bible';
+import { type NewsItemType, getNewsItem } from '@/features/news';
 import { type NextRequest, NextResponse } from 'next/server';
 import { axiosInstance } from '@/shared';
 
