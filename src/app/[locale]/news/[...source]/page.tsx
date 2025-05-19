@@ -6,7 +6,6 @@ import {
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { getNewsItem } from '@/features/bible';
 import { getTranslations } from 'next-intl/server';
 
 type Props = { params: Promise<{ locale: string; source: string[] }> };
@@ -21,8 +20,7 @@ export async function generateMetadata(
 
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
-  const newsBySource = getNewsItem(news, sources);
+  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
 
   return {
     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
@@ -35,8 +33,7 @@ export default async function NewsIdPage({ params }: Props) {
 
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
-  const newsBySource = getNewsItem(news, sources);
+  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
 
   if (!newsBySource) return <p className="center-absolute">{t('noNews')}</p>;
 
@@ -48,7 +45,9 @@ export default async function NewsIdPage({ params }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container />
+      <>
+        <Container />
+      </>
     </HydrationBoundary>
   );
 }

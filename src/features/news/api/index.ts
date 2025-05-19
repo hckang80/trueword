@@ -1,5 +1,5 @@
 import { axiosInstance, toReadableDate } from '@/shared';
-import type { NewsItemType } from '@/features/news';
+import { getNewsItem, type NewsItemType } from '@/features/news';
 
 export * from './fetchRssFeed';
 
@@ -7,6 +7,17 @@ export async function fetchNews(locale: string): Promise<NewsItemType[]> {
   const { data } = await axiosInstance<NewsItemType[]>('/api/news');
 
   return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate), locale) }));
+}
+
+export async function fetchNewsItem(
+  [sourceName, guid]: string[],
+  locale: string
+): Promise<NewsItemType> {
+  const data = await fetchNews(locale);
+  const result = getNewsItem(data, [sourceName, guid]);
+  if (!result) throw Error('뉴스 아이템을 찾을 수 없습니다.');
+
+  return result;
 }
 
 export const PAGE_SIZE = 10;
