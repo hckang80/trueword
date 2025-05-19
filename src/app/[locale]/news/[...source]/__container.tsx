@@ -20,7 +20,7 @@ export default function NewsIdContainer() {
   const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
   const {
     data: news = { link: '', title: '', description: '', source: '', pubDate: '', thumbnail: '' }
-  } = useNewsBySource(sources, locale);
+  } = useNewsBySource(sources);
 
   const { link, title, description, source, pubDate, thumbnail = '' } = news;
   const { data: scraped } = useScrapedContent(link, description);

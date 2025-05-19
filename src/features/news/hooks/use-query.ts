@@ -1,6 +1,12 @@
 import { newsKeys } from '@/shared';
 import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { fetchNews, fetchNewsSlice, fetchScrapedContent, fetchSummary } from '../api';
+import {
+  fetchNews,
+  fetchNewsItem,
+  fetchNewsSlice,
+  fetchScrapedContent,
+  fetchSummary
+} from '../api';
 import type { NewsItemType } from '../model';
 
 export function newsQueryOptions(locale: string) {
@@ -30,19 +36,16 @@ export const useInfiniteNews = (allNews: NewsItemType[]) => {
   });
 };
 
-export function newsBySourceQueryOptions(sources: string[], locale: string) {
+export function newsBySourceQueryOptions(sources: string[]) {
   return {
     ...newsKeys.data(sources),
-    queryFn: () => fetchNews(locale),
+    queryFn: () => fetchNewsItem(sources),
     staleTime: 1000 * 60 * 5
   };
 }
-export function useNewsBySource(sources: string[], locale: string) {
-  const [source, id] = sources;
-
+export function useNewsBySource(sources: string[]) {
   return useSuspenseQuery({
-    ...newsBySourceQueryOptions(sources, locale),
-    select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
+    ...newsBySourceQueryOptions(sources)
   });
 }
 
