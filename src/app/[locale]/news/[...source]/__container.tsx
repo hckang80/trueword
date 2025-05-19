@@ -39,7 +39,7 @@ export default function NewsIdContainer() {
 
         {thumbnail && (
           <div className="relative h-[250px]">
-            <NewsImage src={thumbnail} />
+            <NewsImage src={thumbnail} alt="" />
           </div>
         )}
       </ViewTransition>

@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 import { memo } from 'react';
 
-const NewsImage = ({ src }: { src: string }) => (
-  <Image src={src} alt="" priority fill style={{ objectFit: 'cover' }} />
+const NewsImage = ({ ...props }: ImageProps) => (
+  <Image priority fill {...props} style={{ objectFit: 'cover' }} />
 );
 NewsImage.displayName = 'NewsImage';
 
