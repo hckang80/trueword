@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/shared/components/ui/button';
+import { RefreshCw, Undo2 } from 'lucide-react';
 import React from 'react';
 
 interface Props {
@@ -31,9 +32,16 @@ class ErrorBoundary extends React.Component<Props, State> {
     return (
       <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
         <p className="text-xl font-semibold p-[20px]">{this.state.error?.toString()}</p>
-        <Button type="button" onClick={() => window.location.reload()}>
-          Try again
-        </Button>
+        <div className="flex justify-center gap-[4px]">
+          <Button variant="secondary" onClick={() => history.back()}>
+            <Undo2 />
+            Back
+          </Button>
+          <Button type="button" onClick={() => window.location.reload()}>
+            <RefreshCw />
+            Try again
+          </Button>
+        </div>
       </div>
     );
   }
