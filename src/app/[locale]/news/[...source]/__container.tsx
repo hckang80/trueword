@@ -38,7 +38,7 @@ export default function NewsIdContainer() {
         <NewsHeader title={title} source={source} pubDate={pubDate} />
 
         {thumbnail && (
-          <div className="relative h-[250px]">
+          <div className="relative aspect-video">
             <NewsImage src={thumbnail} alt="" />
           </div>
         )}
