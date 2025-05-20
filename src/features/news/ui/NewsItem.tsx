@@ -22,7 +22,7 @@ const NewsItem = ({ item }: { item: NewsItemType }) => (
         </div>
         {item.thumbnail && (
           <div className="relative w-[120px] h-[63px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
-            <NewsImage src={item.thumbnail} sizes="(max-width: 120px) 100vw, 120px" alt="" />
+            <NewsImage src={item.thumbnail} alt="" />
           </div>
         )}
       </ViewTransition>
