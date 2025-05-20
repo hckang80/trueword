@@ -21,7 +21,7 @@ const NewsItem = ({ item }: { item: NewsItemType }) => (
           <NewsItemMeta source={item.source} pubDate={item.pubDate} />
         </div>
         {item.thumbnail && (
-          <div className="relative w-[120px] h-[63px] shrink-0 rounded-lg overflow-hidden relative bg-primary/10">
+          <div className="relative aspect-video basis-[120px] shrink-0 rounded-lg overflow-hidden bg-primary/10">
             <NewsImage src={item.thumbnail} alt="" />
           </div>
         )}
