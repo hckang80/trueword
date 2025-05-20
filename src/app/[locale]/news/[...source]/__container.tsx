@@ -18,9 +18,9 @@ import { useTranslations } from 'next-intl';
 export default function NewsIdContainer() {
   const t = useTranslations();
   const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
-  const {
-    data: news = { link: '', title: '', description: '', source: '', pubDate: '', thumbnail: '' }
-  } = useNewsBySource(sources, locale);
+  const { data: news } = useNewsBySource(sources, locale);
+
+  if (!news) throw Error(t('News.noNews'));
 
   const { link, title, description, source, pubDate, thumbnail = '' } = news;
   const { data: scraped } = useScrapedContent(link, description);
