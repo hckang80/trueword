@@ -45,9 +45,7 @@ export default async function NewsIdPage({ params }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <>
-        <Container />
-      </>
+      <Container />
     </HydrationBoundary>
   );
 }
