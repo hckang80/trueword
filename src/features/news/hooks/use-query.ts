@@ -13,7 +13,7 @@ export function newsQueryOptions(locale: string) {
   return {
     queryKey: newsKeys._def,
     queryFn: () => fetchNews(locale),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   };
 }
 export function useNews(locale: string) {
@@ -32,7 +32,7 @@ export const useInfiniteNews = (allNews: NewsItemType[]) => {
       return isListEnd ? undefined : allPages.length + 1;
     },
     initialPageParam: 1,
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   });
 };
 
@@ -40,7 +40,7 @@ export function newsBySourceQueryOptions(sources: string[], locale: string) {
   return {
     ...newsKeys.data(sources),
     queryFn: () => fetchNewsItem(sources, locale),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   };
 }
 export function useNewsBySource(sources: string[], locale: string) {
@@ -56,7 +56,7 @@ export function scrapedContentQueryOptions(url: string, description: string) {
   return {
     queryKey: ['scraped', url],
     queryFn: () => fetchScrapedContent(url, description),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   };
 }
 export function useScrapedContent(url: string, description: string) {
@@ -67,7 +67,7 @@ export function summaryQueryOptions(content: string, title: string, locale: stri
   return {
     queryKey: ['summary', title],
     queryFn: () => fetchSummary({ content, title, locale }),
-    staleTime: 1000 * 60 * 5
+    staleTime: Infinity
   };
 }
 export function useSummary(content: string, title: string, locale: string) {
