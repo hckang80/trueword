@@ -1,5 +1,6 @@
 import {
-  newsBySourceQueryOptions,
+  getNewsItem,
+  newsQueryOptions,
   scrapedContentQueryOptions,
   summaryQueryOptions
 } from '@/features/news';
@@ -20,7 +21,8 @@ export async function generateMetadata(
 
   const queryClient = new QueryClient();
 
-  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
+  const news = await queryClient.fetchQuery(newsQueryOptions(locale));
+  const newsBySource = getNewsItem(news, sources);
 
   return {
     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
@@ -33,7 +35,8 @@ export default async function NewsIdPage({ params }: Props) {
 
   const queryClient = new QueryClient();
 
-  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
+  const news = await queryClient.fetchQuery(newsQueryOptions(locale));
+  const newsBySource = getNewsItem(news, sources);
 
   if (!newsBySource) return <p className="center-absolute">{t('noNews')}</p>;
 

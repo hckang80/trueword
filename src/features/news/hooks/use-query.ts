@@ -44,8 +44,11 @@ export function newsBySourceQueryOptions(sources: string[], locale: string) {
   };
 }
 export function useNewsBySource(sources: string[], locale: string) {
+  const [source, id] = sources;
+
   return useSuspenseQuery({
-    ...newsBySourceQueryOptions(sources, locale)
+    ...newsQueryOptions(locale),
+    select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
   });
 }
 
