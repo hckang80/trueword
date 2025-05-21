@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/shared/components/system/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared';
 import { getLanguageFullName, useBibleLanguage, useUpdateBibleParams } from '@/features/bible';
 import { useTranslationVersions } from '@/features/bible';
 
