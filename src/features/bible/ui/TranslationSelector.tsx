@@ -1,15 +1,15 @@
 'use client';
 
-import { cn } from '@/shared';
-import { Button } from '@/shared/components/ui/button';
 import {
+  cn,
+  Button,
   Drawer,
   DrawerTrigger,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
   DrawerDescription
-} from '@/shared/components/ui/drawer';
+} from '@/shared';
 import { Globe } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
