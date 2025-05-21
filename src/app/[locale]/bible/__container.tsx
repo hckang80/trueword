@@ -55,7 +55,7 @@ export default function Container() {
           localizedTranslationVersions={localizedTranslationVersions}
           bibleChapterInstance={bibleChapterInstance}
         />
-        <VideoList />
+        <VideoList chapterName={bibleChapterInstance.name} />
       </div>
       <VerseList selectedVerses={selectedVerses} />
     </div>

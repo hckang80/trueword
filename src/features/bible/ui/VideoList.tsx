@@ -6,11 +6,11 @@ import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
 
-function VideoList() {
+function VideoList({ chapterName }: { chapterName: string }) {
   const [open, setOpen] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
-  const { data: videos = [], isLoading } = useYouTubeVideos('창세기 1', { enabled: open });
+  const { data: videos = [], isLoading } = useYouTubeVideos(chapterName, { enabled: open });
 
   const handleVideoClick = (videoId: string) => {
     setSelectedVideoId(videoId);
@@ -25,7 +25,7 @@ function VideoList() {
       </DrawerTrigger>
       <DrawerContent className="sm:max-w-[600px]" aria-describedby="관련 영상 목록">
         <DrawerHeader>
-          <DrawerTitle>창세기</DrawerTitle>
+          <DrawerTitle>{chapterName}</DrawerTitle>
         </DrawerHeader>
         {isLoading ? (
           <div className="flex justify-center py-8">
