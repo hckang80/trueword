@@ -1,25 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  axiosInstance,
-  Button,
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger
-} from '@/shared';
+import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shared';
 import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
-
-type YouTubeVideo = {
-  id: string;
-  title: string;
-  thumbnail: string;
-  channelTitle: string;
-};
 
 function VideoPlay() {
   const [open, setOpen] = useState(false);
