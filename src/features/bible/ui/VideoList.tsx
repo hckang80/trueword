@@ -41,7 +41,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
         {isLoading ? (
           <div className="grid gap-4 py-4 px-4">
             {Array.from({ length: VIDEO_LENGTH }).map((_, i) => (
-              <div className="flex gap-4 items-start">
+              <div key={i} className="flex gap-4 items-start">
                 <div className="flex-shrink-0 relative">
                   <Skeleton className="w-[128px] h-[72px] rounded-md" />
                 </div>
