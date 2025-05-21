@@ -3,7 +3,8 @@
     "bible": "성경",
     "language": "언어",
     "news": "뉴스",
-    "back": "이전으로"
+    "back": "이전으로",
+    "BackToList": "목록으로"
   },
   "Meta": {
     "title": "True Word",

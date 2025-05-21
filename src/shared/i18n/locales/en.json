@@ -3,7 +3,8 @@
     "bible": "bible",
     "language": "language",
     "news": "news",
-    "back": "Back"
+    "back": "Back",
+    "BackToList": "Back To List"
   },
   "Meta": {
     "title": "True Word",

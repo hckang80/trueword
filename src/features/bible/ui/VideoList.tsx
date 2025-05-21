@@ -14,8 +14,10 @@ import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
 import { VIDEO_LENGTH } from '@/features/news';
+import { useTranslations } from 'next-intl';
 
 function VideoList({ chapterName }: { chapterName: string }) {
+  const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
@@ -64,7 +66,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
                   ></iframe>
                 </div>
                 <Button variant="outline" className="mt-2" onClick={() => setSelectedVideoId(null)}>
-                  목록으로 돌아가기
+                  {t('BackToList')}
                 </Button>
               </div>
             ) : (
