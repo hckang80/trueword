@@ -12,6 +12,7 @@ import {
 } from '@/shared';
 import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
+import Image from 'next/image';
 
 type YouTubeVideo = {
   id: string;
@@ -71,10 +72,12 @@ function VideoPlay() {
                   onClick={() => handleVideoClick(video.id)}
                 >
                   <div className="flex-shrink-0 relative">
-                    <img
+                    <Image
                       src={video.thumbnail}
+                      width="128"
+                      height="72"
                       alt={video.title}
-                      className="w-32 h-24 object-cover rounded-md"
+                      className="rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
