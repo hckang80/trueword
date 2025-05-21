@@ -6,7 +6,7 @@ import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
 
-function VideoPlay() {
+function VideoList() {
   const [open, setOpen] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
@@ -78,4 +78,4 @@ function VideoPlay() {
   );
 }
 
-export default VideoPlay;
+export default VideoList;
