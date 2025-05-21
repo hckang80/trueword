@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
   Skeleton
 } from '@/shared';
-import { LoaderCircle, Video } from 'lucide-react';
+import { Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
 import { VIDEO_LENGTH } from '@/features/news';
