@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { Video } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 type YouTubeVideo = {
   id: string;
@@ -45,7 +44,6 @@ async function fetchYouTubeVideos(query: string): Promise<YouTubeVideo[]> {
 function VideoPlay() {
   const [open, setOpen] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
-  const t = useTranslations('Bible');
 
   const { data: videos = [], isLoading } = useQuery({
     queryKey: ['youtubeVideos', '창세기'],
@@ -66,7 +64,7 @@ function VideoPlay() {
       </DrawerTrigger>
       <DrawerContent className="sm:max-w-[600px]">
         <DrawerHeader>
-          <DrawerTitle>{t('videoResults', { defaultValue: '창세기 관련 영상' })}</DrawerTitle>
+          <DrawerTitle>창세기</DrawerTitle>
         </DrawerHeader>
 
         {isLoading ? (
