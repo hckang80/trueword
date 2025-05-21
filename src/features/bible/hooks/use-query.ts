@@ -1,7 +1,13 @@
 import { bibleKeys, translationsKeys } from '@/shared';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { fetchBibleInstance, fetchTranslationBooks, getLocalizedTranslationVersions } from '..';
-import { fetchTranslationVersions } from '@/features/bible';
+import { useQuery, useSuspenseQuery, UseQueryOptions } from '@tanstack/react-query';
+import {
+  fetchBibleInstance,
+  fetchTranslationBooks,
+  fetchYouTubeVideos,
+  getLocalizedTranslationVersions,
+  fetchTranslationVersions,
+  type YouTubeVideo
+} from '..';
 
 export const bibleChapterInstanceQueryOptions = (params: string[]) => ({
   ...bibleKeys.data(params),
@@ -38,3 +44,15 @@ export const translationVersionsQueryOptions = {
 export const useTranslationVersions = () => {
   return useSuspenseQuery(translationVersionsQueryOptions);
 };
+
+export function useYouTubeVideos(
+  query: string,
+  queryOptions: Omit<UseQueryOptions<YouTubeVideo[]>, 'queryKey'>
+) {
+  return useQuery({
+    queryKey: ['youtube', 'video', query],
+    queryFn: () => fetchYouTubeVideos(query),
+    staleTime: 1000 * 60 * 5,
+    ...queryOptions
+  });
+}

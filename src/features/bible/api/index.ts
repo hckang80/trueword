@@ -1,4 +1,9 @@
-import type { BibleChapterInstance, TransitionVersion, TranslationBooks } from '@/features/bible';
+import type {
+  BibleChapterInstance,
+  TransitionVersion,
+  TranslationBooks,
+  YouTubeVideo
+} from '@/features/bible';
 import { axiosInstance } from '@/shared';
 import { availableTranslationVersions } from '..';
 
@@ -25,5 +30,14 @@ export async function fetchBibleInstance(params: string[]) {
 
 export async function fetchTranslationBooks(translation: string) {
   const { data } = await axiosInstance<TranslationBooks>(`/translations/${translation}`);
+  return data;
+}
+
+export async function fetchYouTubeVideos(query: string) {
+  const { data } = await axiosInstance.get<YouTubeVideo[]>('/api/video', {
+    params: {
+      q: query
+    }
+  });
   return data;
 }

@@ -10,8 +10,8 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/shared';
-import { useQuery } from '@tanstack/react-query';
-import { Video } from 'lucide-react';
+import { LoaderCircle, Video } from 'lucide-react';
+import { useYouTubeVideos } from '../hooks';
 
 type YouTubeVideo = {
   id: string;
@@ -20,21 +20,11 @@ type YouTubeVideo = {
   channelTitle: string;
 };
 
-async function fetchYouTubeVideos(query: string): Promise<YouTubeVideo[]> {
-  const { data } = await axiosInstance.get(`/api/video?q=${encodeURIComponent(query)}`);
-
-  return data;
-}
-
 function VideoPlay() {
   const [open, setOpen] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
-  const { data: videos = [], isLoading } = useQuery({
-    queryKey: ['youtubeVideos', '창세기'],
-    queryFn: () => fetchYouTubeVideos('창세기'),
-    enabled: open // 모달이 열릴 때만 데이터 가져오기
-  });
+  const { data: videos = [], isLoading } = useYouTubeVideos('창세기 1', { enabled: open });
 
   const handleVideoClick = (videoId: string) => {
     setSelectedVideoId(videoId);
@@ -54,7 +44,7 @@ function VideoPlay() {
 
         {isLoading ? (
           <div className="flex justify-center py-8">
-            <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+            <LoaderCircle className="animate-spin" />
           </div>
         ) : (
           <div className="grid gap-4 py-4 px-4">
@@ -86,9 +76,6 @@ function VideoPlay() {
                       alt={video.title}
                       className="w-32 h-24 object-cover rounded-md"
                     />
-                    {/* <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-10 transition-opacity">
-                      <Video className="h-8 w-8 text-white" />
-                    </div> */}
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium hover:underline">{video.title}</span>
