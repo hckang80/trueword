@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import { VIDEO_LENGTH } from '@/features/news';
+import { Redis } from '@upstash/redis';
 
 interface VideoItem {
   kind: string;
@@ -31,9 +32,25 @@ interface VideoThumbnail {
   high: { url: string; width: number; height: number };
 }
 
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN
+});
+
+const CACHE_TTL = 5 * 60;
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
+
+  if (!query || typeof query !== 'string') {
+    return NextResponse.json({ message: 'Query is required' }, { status: 400 });
+  }
+
+  const key = `video:${query}`;
+  const cached = await redis.get<VideoItem[]>(key);
+
+  if (cached) return cached;
 
   try {
     const { data } = await axios.get<{ items: VideoItem[] }>(
@@ -56,6 +73,8 @@ export async function GET(request: NextRequest) {
       thumbnail: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
       channelTitle
     }));
+
+    redis.set(key, videos, { ex: CACHE_TTL });
 
     return NextResponse.json(videos);
   } catch (error) {
