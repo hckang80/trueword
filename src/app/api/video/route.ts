@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
+import { VIDEO_LENGTH } from '@/features/news';
 
 interface VideoItem {
   kind: string;
@@ -41,7 +42,7 @@ export async function GET(request: NextRequest) {
         params: {
           key: process.env.YOUTUBE_DATA_API_KEY,
           q: query,
-          maxResults: 3,
+          maxResults: VIDEO_LENGTH,
           type: 'video',
           part: 'snippet',
           videoEmbeddable: true

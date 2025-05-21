@@ -13,6 +13,7 @@ import {
 import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
+import { VIDEO_LENGTH } from '@/features/news';
 
 function VideoList({ chapterName }: { chapterName: string }) {
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
         </DrawerHeader>
         {isLoading ? (
           <div className="grid gap-4 py-4 px-4">
-            {Array.from({ length: 3 }).map((_, i) => (
+            {Array.from({ length: VIDEO_LENGTH }).map((_, i) => (
               <div className="flex gap-4 items-start">
                 <div className="flex-shrink-0 relative">
                   <Skeleton className="w-[128px] h-[72px] rounded-md" />
