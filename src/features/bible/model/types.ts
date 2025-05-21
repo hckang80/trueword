@@ -58,3 +58,10 @@ export interface SelectedBook {
   book: string;
   chapter: number;
 }
+
+export interface YouTubeVideo {
+  id: string;
+  title: string;
+  thumbnail: string;
+  channelTitle: string;
+}
