@@ -1,7 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shared';
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  Skeleton
+} from '@/shared';
 import { LoaderCircle, Video } from 'lucide-react';
 import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
@@ -28,8 +36,18 @@ function VideoList({ chapterName }: { chapterName: string }) {
           <DrawerTitle>{chapterName}</DrawerTitle>
         </DrawerHeader>
         {isLoading ? (
-          <div className="flex justify-center py-8">
-            <LoaderCircle className="animate-spin" />
+          <div className="grid gap-4 py-4 px-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 relative">
+                  <Skeleton className="w-[128px] h-[72px] rounded-md" />
+                </div>
+                <div className="flex flex-col grow-1 gap-1">
+                  <Skeleton className="w-full h-6" />
+                  <Skeleton className="w-30 h-4" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="grid gap-4 py-4 px-4">
