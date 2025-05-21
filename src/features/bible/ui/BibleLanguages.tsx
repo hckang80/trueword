@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/shared/components/ui/select';
+} from '@/shared/components/system/select';
 import { getLanguageFullName, useBibleLanguage, useUpdateBibleParams } from '@/features/bible';
 import { useTranslationVersions } from '@/features/bible';
 

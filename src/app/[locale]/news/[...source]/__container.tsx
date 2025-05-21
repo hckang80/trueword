@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, buttonVariants } from '@/shared/components/ui/button';
+import { Button, buttonVariants } from '@/shared/components/system/button';
 import { Link } from '@/shared/i18n/routing';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';

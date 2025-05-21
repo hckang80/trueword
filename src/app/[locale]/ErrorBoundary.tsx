@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/shared/components/ui/button';
+import { Button } from '@/shared/components/system/button';
 import { RefreshCw, Undo2 } from 'lucide-react';
 import React from 'react';
 

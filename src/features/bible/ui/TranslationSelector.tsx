@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/shared';
-import { Button } from '@/shared/components/ui/button';
+import { Button } from '@/shared/components/system/button';
 import {
   Drawer,
   DrawerTrigger,
@@ -9,7 +9,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerDescription
-} from '@/shared/components/ui/drawer';
+} from '@/shared/components/system/drawer';
 import { Globe } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';

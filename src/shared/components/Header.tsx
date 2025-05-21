@@ -1,5 +1,5 @@
 import { ModeToggle } from '@/shared';
-import { Button } from '@/shared/components/ui/button';
+import { Button } from '@/shared/components/system/button';
 import { Mail } from 'lucide-react';
 
 export function Header() {

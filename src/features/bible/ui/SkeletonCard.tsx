@@ -1,6 +1,6 @@
 'use client';
 
-import { Skeleton } from '@/shared/components/ui/skeleton';
+import { Skeleton } from '@/shared/components/system/skeleton';
 
 function SkeletonCard() {
   return (
