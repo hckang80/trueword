@@ -8,7 +8,8 @@ import {
   useTranslationBooks,
   BookSelector,
   TranslationSelector,
-  VerseList
+  VerseList,
+  VideoPlay
 } from '@/features/bible';
 import { useSearchParams } from 'next/navigation';
 
@@ -54,6 +55,7 @@ export default function Container() {
           localizedTranslationVersions={localizedTranslationVersions}
           bibleChapterInstance={bibleChapterInstance}
         />
+        <VideoPlay />
       </div>
       <VerseList selectedVerses={selectedVerses} />
     </div>
