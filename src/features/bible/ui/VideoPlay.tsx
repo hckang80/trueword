@@ -14,8 +14,8 @@ type YouTubeVideo = {
 };
 
 async function fetchYouTubeVideos(query: string): Promise<YouTubeVideo[]> {
-  // In a real app, you would call your API endpoint that interfaces with YouTube API
-  // For demo purposes, we'll return mock data
+  // 실제 앱에서는 YouTube API와 연동하는 API 엔드포인트를 호출해야 합니다
+  // 데모 목적으로 가상 데이터를 반환합니다
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
@@ -44,13 +44,18 @@ async function fetchYouTubeVideos(query: string): Promise<YouTubeVideo[]> {
 
 function VideoPlay() {
   const [open, setOpen] = useState(false);
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const t = useTranslations('Bible');
 
   const { data: videos = [], isLoading } = useQuery({
     queryKey: ['youtubeVideos', '창세기'],
     queryFn: () => fetchYouTubeVideos('창세기'),
-    enabled: open // Only fetch when modal is open
+    enabled: open // 모달이 열릴 때만 데이터 가져오기
   });
+
+  const handleVideoClick = (videoId: string) => {
+    setSelectedVideoId(videoId);
+  };
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -69,34 +74,46 @@ function VideoPlay() {
             <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
           </div>
         ) : (
-          <div className="grid gap-4 py-4">
-            {videos.map((video) => (
-              <div key={video.id} className="flex gap-4 items-start">
-                <a
-                  href={`https://www.youtube.com/watch?v=${video.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-shrink-0"
-                >
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-32 h-24 object-cover rounded-md"
-                  />
-                </a>
-                <div className="flex flex-col">
-                  <a
-                    href={`https://www.youtube.com/watch?v=${video.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium hover:underline"
-                  >
-                    {video.title}
-                  </a>
-                  <span className="text-sm text-gray-500">{video.channelTitle}</span>
+          <div className="grid gap-4 py-4 px-4">
+            {selectedVideoId ? (
+              <div className="mb-4">
+                <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
+                    title="YouTube video player"
+                    className="absolute top-0 left-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
+                <Button variant="outline" className="mt-2" onClick={() => setSelectedVideoId(null)}>
+                  목록으로 돌아가기
+                </Button>
               </div>
-            ))}
+            ) : (
+              videos.map((video) => (
+                <div
+                  key={video.id}
+                  className="flex gap-4 items-start cursor-pointer"
+                  onClick={() => handleVideoClick(video.id)}
+                >
+                  <div className="flex-shrink-0 relative">
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-32 h-24 object-cover rounded-md"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-10 transition-opacity">
+                      <Video className="h-8 w-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-medium hover:underline">{video.title}</span>
+                    <span className="text-sm text-gray-500">{video.channelTitle}</span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         )}
       </DrawerContent>
