@@ -1,7 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shared';
+import {
+  axiosInstance,
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
+} from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { Video } from 'lucide-react';
 
@@ -13,32 +21,9 @@ type YouTubeVideo = {
 };
 
 async function fetchYouTubeVideos(query: string): Promise<YouTubeVideo[]> {
-  // 실제 앱에서는 YouTube API와 연동하는 API 엔드포인트를 호출해야 합니다
-  // 데모 목적으로 가상 데이터를 반환합니다
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          id: 'dQw4w9WgXcQ',
-          title: '창세기 1장 해설 - 태초에',
-          thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-          channelTitle: '성경 채널'
-        },
-        {
-          id: 'UxxajLWwzqY',
-          title: '창세기 개요 - 성경의 시작',
-          thumbnail: 'https://i.ytimg.com/vi/UxxajLWwzqY/mqdefault.jpg',
-          channelTitle: '말씀 연구소'
-        },
-        {
-          id: 'OPf0YbXqDm0',
-          title: '창세기 강해 1부 - 아담과 하와',
-          thumbnail: 'https://i.ytimg.com/vi/OPf0YbXqDm0/mqdefault.jpg',
-          channelTitle: '성경 이해하기'
-        }
-      ]);
-    }, 500);
-  });
+  const { data } = await axiosInstance.get(`/api/video?q=${encodeURIComponent(query)}`);
+
+  return data;
 }
 
 function VideoPlay() {
@@ -101,9 +86,9 @@ function VideoPlay() {
                       alt={video.title}
                       className="w-32 h-24 object-cover rounded-md"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-10 transition-opacity">
+                    {/* <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-10 transition-opacity">
                       <Video className="h-8 w-8 text-white" />
-                    </div>
+                    </div> */}
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium hover:underline">{video.title}</span>
