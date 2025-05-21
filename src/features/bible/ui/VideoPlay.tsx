@@ -23,11 +23,10 @@ function VideoPlay() {
           <Video className="h-4 w-4" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="sm:max-w-[600px]">
+      <DrawerContent className="sm:max-w-[600px]" aria-describedby="관련 영상 목록">
         <DrawerHeader>
           <DrawerTitle>창세기</DrawerTitle>
         </DrawerHeader>
-
         {isLoading ? (
           <div className="flex justify-center py-8">
             <LoaderCircle className="animate-spin" />
