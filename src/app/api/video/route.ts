@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       'https://www.googleapis.com/youtube/v3/search',
       {
         params: {
-          key: process.env.YOUTUBE_DATA_API_KEY,
+          key: process.env.YOUTUBE_API_KEY,
           q: query,
           maxResults: VIDEO_LENGTH,
           type: 'video',
