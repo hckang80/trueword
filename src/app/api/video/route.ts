@@ -50,7 +50,9 @@ export async function GET(request: NextRequest) {
   const key = `video:${query}`;
   const cached = await redis.get<VideoItem[]>(key);
 
-  if (cached) return cached;
+  if (cached) {
+    return NextResponse.json(cached);
+  }
 
   try {
     const { data } = await axios.get<{ items: VideoItem[] }>(
