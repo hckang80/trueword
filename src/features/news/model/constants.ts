@@ -1,1 +1,1 @@
-export const VIDEO_LENGTH = 5;
+export const VIDEO_LENGTH = 10;
