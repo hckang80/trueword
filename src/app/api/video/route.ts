@@ -37,7 +37,7 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
-const CACHE_TTL = 5 * 60;
+const CACHE_TTL = 24 * 60 * 60;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
