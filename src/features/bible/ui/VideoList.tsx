@@ -36,7 +36,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader>
+        <DrawerHeader className="h-[432px]">
           <DrawerTitle hidden>{chapterName}</DrawerTitle>
           <DrawerDescription asChild>
             <div className="grid gap-[10px]">
@@ -47,7 +47,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
                       <Skeleton className="w-[128px] h-[72px] rounded-md" />
                     </div>
                     <div className="flex flex-col grow-1 gap-1">
-                      <Skeleton className="w-full h-6" />
+                      <Skeleton className="w-full h-5" />
                       <Skeleton className="w-30 h-4" />
                     </div>
                   </div>

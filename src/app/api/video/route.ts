@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
         params: {
           key: process.env.YOUTUBE_DATA_API_KEY,
           q: query,
-          maxResults: VIDEO_LENGTH,
+          maxResults: VIDEO_LENGTH * 2,
           type: 'video',
           part: 'snippet',
           videoEmbeddable: true
