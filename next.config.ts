@@ -14,7 +14,13 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    remotePatterns,
+    remotePatterns: [
+      ...remotePatterns,
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com'
+      }
+    ],
     minimumCacheTTL: 60,
     formats: ['image/webp', 'image/avif']
   },
