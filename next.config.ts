@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
       ...remotePatterns,
       {
         protocol: 'https',
+        hostname: 's.w.org'
+      },
+      {
+        protocol: 'https',
         hostname: 'i.ytimg.com'
       }
     ],
