@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t('title'),
     description: t('description'),
     keywords:
-      '성경, 기독교, 말씀, 신앙, 종교 뉴스, Bible, Christian news, Scripture, Faith, Spirituality'
+      '성경, Bible, 성경앱, Bible App, 기독교, Christianity, 말씀, Scripture, 말씀묵상, Bible Devotion, 큐티, Quiet Time, 성경읽기, Bible Reading, 성경검색, Bible Search, 성경요약, Bible Summary, 성경순, Canonical Order, 예수, Jesus, 신앙, Faith, 경건생활, Devotional, 온라인 성경, Online Bible, 개역개정, KRV, NIV, ESV, 말씀카드, Verse Card, 추천말씀, Daily Verse, 크리스천 뉴스, Christian News, 복음, Gospel, 믿음, Belief, 하나님의 말씀, Word of God'
   };
 }
 
