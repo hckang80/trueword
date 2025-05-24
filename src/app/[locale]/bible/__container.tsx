@@ -9,10 +9,9 @@ import {
   BookSelector,
   TranslationSelector,
   VerseList,
-  VideoList
+  VideoList,
+  BibleNavigator
 } from '@/features/bible';
-import { Button } from '@/shared';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
 export default function Container() {
@@ -60,25 +59,7 @@ export default function Container() {
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
       <VerseList selectedVerses={selectedVerses} />
-
-      <div className="flex justify-between sticky bottom-18 mt-4">
-        <Button
-          title="Previous Chapter"
-          variant="outline"
-          size="icon"
-          onClick={() => changeBookChapter(+getBookNumber, +getChapterNumber - 1)}
-        >
-          <ChevronLeft />
-        </Button>
-        <Button
-          title="Next Chapter"
-          variant="outline"
-          size="icon"
-          onClick={() => changeBookChapter(+getBookNumber, +getChapterNumber + 1)}
-        >
-          <ChevronRight />
-        </Button>
-      </div>
+      <BibleNavigator changeBookChapter={changeBookChapter} />
     </div>
   );
 }
