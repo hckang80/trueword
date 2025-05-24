@@ -10,7 +10,7 @@ import {
   DrawerTitle,
   DrawerDescription
 } from '@/shared';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
@@ -93,6 +93,16 @@ function BookSelector({
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
+              <div className="inline-flex gap-1 sticky top-0 left-full p-3">
+                <Button variant="outline">
+                  <ListOrdered />
+                  성경순
+                </Button>
+                <Button variant="outline">
+                  <SortAsc />
+                  ABC순
+                </Button>
+              </div>
               {Object.values(books).map(({ name: book, nr: bookNumber }, index) => (
                 <details
                   name="books"
