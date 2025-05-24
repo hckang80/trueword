@@ -2,16 +2,14 @@
 
 import { Button } from '@/shared';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import { useBibleSearchParams } from '..';
 
 function BibleNavigator({
   changeBookChapter
 }: {
   changeBookChapter: (bookNumber: number, chapter: number) => void;
 }) {
-  const searchParams = useSearchParams();
-  const getBookNumber = searchParams.get('bookNumber') || '1';
-  const getChapterNumber = searchParams.get('chapterNumber') || '1';
+  const { bookNumber: getBookNumber, chapterNumber: getChapterNumber } = useBibleSearchParams();
 
   return (
     <div className="flex justify-between sticky bottom-18 mt-4">
