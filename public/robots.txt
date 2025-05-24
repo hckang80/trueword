@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://true-word.vercel.app/sitemap.xml
