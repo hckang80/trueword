@@ -12,6 +12,19 @@ export const useBibleParams = () => {
   return { urlSearchParams, pathname, locale };
 };
 
+export const useBibleSearchParams = () => {
+  const searchParams = useSearchParams();
+  const routeParams = useParams<{ locale: string }>();
+  const { locale } = routeParams;
+
+  return {
+    translation: searchParams.get('translation') || locale,
+    abbreviation: searchParams.get('abbreviation'),
+    bookNumber: searchParams.get('bookNumber') || '1',
+    chapterNumber: searchParams.get('chapterNumber') || '1'
+  };
+};
+
 export const useBibleLanguage = () => {
   const { urlSearchParams, locale } = useBibleParams();
 

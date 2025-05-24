@@ -9,19 +9,21 @@ import {
   BookSelector,
   TranslationSelector,
   VerseList,
-  VideoList
+  VideoList,
+  BibleNavigator,
+  useBibleSearchParams
 } from '@/features/bible';
-import { useSearchParams } from 'next/navigation';
 
 export default function Container() {
-  const searchParams = useSearchParams();
   const language = useBibleLanguage();
+  const {
+    abbreviation: getAbbreviation,
+    bookNumber: getBookNumber,
+    chapterNumber: getChapterNumber
+  } = useBibleSearchParams();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-  const getTranslationVersionId =
-    searchParams.get('abbreviation') || translationVersion.abbreviation;
-  const getBookNumber = searchParams.get('bookNumber') || '1';
-  const getChapterNumber = searchParams.get('chapterNumber') || '1';
+  const getTranslationVersionId = getAbbreviation || translationVersion.abbreviation;
 
   const { data: bibleChapterInstance } = useBibleChapterInstance([
     getTranslationVersionId,
@@ -58,6 +60,7 @@ export default function Container() {
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
       <VerseList selectedVerses={selectedVerses} />
+      <BibleNavigator changeBookChapter={changeBookChapter} />
     </div>
   );
 }
