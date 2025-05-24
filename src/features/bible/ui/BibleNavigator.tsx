@@ -2,7 +2,7 @@
 
 import { Button } from '@/shared';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useBibleSearchParams } from '..';
+import { CHAPTER_LENGTH, useBibleSearchParams } from '..';
 
 function BibleNavigator({
   changeBookChapter
@@ -11,9 +11,13 @@ function BibleNavigator({
 }) {
   const { bookNumber: getBookNumber, chapterNumber: getChapterNumber } = useBibleSearchParams();
 
+  const isFirstChapter = getChapterNumber === '1';
+  const isLastChapter = +getChapterNumber === CHAPTER_LENGTH[getBookNumber];
+
   return (
     <div className="flex justify-between sticky bottom-18 mt-4">
       <Button
+        disabled={isFirstChapter && getBookNumber === '1'}
         title="Previous Chapter"
         variant="outline"
         size="icon"
@@ -22,6 +26,7 @@ function BibleNavigator({
         <ChevronLeft />
       </Button>
       <Button
+        disabled={isLastChapter && getBookNumber === '66'}
         title="Next Chapter"
         variant="outline"
         size="icon"
