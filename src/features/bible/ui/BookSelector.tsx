@@ -30,6 +30,12 @@ function BookSelector({
     chapter: selectedChapterNumber
   } = bibleChapterInstance;
   const [open, setOpen] = useState(false);
+  const [order, setOrder] = useState<'book' | 'asc'>('book');
+
+  const sortedBooks = Object.values(books).toSorted((a, b) => {
+    if (order === 'book') return a.nr - b.nr;
+    return a.name.localeCompare(b.name);
+  });
 
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
@@ -94,16 +100,16 @@ function BookSelector({
           <DrawerDescription asChild>
             <div className="text-left">
               <div className="inline-flex gap-1 sticky top-0 left-full p-3">
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => setOrder('book')}>
                   <ListOrdered />
                   성경순
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => setOrder('asc')}>
                   <SortAsc />
                   ABC순
                 </Button>
               </div>
-              {Object.values(books).map(({ name: book, nr: bookNumber }, index) => (
+              {sortedBooks.map(({ name: book, nr: bookNumber }, index) => (
                 <details
                   name="books"
                   ref={(el) => {
