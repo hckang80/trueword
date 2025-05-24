@@ -10,10 +10,11 @@ import {
   DrawerTitle,
   DrawerDescription
 } from '@/shared';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
+import { useTranslations } from 'next-intl';
 
 function BookSelector({
   books,
@@ -29,7 +30,14 @@ function BookSelector({
     name: selectedChapterName,
     chapter: selectedChapterNumber
   } = bibleChapterInstance;
+  const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
+  const [order, setOrder] = useState<'book' | 'asc'>('book');
+
+  const sortedBooks = Object.values(books).toSorted((a, b) => {
+    if (order === 'book') return a.nr - b.nr;
+    return a.name.localeCompare(b.name);
+  });
 
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
@@ -93,7 +101,25 @@ function BookSelector({
           <DrawerTitle className="hidden">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
-              {Object.values(books).map(({ name: book, nr: bookNumber }, index) => (
+              <div className="inline-flex gap-1 sticky top-0 left-full p-3">
+                <Button
+                  variant="outline"
+                  disabled={order === 'book'}
+                  onClick={() => setOrder('book')}
+                >
+                  <ListOrdered />
+                  {t('bookOrder')}
+                </Button>
+                <Button
+                  variant="outline"
+                  disabled={order === 'asc'}
+                  onClick={() => setOrder('asc')}
+                >
+                  <SortAsc />
+                  {t('abcOrder')}
+                </Button>
+              </div>
+              {sortedBooks.map(({ name: book, nr: bookNumber }, index) => (
                 <details
                   name="books"
                   ref={(el) => {
