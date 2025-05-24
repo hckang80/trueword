@@ -14,6 +14,16 @@ function BibleNavigator({
   const isFirstChapter = getChapterNumber === '1';
   const isLastChapter = +getChapterNumber === CHAPTER_LENGTH[getBookNumber];
 
+  function prevChapter(bookNumber: number, chapterNumber: number) {
+    if (isFirstChapter) return changeBookChapter(bookNumber - 1, CHAPTER_LENGTH[bookNumber - 1]);
+    changeBookChapter(bookNumber, chapterNumber);
+  }
+
+  function nextChapter(bookNumber: number, chapterNumber: number) {
+    if (isLastChapter) return changeBookChapter(bookNumber + 1, 1);
+    changeBookChapter(bookNumber, chapterNumber);
+  }
+
   return (
     <div className="flex justify-between sticky bottom-18 mt-4">
       <Button
@@ -21,7 +31,7 @@ function BibleNavigator({
         title="Previous Chapter"
         variant="outline"
         size="icon"
-        onClick={() => changeBookChapter(+getBookNumber, +getChapterNumber - 1)}
+        onClick={() => prevChapter(+getBookNumber, +getChapterNumber - 1)}
       >
         <ChevronLeft />
       </Button>
@@ -30,7 +40,7 @@ function BibleNavigator({
         title="Next Chapter"
         variant="outline"
         size="icon"
-        onClick={() => changeBookChapter(+getBookNumber, +getChapterNumber + 1)}
+        onClick={() => nextChapter(+getBookNumber, +getChapterNumber + 1)}
       >
         <ChevronRight />
       </Button>
