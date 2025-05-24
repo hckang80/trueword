@@ -14,6 +14,7 @@ import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
+import { useTranslations } from 'next-intl';
 
 function BookSelector({
   books,
@@ -29,6 +30,7 @@ function BookSelector({
     name: selectedChapterName,
     chapter: selectedChapterNumber
   } = bibleChapterInstance;
+  const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
   const [order, setOrder] = useState<'book' | 'asc'>('book');
 
@@ -106,7 +108,7 @@ function BookSelector({
                   onClick={() => setOrder('book')}
                 >
                   <ListOrdered />
-                  성경순
+                  {t('bookOrder')}
                 </Button>
                 <Button
                   variant="outline"
@@ -114,7 +116,7 @@ function BookSelector({
                   onClick={() => setOrder('asc')}
                 >
                   <SortAsc />
-                  ABC순
+                  {t('abcOrder')}
                 </Button>
               </div>
               {sortedBooks.map(({ name: book, nr: bookNumber }, index) => (

@@ -4,7 +4,9 @@
     "language": "language",
     "news": "news",
     "back": "Back",
-    "BackToList": "Back To List"
+    "BackToList": "Back To List",
+    "bookOrder": "Book Order",
+    "abcOrder": "ABC"
   },
   "Meta": {
     "title": "True Word",

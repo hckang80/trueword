@@ -4,7 +4,9 @@
     "language": "언어",
     "news": "뉴스",
     "back": "이전으로",
-    "BackToList": "목록으로"
+    "BackToList": "목록으로",
+    "bookOrder": "성경순",
+    "abcOrder": "ABC순"
   },
   "Meta": {
     "title": "True Word",
