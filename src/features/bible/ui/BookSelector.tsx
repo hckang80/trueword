@@ -100,11 +100,19 @@ function BookSelector({
           <DrawerDescription asChild>
             <div className="text-left">
               <div className="inline-flex gap-1 sticky top-0 left-full p-3">
-                <Button variant="outline" onClick={() => setOrder('book')}>
+                <Button
+                  variant="outline"
+                  disabled={order === 'book'}
+                  onClick={() => setOrder('book')}
+                >
                   <ListOrdered />
                   성경순
                 </Button>
-                <Button variant="outline" onClick={() => setOrder('asc')}>
+                <Button
+                  variant="outline"
+                  disabled={order === 'asc'}
+                  onClick={() => setOrder('asc')}
+                >
                   <SortAsc />
                   ABC순
                 </Button>
