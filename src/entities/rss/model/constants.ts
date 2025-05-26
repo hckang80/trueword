@@ -26,15 +26,6 @@ export const RSS_FEEDS: RSSFeed[] = [
     },
     locale: 'ko'
   },
-  // {
-  //   url: 'https://www.christiandaily.co.kr/rss',
-  //   imageUrl: 'images.christiandaily.co.kr',
-  //   name: {
-  //     native: '기독일보',
-  //     global: 'christiandaily'
-  //   },
-  //   locale: 'ko'
-  // },
   {
     url: 'https://www.kcnp.com/rss',
     name: {
