@@ -1,7 +1,7 @@
 import { axiosInstance, toReadableDate } from '@/shared';
 import { getNewsItem, type NewsItemType } from '@/features/news';
 
-export * from './fetchRssFeed';
+export * from './fetchNewsFeed';
 
 export async function fetchNews(locale: string): Promise<NewsItemType[]> {
   const { data } = await axiosInstance<NewsItemType[]>('/api/news');

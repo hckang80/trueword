@@ -1,4 +1,4 @@
-import { fetchRssFeed, NewsItemType } from '@/features/news';
+import { fetchNewsFeed, NewsItemType } from '@/features/news';
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { RSS_FEEDS } from '@/entities/rss';
@@ -24,7 +24,7 @@ export async function GET() {
 }
 
 async function fetchFreshData() {
-  const newsPromises = RSS_FEEDS.map(fetchRssFeed);
+  const newsPromises = RSS_FEEDS.map(fetchNewsFeed);
   const newsResults = await Promise.all(newsPromises);
   const allNews = newsResults
     .flat()

@@ -5,7 +5,7 @@ import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
 import { extractLastNumber } from '@/shared';
 
-export async function fetchRssFeed({
+export async function fetchNewsFeed({
   url: feedUrl,
   name: sourceName,
   locale
