@@ -1,14 +1,15 @@
 import type { NewsItemType, RSSFeed, RSSItem } from '../model';
+import type { RSSFeed as realRSSFeed } from '@/entities/rss';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
 import { extractLastNumber } from '@/shared';
 
-export async function fetchRssFeed(
-  feedUrl: string,
-  sourceName: Record<string, string>,
-  locale: string
-): Promise<NewsItemType[]> {
+export async function fetchRssFeed({
+  url: feedUrl,
+  name: sourceName,
+  locale
+}: realRSSFeed): Promise<NewsItemType[]> {
   try {
     const response = await axios.get<string>(feedUrl, {
       headers: {
