@@ -30,7 +30,7 @@ export function fetcher<T>(url: string | URL | Request, init?: RequestInit): Pro
   }).then((res) => res.json());
 }
 
-export function extractLastNumber(url: string) {
+export function extractUniqId(url: string) {
   const match = url.match(/(\d+)(?:\/?)$/);
   return match?.[1] || '';
 }

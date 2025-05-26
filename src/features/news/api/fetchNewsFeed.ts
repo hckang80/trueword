@@ -3,7 +3,7 @@ import type { RSSInstance, RSSInstanceItem, RSSFeed } from '@/entities/rss';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
-import { extractLastNumber } from '@/shared';
+import { extractUniqId } from '@/shared';
 
 export async function fetchNewsFeed({
   url: feedUrl,
@@ -51,7 +51,7 @@ export async function fetchNewsFeed({
         thumbnail: originThumbnail,
         source: sourceName.ko,
         sourceEng: sourceName.en,
-        guid: extractLastNumber(postId || guid || link),
+        guid: extractUniqId(postId || guid || link),
         locale
       };
     });
