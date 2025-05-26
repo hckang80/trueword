@@ -1,4 +1,4 @@
-import type { RSSItem } from '@/features/news';
+import type { RSSInstanceItem } from '@/features/news';
 import { parse } from 'node-html-parser';
 
 function extractFirstImageUrl(htmlContent: string): string | undefined {
@@ -16,7 +16,7 @@ function extractFirstImageUrl(htmlContent: string): string | undefined {
   }
 }
 
-export const extractThumbnail = (item: RSSItem): string | undefined => {
+export const extractThumbnail = (item: RSSInstanceItem): string | undefined => {
   if (item.media?.length) {
     const mediaImages = item.media.filter((m) => m.type.startsWith('image/'));
 

@@ -1,5 +1,5 @@
-import type { NewsItemType, RSSFeed, RSSItem } from '../model';
-import type { RSSFeed as realRSSFeed } from '@/entities/rss';
+import type { NewsItemType, RSSInstance, RSSInstanceItem } from '../model';
+import type { RSSFeed } from '@/entities/rss';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
@@ -9,7 +9,7 @@ export async function fetchRssFeed({
   url: feedUrl,
   name: sourceName,
   locale
-}: realRSSFeed): Promise<NewsItemType[]> {
+}: RSSFeed): Promise<NewsItemType[]> {
   try {
     const response = await axios.get<string>(feedUrl, {
       headers: {
@@ -17,7 +17,7 @@ export async function fetchRssFeed({
       }
     });
 
-    const parser = new Parser<RSSFeed, RSSItem>({
+    const parser = new Parser<RSSInstance, RSSInstanceItem>({
       customFields: {
         item: [
           ['post-id', 'postId'],

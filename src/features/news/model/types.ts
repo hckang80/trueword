@@ -1,4 +1,4 @@
-export interface RSSItem {
+export interface RSSInstanceItem {
   title: string;
   link: string;
   pubDate?: string;
@@ -34,11 +34,11 @@ export interface RSSItem {
   [key: string]: unknown;
 }
 
-export interface RSSFeed {
+export interface RSSInstance {
   title: string;
   description: string;
   link: string;
-  items: RSSItem[];
+  items: RSSInstanceItem[];
   lastBuildDate?: string;
   pubDate?: string;
   language?: string;
