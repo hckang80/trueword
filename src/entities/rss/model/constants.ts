@@ -6,16 +6,14 @@ export const RSS_FEEDS: RSSFeed[] = [
     url: 'https://relevantmagazine.com/feed',
     imageUrl: 'i0.wp.com',
     name: {
-      ko: 'relevantmagazine',
-      en: 'relevantmagazine'
+      global: 'relevantmagazine'
     },
     locale: 'en'
   },
   {
     url: 'https://www.christianitytoday.com/rss',
     name: {
-      ko: 'christianitytoday',
-      en: 'christianitytoday'
+      global: 'christianitytoday'
     },
     locale: 'en'
   },
@@ -23,8 +21,8 @@ export const RSS_FEEDS: RSSFeed[] = [
     url: 'https://www.christiantoday.co.kr/rss',
     imageUrl: 'images.christiantoday.co.kr',
     name: {
-      ko: '크리스천투데이',
-      en: 'christiantoday'
+      native: '크리스천투데이',
+      global: 'christiantoday'
     },
     locale: 'ko'
   },
@@ -32,16 +30,16 @@ export const RSS_FEEDS: RSSFeed[] = [
   //   url: 'https://www.christiandaily.co.kr/rss',
   //   imageUrl: 'images.christiandaily.co.kr',
   //   name: {
-  //     ko: '기독일보',
-  //     en: 'christiandaily'
+  //     native: '기독일보',
+  //     global: 'christiandaily'
   //   },
   //   locale: 'ko'
   // },
   {
     url: 'https://www.kcnp.com/rss',
     name: {
-      ko: '한국기독신문',
-      en: 'kcnp'
+      native: '한국기독신문',
+      global: 'kcnp'
     },
     locale: 'ko'
   }

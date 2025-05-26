@@ -49,8 +49,8 @@ export async function fetchNewsFeed({
         description: fullContent || description,
         pubDate: parsedDate?.toISOString() || '',
         thumbnail: originThumbnail,
-        source: sourceName.ko,
-        sourceEng: sourceName.en,
+        source: sourceName.native || sourceName.global,
+        sourceEng: sourceName.global,
         guid: extractUniqId(postId || guid || link),
         locale
       };

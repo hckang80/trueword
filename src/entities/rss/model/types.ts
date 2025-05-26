@@ -65,4 +65,4 @@ export type RSSFeed = {
   locale: string;
 };
 
-export type RSSFeedName = Record<string, string> & { en: string };
+export type RSSFeedName = { native?: string; global: string };
