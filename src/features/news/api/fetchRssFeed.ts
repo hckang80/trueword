@@ -1,5 +1,5 @@
-import type { NewsItemType, RSSInstance, RSSInstanceItem } from '../model';
-import type { RSSFeed } from '@/entities/rss';
+import type { NewsItemType } from '../model';
+import type { RSSInstance, RSSInstanceItem, RSSFeed } from '@/entities/rss';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';

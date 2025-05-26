@@ -1,4 +1,4 @@
-import type { RSSInstanceItem } from '@/features/news';
+import type { RSSInstanceItem } from '@/entities/rss';
 import { parse } from 'node-html-parser';
 
 function extractFirstImageUrl(htmlContent: string): string | undefined {
