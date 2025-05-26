@@ -12,20 +12,20 @@ import {
   Skeleton
 } from '@/shared';
 import { Video } from 'lucide-react';
-import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
 import { VIDEO_LENGTH } from '@/features/news';
 import { useTranslations } from 'next-intl';
+import { type YouTubeVideo, useYouTubeVideos } from '..';
 
 function VideoList({ chapterName }: { chapterName: string }) {
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   const { data: videos = [], isLoading } = useYouTubeVideos(chapterName, { enabled: open });
 
-  const handleVideoClick = (videoId: string) => {
-    setSelectedVideoId(videoId);
+  const handleVideoClick = (video: YouTubeVideo) => {
+    setSelectedVideo(video);
   };
 
   return (
@@ -54,11 +54,11 @@ function VideoList({ chapterName }: { chapterName: string }) {
                 ))
               ) : (
                 <>
-                  {selectedVideoId ? (
+                  {selectedVideo ? (
                     <div className="mb-4">
                       <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
                         <iframe
-                          src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
+                          src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
                           title="YouTube video player"
                           className="absolute top-0 left-0 w-full h-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -68,7 +68,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
                       <Button
                         variant="outline"
                         className="mt-2"
-                        onClick={() => setSelectedVideoId(null)}
+                        onClick={() => setSelectedVideo(null)}
                       >
                         {t('BackToList')}
                       </Button>
@@ -78,7 +78,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
                       <button
                         key={video.id}
                         className="flex gap-4"
-                        onClick={() => handleVideoClick(video.id)}
+                        onClick={() => handleVideoClick(video)}
                       >
                         <div className="shrink-0 relative">
                           <Image
