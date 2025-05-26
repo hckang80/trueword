@@ -25,13 +25,13 @@ export const RSS_FEEDS: RSSFeed[] = [
       global: 'christiantoday'
     },
     locale: 'ko'
-  },
-  {
-    url: 'https://www.kcnp.com/rss',
-    name: {
-      native: '한국기독신문',
-      global: 'kcnp'
-    },
-    locale: 'ko'
   }
+  // {
+  //   url: 'https://www.kcnp.com/rss',
+  //   name: {
+  //     native: '한국기독신문',
+  //     global: 'kcnp'
+  //   },
+  //   locale: 'ko'
+  // }
 ];
