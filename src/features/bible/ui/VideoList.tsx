@@ -39,7 +39,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
         <DrawerHeader className="h-[432px]">
           <DrawerTitle hidden>{chapterName}</DrawerTitle>
           <DrawerDescription asChild>
-            <div className="grid gap-[10px]">
+            <div className="grid content-start gap-[10px]">
               {isLoading ? (
                 Array.from({ length: VIDEO_LENGTH }).map((_, i) => (
                   <div key={i} className="flex gap-4">
@@ -64,20 +64,16 @@ function VideoList({ chapterName }: { chapterName: string }) {
                           {selectedVideo.channelTitle}
                         </span>
                       </div>
-                      <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+                      <div className="aspect-video relative overflow-hidden rounded-lg">
                         <iframe
                           src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
                           title="YouTube video player"
-                          className="absolute top-0 left-0 w-full h-full"
+                          className="absolute w-full h-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         ></iframe>
                       </div>
-                      <Button
-                        variant="outline"
-                        className="mt-2"
-                        onClick={() => setSelectedVideo(null)}
-                      >
+                      <Button variant="outline" onClick={() => setSelectedVideo(null)}>
                         {t('BackToList')}
                       </Button>
                     </>
