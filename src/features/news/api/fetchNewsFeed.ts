@@ -1,14 +1,15 @@
-import type { NewsItemType, RSSFeed, RSSItem } from '../model';
+import type { NewsItemType } from '../model';
+import type { RSSInstance, RSSInstanceItem, RSSFeed } from '@/entities/rss';
 import axios from 'axios';
 import Parser from 'rss-parser';
 import { extractThumbnail } from '@/features/news/lib';
-import { extractLastNumber } from '@/shared';
+import { extractUniqId } from '@/shared';
 
-export async function fetchRssFeed(
-  feedUrl: string,
-  sourceName: Record<string, string>,
-  locale: string
-): Promise<NewsItemType[]> {
+export async function fetchNewsFeed({
+  url: feedUrl,
+  name: sourceName,
+  locale
+}: RSSFeed): Promise<NewsItemType[]> {
   try {
     const response = await axios.get<string>(feedUrl, {
       headers: {
@@ -16,7 +17,7 @@ export async function fetchRssFeed(
       }
     });
 
-    const parser = new Parser<RSSFeed, RSSItem>({
+    const parser = new Parser<RSSInstance, RSSInstanceItem>({
       customFields: {
         item: [
           ['post-id', 'postId'],
@@ -48,9 +49,9 @@ export async function fetchRssFeed(
         description: fullContent || description,
         pubDate: parsedDate?.toISOString() || '',
         thumbnail: originThumbnail,
-        source: sourceName.ko,
-        sourceEng: sourceName.en,
-        guid: extractLastNumber(postId || guid || link),
+        source: sourceName.native || sourceName.global,
+        sourceEng: sourceName.global,
+        guid: extractUniqId(postId || guid || link),
         locale
       };
     });
