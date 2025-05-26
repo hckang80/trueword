@@ -55,7 +55,15 @@ function VideoList({ chapterName }: { chapterName: string }) {
               ) : (
                 <>
                   {selectedVideo ? (
-                    <div className="mb-4">
+                    <>
+                      <div className="flex flex-col grow-1 gap-1 text-left">
+                        <span className="text-sm text-gray-900 dark:text-white">
+                          {selectedVideo.title}
+                        </span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          {selectedVideo.channelTitle}
+                        </span>
+                      </div>
                       <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
                         <iframe
                           src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
@@ -72,7 +80,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
                       >
                         {t('BackToList')}
                       </Button>
-                    </div>
+                    </>
                   ) : (
                     videos.map((video) => (
                       <button
