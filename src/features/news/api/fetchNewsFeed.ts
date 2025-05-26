@@ -39,9 +39,7 @@ export async function fetchNewsFeed({
       try {
         const { origin, pathname } = new URL(extractThumbnail(item) || '');
         originThumbnail = `${origin}${pathname}`;
-      } catch {
-        console.warn('확인 가능한 이미지 없음');
-      }
+      } catch {}
 
       return {
         title,
