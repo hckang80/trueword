@@ -12,20 +12,20 @@ import {
   Skeleton
 } from '@/shared';
 import { Video } from 'lucide-react';
-import { useYouTubeVideos } from '../hooks';
 import Image from 'next/image';
 import { VIDEO_LENGTH } from '@/features/news';
 import { useTranslations } from 'next-intl';
+import { type YouTubeVideo, useYouTubeVideos } from '..';
 
 function VideoList({ chapterName }: { chapterName: string }) {
   const t = useTranslations('Common');
   const [open, setOpen] = useState(false);
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   const { data: videos = [], isLoading } = useYouTubeVideos(chapterName, { enabled: open });
 
-  const handleVideoClick = (videoId: string) => {
-    setSelectedVideoId(videoId);
+  const handleVideoClick = (video: YouTubeVideo) => {
+    setSelectedVideo(video);
   };
 
   return (
@@ -39,7 +39,7 @@ function VideoList({ chapterName }: { chapterName: string }) {
         <DrawerHeader className="h-[432px]">
           <DrawerTitle hidden>{chapterName}</DrawerTitle>
           <DrawerDescription asChild>
-            <div className="grid gap-[10px]">
+            <div className="grid content-start gap-[10px]">
               {isLoading ? (
                 Array.from({ length: VIDEO_LENGTH }).map((_, i) => (
                   <div key={i} className="flex gap-4">
@@ -54,31 +54,35 @@ function VideoList({ chapterName }: { chapterName: string }) {
                 ))
               ) : (
                 <>
-                  {selectedVideoId ? (
-                    <div className="mb-4">
-                      <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+                  {selectedVideo ? (
+                    <>
+                      <div className="flex flex-col grow-1 gap-1 text-left">
+                        <span className="text-sm text-gray-900 dark:text-white">
+                          {selectedVideo.title}
+                        </span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          {selectedVideo.channelTitle}
+                        </span>
+                      </div>
+                      <div className="aspect-video relative overflow-hidden rounded-lg">
                         <iframe
-                          src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
+                          src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
                           title="YouTube video player"
-                          className="absolute top-0 left-0 w-full h-full"
+                          className="absolute w-full h-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         ></iframe>
                       </div>
-                      <Button
-                        variant="outline"
-                        className="mt-2"
-                        onClick={() => setSelectedVideoId(null)}
-                      >
+                      <Button variant="outline" onClick={() => setSelectedVideo(null)}>
                         {t('BackToList')}
                       </Button>
-                    </div>
+                    </>
                   ) : (
                     videos.map((video) => (
                       <button
                         key={video.id}
                         className="flex gap-4"
-                        onClick={() => handleVideoClick(video.id)}
+                        onClick={() => handleVideoClick(video)}
                       >
                         <div className="shrink-0 relative">
                           <Image
