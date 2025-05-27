@@ -33,16 +33,16 @@ export const RSS_FEEDS: RSSFeed[] = [
       global: 'newsnjoy'
     },
     locale: 'ko'
-  },
-  {
-    url: 'https://www.christiandaily.co.kr/rss/archives/all.xml',
-    imageUrl: 'images.christiandaily.co.kr',
-    name: {
-      native: '기독일보',
-      global: 'christiandaily'
-    },
-    locale: 'ko'
   }
+  // {
+  //   url: 'https://www.christiandaily.co.kr/rss/archives/all.xml',
+  //   imageUrl: 'images.christiandaily.co.kr',
+  //   name: {
+  //     native: '기독일보',
+  //     global: 'christiandaily'
+  //   },
+  //   locale: 'ko'
+  // } // 서버에 올라가면 이미지 못 불러옴
   // {
   //   url: 'http://www.ecumenian.com/rss/allArticle.xml',
   //   // imageUrl: 'images.christiandaily.co.kr',
