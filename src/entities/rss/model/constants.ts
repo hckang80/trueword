@@ -27,11 +27,37 @@ export const RSS_FEEDS: RSSFeed[] = [
     locale: 'ko'
   },
   {
-    url: 'https://www.kcnp.com/rss',
+    url: 'http://www.newsnjoy.or.kr/rss/allArticle.xml',
     name: {
-      native: '한국기독신문',
-      global: 'kcnp'
+      native: '뉴스앤조이',
+      global: 'newsnjoy'
+    },
+    locale: 'ko'
+  },
+  {
+    url: 'https://www.christiandaily.co.kr/rss/archives/all.xml',
+    imageUrl: 'images.christiandaily.co.kr',
+    name: {
+      native: '기독일보',
+      global: 'christiandaily'
     },
     locale: 'ko'
   }
+  // {
+  //   url: 'http://www.ecumenian.com/rss/allArticle.xml',
+  //   // imageUrl: 'images.christiandaily.co.kr',
+  //   name: {
+  //     native: '에큐메니안',
+  //     global: 'ecumenian'
+  //   },
+  //   locale: 'ko'
+  // } // 인코딩 깨짐
+  // {
+  //   url: 'https://www.kcnp.com/rss',
+  //   name: {
+  //     native: '한국기독신문',
+  //     global: 'kcnp'
+  //   },
+  //   locale: 'ko'
+  // } RSS 피드 수집 거부
 ];
