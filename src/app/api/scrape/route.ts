@@ -71,10 +71,10 @@ export async function POST(request: NextRequest) {
         content = element.text.trim();
       }
 
-      if (MIN_CONTENT_LENGTH >= 100) break;
+      if (content.length >= MIN_CONTENT_LENGTH) break;
     }
 
-    if (!content || MIN_CONTENT_LENGTH < 100) {
+    if (!content || content.length < MIN_CONTENT_LENGTH) {
       const body = root.querySelector('body');
       if (body) {
         body.querySelectorAll('script, style, nav, header, footer').forEach((el) => el.remove());
