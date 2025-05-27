@@ -33,7 +33,7 @@ export const RSS_FEEDS: RSSFeed[] = [
       global: 'newsnjoy'
     },
     locale: 'ko'
-  }
+  } // 서버에서 바로 못불러옴 - 로컬 환경에서 불러서 캐시에 저장 후 사용 중
   // {
   //   url: 'https://www.christiandaily.co.kr/rss/archives/all.xml',
   //   imageUrl: 'images.christiandaily.co.kr',
