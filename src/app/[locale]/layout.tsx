@@ -55,7 +55,7 @@ export default async function LocaleLayout({
             </Providers>
           </ThemeProvider>
         </ErrorBoundary>
-        {process.env.NODE_ENV !== 'development' && <GoogleAnalytics gaId="G-P43JHSZ9K8" />}
+        {process.env.NODE_ENV === 'production' && <GoogleAnalytics gaId="G-P43JHSZ9K8" />}
       </body>
     </html>
   );
