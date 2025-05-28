@@ -6,7 +6,7 @@
 다국어 성경과 크리스천 뉴스를 제공합니다.   
 신앙 생활과 관련한 기능을 확대해나가고 있습니다.
 
-[[칸반보드 바로가기](https://linen-blarney-a50.notion.site/1f239938811b808d80c4d53cbe2c0b77?v=1f239938811b81dfa7b4000c58951d3b)]
+[[칸반보드 바로가기](https://linen-blarney-a50.notion.site/1f239938811b808d80c4d53cbe2c0b77?v=1f239938811b81dfa7b4000c58951d3b)] [[서비스 바로가기](https://trueword.vercel.app/)]
 
 ---
 
@@ -22,8 +22,6 @@
 
 - **국제화(i18n)**
   - 글로벌 유저를 대상으로 하기 위해 국문과 영문을 제공합니다.
-
-[[서비스 바로가기](https://trueword.vercel.app/)]
 
 ---
 
