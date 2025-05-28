@@ -1,4 +1,7 @@
+// import { getNewsItem, newsQueryOptions } from '@/features/news';
+// import { QueryClient } from '@tanstack/react-query';
 import Container from './__container';
+import type { Metadata, ResolvingMetadata } from 'next';
 
 // type Props = { params: Promise<{ locale: string; source: string[] }> };
 
@@ -18,7 +21,18 @@ import Container from './__container';
 //   return {
 //     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
 //   };
-// } 무한 루프로 임시 제거
+// }
+
+export async function generateMetadata(
+  _props: unknown,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const previousTitle = (await parent).title;
+
+  return {
+    title: `News - ${previousTitle?.absolute}`
+  };
+}
 
 export default async function NewsIdPage() {
   return <Container />;
