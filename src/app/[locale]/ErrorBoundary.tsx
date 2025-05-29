@@ -15,6 +15,8 @@ interface State {
 }
 
 class ErrorBoundary extends React.Component<Props, State> {
+  private timeoutId: NodeJS.Timeout | null = null;
+
   constructor(props: Props) {
     super(props);
 
@@ -26,9 +28,14 @@ class ErrorBoundary extends React.Component<Props, State> {
   componentDidCatch(_error: Error, errorInfo: React.ErrorInfo) {
     console.error(errorInfo);
   }
+  componentWillUnmount() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
   handleGoBack() {
     history.back();
-    setTimeout(() => window.location.reload(), 100);
+    this.timeoutId = setTimeout(() => window.location.reload(), 100);
   }
   render() {
     if (!this.state.hasError) return this.props.children;
