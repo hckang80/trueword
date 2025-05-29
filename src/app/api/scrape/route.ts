@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
       '.article-content',
       '.post-content',
       '.entry-content',
+      '.view-page',
       'main',
       '[role="main"]'
     ];
