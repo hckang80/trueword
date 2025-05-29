@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, buttonVariants } from '@/shared';
+import { Button, buttonVariants, Loading } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';
@@ -24,9 +24,8 @@ export default function NewsIdContainer() {
 
   const { link, title, description, source, pubDate, thumbnail = '' } = news;
   const { data: scraped } = useScrapedContent(link, description);
-  const {
-    data: { summary }
-  } = useSummary(scraped.content, scraped.title, locale);
+  const { data: summaryData, isLoading } = useSummary(scraped.content, scraped.title, locale);
+  const { summary = '' } = summaryData || {};
 
   const sanitizedData = () => ({
     __html: sanitizeHtml(summary.replace(/`{3,}/g, '').replace('html', ''))
@@ -45,11 +44,17 @@ export default function NewsIdContainer() {
       </ViewTransition>
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
-        <p className="mb-[10px] text-xs text-muted-foreground">{t('News.aiSummary')}</p>
-        <div
-          className="news-summary text-secondary-foreground"
-          dangerouslySetInnerHTML={sanitizedData()}
-        />
+        <p className="mb-[10px] text-xs text-muted-foreground">
+          {t(isLoading ? 'News.aiSummaryLoading' : 'News.aiSummary')}
+        </p>
+        <div className="news-summary text-secondary-foreground">
+          {isLoading && (
+            <div className="relative min-h-30">
+              <Loading />
+            </div>
+          )}
+          <div dangerouslySetInnerHTML={sanitizedData()} />
+        </div>
       </div>
 
       <div className="flex justify-center gap-[4px] mt-[20px]">

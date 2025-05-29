@@ -1,5 +1,5 @@
 import { newsKeys } from '@/shared';
-import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery, useSuspenseQuery, useQuery } from '@tanstack/react-query';
 import {
   fetchNews,
   fetchNewsItem,
@@ -71,5 +71,5 @@ export function summaryQueryOptions(content: string, title: string, locale: stri
   };
 }
 export function useSummary(content: string, title: string, locale: string) {
-  return useSuspenseQuery(summaryQueryOptions(content, title, locale));
+  return useQuery(summaryQueryOptions(content, title, locale));
 }
