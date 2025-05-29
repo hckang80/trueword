@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/shared';
+import { isAxiosError } from 'axios';
 import { RefreshCw, Undo2 } from 'lucide-react';
 import React from 'react';
 
@@ -40,9 +41,13 @@ class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (!this.state.hasError) return this.props.children;
 
+    const displayedError = isAxiosError(this.state.error)
+      ? `[${this.state.error.response?.status} ${this.state.error.response?.statusText}] ${this.state.error.response?.data.message}`
+      : this.state.error?.toString();
+
     return (
       <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
-        <p className="text-xl font-semibold p-[20px]">{this.state.error?.toString()}</p>
+        <p className="text-xl font-semibold p-[20px]">{displayedError}</p>
         <div className="flex justify-center gap-[4px]">
           <Button variant="secondary" onClick={this.handleGoBack}>
             <Undo2 />
