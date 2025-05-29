@@ -26,6 +26,10 @@ class ErrorBoundary extends React.Component<Props, State> {
   componentDidCatch(_error: Error, errorInfo: React.ErrorInfo) {
     console.error(errorInfo);
   }
+  handleGoBack() {
+    history.back();
+    setTimeout(() => window.location.reload(), 100);
+  }
   render() {
     if (!this.state.hasError) return this.props.children;
 
@@ -33,7 +37,7 @@ class ErrorBoundary extends React.Component<Props, State> {
       <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
         <p className="text-xl font-semibold p-[20px]">{this.state.error?.toString()}</p>
         <div className="flex justify-center gap-[4px]">
-          <Button variant="secondary" onClick={() => history.back()}>
+          <Button variant="secondary" onClick={this.handleGoBack}>
             <Undo2 />
             Back
           </Button>
