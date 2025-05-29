@@ -44,7 +44,9 @@ export default function NewsIdContainer() {
       </ViewTransition>
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
-        <p className="mb-[10px] text-xs text-muted-foreground">{t('News.aiSummary')}</p>
+        <p className="mb-[10px] text-xs text-muted-foreground">
+          {t(isLoading ? 'News.aiSummaryLoading' : 'News.aiSummary')}
+        </p>
         <div className="news-summary text-secondary-foreground">
           {isLoading && (
             <div className="relative min-h-30">
