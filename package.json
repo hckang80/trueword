@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
@@ -41,15 +42,21 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.0.14",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.0",
+    "@vitejs/plugin-react": "^4.5.0",
     "eslint": "^9",
     "eslint-config-next": "^15.2.3",
+    "jsdom": "^26.1.0",
     "postcss": "^8",
     "tailwindcss": "^4.0.14",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.4"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
