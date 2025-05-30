@@ -17,7 +17,7 @@ function createTransitionVersion(overrides: Partial<TransitionVersion>): Transit
 }
 
 describe('availableTranslationVersions', () => {
-  it('지원하는 언어와 라이센스, 그리고 versification 여부에 따라 필터링', () => {
+  it('각 항목이 모든 조건(license, versification, lang)을 만족하는 경우에만 반환', () => {
     const versions = {
       version1: createTransitionVersion({
         distribution_license: 'Public Domain',
@@ -50,6 +50,30 @@ describe('availableTranslationVersions', () => {
         lang: 'ko'
       })
     ]);
+  });
+
+  it('각 항목이 일부 조건만 만족하는 경우 빈 배열을 반환', () => {
+    const versions = {
+      version1: createTransitionVersion({
+        distribution_license: 'Public Domain',
+        distribution_versification: '',
+        lang: 'en'
+      }),
+      version2: createTransitionVersion({
+        distribution_license: 'Restricted',
+        distribution_versification: 'NIV',
+        lang: 'ko'
+      }),
+      version3: createTransitionVersion({
+        distribution_license: 'Public Domain',
+        distribution_versification: 'NIV',
+        lang: 'ar'
+      })
+    };
+
+    const result = availableTranslationVersions(versions);
+
+    expect(result).toEqual([]);
   });
 
   it('조건을 만족하는 번역 버전이 없을 때 빈 배열을 반환', () => {
