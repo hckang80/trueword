@@ -1,10 +1,10 @@
 export const isSupportedLocale = (
   locale: string
-): locale is 'en' | 'ko' | 'zh' | 'de' | 'nl' | 'sv' => {
-  return ['en', 'ko', 'zh', 'de', 'nl', 'sv'].includes(locale);
+): locale is 'en' | 'ko' | 'zh' | 'zh-Hans' | 'zh-Hant' | 'de' | 'nl' | 'sv' => {
+  return ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'].includes(locale);
 };
 
-export const locales = ['en', 'ko', 'zh', 'de', 'nl', 'sv'] as const;
+export const locales = ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'] as const;
 
 export type Locale = (typeof locales)[number];
 

@@ -22,17 +22,17 @@ describe('availableTranslationVersions', () => {
       version1: createTransitionVersion({
         distribution_license: 'Public Domain',
         distribution_versification: 'KJV',
-        language: 'English'
+        lang: 'en'
       }),
       version2: createTransitionVersion({
         distribution_license: 'Copyrighted; Free non-commercial distribution',
         distribution_versification: 'NIV',
-        language: 'Korean'
+        lang: 'ko'
       }),
       version3: createTransitionVersion({
         distribution_license: 'Restricted',
         distribution_versification: '',
-        language: 'Arabic'
+        lang: 'ar'
       })
     };
 
@@ -42,12 +42,12 @@ describe('availableTranslationVersions', () => {
       createTransitionVersion({
         distribution_license: 'Public Domain',
         distribution_versification: 'KJV',
-        language: 'English'
+        lang: 'en'
       }),
       createTransitionVersion({
         distribution_license: 'Copyrighted; Free non-commercial distribution',
         distribution_versification: 'NIV',
-        language: 'Korean'
+        lang: 'ko'
       })
     ]);
   });
@@ -57,7 +57,7 @@ describe('availableTranslationVersions', () => {
       version1: createTransitionVersion({
         distribution_license: 'Restricted',
         distribution_versification: '',
-        language: 'Arabic'
+        lang: 'ar'
       })
     };
 
