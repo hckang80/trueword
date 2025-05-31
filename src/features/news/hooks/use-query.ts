@@ -7,7 +7,7 @@ import {
   fetchScrapedContent,
   fetchSummary
 } from '../api';
-import type { NewsItemType } from '../model';
+import type { NewsItemType, SummaryRequestPayload } from '../model';
 
 export function newsQueryOptions(locale: string) {
   return {
@@ -63,13 +63,13 @@ export function useScrapedContent(url: string, description: string) {
   return useSuspenseQuery(scrapedContentQueryOptions(url, description));
 }
 
-export function summaryQueryOptions(params: { content: string; title: string; locale: string }) {
+export function summaryQueryOptions(params: SummaryRequestPayload) {
   return {
     queryKey: ['summary', params.title],
     queryFn: () => fetchSummary(params),
     staleTime: Infinity
   };
 }
-export function useSummary(params: { content: string; title: string; locale: string }) {
+export function useSummary(params: SummaryRequestPayload) {
   return useQuery(summaryQueryOptions(params));
 }
