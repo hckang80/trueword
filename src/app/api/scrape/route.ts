@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
 
     const key = `scrape:${url}`;
     const cached = await redis.get<{
-      title: string | null | undefined;
       content: string | null | undefined;
     }>(key);
 
@@ -37,12 +36,6 @@ export async function POST(request: NextRequest) {
     });
 
     const root = parse(html);
-
-    const title =
-      root.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
-      root.querySelector('meta[name="twitter:title"]')?.getAttribute('content') ||
-      root.querySelector('title')?.text ||
-      '';
 
     let content = '';
     const possibleContentSelectors = [
@@ -85,7 +78,7 @@ export async function POST(request: NextRequest) {
 
     if (!content) content = description;
 
-    const result = { title, content: content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
+    const result = { content: content.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
 
     await redis.set(key, result, { ex: CACHE_TTL });
 

@@ -20,3 +20,9 @@ export interface NewsInstance {
   meta: NewsMeta;
   documents: NewsItemType[];
 }
+
+export interface SummaryRequestPayload {
+  content: string;
+  title: string;
+  locale: string;
+}
