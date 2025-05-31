@@ -63,13 +63,13 @@ export function useScrapedContent(url: string, description: string) {
   return useSuspenseQuery(scrapedContentQueryOptions(url, description));
 }
 
-export function summaryQueryOptions(content: string, title: string, locale: string) {
+export function summaryQueryOptions(params: { content: string; title: string; locale: string }) {
   return {
-    queryKey: ['summary', title],
-    queryFn: () => fetchSummary({ content, title, locale }),
+    queryKey: ['summary', params.title],
+    queryFn: () => fetchSummary(params),
     staleTime: Infinity
   };
 }
-export function useSummary(content: string, title: string, locale: string) {
-  return useQuery(summaryQueryOptions(content, title, locale));
+export function useSummary(params: { content: string; title: string; locale: string }) {
+  return useQuery(summaryQueryOptions(params));
 }
