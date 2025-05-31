@@ -22,9 +22,9 @@ export default function NewsIdContainer() {
 
   if (!news) throw Error(t('News.noNews'));
 
-  const { link, title, description, source, pubDate, thumbnail = '' } = news;
+  const { link, title, description, source, pubDate, thumbnail } = news;
   const { data: scraped } = useScrapedContent(link, description);
-  const { data: summaryData, isLoading } = useSummary(scraped.content, scraped.title, locale);
+  const { data: summaryData, isLoading } = useSummary(scraped.content, title, locale);
   const { summary = '' } = summaryData || {};
 
   const sanitizedData = () => ({

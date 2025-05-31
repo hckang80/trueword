@@ -41,7 +41,7 @@ export const fetchNewsSlice = async (allNews: NewsItemType[], pageParam: number)
 };
 
 export async function fetchScrapedContent(url: string, description: string) {
-  const { data } = await axiosInstance.post<{ content: string; title: string }>('/api/scrape', {
+  const { data } = await axiosInstance.post<{ content: string }>('/api/scrape', {
     url,
     description
   });
