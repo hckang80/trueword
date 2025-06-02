@@ -10,7 +10,7 @@ export async function GET(
 
   try {
     const { data } = await axios.get<{ data: TranslationBooks }>(
-      `${process.env.API_BASE_URL}/${translation}/books.json`
+      `${process.env.BIBLE_API_URL}/${translation}/books.json`
     );
 
     return NextResponse.json(data);

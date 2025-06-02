@@ -65,10 +65,10 @@ export async function fetchSummary({
     },
     {
       headers: {
-        'Accept-Language': locale,
-        'Content-Type': 'application/json'
+        'Accept-Language': locale
       }
     }
   );
+
   return data;
 }

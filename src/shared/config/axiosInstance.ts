@@ -2,8 +2,11 @@ import axios, { type AxiosError } from 'axios';
 import type { ErrorResponse } from '..';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_SITE_URL,
-  timeout: 8000
+  baseURL: process.env.API_BASE_URL,
+  timeout: 8000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 axiosInstance.interceptors.request.use(

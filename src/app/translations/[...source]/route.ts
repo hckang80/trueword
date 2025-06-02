@@ -11,7 +11,7 @@ export async function GET(
 
   try {
     const { data } = await axios.get<{ data: BibleChapterInstance }>(
-      `${process.env.API_BASE_URL}/${abbr}/${bookNumber}/${chapterNumber}.json`
+      `${process.env.BIBLE_API_URL}/${abbr}/${bookNumber}/${chapterNumber}.json`
     );
 
     return NextResponse.json(data);
