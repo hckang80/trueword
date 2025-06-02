@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     const genAI = new GoogleGenerativeAI(process.env.LLM_API_KEY || '');
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const promptLocales: Record<string, string> = {
       ko: '다음 게시글의 주요 내용을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :',
