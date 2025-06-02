@@ -3,7 +3,10 @@ import type { ErrorResponse } from '..';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_SITE_URL,
-  timeout: 8000
+  timeout: 8000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 axiosInstance.interceptors.request.use(
