@@ -1,4 +1,4 @@
-import { getNewsItem, newsQueryOptions } from '@/features/news';
+import { newsBySourceQueryOptions } from '@/features/news';
 import { QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
@@ -15,8 +15,7 @@ export async function generateMetadata(
 
   const queryClient = new QueryClient();
 
-  const news = await queryClient.fetchQuery(newsQueryOptions(locale));
-  const newsBySource = getNewsItem(news, sources);
+  const newsBySource = await queryClient.fetchQuery(newsBySourceQueryOptions(sources, locale));
 
   return {
     title: `${newsBySource?.title} - ${previousTitle?.absolute}`
