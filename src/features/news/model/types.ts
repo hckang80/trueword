@@ -1,3 +1,5 @@
+import type { Locale } from '@/shared';
+
 export interface NewsItemType {
   title: string;
   link: string;
@@ -7,7 +9,7 @@ export interface NewsItemType {
   source: string;
   sourceEng: string;
   guid: string;
-  locale: string;
+  locale: Locale;
 }
 
 export interface NewsMeta {
@@ -24,5 +26,5 @@ export interface NewsInstance {
 export interface SummaryRequestPayload {
   content: string;
   title: string;
-  locale: string;
+  locale: Locale;
 }

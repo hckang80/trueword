@@ -1,9 +1,9 @@
-import { axiosInstance, toReadableDate } from '@/shared';
+import { axiosInstance, type Locale, toReadableDate } from '@/shared';
 import { getNewsItem, type NewsItemType } from '@/features/news';
 
 export * from './fetchNewsFeed';
 
-export async function fetchNews(locale: string): Promise<NewsItemType[]> {
+export async function fetchNews(locale: Locale): Promise<NewsItemType[]> {
   const { data } = await axiosInstance<NewsItemType[]>('/api/news');
 
   return data.map((item) => ({ ...item, pubDate: toReadableDate(new Date(item.pubDate), locale) }));
@@ -11,7 +11,7 @@ export async function fetchNews(locale: string): Promise<NewsItemType[]> {
 
 export async function fetchNewsItem(
   [sourceName, guid]: string[],
-  locale: string
+  locale: Locale
 ): Promise<NewsItemType> {
   const data = await fetchNews(locale);
   const result = getNewsItem(data, [sourceName, guid]);
@@ -55,7 +55,7 @@ export async function fetchSummary({
 }: {
   content: string;
   title: string;
-  locale: string;
+  locale: Locale;
 }) {
   const { data } = await axiosInstance.post<{ summary: string }>(
     '/api/summarize',

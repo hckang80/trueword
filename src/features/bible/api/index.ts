@@ -4,13 +4,13 @@ import type {
   TranslationBooks,
   YouTubeVideo
 } from '@/features/bible';
-import { axiosInstance } from '@/shared';
+import { axiosInstance, type Locale } from '@/shared';
 import { availableTranslationVersions } from '..';
 
-export async function getLocalizedTranslationVersions(language: string) {
+export async function getLocalizedTranslationVersions(locale: Locale) {
   const data = await fetchTranslationVersions();
 
-  return data.filter(({ lang }) => lang === language);
+  return data.filter(({ lang }) => lang === locale);
 }
 
 export async function fetchTranslationVersions() {
