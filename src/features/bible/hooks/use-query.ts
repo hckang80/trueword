@@ -1,4 +1,4 @@
-import { bibleKeys, translationsKeys } from '@/shared';
+import { bibleKeys, Locale, translationsKeys } from '@/shared';
 import { useQuery, useSuspenseQuery, UseQueryOptions } from '@tanstack/react-query';
 import {
   fetchBibleInstance,
@@ -27,13 +27,13 @@ export const useTranslationBooks = (getTranslationVersionId: string) => {
   return useSuspenseQuery(translationBooksQueryOptions(getTranslationVersionId));
 };
 
-export const localizedTranslationVersionsQueryOptions = (language: string) => ({
-  ...translationsKeys.data(language),
-  queryFn: () => getLocalizedTranslationVersions(language),
+export const localizedTranslationVersionsQueryOptions = (locale: Locale) => ({
+  ...translationsKeys.data(locale),
+  queryFn: () => getLocalizedTranslationVersions(locale),
   staleTime: Infinity
 });
-export const useLocalizedTranslationVersions = (language: string) => {
-  return useSuspenseQuery(localizedTranslationVersionsQueryOptions(language));
+export const useLocalizedTranslationVersions = (locale: Locale) => {
+  return useSuspenseQuery(localizedTranslationVersionsQueryOptions(locale));
 };
 
 export const translationVersionsQueryOptions = {

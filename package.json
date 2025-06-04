@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "lint:strict": "pnpm lint && pnpm typecheck",
     "test": "vitest"
   },
   "dependencies": {

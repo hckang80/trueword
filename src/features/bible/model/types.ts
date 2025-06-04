@@ -1,7 +1,9 @@
+import type { Locale } from '@/shared';
+
 export interface TranslationBookInstance {
   translation: string;
   abbreviation: string;
-  lang: string;
+  lang: Locale;
   language: string;
   direction: string;
   encoding: string;
@@ -44,7 +46,7 @@ export interface Verse {
 export interface TransitionVersion {
   abbreviation: string;
   description: string;
-  lang: string;
+  lang: Locale;
   language: string;
   distribution_license: string;
   distribution_versification: string;

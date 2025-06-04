@@ -1,6 +1,13 @@
 'use client';
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared';
+import {
+  type Locale,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/shared';
 import { getLanguageFullName, useBibleLanguage, useUpdateBibleParams } from '@/features/bible';
 import { useTranslationVersions } from '@/features/bible';
 
@@ -10,10 +17,10 @@ function BibleLanguages() {
 
   const { data: translationVersions } = useTranslationVersions();
 
-  const getTranslationVersion = (language: string) =>
+  const getTranslationVersion = (language: Locale) =>
     translationVersions.find(({ lang }) => lang === language);
 
-  const handleChange = (language: string) => {
+  const handleChange = (language: Locale) => {
     const translationVersion = getTranslationVersion(language);
     if (!translationVersion) return;
 

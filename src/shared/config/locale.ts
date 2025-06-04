@@ -6,9 +6,9 @@ export const isSupportedLocale = (
 
 export const locales = ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'] as const;
 
-export type Locale = (typeof locales)[number];
+export type Locale = (typeof locales)[number] | (string & {});
 
-export const DEFAULT_LOCALE: Locale = 'ko';
+export const DEFAULT_LOCALE = 'ko';
 
 export const supportedTranslations = locales.map((locale) => getLocaleDisplayName(locale));
 
