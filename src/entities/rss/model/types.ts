@@ -1,3 +1,5 @@
+import type { Locale } from '@/shared';
+
 export type RemotePattern = {
   protocol?: 'http' | 'https';
   hostname: string;
@@ -62,7 +64,7 @@ export type RSSFeed = {
   url: string;
   imageUrl?: string;
   name: RSSFeedName;
-  locale: string;
+  locale: Locale;
 };
 
 export type RSSFeedName = { native?: string; global: string };
