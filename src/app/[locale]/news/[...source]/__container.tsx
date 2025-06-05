@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, buttonVariants, Loading } from '@/shared';
+import { Button, Loading } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import sanitizeHtml from 'sanitize-html';
@@ -46,6 +46,21 @@ export default function NewsIdContainer() {
       </ViewTransition>
 
       <div className="text-gray-700 bg-[var(--color-secondary)] p-[var(--global-inset)]">
+        <div className="flex justify-end gap-1 mb-5">
+          <Button size="icon" title={t('Common.back')} onClick={() => history.back()}>
+            <Undo2 />
+          </Button>
+          <Button size="icon" asChild>
+            <Link
+              title={t('News.viewFullArticle')}
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SquareArrowOutUpRight />
+            </Link>
+          </Button>
+        </div>
         <p className="mb-[10px] text-xs text-muted-foreground">
           {t(isLoading ? 'News.aiSummaryLoading' : 'News.aiSummary')}
         </p>
@@ -57,17 +72,6 @@ export default function NewsIdContainer() {
           )}
           <div dangerouslySetInnerHTML={sanitizedData()} />
         </div>
-      </div>
-
-      <div className="flex justify-center gap-[4px] mt-[20px]">
-        <Button variant="secondary" onClick={() => history.back()}>
-          <Undo2 />
-          {t('Common.back')}
-        </Button>
-        <Link href={link} target="_blank" rel="noopener noreferrer" className={buttonVariants()}>
-          <SquareArrowOutUpRight />
-          {t('News.viewFullArticle')}
-        </Link>
       </div>
     </article>
   );
