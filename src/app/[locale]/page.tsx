@@ -1,6 +1,37 @@
+import {
+  bibleChapterInstanceQueryOptions,
+  CHAPTER_LENGTH,
+  localizedTranslationVersionsQueryOptions
+} from '@/features/bible';
+import { getRandomPositiveInt } from '@/shared';
+import { QueryClient } from '@tanstack/react-query';
 import React from 'react';
 
-const MainPage = () => {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+const MainPage = async ({ params }: Props) => {
+  const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
+  const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
+
+  const { locale: language } = await params;
+
+  const queryClient = new QueryClient();
+
+  const localizedTranslationVersions = await queryClient.fetchQuery(
+    localizedTranslationVersionsQueryOptions(language)
+  );
+
+  const [defaultTranslation] = localizedTranslationVersions;
+  const getTranslationVersionId = defaultTranslation.abbreviation;
+
+  const data = await queryClient.fetchQuery(
+    bibleChapterInstanceQueryOptions([getTranslationVersionId, '' + bookNumber, '' + chapterNumber])
+  );
+  const todayWord = data.verses[getRandomPositiveInt(data.verses.length) - 1];
+  console.log({ todayWord });
+
   const mainStyle = {
     backgroundColor: '#222',
     color: '#EEE',
