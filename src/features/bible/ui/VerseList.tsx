@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { useBibleSearchParams } from '../hooks';
 import type { Verse } from '../model';
 
@@ -8,9 +8,10 @@ function VerseList({ selectedVerses }: { selectedVerses: Verse[] }) {
   const { verseNumber } = useBibleSearchParams();
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const verseEl = verseNumber && verseRefs.current[+verseNumber];
     if (!verseEl) return;
+
     verseEl.scrollIntoView({
       behavior: 'smooth',
       block: 'center'
