@@ -53,7 +53,8 @@ export default function MainContainer() {
     pathname: '/bible',
     query: {
       ...restData,
-      chapterNumber: verse.chapter
+      chapterNumber: verse.chapter,
+      verseNumber: verse.verse
     }
   };
 
