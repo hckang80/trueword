@@ -1,6 +1,8 @@
 'use client';
 
 import { useBibleToday } from '@/features/bible';
+import { Link } from '@/shared/i18n/routing';
+import type { UrlObject } from 'url';
 
 export default function MainContainer() {
   const mainStyle = {
@@ -43,17 +45,27 @@ export default function MainContainer() {
     marginLeft: '10px'
   };
 
-  const { data: todayWord } = useBibleToday();
+  const {
+    data: { verse, ...restData }
+  } = useBibleToday();
+
+  const moreTodayWord: UrlObject = {
+    pathname: '/bible',
+    query: {
+      ...restData,
+      chapterNumber: verse.chapter
+    }
+  };
 
   return (
     <div style={mainStyle}>
       <div style={sectionStyle}>
         <h2 style={headingStyle}>오늘의 말씀</h2>
-        <p style={{ fontSize: '1.2em', color: '#FFF' }}>{todayWord.name}</p>
-        <p>{todayWord.text}</p>
-        <a href="#" style={linkStyle}>
+        <p style={{ fontSize: '1.2em', color: '#FFF' }}>{verse.name}</p>
+        <p>{verse.text}</p>
+        <Link href={moreTodayWord} style={linkStyle}>
           전체 맥락 보기
-        </a>
+        </Link>
       </div>
 
       <div style={sectionStyle}>
