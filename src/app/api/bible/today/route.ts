@@ -34,11 +34,17 @@ export async function GET(request: NextRequest) {
       '' + bookNumber,
       '' + chapterNumber
     ]);
-    const randomVerse = verses[getRandomPositiveInt(verses.length) - 1];
+    const verse = verses[getRandomPositiveInt(verses.length) - 1];
+    const data = {
+      translation: locale,
+      abbreviation: localizedTranslationVersion.abbreviation,
+      bookNumber,
+      verse
+    };
 
-    redis.set(key, randomVerse, { ex: CACHE_TTL });
+    redis.set(key, data, { ex: CACHE_TTL });
 
-    return NextResponse.json(randomVerse);
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching today's bible:", error);
     return NextResponse.json({ error: "Failed to fetch today's bible" }, { status: 500 });

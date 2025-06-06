@@ -2,7 +2,7 @@ import type {
   BibleChapterInstance,
   TransitionVersion,
   TranslationBooks,
-  Verse,
+  TodayVerse,
   YouTubeVideo
 } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
@@ -44,6 +44,6 @@ export async function fetchYouTubeVideos(query: string) {
 }
 
 export async function fetchBibleToday() {
-  const { data } = await axiosInstance.get<Verse>('/api/bible/today');
+  const { data } = await axiosInstance.get<TodayVerse>('/api/bible/today');
   return data;
 }
