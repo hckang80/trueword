@@ -2,6 +2,7 @@
 
 import { useBibleToday } from '@/features/bible';
 import { Link } from '@/shared/i18n/routing';
+import { useTranslations } from 'next-intl';
 import type { UrlObject } from 'url';
 
 export default function MainContainer() {
@@ -58,14 +59,16 @@ export default function MainContainer() {
     }
   };
 
+  const t = useTranslations('Home');
+
   return (
     <div style={mainStyle}>
       <div style={sectionStyle}>
-        <h2 style={headingStyle}>오늘의 말씀</h2>
+        <h2 style={headingStyle}>{t('todaysVerse')}</h2>
         <p style={{ fontSize: '1.2em', color: '#FFF' }}>{verse.name}</p>
         <p>{verse.text}</p>
         <Link href={moreTodayWord} style={linkStyle}>
-          전체 맥락 보기
+          {t('viewFullContext')}
         </Link>
       </div>
 
