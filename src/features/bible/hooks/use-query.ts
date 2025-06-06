@@ -6,7 +6,8 @@ import {
   fetchYouTubeVideos,
   getLocalizedTranslationVersions,
   fetchTranslationVersions,
-  type YouTubeVideo
+  type YouTubeVideo,
+  fetchBibleToday
 } from '..';
 
 export const bibleChapterInstanceQueryOptions = (params: string[]) => ({
@@ -55,4 +56,13 @@ export function useYouTubeVideos(
     staleTime: 1000 * 60 * 5,
     ...queryOptions
   });
+}
+
+export const bibleTodayQueryOptions = {
+  queryKey: ['bible', 'today'],
+  queryFn: fetchBibleToday,
+  staleTime: 1000 * 60 * 60 * 24
+};
+export function useBibleToday() {
+  return useSuspenseQuery(bibleTodayQueryOptions);
 }
