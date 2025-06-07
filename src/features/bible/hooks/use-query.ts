@@ -58,11 +58,11 @@ export function useYouTubeVideos(
   });
 }
 
-export const bibleTodayQueryOptions = {
-  queryKey: ['bible', 'today'],
-  queryFn: fetchBibleToday,
+export const bibleTodayQueryOptions = (locale: Locale) => ({
+  queryKey: ['bible', 'today', locale],
+  queryFn: () => fetchBibleToday(locale),
   staleTime: 1000 * 60 * 60 * 24
-};
-export function useBibleToday() {
-  return useSuspenseQuery(bibleTodayQueryOptions);
+});
+export function useBibleToday(locale: Locale) {
+  return useSuspenseQuery(bibleTodayQueryOptions(locale));
 }

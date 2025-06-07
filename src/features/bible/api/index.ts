@@ -43,7 +43,11 @@ export async function fetchYouTubeVideos(query: string) {
   return data;
 }
 
-export async function fetchBibleToday() {
-  const { data } = await axiosInstance.get<TodayVerse>('/api/bible/today');
+export async function fetchBibleToday(locale: Locale) {
+  const { data } = await axiosInstance.get<TodayVerse>('/api/bible/today', {
+    headers: {
+      'Accept-Language': locale
+    }
+  });
   return data;
 }

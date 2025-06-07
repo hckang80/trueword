@@ -3,9 +3,11 @@
 import { useBibleToday } from '@/features/bible';
 import { Link } from '@/shared/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import type { UrlObject } from 'url';
 
 export default function MainContainer() {
+  const { locale } = useParams<{ locale: string }>();
   const mainStyle = {
     backgroundColor: '#222',
     color: '#EEE',
@@ -48,7 +50,7 @@ export default function MainContainer() {
 
   const {
     data: { verse, ...restData }
-  } = useBibleToday();
+  } = useBibleToday(locale);
 
   const moreTodayWord: UrlObject = {
     pathname: '/bible',
