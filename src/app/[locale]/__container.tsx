@@ -1,7 +1,15 @@
 'use client';
 
 import { useBibleToday } from '@/features/bible';
-import { Button } from '@/shared';
+import {
+  Button,
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -27,14 +35,20 @@ export default function MainContainer() {
 
   return (
     <div className="p-[var(--global-inset)]">
-      <section>
-        <h2>{t('todaysVerse')}</h2>
-        <p>{verse.name}</p>
-        <p>{verse.text}</p>
-        <Button size="sm" className="mt-2" asChild>
-          <Link href={moreTodayWord}>{t('viewFullContext')}</Link>
-        </Button>
-      </section>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('todaysVerse')}</CardTitle>
+          <CardDescription>{verse.name}</CardDescription>
+          <CardAction>
+            <Button size="sm" asChild>
+              <Link href={moreTodayWord}>{t('viewFullContext')}</Link>
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <p>{verse.text}</p>
+        </CardContent>
+      </Card>
     </div>
   );
 }
