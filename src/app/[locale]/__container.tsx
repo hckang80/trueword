@@ -25,13 +25,13 @@ export default function MainContainer() {
   const t = useTranslations('Home');
 
   return (
-    <div>
-      <div>
+    <div className="p-[var(--global-inset)]">
+      <section>
         <h2>{t('todaysVerse')}</h2>
         <p>{verse.name}</p>
         <p>{verse.text}</p>
         <Link href={moreTodayWord}>{t('viewFullContext')}</Link>
-      </div>
+      </section>
     </div>
   );
 }
