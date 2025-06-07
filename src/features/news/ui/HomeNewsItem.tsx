@@ -1,16 +1,15 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { memo } from 'react';
 import { NewsImage, HomeNewsItemMeta } from '.';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { NewsItemType } from '../model';
+import { Link } from '@/shared/i18n/routing';
 
 const HomeNewsItem = ({ item }: { item: NewsItemType }) => (
   <li>
     <Link
-      href={`${usePathname()}/news/${item.sourceEng}/${item.guid}`}
+      href={`/news/${item.sourceEng}/${item.guid}`}
       className="group flex flex-col gap-2 visited:text-gray-300 dark:visited:text-gray-600 rounded-lg"
     >
       <ViewTransition name={`news-header-${item.sourceEng}-${item.guid}`}>
