@@ -35,6 +35,7 @@ export default function MainContainer() {
   const t = useTranslations('Home');
 
   const { data: news } = useNews(locale);
+  const filteredNews = news.filter(({ thumbnail }) => thumbnail);
 
   return (
     <div className="p-[var(--global-inset)]">
@@ -65,7 +66,7 @@ export default function MainContainer() {
         </CardHeader>
         <CardContent>
           <ul className="grid grid-cols-2 gap-4">
-            {news.map((item) => (
+            {filteredNews.map((item) => (
               <HomeNewsItem key={item.guid} item={item} />
             ))}
           </ul>
