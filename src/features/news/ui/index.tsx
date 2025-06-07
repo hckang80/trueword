@@ -1,4 +1,5 @@
 export { default as HomeNewsItem } from './HomeNewsItem';
+export { default as HomeNewsItemMeta } from './HomeNewsItemMeta';
 export { default as NewsHeader } from './NewsHeader';
 export { default as NewsImage } from './NewsImage';
 export { default as NewsItem } from './NewsItem';
