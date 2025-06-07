@@ -64,7 +64,7 @@ export default function MainContainer() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <ul>
+          <ul className="grid grid-cols-2 gap-4">
             {news.map((item) => (
               <HomeNewsItem key={item.guid} item={item} />
             ))}
