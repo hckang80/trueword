@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { memo } from 'react';
 import { NewsImage, HomeNewsItemMeta } from '.';
 import { unstable_ViewTransition as ViewTransition } from 'react';
