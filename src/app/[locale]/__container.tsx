@@ -35,7 +35,7 @@ export default function MainContainer() {
   const t = useTranslations('Home');
 
   const { data: news } = useNews(locale);
-  const filteredNews = news.filter(({ thumbnail }) => thumbnail);
+  const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, 4);
 
   return (
     <div className="p-[var(--global-inset)]">
