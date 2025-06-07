@@ -2,6 +2,7 @@ import { bibleTodayQueryOptions } from '@/features/bible';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import Container from './__container';
+import { newsQueryOptions } from '@/features/news';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -10,7 +11,10 @@ type Props = {
 const MainPage = async ({ params }: Props) => {
   const { locale } = await params;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(bibleTodayQueryOptions(locale));
+  Promise.all([
+    queryClient.prefetchQuery(bibleTodayQueryOptions(locale)),
+    queryClient.prefetchQuery(newsQueryOptions(locale))
+  ]);
   const dehydratedState = dehydrate(queryClient);
 
   return (

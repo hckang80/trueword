@@ -1,6 +1,7 @@
 'use client';
 
 import { useBibleToday } from '@/features/bible';
+import { useNews } from '@/features/news';
 import {
   Button,
   Card,
@@ -32,6 +33,8 @@ export default function MainContainer() {
   };
 
   const t = useTranslations('Home');
+
+  const { data: news } = useNews(locale);
 
   return (
     <div className="p-[var(--global-inset)]">
