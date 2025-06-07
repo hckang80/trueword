@@ -13,8 +13,11 @@
     "description": "Your comprehensive platform for the latest Bible news, Christian insights, and spiritual perspectives from around the world"
   },
   "Home": {
+    "news": "What’s New",
+    "newsDescription": "Daily updates on faith, culture, and the world.",
     "todaysVerse": "Today's Verse",
-    "viewFullContext": "View Full Context"
+    "viewFullContext": "View Full Context",
+    "more": "See More"
   },
   "News": {
     "viewFullArticle": "View Full Article",
