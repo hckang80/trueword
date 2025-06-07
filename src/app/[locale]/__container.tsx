@@ -1,6 +1,7 @@
 'use client';
 
 import { useBibleToday } from '@/features/bible';
+import { Button } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -30,7 +31,9 @@ export default function MainContainer() {
         <h2>{t('todaysVerse')}</h2>
         <p>{verse.name}</p>
         <p>{verse.text}</p>
-        <Link href={moreTodayWord}>{t('viewFullContext')}</Link>
+        <Button size="sm" className="mt-2" asChild>
+          <Link href={moreTodayWord}>{t('viewFullContext')}</Link>
+        </Button>
       </section>
     </div>
   );
