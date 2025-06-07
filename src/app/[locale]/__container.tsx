@@ -1,7 +1,7 @@
 'use client';
 
 import { useBibleToday } from '@/features/bible';
-import { NewsItem, useNews } from '@/features/news';
+import { HomeNewsItem, useNews } from '@/features/news';
 import {
   Button,
   Card,
@@ -66,7 +66,7 @@ export default function MainContainer() {
         <CardContent>
           <ul>
             {news.map((item) => (
-              <NewsItem key={item.guid} item={item} />
+              <HomeNewsItem key={item.guid} item={item} />
             ))}
           </ul>
         </CardContent>
