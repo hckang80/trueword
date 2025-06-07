@@ -10,7 +10,7 @@ function VerseList({ selectedVerses }: { selectedVerses: Verse[] }) {
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
 
   useLayoutEffect(() => {
-    const verseEl = verseNumber && verseRefs.current[+verseNumber];
+    const verseEl = verseRefs.current[Number(verseNumber)];
     if (!verseEl) return;
 
     verseEl.scrollIntoView({
