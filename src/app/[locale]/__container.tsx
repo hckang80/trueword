@@ -38,7 +38,7 @@ export default function MainContainer() {
   const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, 4);
 
   return (
-    <div className="p-[var(--global-inset)]">
+    <div className="flex flex-col gap-4 p-[var(--global-inset)]">
       <Card>
         <CardHeader>
           <CardTitle>{t('todaysVerse')}</CardTitle>
