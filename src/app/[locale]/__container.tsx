@@ -53,11 +53,24 @@ export default function MainContainer() {
         </CardContent>
       </Card>
 
-      <ul>
-        {news.map((item) => (
-          <NewsItem key={item.guid} item={item} />
-        ))}
-      </ul>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('news')}</CardTitle>
+          <CardDescription>{t('newsDescription')}</CardDescription>
+          <CardAction>
+            <Button size="sm" asChild>
+              <Link href={moreTodayWord}>{t('more')}</Link>
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <ul>
+            {news.map((item) => (
+              <NewsItem key={item.guid} item={item} />
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 }
