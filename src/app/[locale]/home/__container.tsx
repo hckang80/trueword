@@ -60,7 +60,7 @@ export default function MainContainer() {
           <CardDescription>{t('newsDescription')}</CardDescription>
           <CardAction>
             <Button size="sm" asChild>
-              <Link href={moreTodayWord}>{t('more')}</Link>
+              <Link href="/news">{t('more')}</Link>
             </Button>
           </CardAction>
         </CardHeader>
