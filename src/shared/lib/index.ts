@@ -25,3 +25,7 @@ export function extractUniqId(url: string) {
   const match = url.match(/(\d+)(?:\/?)$/);
   return match?.[1] || '';
 }
+
+export function getRandomPositiveInt(max: number) {
+  return Math.floor(Math.random() * max) + 1;
+}

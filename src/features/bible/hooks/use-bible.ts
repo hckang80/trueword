@@ -21,7 +21,8 @@ export const useBibleSearchParams = () => {
     translation: searchParams.get('translation') || locale,
     abbreviation: searchParams.get('abbreviation'),
     bookNumber: searchParams.get('bookNumber') || '1',
-    chapterNumber: searchParams.get('chapterNumber') || '1'
+    chapterNumber: searchParams.get('chapterNumber') || '1',
+    verseNumber: searchParams.get('verseNumber')
   };
 };
 

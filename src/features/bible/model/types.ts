@@ -67,3 +67,10 @@ export interface YouTubeVideo {
   thumbnail: string;
   channelTitle: string;
 }
+
+export interface TodayVerse {
+  translation: Locale;
+  abbreviation: string;
+  bookNumber: number;
+  verse: Verse;
+}
