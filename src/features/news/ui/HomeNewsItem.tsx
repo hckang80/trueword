@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import { NewsImage, HomeNewsItemMeta } from '.';
+import { NewsImage } from '.';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { NewsItemType } from '../model';
 import { Link } from '@/shared/i18n/routing';
@@ -22,7 +22,6 @@ const HomeNewsItem = ({ item }: { item: NewsItemType }) => (
           <h2 className="text-sm mb-1 visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline transition-colors duration-300 line-clamp-2 break-words">
             {item.title}
           </h2>
-          <HomeNewsItemMeta source={item.source} />
         </div>
       </ViewTransition>
     </Link>
