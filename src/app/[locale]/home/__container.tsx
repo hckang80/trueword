@@ -35,7 +35,8 @@ export default function MainContainer() {
   const t = useTranslations('Home');
 
   const { data: news } = useNews(locale);
-  const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, 4);
+  const MAX_NEWS_ITEMS = 4;
+  const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
 
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
