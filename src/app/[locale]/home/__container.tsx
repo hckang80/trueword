@@ -73,6 +73,10 @@ export default function MainContainer() {
           </ul>
         </CardContent>
       </Card>
+
+      <footer className="text-xs text-center">
+        &copy; {new Date().getFullYear()} TrueWord. All rights reserved.
+      </footer>
     </div>
   );
 }
