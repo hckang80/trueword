@@ -18,11 +18,9 @@ const HomeNewsItem = ({ item }: { item: NewsItemType }) => (
             <NewsImage src={item.thumbnail} alt="" />
           </div>
         )}
-        <div>
-          <h2 className="text-sm mb-1 visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline transition-colors duration-300 line-clamp-2 break-words">
-            {item.title}
-          </h2>
-        </div>
+        <p className="text-sm visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline transition-colors duration-300 line-clamp-2 break-words">
+          {item.title}
+        </p>
       </ViewTransition>
     </Link>
   </li>
