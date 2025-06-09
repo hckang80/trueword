@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     ]);
     const verse = verses[getRandomPositiveInt(verses.length) - 1];
     const data = {
-      translation: locale,
+      lang: locale,
       abbreviation: localizedTranslationVersion.abbreviation,
       bookNumber,
       verse

@@ -69,7 +69,7 @@ export interface YouTubeVideo {
 }
 
 export interface TodayVerse {
-  translation: Locale;
+  lang: Locale;
   abbreviation: string;
   bookNumber: number;
   verse: Verse;
