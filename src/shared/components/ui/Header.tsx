@@ -3,6 +3,7 @@
 import { useBibleParams } from '@/features/bible';
 import {
   Button,
+  languages,
   ModeToggle,
   Select,
   SelectContent,
@@ -13,8 +14,6 @@ import {
 import { usePathname } from '@/shared/i18n/routing';
 import { Mail } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-const languages = ['ko', 'en'];
 
 export function Header() {
   const router = useRouter();
