@@ -12,7 +12,6 @@ import {
 } from '@/shared';
 import { usePathname } from '@/shared/i18n/routing';
 import { Mail } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const languages = ['ko', 'en'];
@@ -41,9 +40,6 @@ export function Header() {
           ))}
         </SelectContent>
       </Select>
-      <Button variant="ghost" size="icon" asChild>
-        <Link href="#">{locale}</Link>
-      </Button>
       <Button variant="outline" size="icon" asChild>
         <a href="mailto:hckang80@gmail.com">
           <Mail />
