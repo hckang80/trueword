@@ -5,6 +5,7 @@ export const isSupportedLocale = (
 };
 
 export const locales = ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'] as const;
+export const languages = ['en', 'ko'];
 
 export type Locale = (typeof locales)[number] | (string & {});
 
