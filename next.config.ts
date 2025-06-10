@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ytimg.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'pbs.twimg.com'
       }
     ],
     minimumCacheTTL: 60,
