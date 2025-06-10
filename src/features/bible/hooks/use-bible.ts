@@ -39,17 +39,20 @@ export const useUpdateBibleParams = () => {
     language = urlSearchParams.get('translation') || locale,
     abbreviation,
     bookNumber = 1,
-    chapterNumber = 1
+    chapterNumber = 1,
+    verseNumber = 0
   }: {
     language?: string;
     abbreviation: string;
     bookNumber?: number;
     chapterNumber?: number;
+    verseNumber?: number;
   }) => {
     urlSearchParams.set('translation', language);
     urlSearchParams.set('abbreviation', abbreviation);
     urlSearchParams.set('bookNumber', '' + bookNumber);
     urlSearchParams.set('chapterNumber', '' + chapterNumber);
+    urlSearchParams.set('verseNumber', '' + verseNumber);
     window.history.pushState(null, '', `${pathname}?${urlSearchParams.toString()}`);
   };
 };
