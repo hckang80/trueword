@@ -18,7 +18,7 @@ const HomeNewsItem = ({ item }: { item: NewsItemType }) => (
             <NewsImage src={item.thumbnail} alt="" />
           </div>
         )}
-        <p className="text-sm visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline transition-colors duration-300 line-clamp-2 break-words">
+        <p className="text-sm visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline line-clamp-2 break-words">
           {item.title}
         </p>
       </ViewTransition>
