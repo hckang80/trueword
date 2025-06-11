@@ -13,7 +13,7 @@ import {
 } from '@/shared';
 import { usePathname } from '@/shared/i18n/routing';
 import { Mail } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'nextjs-toploader/app';
 
 export function Header() {
   const router = useRouter();
