@@ -10,6 +10,7 @@ const NewsImage = ({ alt = '', ...props }: ImageProps) => (
     fill
     alt={alt}
     {...props}
+    className="group-hover:scale-105 transition-transform duration-300 ease-in-out"
     style={{ objectFit: 'cover' }}
   />
 );
