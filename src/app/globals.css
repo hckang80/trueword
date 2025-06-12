@@ -136,6 +136,14 @@
     margin-bottom: var(--navbar-height);
   }
 
+  .global-nav {
+    view-transition-name: nav;
+  }
+
+  ::view-transition-group(nav) {
+    z-index: 100;
+  }
+
   .news-summary {
     h1 {
       margin: 0 0 10px;
