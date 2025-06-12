@@ -8,10 +8,9 @@ import {
 } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';
-import { Loading } from '@/shared';
+import { Loading, type RouteProps } from '@/shared';
 
-type Props = {
-  params: Promise<{ locale: string }>;
+type Props = RouteProps & {
   searchParams: Promise<Partial<{ locale: string; abbreviation: string }>>;
 };
 

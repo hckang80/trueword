@@ -3,12 +3,9 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import React from 'react';
 import Container from './__container';
 import { newsQueryOptions } from '@/features/news';
+import type { RouteProps } from '@/shared';
 
-type Props = {
-  params: Promise<{ locale: string }>;
-};
-
-const MainPage = async ({ params }: Props) => {
+const MainPage = async ({ params }: RouteProps) => {
   const { locale } = await params;
   const queryClient = new QueryClient();
   Promise.all([

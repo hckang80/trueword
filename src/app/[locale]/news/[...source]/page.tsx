@@ -2,8 +2,9 @@ import { newsBySourceQueryOptions } from '@/features/news';
 import { QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 import type { Metadata, ResolvingMetadata } from 'next';
+import type { RouteProps } from '@/shared';
 
-type Props = { params: Promise<{ locale: string; source: string[] }> };
+type Props = RouteProps & { params: Promise<{ source: string[] }> };
 
 export async function generateMetadata(
   { params }: Props,
