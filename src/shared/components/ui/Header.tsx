@@ -3,7 +3,7 @@
 import { useBibleParams } from '@/features/bible';
 import {
   Button,
-  languages,
+  locales,
   ModeToggle,
   Select,
   SelectContent,
@@ -34,7 +34,7 @@ export function Header() {
           <SelectValue placeholder="Select a language" />
         </SelectTrigger>
         <SelectContent>
-          {languages.map((language) => (
+          {locales.map((language) => (
             <SelectItem value={language} key={language}>
               {language.toUpperCase()}
             </SelectItem>

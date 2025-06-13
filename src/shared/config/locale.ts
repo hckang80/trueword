@@ -4,14 +4,14 @@ export const isSupportedLocale = (
   return ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'].includes(locale);
 };
 
-export const locales = ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'] as const;
-export const languages = ['en', 'ko'];
+export const translateLocales = ['en', 'ko', 'zh', 'zh-Hans', 'zh-Hant', 'de', 'nl', 'sv'] as const;
+export const locales = ['en', 'ko'];
 
-export type Locale = (typeof locales)[number] | (string & {});
+export type Locale = (typeof translateLocales)[number] | (string & {});
 
 export const DEFAULT_LOCALE = 'ko';
 
-export const supportedTranslations = locales.map((locale) => getLocaleDisplayName(locale));
+export const supportedTranslations = translateLocales.map((locale) => getLocaleDisplayName(locale));
 
 function getLocaleDisplayName(locale: Locale, targetLocale: string = 'en') {
   const displayNames = new Intl.DisplayNames([targetLocale], { type: 'language' });
