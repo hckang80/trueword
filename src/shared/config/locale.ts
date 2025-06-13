@@ -10,10 +10,3 @@ export const locales = ['en', 'ko'];
 export type Locale = (typeof translateLocales)[number] | (string & {});
 
 export const DEFAULT_LOCALE = 'ko';
-
-export const supportedTranslations = translateLocales.map((locale) => getLocaleDisplayName(locale));
-
-function getLocaleDisplayName(locale: Locale, targetLocale: string = 'en') {
-  const displayNames = new Intl.DisplayNames([targetLocale], { type: 'language' });
-  return displayNames.of(locale) || locale;
-}
