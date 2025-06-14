@@ -14,7 +14,7 @@ interface NewsListProps {
 }
 
 const NewsList = ({ data, fetchNextPage, hasNextPage, isFetchingNextPage }: NewsListProps) => (
-  <div className="p-[var(--global-inset)]">
+  <div className="grid gap-4 p-[var(--global-inset)]">
     {data.pages.map((page, pageIndex) => (
       <ul key={pageIndex} style={{ display: 'contents' }}>
         {page.documents.map((news) => (
