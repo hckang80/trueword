@@ -18,7 +18,7 @@ const NewsItem = ({ item }: { item: NewsItemType }) => (
         >
           <ViewTransition name={`news-header-${item.sourceEng}-${item.guid}`}>
             <div>
-              <h2 className="text-sm font-semibold mb-2 visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline">
+              <h2 className="font-semibold mb-2 visited:not:text-gray-900 dark:visited:not:text-white group-hover:underline">
                 <strong>{item.title}</strong>
               </h2>
               <NewsItemMeta source={item.source} pubDate={item.pubDate} />
