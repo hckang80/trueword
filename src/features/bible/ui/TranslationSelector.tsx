@@ -36,7 +36,7 @@ function TranslationSelector({
 
   const searchParams = useSearchParams();
   const abbreviation = searchParams.get('abbreviation');
-  const { full_name: label } =
+  const { short_name: label } =
     localizedTranslationVersions.find((version) => version.short_name === abbreviation) ||
     localizedTranslationVersions[0];
 
