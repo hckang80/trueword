@@ -1,6 +1,7 @@
 import {
   CHAPTER_LENGTH,
   fetchBibleInstance,
+  fetchTranslationBooks,
   fetchTranslationVersions,
   getLanguageFullName
 } from '@/features/bible';
@@ -37,7 +38,15 @@ export async function GET(request: NextRequest) {
     const abbreviation = localizedTranslationVersion.translations[0].short_name;
     const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
     const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
-    const verses = await fetchBibleInstance([abbreviation, '' + bookNumber, '' + chapterNumber]);
+    const [verses, books] = await Promise.all([
+      fetchBibleInstance([abbreviation, '' + bookNumber, '' + chapterNumber]),
+      fetchTranslationBooks(abbreviation)
+    ]);
+    const bookInstance = books.find(({ bookid }) => bookid === bookNumber);
+    if (!bookInstance) {
+      return NextResponse.json({ error: 'Failed to fetch book instance' }, { status: 500 });
+    }
+
     const { verse, text } = verses[getRandomPositiveInt(verses.length) - 1];
     const data = {
       lang: locale,
@@ -46,7 +55,7 @@ export async function GET(request: NextRequest) {
       verse: {
         chapter: chapterNumber,
         verse,
-        name: `${chapterNumber}:${verse}`,
+        name: `${bookInstance.name} ${chapterNumber}:${verse}`,
         text
       }
     };
