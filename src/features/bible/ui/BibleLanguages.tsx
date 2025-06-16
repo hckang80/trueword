@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/shared';
-import { getLanguageFullName, useBibleLanguage, useUpdateBibleParams } from '@/features/bible';
+import { useBibleLanguage, useUpdateBibleParams } from '@/features/bible';
 import { useTranslationVersions } from '@/features/bible';
 
 function BibleLanguages() {
@@ -18,20 +18,14 @@ function BibleLanguages() {
   const { data: translationVersions } = useTranslationVersions();
 
   const getTranslationVersion = (language: Locale) =>
-    translationVersions.find(({ lang }) => lang === language);
+    translationVersions.find(({ id }) => id === language);
 
   const handleChange = (language: Locale) => {
     const translationVersion = getTranslationVersion(language);
     if (!translationVersion) return;
 
-    updateBibleParams({ language, abbreviation: translationVersion.abbreviation });
+    updateBibleParams({ language, abbreviation: translationVersion.translations[0].short_name });
   };
-
-  const languages = [...new Set([...Object.values(translationVersions).map(({ lang }) => lang)])];
-  const languagesWithLabel = languages.map((language) => ({
-    language,
-    label: getLanguageFullName(language, language)
-  }));
 
   return (
     <Select value={value} onValueChange={handleChange}>
@@ -39,9 +33,9 @@ function BibleLanguages() {
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
       <SelectContent>
-        {languagesWithLabel.map(({ language, label }) => (
-          <SelectItem value={language} key={language}>
-            {label}
+        {translationVersions.map(({ id, language }) => (
+          <SelectItem value={id} key={id}>
+            {language}
           </SelectItem>
         ))}
       </SelectContent>

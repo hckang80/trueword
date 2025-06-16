@@ -1,23 +1,14 @@
-import {
-  type Verse,
-  type BibleBook,
-  type TodayVerse,
-  type YouTubeVideo,
-  getLanguageFullName
-} from '@/features/bible';
+import { type Verse, type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
 import type { BibleLanguage } from '..';
 
-export async function getLocalizedTranslationVersions(locale: Locale) {
+export async function getLocalizedTranslationVersions(language: string) {
   const data = await fetchTranslationVersions();
 
-  const localizedData = data.find(({ language }) => {
-    const [languageFullName] = language.split(' ');
-    return languageFullName === getLanguageFullName(locale, 'en-US');
-  });
+  const localizedData = data.find(({ id }) => id === language);
 
   if (!localizedData) {
-    throw new Error(`No translation found for language: ${getLanguageFullName(locale, 'en-US')}`);
+    throw new Error(`No translation found for language: ${language}`);
   }
 
   const { translations } = localizedData;

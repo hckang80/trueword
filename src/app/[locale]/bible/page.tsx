@@ -4,11 +4,12 @@ import {
   localizedTranslationVersionsQueryOptions,
   bibleChapterInstanceQueryOptions,
   translationBooksQueryOptions,
-  translationVersionsQueryOptions
+  translationVersionsQueryOptions,
+  getLanguageFullName
 } from '@/features/bible';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';
-import { Loading, type RouteProps } from '@/shared';
+import { isSupportedLocale, Loading, type RouteProps } from '@/shared';
 
 type Props = RouteProps & {
   searchParams: Promise<Partial<{ locale: string; abbreviation: string }>>;
@@ -26,13 +27,17 @@ export async function generateMetadata(
 }
 
 export default async function Bible({ params, searchParams }: Props) {
-  const { locale: language } = await params;
+  const { locale } = await params;
   const { abbreviation } = await searchParams;
 
   const queryClient = new QueryClient();
 
+  if (!isSupportedLocale(locale) || !getLanguageFullName(locale)) {
+    throw new Error(`Unsupported locale: ${locale}`);
+  }
+
   const localizedTranslationVersions = await queryClient.fetchQuery(
-    localizedTranslationVersionsQueryOptions(language)
+    localizedTranslationVersionsQueryOptions(getLanguageFullName(locale))
   );
 
   const [defaultTranslation] = localizedTranslationVersions;
