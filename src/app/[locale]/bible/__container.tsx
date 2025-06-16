@@ -23,7 +23,7 @@ export default function Container() {
   } = useBibleSearchParams();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-  const getTranslationVersionId = getAbbreviation || translationVersion.abbreviation;
+  const getTranslationVersionId = getAbbreviation || translationVersion.short_name;
 
   const { data: bibleChapterInstance } = useBibleChapterInstance([
     getTranslationVersionId,
