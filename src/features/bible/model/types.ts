@@ -60,6 +60,7 @@ export interface TransitionVersion {
 }
 
 export interface BibleLanguage {
+  id: string;
   language: string;
   translations: BibleTransition[];
 }

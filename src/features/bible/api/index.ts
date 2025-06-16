@@ -28,7 +28,10 @@ export async function getLocalizedTranslationVersions(locale: Locale) {
 export async function fetchTranslationVersions() {
   const { data } = await axiosInstance<BibleLanguage[]>('/api/translations');
 
-  return data;
+  return data.map((item) => {
+    const [id] = item.language.split(' ');
+    return { ...item, id };
+  });
 }
 
 export async function fetchBibleInstance(params: string[]) {
