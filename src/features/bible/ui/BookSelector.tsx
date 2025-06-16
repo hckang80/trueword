@@ -13,7 +13,7 @@ import {
 import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { type TranslationBooks, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
+import { type BibleBook, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
 import { useTranslations } from 'next-intl';
 
 function BookSelector({
@@ -21,7 +21,7 @@ function BookSelector({
   bibleChapterInstance,
   changeBookChapter
 }: {
-  books: TranslationBooks;
+  books: BibleBook[];
   bibleChapterInstance: BibleChapterInstance;
   changeBookChapter: (bookNumber: number, chapter: number) => void;
 }) {
@@ -35,7 +35,7 @@ function BookSelector({
   const [order, setOrder] = useState<'book' | 'asc'>('book');
 
   const sortedBooks = Object.values(books).toSorted((a, b) => {
-    if (order === 'book') return a.nr - b.nr;
+    if (order === 'book') return a.bookid - b.bookid;
     return a.name.localeCompare(b.name);
   });
 
@@ -119,7 +119,7 @@ function BookSelector({
                   {t('abcOrder')}
                 </Button>
               </div>
-              {sortedBooks.map(({ name: book, nr: bookNumber }, index) => (
+              {sortedBooks.map(({ name: book, bookid: bookNumber, chapters }, index) => (
                 <details
                   name="books"
                   ref={(el) => {
@@ -139,7 +139,7 @@ function BookSelector({
                     <ChevronDown size={20} className="transition group-open:rotate-180" />
                   </summary>
                   <div className="grid grid-cols-5 gap-[4px] px-[10px]">
-                    {Array.from({ length: CHAPTER_LENGTH[bookNumber] }, (_, i) => (
+                    {Array.from({ length: chapters }, (_, i) => (
                       <Button
                         key={i}
                         variant="outline"

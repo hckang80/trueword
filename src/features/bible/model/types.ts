@@ -15,6 +15,13 @@ export interface TranslationBookInstance {
 
 export type TranslationBooks = Record<string, TranslationBookInstance>;
 
+export interface BibleBook {
+  bookid: number;
+  name: string;
+  chronorder: number;
+  chapters: number;
+}
+
 export interface BibleChapterInstance {
   abbreviation: string;
   book_nr: number;

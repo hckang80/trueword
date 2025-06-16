@@ -1,4 +1,4 @@
-import type { TranslationBooks } from '@/features/bible';
+import type { BibleBook } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -9,8 +9,8 @@ export async function GET(
   const { translation } = await params;
 
   try {
-    const { data } = await axios.get<{ data: TranslationBooks }>(
-      `${process.env.BIBLE_API_URL}/${translation}/books.json`
+    const { data } = await axios.get<{ data: BibleBook[] }>(
+      `${process.env.BIBLE_API_URL}/get-books/${translation}`
     );
 
     return NextResponse.json(data);
