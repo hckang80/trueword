@@ -13,7 +13,7 @@ import {
 import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { type BibleBook, BibleChapterInstance, CHAPTER_LENGTH } from '../model';
+import { type BibleBook, BibleChapterInstance } from '../model';
 import { useTranslations } from 'next-intl';
 
 function BookSelector({
