@@ -36,7 +36,7 @@ export default async function Bible({ params, searchParams }: Props) {
   );
 
   const [defaultTranslation] = localizedTranslationVersions;
-  const getTranslationVersionId = abbreviation || defaultTranslation.abbreviation;
+  const getTranslationVersionId = abbreviation || defaultTranslation.short_name;
 
   await Promise.all([
     queryClient.prefetchQuery(
