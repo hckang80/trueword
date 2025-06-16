@@ -37,7 +37,7 @@ export default async function Bible({ params, searchParams }: Props) {
   }
 
   const localizedTranslationVersions = await queryClient.fetchQuery(
-    localizedTranslationVersionsQueryOptions(getLanguageFullName(locale))
+    localizedTranslationVersionsQueryOptions(getLanguageFullName(locale, 'en'))
   );
 
   const [defaultTranslation] = localizedTranslationVersions;

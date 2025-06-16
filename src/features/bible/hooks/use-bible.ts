@@ -30,7 +30,7 @@ export const useBibleSearchParams = () => {
 export const useBibleLanguage = () => {
   const { urlSearchParams, locale } = useBibleParams();
 
-  return urlSearchParams.get('translation') || getLanguageFullName(locale);
+  return urlSearchParams.get('translation') || getLanguageFullName(locale, 'en');
 };
 
 export const useUpdateBibleParams = () => {

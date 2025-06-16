@@ -1,7 +1,7 @@
 import { TransitionVersion } from '@/features/bible';
-import { isSupportedLocale, type Locale, translateLocales } from '@/shared';
+import { DEFAULT_LOCALE, isSupportedLocale, type Locale, translateLocales } from '@/shared';
 
-export function getLanguageFullName(langCode: Locale, locale: Locale = 'en') {
+export function getLanguageFullName(langCode: Locale, locale: Locale = DEFAULT_LOCALE) {
   if (!langCode) throw Error('langCode가 빈 문자열입니다.');
 
   const displayNames = new Intl.DisplayNames([locale], { type: 'language' });
