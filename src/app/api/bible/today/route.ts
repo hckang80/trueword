@@ -1,4 +1,9 @@
-import { CHAPTER_LENGTH, fetchBibleInstance, fetchTranslationVersions } from '@/features/bible';
+import {
+  CHAPTER_LENGTH,
+  fetchBibleInstance,
+  fetchTranslationVersions,
+  getLanguageFullName
+} from '@/features/bible';
 import { DEFAULT_LOCALE, getRandomPositiveInt } from '@/shared';
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
@@ -22,22 +27,24 @@ export async function GET(request: NextRequest) {
     if (cached) return NextResponse.json(cached);
 
     const translationVersions = await fetchTranslationVersions();
-    const localizedTranslationVersion = translationVersions.find(({ lang }) => lang === locale);
+    const localizedTranslationVersion = translationVersions.find(
+      ({ id }) => id === getLanguageFullName(locale, 'en')
+    );
 
     if (!localizedTranslationVersion)
       return NextResponse.json({ error: 'Failed to fetch translation versions' }, { status: 500 });
 
     const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
     const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
-    const { verses } = await fetchBibleInstance([
-      localizedTranslationVersion.abbreviation,
+    const verses = await fetchBibleInstance([
+      localizedTranslationVersion.translations[0].short_name,
       '' + bookNumber,
       '' + chapterNumber
     ]);
     const verse = verses[getRandomPositiveInt(verses.length) - 1];
     const data = {
       lang: locale,
-      abbreviation: localizedTranslationVersion.abbreviation,
+      abbreviation: localizedTranslationVersion.translations[0].short_name,
       bookNumber,
       verse
     };
