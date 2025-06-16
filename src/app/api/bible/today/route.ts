@@ -38,12 +38,17 @@ export async function GET(request: NextRequest) {
     const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
     const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
     const verses = await fetchBibleInstance([abbreviation, '' + bookNumber, '' + chapterNumber]);
-    const verse = verses[getRandomPositiveInt(verses.length) - 1];
+    const { verse, text } = verses[getRandomPositiveInt(verses.length) - 1];
     const data = {
       lang: locale,
       abbreviation,
       bookNumber,
-      verse
+      verse: {
+        chapter: chapterNumber,
+        verse,
+        name: `${chapterNumber}:${verse}`,
+        text
+      }
     };
 
     redis.set(key, data, { ex: CACHE_TTL });
