@@ -25,17 +25,29 @@ export default function Container() {
   const [translationVersion] = localizedTranslationVersions;
   const getTranslationVersionId = getAbbreviation || translationVersion.short_name;
 
-  const { data: bibleChapterInstance } = useBibleChapterInstance([
+  const { data: verses } = useBibleChapterInstance([
     getTranslationVersionId,
     getBookNumber,
     getChapterNumber
   ]);
 
   const { data: books } = useTranslationBooks(getTranslationVersionId);
+  const getCurrentBook = books.find(({ bookid }) => bookid === +getBookNumber);
+
+  if (!getCurrentBook) {
+    throw new Error(
+      `Book with id ${getBookNumber} not found in translation ${getTranslationVersionId}`
+    );
+  }
+
+  const bibleChapterInstance = {
+    abbreviation: getTranslationVersionId,
+    book_name: getCurrentBook.name,
+    name: `${getCurrentBook.name} ${getChapterNumber}`,
+    chapter: +getChapterNumber
+  };
 
   const updateBibleParams = useUpdateBibleParams();
-
-  const selectedVerses = bibleChapterInstance.verses;
 
   const changeBookChapter = (bookNumber: number, chapter: number) => {
     updateBibleParams({
@@ -59,7 +71,7 @@ export default function Container() {
         />
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
-      <VerseList selectedVerses={selectedVerses} />
+      <VerseList selectedVerses={verses} />
       <BibleNavigator changeBookChapter={changeBookChapter} />
     </div>
   );

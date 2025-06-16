@@ -1,5 +1,5 @@
 import {
-  type BibleChapterInstance,
+  type Verse,
   type BibleBook,
   type TodayVerse,
   type YouTubeVideo,
@@ -33,7 +33,8 @@ export async function fetchTranslationVersions() {
 
 export async function fetchBibleInstance(params: string[]) {
   const [abbreviation, bookNumber, chapterNumber] = params;
-  const { data } = await axiosInstance<BibleChapterInstance>(
+
+  const { data } = await axiosInstance<Verse[]>(
     `/translations/${abbreviation}/${bookNumber}/${chapterNumber}`
   );
 

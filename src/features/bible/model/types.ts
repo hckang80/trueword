@@ -24,11 +24,9 @@ export interface BibleBook {
 
 export interface BibleChapterInstance {
   abbreviation: string;
-  book_nr: number;
   book_name: string;
   chapter: number;
   name: string;
-  verses: Verse[];
 }
 
 export interface Book {
@@ -44,8 +42,7 @@ export interface Chapter {
 }
 
 export interface Verse {
-  chapter: number;
-  name: string;
+  pk: number;
   verse: number;
   text: string;
 }
