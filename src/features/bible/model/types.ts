@@ -55,6 +55,17 @@ export interface TransitionVersion {
   translation: string;
 }
 
+export interface BibleLanguage {
+  language: string;
+  translations: BibleTransition[];
+}
+
+export interface BibleTransition {
+  short_name: string;
+  full_name: string;
+  updated: number;
+}
+
 export interface SelectedBook {
   bookNumber: number;
   book: string;
