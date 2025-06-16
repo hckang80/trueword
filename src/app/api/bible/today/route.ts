@@ -34,17 +34,14 @@ export async function GET(request: NextRequest) {
     if (!localizedTranslationVersion)
       return NextResponse.json({ error: 'Failed to fetch translation versions' }, { status: 500 });
 
+    const abbreviation = localizedTranslationVersion.translations[0].short_name;
     const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
     const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
-    const verses = await fetchBibleInstance([
-      localizedTranslationVersion.translations[0].short_name,
-      '' + bookNumber,
-      '' + chapterNumber
-    ]);
+    const verses = await fetchBibleInstance([abbreviation, '' + bookNumber, '' + chapterNumber]);
     const verse = verses[getRandomPositiveInt(verses.length) - 1];
     const data = {
       lang: locale,
-      abbreviation: localizedTranslationVersion.translations[0].short_name,
+      abbreviation,
       bookNumber,
       verse
     };
