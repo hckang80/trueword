@@ -4,6 +4,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { useBibleSearchParams } from '../hooks';
 import type { Verse } from '../model';
 import { cn } from '@/shared';
+import sanitizeHtml from 'sanitize-html';
 
 function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: boolean }) {
   const { verseNumber } = useBibleSearchParams();
@@ -19,6 +20,10 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
     });
   }, [verseNumber]);
 
+  const sanitizedData = (text: string) => ({
+    __html: sanitizeHtml(text.replace(/`{3,}/g, '').replace('html', ''))
+  });
+
   return (
     <div>
       {selectedVerses.map(({ verse, text }) => (
@@ -30,7 +35,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
             verseRefs.current[verse] = el;
           }}
         >
-          <sup>{verse}</sup> {text}
+          <sup>{verse}</sup> <span dangerouslySetInnerHTML={sanitizedData(text)} />
         </p>
       ))}
     </div>
