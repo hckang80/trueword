@@ -15,14 +15,14 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useUpdateBibleParams } from '../hooks';
-import type { TransitionVersion, BibleChapterInstance } from '../model';
+import type { BibleTransition, BibleChapterInstance } from '../model';
 import { BibleLanguages } from '..';
 
 function TranslationSelector({
   localizedTranslationVersions,
   bibleChapterInstance
 }: {
-  localizedTranslationVersions: TransitionVersion[];
+  localizedTranslationVersions: BibleTransition[];
   bibleChapterInstance: BibleChapterInstance;
 }) {
   const t = useTranslations('Common');
@@ -36,8 +36,8 @@ function TranslationSelector({
 
   const searchParams = useSearchParams();
   const abbreviation = searchParams.get('abbreviation');
-  const { distribution_versification: label } =
-    localizedTranslationVersions.find((version) => version.abbreviation === abbreviation) ||
+  const { short_name: label } =
+    localizedTranslationVersions.find((version) => version.short_name === abbreviation) ||
     localizedTranslationVersions[0];
 
   useEffect(() => {
@@ -63,26 +63,24 @@ function TranslationSelector({
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
-              {localizedTranslationVersions.map(
-                ({ distribution_versification, abbreviation, description }) => (
-                  <li key={abbreviation}>
-                    <button
-                      className={cn('w-full p-[10px] text-left')}
-                      onClick={() => handleTranslationVersionChange(abbreviation)}
+              {localizedTranslationVersions.map(({ full_name, short_name }) => (
+                <li key={short_name}>
+                  <button
+                    className={cn('w-full p-[10px] text-left')}
+                    onClick={() => handleTranslationVersionChange(short_name)}
+                  >
+                    <em
+                      className={cn(
+                        'block text-[16px]',
+                        short_name === bibleChapterInstance.abbreviation ? 'font-bold' : ''
+                      )}
                     >
-                      <em
-                        className={cn(
-                          'block text-[16px]',
-                          abbreviation === bibleChapterInstance.abbreviation ? 'font-bold' : ''
-                        )}
-                      >
-                        {distribution_versification}
-                      </em>
-                      <span className="block text-[13px]">{description}</span>
-                    </button>
-                  </li>
-                )
-              )}
+                      {short_name}
+                    </em>
+                    <span className="block text-[13px]">{full_name}</span>
+                  </button>
+                </li>
+              ))}
             </ul>
           </DrawerDescription>
         </DrawerHeader>

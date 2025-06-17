@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
+import { getLanguageFullName } from '../lib';
 
 export const useBibleParams = () => {
   const searchParams = useSearchParams();
@@ -29,7 +30,7 @@ export const useBibleSearchParams = () => {
 export const useBibleLanguage = () => {
   const { urlSearchParams, locale } = useBibleParams();
 
-  return urlSearchParams.get('translation') || locale;
+  return urlSearchParams.get('translation') || getLanguageFullName(locale, 'en');
 };
 
 export const useUpdateBibleParams = () => {

@@ -1,4 +1,10 @@
-import { CHAPTER_LENGTH, fetchBibleInstance, fetchTranslationVersions } from '@/features/bible';
+import {
+  CHAPTER_LENGTH,
+  fetchBibleInstance,
+  fetchTranslationBooks,
+  fetchTranslationVersions,
+  getLanguageFullName
+} from '@/features/bible';
 import { DEFAULT_LOCALE, getRandomPositiveInt } from '@/shared';
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
@@ -22,24 +28,36 @@ export async function GET(request: NextRequest) {
     if (cached) return NextResponse.json(cached);
 
     const translationVersions = await fetchTranslationVersions();
-    const localizedTranslationVersion = translationVersions.find(({ lang }) => lang === locale);
+    const localizedTranslationVersion = translationVersions.find(
+      ({ id }) => id === getLanguageFullName(locale, 'en')
+    );
 
     if (!localizedTranslationVersion)
       return NextResponse.json({ error: 'Failed to fetch translation versions' }, { status: 500 });
 
+    const abbreviation = localizedTranslationVersion.translations[0].short_name;
     const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
     const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
-    const { verses } = await fetchBibleInstance([
-      localizedTranslationVersion.abbreviation,
-      '' + bookNumber,
-      '' + chapterNumber
+    const [verses, books] = await Promise.all([
+      fetchBibleInstance([abbreviation, '' + bookNumber, '' + chapterNumber]),
+      fetchTranslationBooks(abbreviation)
     ]);
-    const verse = verses[getRandomPositiveInt(verses.length) - 1];
+    const bookInstance = books.find(({ bookid }) => bookid === bookNumber);
+    if (!bookInstance) {
+      return NextResponse.json({ error: 'Failed to fetch book instance' }, { status: 500 });
+    }
+
+    const { verse, text } = verses[getRandomPositiveInt(verses.length) - 1];
     const data = {
       lang: locale,
-      abbreviation: localizedTranslationVersion.abbreviation,
+      abbreviation,
       bookNumber,
-      verse
+      verse: {
+        chapter: chapterNumber,
+        verse,
+        name: `${bookInstance.name} ${chapterNumber}:${verse}`,
+        text
+      }
     };
 
     redis.set(key, data, { ex: CACHE_TTL });

@@ -28,13 +28,13 @@ export const useTranslationBooks = (getTranslationVersionId: string) => {
   return useSuspenseQuery(translationBooksQueryOptions(getTranslationVersionId));
 };
 
-export const localizedTranslationVersionsQueryOptions = (locale: Locale) => ({
-  ...translationsKeys.data(locale),
-  queryFn: () => getLocalizedTranslationVersions(locale),
+export const localizedTranslationVersionsQueryOptions = (language: string) => ({
+  ...translationsKeys.data(language),
+  queryFn: () => getLocalizedTranslationVersions(language),
   staleTime: Infinity
 });
-export const useLocalizedTranslationVersions = (locale: Locale) => {
-  return useSuspenseQuery(localizedTranslationVersionsQueryOptions(locale));
+export const useLocalizedTranslationVersions = (language: string) => {
+  return useSuspenseQuery(localizedTranslationVersionsQueryOptions(language));
 };
 
 export const translationVersionsQueryOptions = {

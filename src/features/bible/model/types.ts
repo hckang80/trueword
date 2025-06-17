@@ -15,13 +15,18 @@ export interface TranslationBookInstance {
 
 export type TranslationBooks = Record<string, TranslationBookInstance>;
 
+export interface BibleBook {
+  bookid: number;
+  name: string;
+  chronorder: number;
+  chapters: number;
+}
+
 export interface BibleChapterInstance {
   abbreviation: string;
-  book_nr: number;
   book_name: string;
   chapter: number;
   name: string;
-  verses: Verse[];
 }
 
 export interface Book {
@@ -37,8 +42,7 @@ export interface Chapter {
 }
 
 export interface Verse {
-  chapter: number;
-  name: string;
+  pk: number;
   verse: number;
   text: string;
 }
@@ -53,6 +57,19 @@ export interface TransitionVersion {
   url: string;
   sha: string;
   translation: string;
+}
+
+export interface BibleLanguage {
+  id: string;
+  language: string;
+  translations: BibleTransition[];
+}
+
+export interface BibleTransition {
+  short_name: string;
+  full_name: string;
+  updated: number;
+  dir?: 'rtl';
 }
 
 export interface SelectedBook {
@@ -72,5 +89,10 @@ export interface TodayVerse {
   lang: Locale;
   abbreviation: string;
   bookNumber: number;
-  verse: Verse;
+  verse: {
+    chapter: number;
+    verse: number;
+    name: string;
+    text: string;
+  };
 }

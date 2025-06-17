@@ -5,7 +5,7 @@ import { useBibleSearchParams } from '../hooks';
 import type { Verse } from '../model';
 import { cn } from '@/shared';
 
-function VerseList({ selectedVerses }: { selectedVerses: Verse[] }) {
+function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: boolean }) {
   const { verseNumber } = useBibleSearchParams();
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
 
@@ -23,6 +23,7 @@ function VerseList({ selectedVerses }: { selectedVerses: Verse[] }) {
     <div>
       {selectedVerses.map(({ verse, text }) => (
         <p
+          dir={cn(isRTL && 'rtl')}
           className={cn(verse === Number(verseNumber) && 'underline')}
           key={verse}
           ref={(el) => {

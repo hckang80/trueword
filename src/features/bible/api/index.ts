@@ -1,28 +1,34 @@
-import type {
-  BibleChapterInstance,
-  TransitionVersion,
-  TranslationBooks,
-  TodayVerse,
-  YouTubeVideo
-} from '@/features/bible';
+import { type Verse, type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
-import { availableTranslationVersions } from '..';
+import type { BibleLanguage } from '..';
 
-export async function getLocalizedTranslationVersions(locale: Locale) {
+export async function getLocalizedTranslationVersions(language: string) {
   const data = await fetchTranslationVersions();
 
-  return data.filter(({ lang }) => lang === locale);
+  const localizedData = data.find(({ id }) => id === language);
+
+  if (!localizedData) {
+    throw new Error(`No translation found for language: ${language}`);
+  }
+
+  const { translations } = localizedData;
+
+  return translations;
 }
 
 export async function fetchTranslationVersions() {
-  const { data } = await axiosInstance<Record<string, TransitionVersion>>('/api/translations');
+  const { data } = await axiosInstance<BibleLanguage[]>('/api/translations');
 
-  return availableTranslationVersions(data);
+  return data.map((item) => {
+    const [id] = item.language.split(' ');
+    return { ...item, id };
+  });
 }
 
 export async function fetchBibleInstance(params: string[]) {
   const [abbreviation, bookNumber, chapterNumber] = params;
-  const { data } = await axiosInstance<BibleChapterInstance>(
+
+  const { data } = await axiosInstance<Verse[]>(
     `/translations/${abbreviation}/${bookNumber}/${chapterNumber}`
   );
 
@@ -30,7 +36,7 @@ export async function fetchBibleInstance(params: string[]) {
 }
 
 export async function fetchTranslationBooks(translation: string) {
-  const { data } = await axiosInstance<TranslationBooks>(`/translations/${translation}`);
+  const { data } = await axiosInstance<BibleBook[]>(`/translations/${translation}`);
   return data;
 }
 

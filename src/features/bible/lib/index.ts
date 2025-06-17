@@ -5,7 +5,7 @@ export function getLanguageFullName(langCode: Locale, locale: Locale = DEFAULT_L
   if (!langCode) throw Error('langCode가 빈 문자열입니다.');
 
   const displayNames = new Intl.DisplayNames([locale], { type: 'language' });
-  return displayNames.of(langCode);
+  return displayNames.of(langCode) || 'Unknown Language';
 }
 
 export function availableTranslationVersions(
