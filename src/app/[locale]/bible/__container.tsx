@@ -57,6 +57,8 @@ export default function Container() {
     });
   };
 
+  const isRTL = translationVersion.dir === 'rtl';
+
   return (
     <div className="p-[var(--global-inset)]">
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
@@ -71,7 +73,7 @@ export default function Container() {
         />
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
-      <VerseList selectedVerses={verses} />
+      <VerseList selectedVerses={verses} isRTL={isRTL} />
       <BibleNavigator changeBookChapter={changeBookChapter} />
     </div>
   );

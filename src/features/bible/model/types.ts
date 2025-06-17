@@ -69,6 +69,7 @@ export interface BibleTransition {
   short_name: string;
   full_name: string;
   updated: number;
+  dir?: 'rtl';
 }
 
 export interface SelectedBook {
