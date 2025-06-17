@@ -39,7 +39,6 @@ export async function POST(request: NextRequest) {
 
     let content = '';
     const possibleContentSelectors = [
-      'article',
       '.article',
       '.post',
       '.content',
