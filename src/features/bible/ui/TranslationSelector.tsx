@@ -63,7 +63,7 @@ function TranslationSelector({
           <DrawerTitle className="hidden">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <ul>
-              {localizedTranslationVersions.map(({ full_name, short_name, updated }) => (
+              {localizedTranslationVersions.map(({ full_name, short_name }) => (
                 <li key={short_name}>
                   <button
                     className={cn('w-full p-[10px] text-left')}
@@ -75,9 +75,9 @@ function TranslationSelector({
                         short_name === bibleChapterInstance.abbreviation ? 'font-bold' : ''
                       )}
                     >
-                      {full_name}
+                      {short_name}
                     </em>
-                    <span className="block text-[13px]">{updated}</span>
+                    <span className="block text-[13px]">{full_name}</span>
                   </button>
                 </li>
               ))}
