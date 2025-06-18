@@ -19,7 +19,7 @@ export const useBibleSearchParams = () => {
   const { locale } = routeParams;
 
   return {
-    translation: searchParams.get('translation') || locale,
+    translation: searchParams.get('translation') || getLanguageFullName(locale, 'en'),
     abbreviation: searchParams.get('abbreviation'),
     bookNumber: searchParams.get('bookNumber') || '1',
     chapterNumber: searchParams.get('chapterNumber') || '1',
@@ -37,7 +37,7 @@ export const useUpdateBibleParams = () => {
   const { urlSearchParams, pathname, locale } = useBibleParams();
 
   return ({
-    language = urlSearchParams.get('translation') || locale,
+    language = urlSearchParams.get('translation') || getLanguageFullName(locale, 'en'),
     abbreviation,
     bookNumber = 1,
     chapterNumber = 1,
