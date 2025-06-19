@@ -42,14 +42,11 @@ export async function POST(request: NextRequest) {
       '.article',
       '.post',
       '.content',
-      '#content',
-      '.article-container',
       '.article-content',
       '.post-content',
       '.entry-content',
       '.view-page',
-      'main',
-      '[role="main"]'
+      'main'
     ];
 
     for (const selector of possibleContentSelectors) {
