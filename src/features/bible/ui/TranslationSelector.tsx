@@ -11,23 +11,21 @@ import {
   DrawerDescription
 } from '@/shared';
 import { ChevronDown } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslationVersions, useUpdateBibleParams } from '../hooks';
 
-function TranslationSelector() {
-  const t = useTranslations('Common');
+function TranslationSelector({ getTranslationVersionId }: { getTranslationVersionId: string }) {
   const [open, setOpen] = useState(false);
 
   const updateBibleParams = useUpdateBibleParams();
 
-  const handleTranslationVersionChange = (abbreviation: string, id: string) => {
-    updateBibleParams({ abbreviation, language: id });
+  const handleTranslationVersionChange = (abbreviation: string) => {
+    updateBibleParams({ abbreviation });
   };
 
   const searchParams = useSearchParams();
-  const abbreviation = searchParams.get('abbreviation') || '';
+  const abbreviation = searchParams.get('abbreviation') || getTranslationVersionId;
 
   const { data: translationVersions } = useTranslationVersions();
 
@@ -105,7 +103,7 @@ function TranslationSelector() {
                         variant="outline"
                         disabled={selectedTranslationVersionItem(short_name)}
                         onClick={() => {
-                          handleTranslationVersionChange(short_name, id);
+                          handleTranslationVersionChange(short_name);
                         }}
                       >
                         {short_name}

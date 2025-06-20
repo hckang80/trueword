@@ -67,7 +67,7 @@ export default function Container() {
           bibleChapterInstance={bibleChapterInstance}
           changeBookChapter={changeBookChapter}
         />
-        <TranslationSelector />
+        <TranslationSelector getTranslationVersionId={getTranslationVersionId} />
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
       <VerseList selectedVerses={verses} isRTL={isRTL} />
