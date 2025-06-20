@@ -1,4 +1,3 @@
-export { default as BibleLanguages } from './BibleLanguages';
 export { default as BibleNavigator } from './BibleNavigator';
 export { default as BookSelector } from './BookSelector';
 export { default as SkeletonCard } from './SkeletonCard';
