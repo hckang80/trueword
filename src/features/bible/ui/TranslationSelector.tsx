@@ -96,9 +96,10 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
                     {language}
                     <ChevronDown size={20} className="transition group-open:rotate-180" />
                   </summary>
-                  <div className="grid grid-cols-5 gap-[4px] px-[10px]">
-                    {translations.map(({ short_name }) => (
+                  <div className="grid gap-[4px] px-[10px]">
+                    {translations.map(({ short_name, full_name }) => (
                       <Button
+                        className="items-start flex-col text-left whitespace-normal h-auto"
                         key={short_name}
                         variant="outline"
                         disabled={selectedTranslationVersionItem(short_name)}
@@ -107,6 +108,7 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
                         }}
                       >
                         {short_name}
+                        <em>{full_name}</em>
                       </Button>
                     ))}
                   </div>
