@@ -27,8 +27,7 @@ function TranslationSelector() {
   };
 
   const searchParams = useSearchParams();
-  const abbreviation = searchParams.get('abbreviation');
-  const translationLanguage = searchParams.get('translation');
+  const abbreviation = searchParams.get('abbreviation') || '';
 
   const { data: translationVersions } = useTranslationVersions();
 
@@ -92,7 +91,8 @@ function TranslationSelector() {
                   <summary
                     className={cn(
                       'flex justify-between p-[10px]',
-                      id === translationLanguage ? 'font-bold' : ''
+                      translations.map(({ short_name }) => short_name).includes(abbreviation) &&
+                        'font-bold'
                     )}
                   >
                     {language}
