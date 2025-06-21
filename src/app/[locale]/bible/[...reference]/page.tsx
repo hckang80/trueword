@@ -26,7 +26,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function Bible({ params }: Props) {
+export default async function BiblePage({ params }: Props) {
   const { locale, reference } = await params;
   const [abbreviation, ...restReference] = reference;
 
