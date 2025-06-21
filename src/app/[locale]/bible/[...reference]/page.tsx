@@ -12,7 +12,7 @@ import { Suspense } from 'react';
 import { isSupportedLocale, Loading, type RouteProps } from '@/shared';
 
 type Props = RouteProps & {
-  searchParams: Promise<Partial<{ locale: string; abbreviation: string }>>;
+  params: Promise<{ reference: string[] }>;
 };
 
 export async function generateMetadata(
@@ -26,9 +26,9 @@ export async function generateMetadata(
   };
 }
 
-export default async function Bible({ params, searchParams }: Props) {
-  const { locale } = await params;
-  const { abbreviation } = await searchParams;
+export default async function Bible({ params }: Props) {
+  const { locale, reference } = await params;
+  const [abbreviation, ...restReference] = reference;
 
   const queryClient = new QueryClient();
 
@@ -45,7 +45,7 @@ export default async function Bible({ params, searchParams }: Props) {
 
   await Promise.all([
     queryClient.prefetchQuery(
-      bibleChapterInstanceQueryOptions([getTranslationVersionId, '1', '1'])
+      bibleChapterInstanceQueryOptions([getTranslationVersionId, ...restReference])
     ),
     queryClient.prefetchQuery(translationBooksQueryOptions(getTranslationVersionId)),
     queryClient.prefetchQuery(translationVersionsQueryOptions)
