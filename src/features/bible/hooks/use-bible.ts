@@ -2,6 +2,7 @@
 
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import { getLanguageFullName } from '../lib';
+import { useRouter } from 'nextjs-toploader/app';
 
 export const useBibleParams = () => {
   const searchParams = useSearchParams();
@@ -31,23 +32,20 @@ export const useBibleLanguage = () => {
 };
 
 export const useUpdateBibleParams = () => {
-  const { urlSearchParams, pathname } = useBibleParams();
+  const router = useRouter();
+  const { locale } = useParams<{ locale: string }>();
 
   return ({
     abbreviation,
     bookNumber = 1,
-    chapterNumber = 1,
-    verseNumber = 0
+    chapterNumber = 1
   }: {
     abbreviation: string;
     bookNumber?: number;
     chapterNumber?: number;
-    verseNumber?: number;
   }) => {
-    urlSearchParams.set('abbreviation', abbreviation);
-    urlSearchParams.set('bookNumber', '' + bookNumber);
-    urlSearchParams.set('chapterNumber', '' + chapterNumber);
-    urlSearchParams.set('verseNumber', '' + verseNumber);
-    window.history.pushState(null, '', `${pathname}?${urlSearchParams.toString()}`);
+    const reference = [abbreviation, bookNumber, chapterNumber];
+    const href = `/${locale}/bible/${reference.join('/')}`;
+    router.push(href);
   };
 };
