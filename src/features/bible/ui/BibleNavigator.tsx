@@ -2,14 +2,17 @@
 
 import { Button } from '@/shared';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { CHAPTER_LENGTH, useBibleSearchParams } from '..';
+import { CHAPTER_LENGTH } from '..';
+import { useParams } from 'next/navigation';
 
 function BibleNavigator({
   changeBookChapter
 }: {
   changeBookChapter: (bookNumber: number, chapter: number) => void;
 }) {
-  const { bookNumber: getBookNumber, chapterNumber: getChapterNumber } = useBibleSearchParams();
+  const {
+    reference: [, getBookNumber, getChapterNumber]
+  } = useParams<{ reference: string[] }>();
 
   const isFirstChapter = getChapterNumber === '1';
   const isLastChapter = +getChapterNumber === CHAPTER_LENGTH[getBookNumber];
