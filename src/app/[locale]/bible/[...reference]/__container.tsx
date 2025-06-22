@@ -14,16 +14,15 @@ import {
   useBibleSearchParams
 } from '@/features/bible';
 
-export default function Container() {
+export default function Container({
+  translationVersionCode: getTranslationVersionId
+}: {
+  translationVersionCode: string;
+}) {
   const language = useBibleLanguage();
-  const {
-    abbreviation: getAbbreviation,
-    bookNumber: getBookNumber,
-    chapterNumber: getChapterNumber
-  } = useBibleSearchParams();
+  const { bookNumber: getBookNumber, chapterNumber: getChapterNumber } = useBibleSearchParams();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
-  const getTranslationVersionId = getAbbreviation || translationVersion.short_name;
 
   const { data: verses } = useBibleChapterInstance([
     getTranslationVersionId,

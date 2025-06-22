@@ -1,7 +1,6 @@
 import Container from './__container';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import {
-  localizedTranslationVersionsQueryOptions,
   bibleChapterInstanceQueryOptions,
   translationBooksQueryOptions,
   translationVersionsQueryOptions,
@@ -28,7 +27,7 @@ export async function generateMetadata(
 
 export default async function BiblePage({ params }: Props) {
   const { locale, reference } = await params;
-  const [abbreviation, ...restReference] = reference;
+  const [translationVersionCode] = reference;
 
   const queryClient = new QueryClient();
 
@@ -36,25 +35,16 @@ export default async function BiblePage({ params }: Props) {
     throw new Error(`Unsupported locale: ${locale}`);
   }
 
-  const localizedTranslationVersions = await queryClient.fetchQuery(
-    localizedTranslationVersionsQueryOptions(getLanguageFullName(locale, 'en'))
-  );
-
-  const [defaultTranslation] = localizedTranslationVersions;
-  const getTranslationVersionId = abbreviation || defaultTranslation.short_name;
-
   await Promise.all([
-    queryClient.prefetchQuery(
-      bibleChapterInstanceQueryOptions([getTranslationVersionId, ...restReference])
-    ),
-    queryClient.prefetchQuery(translationBooksQueryOptions(getTranslationVersionId)),
+    queryClient.prefetchQuery(bibleChapterInstanceQueryOptions(reference)),
+    queryClient.prefetchQuery(translationBooksQueryOptions(translationVersionCode)),
     queryClient.prefetchQuery(translationVersionsQueryOptions)
   ]);
 
   return (
     <Suspense fallback={<Loading />}>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <Container />
+        <Container translationVersionCode={translationVersionCode} />
       </HydrationBoundary>
     </Suspense>
   );
