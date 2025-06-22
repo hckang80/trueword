@@ -20,17 +20,10 @@ export default function MainContainer() {
   const { locale } = useParams<{ locale: string }>();
 
   const {
-    data: { verse, ...restData }
+    data: { verse, abbreviation, bookNumber }
   } = useBibleToday(locale);
 
-  const moreTodayWord: UrlObject = {
-    pathname: '/bible',
-    query: {
-      ...restData,
-      chapterNumber: verse.chapter,
-      verseNumber: verse.verse
-    }
-  };
+  const moreTodayWordPath = `/bible/${abbreviation}/${bookNumber}/${verse.chapter}#${verse.verse}`;
 
   const t = useTranslations('Home');
 
@@ -46,7 +39,7 @@ export default function MainContainer() {
           <CardDescription>{verse.name}</CardDescription>
           <CardAction>
             <Button size="sm" asChild>
-              <Link href={moreTodayWord}>{t('viewFullContext')}</Link>
+              <Link href={moreTodayWordPath}>{t('viewFullContext')}</Link>
             </Button>
           </CardAction>
         </CardHeader>

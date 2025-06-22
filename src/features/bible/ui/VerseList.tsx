@@ -28,6 +28,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
     <div dir={cn(isRTL && 'rtl')}>
       {selectedVerses.map(({ verse, text }) => (
         <p
+          id={`${verse}`}
           className={cn(verse === Number(verseNumber) && 'underline')}
           key={verse}
           ref={(el) => {
