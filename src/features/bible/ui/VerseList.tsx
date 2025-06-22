@@ -1,16 +1,18 @@
 'use client';
 
 import { useRef, useLayoutEffect } from 'react';
-import { useBibleSearchParams } from '../hooks';
 import type { Verse } from '../model';
 import { cn } from '@/shared';
 import sanitizeHtml from 'sanitize-html';
 
 function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: boolean }) {
-  const { verseNumber } = useBibleSearchParams();
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
 
   useLayoutEffect(() => {
+    const { hash } = window.location;
+    if (!hash) return;
+
+    const [, verseNumber] = hash.split('#');
     const verseEl = verseRefs.current[Number(verseNumber)];
     if (!verseEl) return;
 
@@ -18,7 +20,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
       behavior: 'smooth',
       block: 'center'
     });
-  }, [verseNumber]);
+  }, []);
 
   const sanitizedData = (text: string) => ({
     __html: sanitizeHtml(text.replace(/`{3,}/g, '').replace('html', ''))
@@ -29,7 +31,6 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
       {selectedVerses.map(({ verse, text }) => (
         <p
           id={`${verse}`}
-          className="[&:target]:underline"
           key={verse}
           ref={(el) => {
             verseRefs.current[verse] = el;
