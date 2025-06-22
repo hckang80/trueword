@@ -29,7 +29,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
       {selectedVerses.map(({ verse, text }) => (
         <p
           id={`${verse}`}
-          className={cn(verse === Number(verseNumber) && 'underline')}
+          className="[&:target]:underline"
           key={verse}
           ref={(el) => {
             verseRefs.current[verse] = el;
