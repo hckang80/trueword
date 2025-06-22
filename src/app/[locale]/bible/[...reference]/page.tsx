@@ -44,7 +44,7 @@ export default async function BiblePage({ params }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <Container translationVersionCode={translationVersionCode} />
+        <Container reference={reference} />
       </HydrationBoundary>
     </Suspense>
   );

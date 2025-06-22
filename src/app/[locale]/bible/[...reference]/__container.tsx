@@ -10,26 +10,16 @@ import {
   TranslationSelector,
   VerseList,
   VideoList,
-  BibleNavigator,
-  useBibleSearchParams
+  BibleNavigator
 } from '@/features/bible';
 
-export default function Container({
-  translationVersionCode: getTranslationVersionId
-}: {
-  translationVersionCode: string;
-}) {
+export default function Container({ reference }: { reference: string[] }) {
+  const [getTranslationVersionId, getBookNumber, getChapterNumber] = reference;
   const language = useBibleLanguage();
-  const { bookNumber: getBookNumber, chapterNumber: getChapterNumber } = useBibleSearchParams();
   const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
   const [translationVersion] = localizedTranslationVersions;
 
-  const { data: verses } = useBibleChapterInstance([
-    getTranslationVersionId,
-    getBookNumber,
-    getChapterNumber
-  ]);
-
+  const { data: verses } = useBibleChapterInstance(reference);
   const { data: books } = useTranslationBooks(getTranslationVersionId);
   const getCurrentBook = books.find(({ bookid }) => bookid === +getBookNumber);
 
