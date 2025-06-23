@@ -14,6 +14,7 @@ import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslationVersions, useUpdateBibleParams } from '../hooks';
+import { BibleTransition } from '../model';
 
 function TranslationSelector({ getTranslationVersionId }: { getTranslationVersionId: string }) {
   const [open, setOpen] = useState(false);
@@ -62,6 +63,8 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
     }, 100);
   };
 
+  const isRTL = (translationVersion: BibleTransition) => translationVersion.dir === 'rtl';
+
   useEffect(() => {
     setOpen(false);
   }, [abbreviation]);
@@ -87,6 +90,7 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
                   onToggle={() => adjustPosition(index)}
                 >
                   <summary
+                    dir={cn(isRTL(translations[0]) && 'rtl')}
                     className={cn(
                       'flex justify-between p-[10px]',
                       translations.map(({ short_name }) => short_name).includes(abbreviation) &&
