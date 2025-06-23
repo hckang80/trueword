@@ -1,8 +1,6 @@
 'use client';
 
 import {
-  useBibleLanguage,
-  useLocalizedTranslationVersions,
   useUpdateBibleParams,
   useBibleChapterInstance,
   useTranslationBooks,
@@ -10,14 +8,21 @@ import {
   TranslationSelector,
   VerseList,
   VideoList,
-  BibleNavigator
+  BibleNavigator,
+  useTranslationVersions
 } from '@/features/bible';
 
 export default function Container({ reference }: { reference: string[] }) {
   const [getTranslationVersionId, getBookNumber, getChapterNumber] = reference;
-  const language = useBibleLanguage();
-  const { data: localizedTranslationVersions } = useLocalizedTranslationVersions(language);
-  const [translationVersion] = localizedTranslationVersions;
+  const { data: translationVersions } = useTranslationVersions();
+  const translationVersion = translationVersions
+    .map(({ translations }) => translations)
+    .flat()
+    .find(({ short_name }) => short_name === getTranslationVersionId);
+
+  if (!translationVersion) {
+    throw new Error(`Translation version with id ${getTranslationVersionId} not found`);
+  }
 
   const { data: verses } = useBibleChapterInstance(reference);
   const { data: books } = useTranslationBooks(getTranslationVersionId);
