@@ -90,14 +90,18 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
                   onToggle={() => adjustPosition(index)}
                 >
                   <summary
-                    dir={cn(isRTL(translations[0]) && 'rtl')}
                     className={cn(
-                      'flex justify-between p-[10px]',
+                      'flex justify-between gap-2 p-[10px]',
                       translations.map(({ short_name }) => short_name).includes(abbreviation) &&
                         'font-bold'
                     )}
                   >
-                    {language}
+                    <span
+                      dir={cn(isRTL(translations[0]) && 'rtl')}
+                      className={cn('flex-grow', isRTL(translations[0]) && 'text-right')}
+                    >
+                      {language}
+                    </span>
                     <ChevronDown size={20} className="transition group-open:rotate-180" />
                   </summary>
                   <div className="grid gap-[4px] px-[10px]">
