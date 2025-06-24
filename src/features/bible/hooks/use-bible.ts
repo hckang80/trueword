@@ -1,28 +1,18 @@
 'use client';
 
-import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import { getLanguageFullName } from '../lib';
 import { useRouter } from 'nextjs-toploader/app';
-
-export const useBibleParams = () => {
-  const searchParams = useSearchParams();
-  const urlSearchParams = new URLSearchParams(searchParams.toString());
-  const pathname = usePathname();
-  const routeParams = useParams<{ locale: string }>();
-  const { locale } = routeParams;
-
-  return { urlSearchParams, pathname, locale };
-};
+import { useLocale } from 'next-intl';
 
 export const useBibleLanguage = () => {
-  const { locale } = useBibleParams();
+  const locale = useLocale();
 
   return getLanguageFullName(locale, 'en');
 };
 
 export const useUpdateBibleParams = () => {
   const router = useRouter();
-  const { locale } = useParams<{ locale: string }>();
+  const locale = useLocale();
 
   return ({
     abbreviation,

@@ -12,11 +12,10 @@ import {
   CardTitle
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function MainContainer() {
-  const { locale } = useParams<{ locale: string }>();
+  const locale = useLocale();
 
   const {
     data: { verse, abbreviation, bookNumber }

@@ -1,6 +1,5 @@
 'use client';
 
-import { useBibleParams } from '@/features/bible';
 import {
   Button,
   locales,
@@ -13,11 +12,12 @@ import {
 } from '@/shared';
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { Mail } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import { useRouter } from 'nextjs-toploader/app';
 
 export function Header() {
   const router = useRouter();
-  const { locale } = useBibleParams();
+  const locale = useLocale();
   const pathname = usePathname();
 
   const handleChange = (language: string) => {

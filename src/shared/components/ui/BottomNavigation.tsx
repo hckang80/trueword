@@ -2,8 +2,8 @@
 
 import { Home, Book, Newspaper } from 'lucide-react';
 import { Link, usePathname } from '@/shared/i18n/routing';
-import { useTranslations } from 'next-intl';
-import { translationVersionCode, useBibleParams } from '@/features/bible';
+import { useLocale, useTranslations } from 'next-intl';
+import { translationVersionCode } from '@/features/bible';
 
 interface NavItemProps {
   href: string;
@@ -27,7 +27,7 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
 };
 
 export const BottomNavigation = () => {
-  const { locale } = useBibleParams();
+  const locale = useLocale();
   const t = useTranslations('Common');
   const pathname = usePathname();
 
