@@ -2,20 +2,6 @@ import { type Verse, type BibleBook, type TodayVerse, type YouTubeVideo } from '
 import { axiosInstance, type Locale } from '@/shared';
 import type { BibleLanguage } from '..';
 
-export async function getLocalizedTranslationVersions(language: string) {
-  const data = await fetchTranslationVersions();
-
-  const localizedData = data.find(({ id }) => id === language);
-
-  if (!localizedData) {
-    throw new Error(`No translation found for language: ${language}`);
-  }
-
-  const { translations } = localizedData;
-
-  return translations;
-}
-
 export async function fetchTranslationVersions() {
   const { data } = await axiosInstance<BibleLanguage[]>('/api/translations');
 

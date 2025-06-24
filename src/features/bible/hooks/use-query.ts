@@ -4,7 +4,6 @@ import {
   fetchBibleInstance,
   fetchTranslationBooks,
   fetchYouTubeVideos,
-  getLocalizedTranslationVersions,
   fetchTranslationVersions,
   type YouTubeVideo,
   fetchBibleToday
@@ -26,15 +25,6 @@ export const translationBooksQueryOptions = (getTranslationVersionId: string) =>
 });
 export const useTranslationBooks = (getTranslationVersionId: string) => {
   return useSuspenseQuery(translationBooksQueryOptions(getTranslationVersionId));
-};
-
-export const localizedTranslationVersionsQueryOptions = (language: string) => ({
-  ...translationsKeys.data(language),
-  queryFn: () => getLocalizedTranslationVersions(language),
-  staleTime: Infinity
-});
-export const useLocalizedTranslationVersions = (language: string) => {
-  return useSuspenseQuery(localizedTranslationVersionsQueryOptions(language));
 };
 
 export const translationVersionsQueryOptions = {

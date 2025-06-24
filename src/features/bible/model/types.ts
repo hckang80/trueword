@@ -13,8 +13,6 @@ export interface TranslationBookInstance {
   sha: string;
 }
 
-export type TranslationBooks = Record<string, TranslationBookInstance>;
-
 export interface BibleBook {
   bookid: number;
   name: string;
