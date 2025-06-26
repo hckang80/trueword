@@ -26,7 +26,7 @@ export default function NewsIdContainer() {
   const {
     data: { content }
   } = useScrapedContent(link, description);
-  const { data: summaryData, isLoading } = useSummary({ content, title, locale });
+  const { data: summaryData, isLoading, isError } = useSummary({ content, title, locale });
   const { summary = '' } = summaryData || {};
 
   const sanitizedData = () => ({
@@ -61,16 +61,25 @@ export default function NewsIdContainer() {
             </Link>
           </Button>
         </div>
-        <p className="mb-[10px] text-xs text-muted-foreground">
-          {t(isLoading ? 'News.aiSummaryLoading' : 'News.aiSummary')}
-        </p>
+
+        {!isError && (
+          <p className="mb-[10px] text-xs text-muted-foreground">
+            {t(isLoading ? 'News.aiSummaryLoading' : 'News.aiSummary')}
+          </p>
+        )}
+
         <div className="news-summary text-secondary-foreground">
           {isLoading && (
             <div className="relative min-h-30">
               <Loading />
             </div>
           )}
-          <div dangerouslySetInnerHTML={sanitizedData()} />
+
+          {!isError ? (
+            <div dangerouslySetInnerHTML={sanitizedData()} />
+          ) : (
+            <p>{t('News.summarizeError')}</p>
+          )}
         </div>
       </div>
     </article>
