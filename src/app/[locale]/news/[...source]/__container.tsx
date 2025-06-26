@@ -78,7 +78,7 @@ export default function NewsIdContainer() {
           {!isError ? (
             <div dangerouslySetInnerHTML={sanitizedData()} />
           ) : (
-            <p>
+            <p className="p-12 text-center">
               {t('News.summarizeError')}{' '}
               <Link
                 title={t('News.viewFullArticle')}
