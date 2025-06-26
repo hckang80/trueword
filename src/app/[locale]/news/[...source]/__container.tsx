@@ -78,7 +78,18 @@ export default function NewsIdContainer() {
           {!isError ? (
             <div dangerouslySetInnerHTML={sanitizedData()} />
           ) : (
-            <p>{t('News.summarizeError')}</p>
+            <p>
+              {t('News.summarizeError')}{' '}
+              <Link
+                title={t('News.viewFullArticle')}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                {t('News.viewFullArticle')}
+              </Link>
+            </p>
           )}
         </div>
       </div>
