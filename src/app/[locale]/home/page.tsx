@@ -8,7 +8,7 @@ import type { RouteProps } from '@/shared';
 const MainPage = async ({ params }: RouteProps) => {
   const { locale } = await params;
   const queryClient = new QueryClient();
-  Promise.all([
+  await Promise.all([
     queryClient.prefetchQuery(bibleTodayQueryOptions(locale)),
     queryClient.prefetchQuery(newsQueryOptions(locale))
   ]);
