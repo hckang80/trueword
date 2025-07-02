@@ -1,17 +1,12 @@
 'use client';
 
 import { InfiniteScrollTrigger } from '@/shared';
-import { InfiniteData } from '@tanstack/react-query';
+import type { InfiniteData, UseSuspenseInfiniteQueryResult } from '@tanstack/react-query';
 import { memo } from 'react';
 import type { NewsInstance } from '../model';
 import { NewsItem } from '.';
 
-interface NewsListProps {
-  data: InfiniteData<NewsInstance>;
-  fetchNextPage: () => void;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-}
+type NewsListProps = UseSuspenseInfiniteQueryResult<InfiniteData<NewsInstance, unknown>, Error>;
 
 const NewsList = ({ data, fetchNextPage, hasNextPage, isFetchingNextPage }: NewsListProps) => (
   <div className="grid gap-4 p-[var(--global-inset)]">

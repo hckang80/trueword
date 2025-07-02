@@ -17,14 +17,6 @@ export default function NewsContainer() {
   const locale = useLocale();
   const { data: news } = useNews(locale);
   const infiniteQuery = useInfiniteNews(news);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteQuery;
 
-  return (
-    <NewsList
-      data={data}
-      fetchNextPage={fetchNextPage}
-      hasNextPage={hasNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-    />
-  );
+  return <NewsList {...infiniteQuery} />;
 }
