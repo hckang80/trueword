@@ -27,6 +27,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'pbs.twimg.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'videos.files.wordpress.com'
       }
     ],
     minimumCacheTTL: 60,
