@@ -4,7 +4,7 @@ import React from 'react';
 import Container from './__container';
 import { newsQueryOptions } from '@/features/news';
 import { axiosInstance, type RouteProps } from '@/shared';
-import { PhotoParams } from '@/app/api/background/route';
+import type { PhotoParams } from '@/entities/background';
 
 const MainPage = async ({ params }: RouteProps) => {
   const { locale } = await params;
