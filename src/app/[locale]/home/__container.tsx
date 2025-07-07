@@ -1,5 +1,6 @@
 'use client';
 
+import { useBackgroundPhoto } from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
@@ -28,6 +29,15 @@ export default function MainContainer() {
   const { data: news } = useNews(locale);
   const MAX_NEWS_ITEMS = 4;
   const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
+
+  const { data: photoData } = useBackgroundPhoto({
+    query: 'cat',
+    page: 1,
+    perPage: 10,
+    color: 'green',
+    orientation: 'portrait'
+  });
+  console.log({ photoData });
 
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
