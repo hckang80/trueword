@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const params = Object.fromEntries(searchParams.entries()) as unknown as PhotoParams;
   const unsplash = createApi({
-    accessKey: 'UFaLEISFs___smayNMm-ithLhO-LwYBMv-vpYTOXeDQ'
+    accessKey: process.env.UNSPLASH_ACCESS_KEY || ''
   });
 
   try {
