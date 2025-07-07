@@ -14,6 +14,7 @@ import {
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export default function MainContainer({
   backgroundPhotoParams
@@ -39,6 +40,10 @@ export default function MainContainer({
 
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
+      {photoData.results.map(({ urls, width, height, alt_description }) => {
+        return <Image src={urls.regular} width={width} height={height} alt={alt_description} />;
+      })}
+
       <Card>
         <CardHeader>
           <CardTitle>{t('todaysVerse')}</CardTitle>
