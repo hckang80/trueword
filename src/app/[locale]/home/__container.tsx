@@ -1,6 +1,6 @@
 'use client';
 
-import { useBackgroundPhoto } from '@/entities/background';
+import { type PhotoParams, useBackgroundPhoto } from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
@@ -15,7 +15,11 @@ import {
 import { Link } from '@/shared/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 
-export default function MainContainer() {
+export default function MainContainer({
+  backgroundPhotoParams
+}: {
+  backgroundPhotoParams: PhotoParams;
+}) {
   const locale = useLocale();
 
   const {
@@ -30,13 +34,7 @@ export default function MainContainer() {
   const MAX_NEWS_ITEMS = 4;
   const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
 
-  const { data: photoData } = useBackgroundPhoto({
-    query: 'cat',
-    page: 1,
-    perPage: 10,
-    color: 'green',
-    orientation: 'portrait'
-  });
+  const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
   console.log({ photoData });
 
   return (
