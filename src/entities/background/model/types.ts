@@ -14,8 +14,13 @@ export interface BackGroundPhoto {
   };
   urls: {
     full: string;
+    raw: string;
+    regular: string;
+    small: string;
+    thumb: string;
   };
   width: number;
+  height: number;
 }
 
 export type PhotoParams = {
