@@ -46,6 +46,7 @@ export default function MainContainer({
           alt={verseBackground.alt_description}
           fill
           priority
+          sizes="483px"
         />
         <CardHeader className="relative">
           <CardTitle className="text-white font-semibold text-shadow-xs">
