@@ -36,15 +36,10 @@ export default function MainContainer({
   const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
-  console.log({ photoData });
   const [verseBackground] = photoData.results;
 
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
-      {photoData.results.map(({ urls, width, height, alt_description }) => {
-        return <Image src={urls.regular} width={width} height={height} alt={alt_description} />;
-      })}
-
       <Card className="relative overflow-hidden">
         <Image
           src={verseBackground.urls.regular}
