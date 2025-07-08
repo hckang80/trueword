@@ -37,6 +37,7 @@ export default function MainContainer({
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
   console.log({ photoData });
+  const [verseBackground] = photoData.results;
 
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
@@ -44,8 +45,14 @@ export default function MainContainer({
         return <Image src={urls.regular} width={width} height={height} alt={alt_description} />;
       })}
 
-      <Card>
-        <CardHeader>
+      <Card className="relative overflow-hidden">
+        <Image
+          src={verseBackground.urls.regular}
+          alt={verseBackground.alt_description}
+          fill
+          priority
+        />
+        <CardHeader className="relative">
           <CardTitle>{t('todaysVerse')}</CardTitle>
           <CardDescription>{verse.name}</CardDescription>
           <CardAction>
@@ -54,7 +61,7 @@ export default function MainContainer({
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <p>{verse.text}</p>
         </CardContent>
       </Card>
