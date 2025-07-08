@@ -1,5 +1,6 @@
 'use client';
 
+import { type PhotoParams, useBackgroundPhoto } from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
@@ -13,8 +14,13 @@ import {
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 
-export default function MainContainer() {
+export default function MainContainer({
+  backgroundPhotoParams
+}: {
+  backgroundPhotoParams: PhotoParams;
+}) {
   const locale = useLocale();
 
   const {
@@ -29,20 +35,31 @@ export default function MainContainer() {
   const MAX_NEWS_ITEMS = 4;
   const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
 
+  const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
+  const [verseBackground] = photoData.results;
+
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('todaysVerse')}</CardTitle>
-          <CardDescription>{verse.name}</CardDescription>
+      <Card className="relative overflow-hidden">
+        <Image
+          src={verseBackground.urls.regular}
+          alt={verseBackground.alt_description}
+          fill
+          priority
+        />
+        <CardHeader className="relative">
+          <CardTitle className="text-white font-semibold text-shadow-xs">
+            {t('todaysVerse')}
+          </CardTitle>
+          <CardDescription className="text-gray-400 text-shadow-xs">{verse.name}</CardDescription>
           <CardAction>
             <Button size="sm" asChild>
               <Link href={moreTodayWordPath}>{t('viewFullContext')}</Link>
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent>
-          <p>{verse.text}</p>
+        <CardContent className="relative">
+          <p className="text-white font-semibold text-shadow-xs">{verse.text}</p>
         </CardContent>
       </Card>
 
