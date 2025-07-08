@@ -9,10 +9,10 @@ import { backgroundPhotoQueryOptions, type PhotoParams } from '@/entities/backgr
 const MainPage = async ({ params }: RouteProps) => {
   const { locale } = await params;
   const backgroundPhotoParams = {
-    query: 'forest natural empty center',
+    query: 'river natural empty center',
     page: 1,
     perPage: 10,
-    color: 'white',
+    color: 'black_and_white',
     orientation: 'landscape'
   } satisfies PhotoParams;
 
