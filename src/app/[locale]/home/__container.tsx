@@ -53,8 +53,8 @@ export default function MainContainer({
           priority
         />
         <CardHeader className="relative">
-          <CardTitle>{t('todaysVerse')}</CardTitle>
-          <CardDescription>{verse.name}</CardDescription>
+          <CardTitle className="text-gray-950">{t('todaysVerse')}</CardTitle>
+          <CardDescription className="text-gray-600">{verse.name}</CardDescription>
           <CardAction>
             <Button size="sm" asChild>
               <Link href={moreTodayWordPath}>{t('viewFullContext')}</Link>
@@ -62,7 +62,7 @@ export default function MainContainer({
           </CardAction>
         </CardHeader>
         <CardContent className="relative">
-          <p>{verse.text}</p>
+          <p className="text-gray-950 font-semibold">{verse.text}</p>
         </CardContent>
       </Card>
 
