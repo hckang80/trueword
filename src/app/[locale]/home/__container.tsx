@@ -17,9 +17,11 @@ import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 export default function MainContainer({
-  backgroundPhotoParams
+  backgroundPhotoParams,
+  randomBackgroundPhotoIndex
 }: {
   backgroundPhotoParams: PhotoParams;
+  randomBackgroundPhotoIndex: number;
 }) {
   const locale = useLocale();
 
@@ -36,7 +38,7 @@ export default function MainContainer({
   const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
-  const [verseBackground] = photoData.results;
+  const verseBackground = photoData.results[randomBackgroundPhotoIndex];
 
   return (
     <div className="flex flex-col gap-4 p-[var(--global-inset)]">
@@ -46,7 +48,7 @@ export default function MainContainer({
           alt={verseBackground.alt_description}
           fill
           priority
-          sizes="483px"
+          sizes={`${verseBackground.width}px`}
         />
         <CardHeader className="relative">
           <CardTitle className="text-white font-semibold text-shadow-xs">
