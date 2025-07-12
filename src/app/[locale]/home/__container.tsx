@@ -13,7 +13,7 @@ import {
   CardTitle
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
-import { Share2 } from 'lucide-react';
+import { ChevronRight, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -58,14 +58,16 @@ export default function MainContainer({
             {t('todaysVerse')}
           </CardTitle>
           <CardDescription className="text-gray-400 text-shadow-xs">{verse.name}</CardDescription>
-          <CardAction>
+          <CardAction className="flex gap-1">
             <Button size="icon">
               <Share2
                 onClick={() => shareVerseCard(verse.text, verse.name, verseBackground.urls.regular)}
               />
             </Button>
-            <Button size="sm" asChild>
-              <Link href={moreTodayWordPath}>{t('viewFullContext')}</Link>
+            <Button size="icon" asChild>
+              <Link href={moreTodayWordPath} title={t('viewFullContext')}>
+                <ChevronRight />
+              </Link>
             </Button>
           </CardAction>
         </CardHeader>
