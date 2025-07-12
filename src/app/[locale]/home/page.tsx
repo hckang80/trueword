@@ -25,7 +25,7 @@ const MainPage = async ({ params }: RouteProps) => {
   ]);
   const dehydratedState = dehydrate(queryClient);
 
-  const randomBackgroundPhotoIndex = new Date().getDate() % PHOTO_LIST_SIZE;
+  const randomBackgroundPhotoIndex = new Date().getUTCDate() % PHOTO_LIST_SIZE;
 
   return (
     <HydrationBoundary state={dehydratedState}>
