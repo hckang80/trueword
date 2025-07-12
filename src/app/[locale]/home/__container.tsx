@@ -1,6 +1,6 @@
 'use client';
 
-import { type PhotoParams, useBackgroundPhoto } from '@/entities/background';
+import { type PhotoParams, shareVerseCard, useBackgroundPhoto } from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
@@ -13,6 +13,7 @@ import {
   CardTitle
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
+import { Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -58,6 +59,11 @@ export default function MainContainer({
           </CardTitle>
           <CardDescription className="text-gray-400 text-shadow-xs">{verse.name}</CardDescription>
           <CardAction>
+            <Button size="icon">
+              <Share2
+                onClick={() => shareVerseCard(verse.text, verse.name, verseBackground.urls.regular)}
+              />
+            </Button>
             <Button size="sm" asChild>
               <Link href={moreTodayWordPath}>{t('viewFullContext')}</Link>
             </Button>
