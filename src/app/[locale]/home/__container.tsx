@@ -59,10 +59,11 @@ export default function MainContainer({
           </CardTitle>
           <CardDescription className="text-gray-400 text-shadow-xs">{verse.name}</CardDescription>
           <CardAction className="flex gap-1">
-            <Button size="icon">
-              <Share2
-                onClick={() => shareVerseCard(verse.text, verse.name, verseBackground.urls.regular)}
-              />
+            <Button
+              size="icon"
+              onClick={() => shareVerseCard(verse.text, verse.name, verseBackground.urls.regular)}
+            >
+              <Share2 />
             </Button>
             <Button size="icon" asChild>
               <Link href={moreTodayWordPath} title={t('viewFullContext')}>
