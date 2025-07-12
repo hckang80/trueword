@@ -38,3 +38,8 @@ export function extractUniqId(url: string) {
 export function getRandomPositiveInt(max: number) {
   return Math.floor(Math.random() * max) + 1;
 }
+
+export function getTodaysDate() {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+}

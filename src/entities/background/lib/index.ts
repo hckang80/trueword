@@ -1,3 +1,5 @@
+import { getTodaysDate } from '@/shared';
+
 export async function createVerseCard(verse: string, reference: string, src: string) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
@@ -109,7 +111,8 @@ export async function shareVerseCard(verse: string, reference: string, backgroun
 
   canvas.toBlob(async (blob) => {
     if (!blob) throw new Error('Blob is not available');
-    const file = new File([blob], 'todays-verse.png', { type: 'image/png' });
+    const filename = `${getTodaysDate()}_todays-verse.png`;
+    const file = new File([blob], filename, { type: 'image/png' });
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
@@ -118,7 +121,7 @@ export async function shareVerseCard(verse: string, reference: string, backgroun
         text: `${verse} - ${reference}`
       });
     } else {
-      downloadImage(canvas, 'todays-verse.png');
+      downloadImage(canvas, filename);
     }
   }, 'image/png');
 }
