@@ -7,8 +7,9 @@ export async function createVerseCard(verse: string, reference: string, src: str
   canvas.height = 1080;
 
   const img = await loadImage(src);
+  const optimizedImg = resizeImage(img, canvas.width, canvas.height);
 
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(optimizedImg, 0, 0, canvas.width, canvas.height);
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -44,6 +45,42 @@ function loadImage(src: string): Promise<HTMLImageElement> {
     img.onerror = reject;
     img.src = src;
   });
+}
+
+function resizeImage(
+  img: HTMLImageElement,
+  targetWidth: number,
+  targetHeight: number
+): HTMLCanvasElement {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas context is not available');
+
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  const imgAspect = img.width / img.height;
+  const canvasAspect = targetWidth / targetHeight;
+
+  let drawWidth, drawHeight, offsetX, offsetY;
+
+  if (imgAspect > canvasAspect) {
+    drawHeight = targetHeight;
+    drawWidth = drawHeight * imgAspect;
+    offsetX = (targetWidth - drawWidth) / 2;
+    offsetY = 0;
+  } else {
+    drawWidth = targetWidth;
+    drawHeight = drawWidth / imgAspect;
+    offsetX = 0;
+    offsetY = (targetHeight - drawHeight) / 2;
+  }
+
+  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+  return canvas;
 }
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number) {
