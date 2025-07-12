@@ -7,11 +7,12 @@ import { getRandomPositiveInt, type RouteProps } from '@/shared';
 import { backgroundPhotoQueryOptions, type PhotoParams } from '@/entities/background';
 
 const MainPage = async ({ params }: RouteProps) => {
+  const PHOTO_LIST_SIZE = 10;
   const { locale } = await params;
   const backgroundPhotoParams = {
     query: 'river natural empty center',
     page: 1,
-    perPage: 10,
+    perPage: PHOTO_LIST_SIZE,
     color: 'black_and_white',
     orientation: 'landscape'
   } satisfies PhotoParams;
@@ -24,13 +25,14 @@ const MainPage = async ({ params }: RouteProps) => {
   ]);
   const dehydratedState = dehydrate(queryClient);
 
-  const randomBackgroundPhotoIndex = getRandomPositiveInt(backgroundPhotoParams.perPage || 1) - 1;
+  const randomBackgroundPhotoIndex = new Date().getDate() % PHOTO_LIST_SIZE;
 
   return (
     <HydrationBoundary state={dehydratedState}>
       <Container
         backgroundPhotoParams={backgroundPhotoParams}
         randomBackgroundPhotoIndex={randomBackgroundPhotoIndex}
+        perPage={PHOTO_LIST_SIZE}
       />
     </HydrationBoundary>
   );
