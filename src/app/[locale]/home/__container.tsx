@@ -19,12 +19,10 @@ import Image from 'next/image';
 
 export default function MainContainer({
   backgroundPhotoParams,
-  randomBackgroundPhotoIndex,
-  perPage
+  randomBackgroundPhotoIndex
 }: {
   backgroundPhotoParams: PhotoParams;
   randomBackgroundPhotoIndex: number;
-  perPage: number;
 }) {
   const locale = useLocale();
 

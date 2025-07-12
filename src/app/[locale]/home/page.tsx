@@ -32,7 +32,6 @@ const MainPage = async ({ params }: RouteProps) => {
       <Container
         backgroundPhotoParams={backgroundPhotoParams}
         randomBackgroundPhotoIndex={randomBackgroundPhotoIndex}
-        perPage={PHOTO_LIST_SIZE}
       />
     </HydrationBoundary>
   );
