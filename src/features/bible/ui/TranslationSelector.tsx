@@ -98,7 +98,10 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
                   >
                     <span
                       dir={cn(isRTL(translations[0]) && 'rtl')}
-                      className={cn('flex-grow', isRTL(translations[0]) && 'text-right')}
+                      className={cn(
+                        'flex-grow',
+                        isRTL(translations[0]) ? 'text-right' : 'text-left'
+                      )}
                     >
                       {language}
                     </span>
