@@ -117,7 +117,7 @@ export async function shareVerseCard(verse: string, reference: string, backgroun
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
         files: [file],
-        title: '오늘의 말씀',
+        title: "Today's Verse",
         text: `${verse} - ${reference}`
       });
     } else {
