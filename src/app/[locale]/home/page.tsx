@@ -3,7 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import React from 'react';
 import Container from './__container';
 import { newsQueryOptions } from '@/features/news';
-import { getRandomPositiveInt, type RouteProps } from '@/shared';
+import type { RouteProps } from '@/shared';
 import { backgroundPhotoQueryOptions, type PhotoParams } from '@/entities/background';
 
 const MainPage = async ({ params }: RouteProps) => {
