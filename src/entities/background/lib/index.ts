@@ -1,4 +1,4 @@
-export function createVerseCard(verse: string, reference: string) {
+export async function createVerseCard(verse: string, reference: string, src: string) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas context is not available');
@@ -6,10 +6,11 @@ export function createVerseCard(verse: string, reference: string) {
   canvas.width = 1080;
   canvas.height = 1080;
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  gradient.addColorStop(0, '#667eea');
-  gradient.addColorStop(1, '#764ba2');
-  ctx.fillStyle = gradient;
+  const img = await loadImage(src);
+
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.fillStyle = '#ffffff';
@@ -31,7 +32,18 @@ export function createVerseCard(verse: string, reference: string) {
   ctx.font = '28px "Noto Sans KR"';
   ctx.fillText(location.origin, canvas.width / 2, canvas.height - 60);
 
+  img.src = src;
   return canvas;
+}
+
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
 }
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number) {
@@ -55,8 +67,8 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
   return lines;
 }
 
-export async function shareVerseCard(verse: string, reference: string) {
-  const canvas = createVerseCard(verse, reference);
+export async function shareVerseCard(verse: string, reference: string, backgroundImageSrc: string) {
+  const canvas = await createVerseCard(verse, reference, backgroundImageSrc);
 
   canvas.toBlob(async (blob) => {
     if (!blob) throw new Error('Blob is not available');
