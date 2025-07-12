@@ -55,7 +55,7 @@ export default function MainContainer({
           <CardTitle className="text-white font-semibold text-shadow-xs">
             {`🌍 ${t('todaysVerse')} (UTC)`}
           </CardTitle>
-          <CardDescription className="text-gray-400 text-shadow-xs">{verse.name}</CardDescription>
+          <CardDescription className="text-gray-300 text-shadow-xs">{verse.name}</CardDescription>
           <CardAction className="flex gap-1">
             <Button
               size="icon"
