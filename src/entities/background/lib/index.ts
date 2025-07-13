@@ -117,8 +117,9 @@ export async function shareVerseCard(verse: string, reference: string, backgroun
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
         files: [file],
-        title: "Today's Verse",
-        text: `${verse} - ${reference}`
+        title: location.origin,
+        text: `${verse}
+- ${reference} -`
       });
     } else {
       downloadImage(canvas, filename);
