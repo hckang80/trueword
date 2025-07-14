@@ -52,10 +52,12 @@ export default function MainContainer({
           sizes={`${verseBackground.width}px`}
         />
         <CardHeader className="relative">
-          <CardTitle className="text-white font-semibold text-shadow-xs">
+          <CardTitle className="text-white font-semibold custom-text-shadow-black">
             {`${t('todaysVerse')} (🌍 UTC)`}
           </CardTitle>
-          <CardDescription className="text-gray-300 text-shadow-xs">{verse.name}</CardDescription>
+          <CardDescription className="text-gray-300 custom-text-shadow-black">
+            {verse.name}
+          </CardDescription>
           <CardAction className="flex gap-1">
             <Button
               size="icon"
@@ -71,7 +73,7 @@ export default function MainContainer({
           </CardAction>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white font-semibold text-shadow-xs">{verse.text}</p>
+          <p className="text-white font-semibold custom-text-shadow-black">{verse.text}</p>
         </CardContent>
       </Card>
 

@@ -191,4 +191,8 @@
     color: transparent;
     animation: shimmer 4s infinite linear;
   }
+
+  .custom-text-shadow-black {
+    text-shadow: 1px 1px 1px #000;
+  }
 }
