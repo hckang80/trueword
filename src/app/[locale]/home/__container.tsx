@@ -53,7 +53,7 @@ export default function MainContainer({
         />
         <CardHeader className="relative">
           <CardTitle className="text-white font-semibold text-shadow-xs">
-            {`🌍 ${t('todaysVerse')} (UTC)`}
+            {`${t('todaysVerse')} (🌍 UTC)`}
           </CardTitle>
           <CardDescription className="text-gray-300 text-shadow-xs">{verse.name}</CardDescription>
           <CardAction className="flex gap-1">
