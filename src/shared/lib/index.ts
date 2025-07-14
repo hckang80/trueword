@@ -39,6 +39,10 @@ export function getRandomPositiveInt(max: number) {
   return Math.floor(Math.random() * max) + 1;
 }
 
+/**
+ * UTC 기준의 년월일을 반환합니다.
+ * 예: 1980-07-28
+ */
 export function getTodaysDate() {
   const today = new Date();
   return today.toISOString().split('T')[0];
