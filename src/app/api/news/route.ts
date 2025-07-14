@@ -2,6 +2,7 @@ import { fetchNewsFeed, NewsItemType } from '@/features/news';
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { RSS_FEEDS } from '@/entities/rss';
+import { getTodaysDate } from '@/shared';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -9,7 +10,7 @@ const redis = new Redis({
 });
 
 const CACHE_TTL = 24 * 60 * 60;
-const CACHE_KEY = 'rss_news';
+const CACHE_KEY = `rss_news:${getTodaysDate()}`;
 
 export async function GET() {
   try {
