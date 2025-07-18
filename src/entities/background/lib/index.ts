@@ -109,18 +109,8 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
 export async function shareVerseCard(verse: string, reference: string, backgroundImageSrc: string) {
   const canvas = await createVerseCard(verse, reference, backgroundImageSrc);
 
-  const blob: Blob = await new Promise((resolve, reject) => {
-    canvas.toBlob((blobResult) => {
-      if (blobResult) {
-        resolve(blobResult);
-      } else {
-        reject(new Error('Blob is not available'));
-      }
-    }, 'image/png');
-  });
-
   const filename = `${getTodaysDate()}_todays-verse.png`;
-  const file = new File([blob], filename, { type: 'image/png' });
+  const file = new File([await canvasToBlob(canvas)], filename, { type: 'image/png' });
 
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
@@ -151,6 +141,13 @@ function downloadImage(canvas: HTMLCanvasElement, filename: string) {
 export async function createVerseCardUrl(verse: string, reference: string, src: string) {
   const canvas = await createVerseCard(verse, reference, src);
 
+  const filename = `${getTodaysDate()}_todays-verse.png`;
+  const file = new File([await canvasToBlob(canvas)], filename, { type: 'image/png' });
+
+  return URL.createObjectURL(file);
+}
+
+export async function canvasToBlob(canvas: HTMLCanvasElement) {
   const blob: Blob = await new Promise((resolve, reject) => {
     canvas.toBlob((blobResult) => {
       if (blobResult) {
@@ -161,8 +158,5 @@ export async function createVerseCardUrl(verse: string, reference: string, src: 
     }, 'image/png');
   });
 
-  const filename = `${getTodaysDate()}_todays-verse.png`;
-  const file = new File([blob], filename, { type: 'image/png' });
-
-  return URL.createObjectURL(file);
+  return blob;
 }
