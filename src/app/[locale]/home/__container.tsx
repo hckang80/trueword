@@ -89,19 +89,22 @@ export default function MainContainer({
               </DrawerTrigger>
               <DrawerContent>
                 <DrawerHeader className="p-0">
-                  <DrawerTitle className="hidden">말씀 카드 선택</DrawerTitle>
-                  <DrawerDescription>
-                    말씀 카드 리스트
-                    {photoData.results.map(async ({ urls, alt_description }) => {
-                      return (
-                        <Image
-                          src={await createVerseCardUrl(verse.text, verse.name, urls.regular)}
-                          width={216}
-                          height={216}
-                          alt={alt_description}
-                        />
-                      );
-                    })}
+                  <DrawerTitle>말씀 카드 공유</DrawerTitle>
+                  <DrawerDescription asChild>
+                    <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
+                      {photoData.results.map(async ({ urls, alt_description }) => {
+                        return (
+                          <div className="snap-center shrink-0">
+                            <Image
+                              src={await createVerseCardUrl(verse.text, verse.name, urls.regular)}
+                              width={216}
+                              height={216}
+                              alt={alt_description}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
                   </DrawerDescription>
                 </DrawerHeader>
               </DrawerContent>
