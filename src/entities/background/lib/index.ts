@@ -109,22 +109,36 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
 export async function shareVerseCard(verse: string, reference: string, backgroundImageSrc: string) {
   const canvas = await createVerseCard(verse, reference, backgroundImageSrc);
 
-  canvas.toBlob(async (blob) => {
-    if (!blob) throw new Error('Blob is not available');
-    const filename = `${getTodaysDate()}_todays-verse.png`;
-    const file = new File([blob], filename, { type: 'image/png' });
+  const blob: Blob = await new Promise((resolve, reject) => {
+    canvas.toBlob((blobResult) => {
+      if (blobResult) {
+        resolve(blobResult);
+      } else {
+        reject(new Error('Blob is not available'));
+      }
+    }, 'image/png');
+  });
 
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  const filename = `${getTodaysDate()}_todays-verse.png`;
+  const file = new File([blob], filename, { type: 'image/png' });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
       await navigator.share({
         files: [file],
         title: location.origin,
-        text: `${verse}
-- ${reference} -`
+        text: `${verse}\n- ${reference} -`
       });
-    } else {
-      downloadImage(canvas, filename);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        console.log('이미지 공유가 취소되었습니다.');
+      } else {
+        console.error('이미지 공유 중 오류 발생:', error);
+      }
     }
-  }, 'image/png');
+  } else {
+    downloadImage(canvas, filename);
+  }
 }
 
 function downloadImage(canvas: HTMLCanvasElement, filename: string) {
@@ -144,7 +158,7 @@ export async function createVerseCardUrl(verse: string, reference: string, src: 
       } else {
         reject(new Error('Blob is not available'));
       }
-    });
+    }, 'image/png');
   });
 
   const filename = `${getTodaysDate()}_todays-verse.png`;
