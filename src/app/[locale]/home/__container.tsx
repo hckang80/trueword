@@ -1,6 +1,11 @@
 'use client';
 
-import { type PhotoParams, shareVerseCard, useBackgroundPhoto } from '@/entities/background';
+import {
+  createVerseCardUrl,
+  type PhotoParams,
+  shareVerseCard,
+  useBackgroundPhoto
+} from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
@@ -85,11 +90,22 @@ export default function MainContainer({
               <DrawerContent>
                 <DrawerHeader className="p-0">
                   <DrawerTitle className="hidden">말씀 카드 선택</DrawerTitle>
-                  <DrawerDescription>말씀 카드 리스트</DrawerDescription>
+                  <DrawerDescription>
+                    말씀 카드 리스트
+                    {photoData.results.map(async ({ urls, alt_description }) => {
+                      return (
+                        <Image
+                          src={await createVerseCardUrl(verse.text, verse.name, urls.regular)}
+                          width={216}
+                          height={216}
+                          alt={alt_description}
+                        />
+                      );
+                    })}
+                  </DrawerDescription>
                 </DrawerHeader>
               </DrawerContent>
             </Drawer>
-            ㄴ
           </CardAction>
         </CardHeader>
         <CardContent className="relative">

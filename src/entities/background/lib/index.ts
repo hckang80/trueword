@@ -133,3 +133,22 @@ function downloadImage(canvas: HTMLCanvasElement, filename: string) {
   link.href = canvas.toDataURL();
   link.click();
 }
+
+export async function createVerseCardUrl(verse: string, reference: string, src: string) {
+  const canvas = await createVerseCard(verse, reference, src);
+
+  const blob: Blob = await new Promise((resolve, reject) => {
+    canvas.toBlob((blobResult) => {
+      if (blobResult) {
+        resolve(blobResult);
+      } else {
+        reject(new Error('Blob is not available'));
+      }
+    });
+  });
+
+  const filename = `${getTodaysDate()}_todays-verse.png`;
+  const file = new File([blob], filename, { type: 'image/png' });
+
+  return URL.createObjectURL(file);
+}
