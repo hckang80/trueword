@@ -10,10 +10,16 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
-import { ChevronRight, Share2 } from 'lucide-react';
+import { ChevronRight, EllipsisVertical, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -70,6 +76,20 @@ export default function MainContainer({
                 <ChevronRight />
               </Link>
             </Button>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button size="icon">
+                  <EllipsisVertical />
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader className="p-0">
+                  <DrawerTitle className="hidden">말씀 카드 선택</DrawerTitle>
+                  <DrawerDescription>말씀 카드 리스트</DrawerDescription>
+                </DrawerHeader>
+              </DrawerContent>
+            </Drawer>
+            ㄴ
           </CardAction>
         </CardHeader>
         <CardContent className="relative">
