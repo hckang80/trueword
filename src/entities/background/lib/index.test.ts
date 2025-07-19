@@ -208,7 +208,7 @@ describe('Canvas Helper Functions', () => {
 
   describe('getCanvasAsFile', () => {
     it('should return a File object with correct name and type', async () => {
-      const file = await getCanvasAsFile(mockCanvas, 'my-prefix');
+      const file = await getCanvasAsFile(new Blob(), 'my-prefix');
       expect(file).toBeInstanceOf(File);
       expect(file.name).toBe(`my-prefix_${MOCK_DATE}.png`);
       expect(file.type).toBe('image/png');
@@ -249,10 +249,8 @@ describe('Canvas Helper Functions', () => {
 
   describe('downloadImage', () => {
     it('should trigger a file download', async () => {
-      await downloadImage(mockCanvas, 'test-download.png');
+      await downloadImage(new Blob(), 'test-download.png');
 
-      expect(mockCanvas.toDataURL).toHaveBeenCalledTimes(0);
-      expect(mockCanvas.toBlob).toHaveBeenCalledTimes(1);
       expect(mockCreateObjectURL).toHaveBeenCalledTimes(1);
       expect(mockLinkClick).toHaveBeenCalledTimes(1);
       expect(appendChildSpy).toHaveBeenCalledTimes(1);

@@ -23,11 +23,7 @@ export async function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
  * @param filenamePrefix - 파일 이름에 붙을 접두사 (예: 'todays-verse')
  * @returns File Promise
  */
-export async function getCanvasAsFile(
-  canvas: HTMLCanvasElement,
-  filenamePrefix: string
-): Promise<File> {
-  const blob = await canvasToBlob(canvas);
+export async function getCanvasAsFile(blob: Blob, filenamePrefix: string): Promise<File> {
   const filename = `${filenamePrefix}_${getTodaysDate()}.png`;
   return new File([blob], filename, { type: 'image/png' });
 }
@@ -180,7 +176,7 @@ export async function createVerseCard({
   ctx.font = '28px "Noto Sans KR"';
   ctx.fillText(location.origin, canvas.width / 2, canvas.height - 60);
 
-  const file = await getCanvasAsFile(canvas, 'todays-verse');
+  const file = await getCanvasAsFile(await canvasToBlob(canvas), 'todays-verse');
   const url = URL.createObjectURL(file);
 
   return { canvas, file, url };
@@ -191,8 +187,7 @@ export async function createVerseCard({
  * @param canvas - 다운로드할 이미지가 그려진 HTMLCanvasElement
  * @param filename - 다운로드될 파일명
  */
-export async function downloadImage(canvas: HTMLCanvasElement, filename: string): Promise<void> {
-  const blob = await canvasToBlob(canvas);
+export async function downloadImage(blob: Blob, filename: string): Promise<void> {
   const link = document.createElement('a');
   link.download = filename;
   link.href = URL.createObjectURL(blob);
@@ -236,6 +231,7 @@ export async function shareCard({
       }
     }
   } else {
-    await downloadImage(canvas, file.name);
+    const blob = await canvasToBlob(canvas);
+    await downloadImage(blob, file.name);
   }
 }
