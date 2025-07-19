@@ -132,6 +132,7 @@ describe('Canvas Helper Functions', () => {
     mockContext.fillStyle = '';
     mockContext.imageSmoothingEnabled = false;
     mockContext.imageSmoothingQuality = 'low';
+    testFile = new File(['mock content'], `todays-verse_${MOCK_DATE}.png`, { type: 'image/png' });
   });
 
   describe('wrapText', () => {

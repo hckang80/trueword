@@ -125,11 +125,7 @@ export function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: 
  * @param src - 배경 이미지 URL
  * @returns {Promise<{ canvas: HTMLCanvasElement; file: File; url: string }>} 그려진 HTMLCanvasElement, File 객체, Blob URL을 포함하는 Promise
  */
-export async function createVerseCard(
-  verse: string,
-  reference: string,
-  src: string
-): Promise<HTMLCanvasElement> {
+export async function createVerseCard(verse: string, reference: string, src: string) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas context is not available');
