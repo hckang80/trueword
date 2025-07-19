@@ -123,7 +123,7 @@ export function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: 
  * @param verse - 성경 구절 텍스트
  * @param reference - 성경 구절 출처
  * @param src - 배경 이미지 URL
- * @returns 그려진 HTMLCanvasElement Promise
+ * @returns {Promise<{ canvas: HTMLCanvasElement; file: File; url: string }>} 그려진 HTMLCanvasElement, File 객체, Blob URL을 포함하는 Promise
  */
 export async function createVerseCard(
   verse: string,
@@ -164,25 +164,10 @@ export async function createVerseCard(
   ctx.font = '28px "Noto Sans KR"';
   ctx.fillText(location.origin, canvas.width / 2, canvas.height - 60);
 
-  return canvas;
-}
-
-/**
- * 생성된 구절 카드 이미지의 URL을 반환하는 함수
- * @param verse - 성경 구절 텍스트
- * @param reference - 성경 구절 출처
- * @param src - 배경 이미지 URL
- * @returns 생성된 이미지의 Blob URL Promise
- */
-export async function createVerseCardUrl(
-  verse: string,
-  reference: string,
-  src: string
-): Promise<string> {
-  const canvas = await createVerseCard(verse, reference, src);
   const file = await getCanvasAsFile(canvas, 'todays-verse');
+  const url = URL.createObjectURL(file);
 
-  return URL.createObjectURL(file);
+  return { canvas, file, url };
 }
 
 /**
@@ -205,17 +190,16 @@ export async function downloadImage(canvas: HTMLCanvasElement, filename: string)
  * 생성된 구절 카드 이미지를 웹 표준 공유 API 또는 다운로드를 통해 공유하는 함수
  * @param verse - 성경 구절 텍스트
  * @param reference - 성경 구절 출처
- * @param backgroundImageSrc - 배경 이미지 URL
+ * @param canvas - 공유할 이미지가 그려진 HTMLCanvasElement
+ * @param file - 공유할 이미지의 File 객체
  * @returns Promise<void>
  */
-export async function shareVerseCard(
+export async function shareCard(
   verse: string,
   reference: string,
-  backgroundImageSrc: string
+  canvas: HTMLCanvasElement,
+  file: File
 ): Promise<void> {
-  const canvas = await createVerseCard(verse, reference, backgroundImageSrc);
-  const file = await getCanvasAsFile(canvas, 'todays-verse');
-
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
       await navigator.share({

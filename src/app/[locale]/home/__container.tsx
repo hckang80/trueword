@@ -1,9 +1,9 @@
 'use client';
 
 import {
-  createVerseCardUrl,
+  createVerseCard,
   type PhotoParams,
-  shareVerseCard,
+  shareCard,
   useBackgroundPhoto
 } from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
@@ -86,10 +86,20 @@ export default function MainContainer({
                           <button
                             className="snap-center shrink-0"
                             key={urls.regular}
-                            onClick={() => shareVerseCard(verse.text, verse.name, urls.regular)}
+                            onClick={async () =>
+                              shareCard(
+                                verse.text,
+                                verse.name,
+                                (await createVerseCard(verse.text, verse.name, urls.regular))
+                                  .canvas,
+                                (await createVerseCard(verse.text, verse.name, urls.regular)).file
+                              )
+                            }
                           >
                             <Image
-                              src={await createVerseCardUrl(verse.text, verse.name, urls.regular)}
+                              src={
+                                (await createVerseCard(verse.text, verse.name, urls.regular)).url
+                              }
                               width={216}
                               height={216}
                               alt={alt_description}
