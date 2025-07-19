@@ -1,6 +1,11 @@
 'use client';
 
-import { type PhotoParams, shareVerseCard, useBackgroundPhoto } from '@/entities/background';
+import {
+  createVerseCard,
+  type PhotoParams,
+  shareCard,
+  useBackgroundPhoto
+} from '@/entities/background';
 import { useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
@@ -10,7 +15,13 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { ChevronRight, Share2 } from 'lucide-react';
@@ -59,12 +70,56 @@ export default function MainContainer({
             {verse.name}
           </CardDescription>
           <CardAction className="flex gap-1">
-            <Button
-              size="icon"
-              onClick={() => shareVerseCard(verse.text, verse.name, verseBackground.urls.regular)}
-            >
-              <Share2 />
-            </Button>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button size="icon">
+                  <Share2 />
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader className="p-0">
+                  <DrawerTitle>말씀 카드 공유</DrawerTitle>
+                  <DrawerDescription asChild>
+                    <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
+                      {photoData.results.map(async ({ urls, alt_description }) => {
+                        return (
+                          <button
+                            className="snap-center shrink-0"
+                            key={urls.regular}
+                            onClick={async () =>
+                              shareCard({
+                                verse: verse.text,
+                                reference: verse.name,
+                                ...(await createVerseCard({
+                                  verse: verse.text,
+                                  reference: verse.name,
+                                  src: urls.regular
+                                }))
+                              })
+                            }
+                          >
+                            <Image
+                              src={
+                                (
+                                  await createVerseCard({
+                                    verse: verse.text,
+                                    reference: verse.name,
+                                    src: urls.regular
+                                  })
+                                ).url
+                              }
+                              width={324}
+                              height={324}
+                              alt={alt_description}
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </DrawerDescription>
+                </DrawerHeader>
+              </DrawerContent>
+            </Drawer>
             <Button size="icon" asChild>
               <Link href={moreTodayWordPath} title={t('viewFullContext')}>
                 <ChevronRight />
