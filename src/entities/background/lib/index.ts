@@ -54,11 +54,15 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
  * @param targetHeight - 캔버스의 목표 높이
  * @returns 리사이징된 이미지가 그려진 HTMLCanvasElement
  */
-export function resizeImage(
-  img: HTMLImageElement,
-  targetWidth: number,
-  targetHeight: number
-): HTMLCanvasElement {
+export function resizeImage({
+  img,
+  targetWidth,
+  targetHeight
+}: {
+  img: HTMLImageElement;
+  targetWidth: number;
+  targetHeight: number;
+}): HTMLCanvasElement {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas context is not available');
@@ -97,7 +101,15 @@ export function resizeImage(
  * @param maxWidth - 최대 너비
  * @returns 줄바꿈된 텍스트 배열
  */
-export function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+export function wrapText({
+  ctx,
+  text,
+  maxWidth
+}: {
+  ctx: CanvasRenderingContext2D;
+  text: string;
+  maxWidth: number;
+}): string[] {
   const words = text.split(' ');
   const lines: string[] = [];
   let currentLine = '';
@@ -125,7 +137,15 @@ export function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: 
  * @param src - 배경 이미지 URL
  * @returns {Promise<{ canvas: HTMLCanvasElement; file: File; url: string }>} 그려진 HTMLCanvasElement, File 객체, Blob URL을 포함하는 Promise
  */
-export async function createVerseCard(verse: string, reference: string, src: string) {
+export async function createVerseCard({
+  verse,
+  reference,
+  src
+}: {
+  verse: string;
+  reference: string;
+  src: string;
+}) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas context is not available');
@@ -134,7 +154,7 @@ export async function createVerseCard(verse: string, reference: string, src: str
   canvas.height = 1080;
 
   const img = await loadImage(src);
-  const optimizedImg = resizeImage(img, canvas.width, canvas.height);
+  const optimizedImg = resizeImage({ img, targetWidth: canvas.width, targetHeight: canvas.height });
 
   ctx.drawImage(optimizedImg, 0, 0, canvas.width, canvas.height);
 
@@ -146,7 +166,7 @@ export async function createVerseCard(verse: string, reference: string, src: str
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
-  const lines = wrapText(ctx, verse, canvas.width - 100);
+  const lines = wrapText({ ctx, text: verse, maxWidth: canvas.width - 100 });
   const lineHeight = 60;
   const startY = canvas.height / 2 - (lines.length * lineHeight) / 2;
 
@@ -190,12 +210,17 @@ export async function downloadImage(canvas: HTMLCanvasElement, filename: string)
  * @param file - 공유할 이미지의 File 객체
  * @returns Promise<void>
  */
-export async function shareCard(
-  verse: string,
-  reference: string,
-  canvas: HTMLCanvasElement,
-  file: File
-): Promise<void> {
+export async function shareCard({
+  verse,
+  reference,
+  canvas,
+  file
+}: {
+  verse: string;
+  reference: string;
+  canvas: HTMLCanvasElement;
+  file: File;
+}): Promise<void> {
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
       await navigator.share({

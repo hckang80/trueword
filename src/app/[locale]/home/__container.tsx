@@ -87,18 +87,26 @@ export default function MainContainer({
                             className="snap-center shrink-0"
                             key={urls.regular}
                             onClick={async () =>
-                              shareCard(
-                                verse.text,
-                                verse.name,
-                                (await createVerseCard(verse.text, verse.name, urls.regular))
-                                  .canvas,
-                                (await createVerseCard(verse.text, verse.name, urls.regular)).file
-                              )
+                              shareCard({
+                                verse: verse.text,
+                                reference: verse.name,
+                                ...(await createVerseCard({
+                                  verse: verse.text,
+                                  reference: verse.name,
+                                  src: urls.regular
+                                }))
+                              })
                             }
                           >
                             <Image
                               src={
-                                (await createVerseCard(verse.text, verse.name, urls.regular)).url
+                                (
+                                  await createVerseCard({
+                                    verse: verse.text,
+                                    reference: verse.name,
+                                    src: urls.regular
+                                  })
+                                ).url
                               }
                               width={216}
                               height={216}

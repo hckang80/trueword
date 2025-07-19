@@ -138,7 +138,7 @@ describe('Canvas Helper Functions', () => {
   describe('wrapText', () => {
     it('should wrap text correctly for multiple lines', () => {
       const text = 'This is a long sentence that needs to be wrapped into multiple lines.';
-      const lines = wrapText(mockContext, text, 200);
+      const lines = wrapText({ ctx: mockContext, text, maxWidth: 200 });
       expect(lines.length).toBeGreaterThan(1);
       expect(lines[0]).not.toContain('that needs');
       expect(lines.join('')).toContain(
@@ -148,12 +148,12 @@ describe('Canvas Helper Functions', () => {
 
     it('should return a single line if text fits within maxWidth', () => {
       const text = 'Short sentence.';
-      const lines = wrapText(mockContext, text, 500);
+      const lines = wrapText({ ctx: mockContext, text, maxWidth: 200 });
       expect(lines).toEqual(['Short sentence. ']);
     });
 
     it('should handle empty text', () => {
-      const lines = wrapText(mockContext, '', 200);
+      const lines = wrapText({ ctx: mockContext, text: '', maxWidth: 200 });
       expect(lines).toEqual([' ']);
     });
   });
@@ -176,7 +176,7 @@ describe('Canvas Helper Functions', () => {
       mockImg.width = 200;
       mockImg.height = 100; // 넓은 이미지
 
-      const resizedCanvas = resizeImage(mockImg, 100, 100);
+      const resizedCanvas = resizeImage({ img: mockImg, targetWidth: 100, targetHeight: 100 });
 
       expect(resizedCanvas).toBe(mockCanvas);
       expect(mockCanvas.width).toBe(100);
@@ -221,7 +221,7 @@ describe('Canvas Helper Functions', () => {
       const reference = 'Test Ref';
       const src = 'http://example.com/bg.png';
 
-      const { canvas, file, url } = await createVerseCard(verse, reference, src);
+      const { canvas, file, url } = await createVerseCard({ verse, reference, src });
 
       expect(canvas).toBe(mockCanvas);
       expect(mockCanvas.width).toBe(1080);
@@ -241,7 +241,7 @@ describe('Canvas Helper Functions', () => {
 
     it('should throw error if canvas context is not available', async () => {
       mockCanvas.getContext = vi.fn(() => null);
-      await expect(createVerseCard('v', 'r', 's')).rejects.toThrow(
+      await expect(createVerseCard({ verse: 'v', reference: ' r', src: 's' })).rejects.toThrow(
         'Canvas context is not available'
       );
     });
@@ -264,7 +264,12 @@ describe('Canvas Helper Functions', () => {
   describe('shareCard', () => {
     it('should use navigator.share if available and supported', async () => {
       mockCanShare.mockReturnValue(true);
-      await shareCard('Verse', 'Reference', mockCanvas, testFile);
+      await shareCard({
+        verse: 'Verse',
+        reference: 'Reference',
+        canvas: mockCanvas,
+        file: testFile
+      });
 
       expect(mockShare).toHaveBeenCalledTimes(1);
       expect(mockShare).toHaveBeenCalledWith(
@@ -282,7 +287,12 @@ describe('Canvas Helper Functions', () => {
       mockShare.mockRejectedValueOnce(new Error('Share failed'));
       const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      await shareCard('Verse', 'Reference', mockCanvas, testFile);
+      await shareCard({
+        verse: 'Verse',
+        reference: 'Reference',
+        canvas: mockCanvas,
+        file: testFile
+      });
 
       expect(consoleErrorSpy).toHaveBeenCalledWith('이미지 공유 중 오류 발생:', expect.any(Error));
       consoleErrorSpy.mockRestore();
