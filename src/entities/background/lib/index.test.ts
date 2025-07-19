@@ -7,8 +7,7 @@ import {
   resizeImage,
   wrapText,
   createVerseCard,
-  createVerseCardUrl,
-  shareVerseCard
+  shareCard
 } from '.';
 
 const MOCK_DATE = '20250719';
@@ -120,6 +119,8 @@ const removeChildSpy = vi
   .mockImplementation(() => mockRemoveChild());
 
 describe('Canvas Helper Functions', () => {
+  let testFile: File;
+
   beforeEach(() => {
     vi.clearAllMocks();
     mockCanvas.width = 0;
@@ -219,7 +220,7 @@ describe('Canvas Helper Functions', () => {
       const reference = 'Test Ref';
       const src = 'http://example.com/bg.png';
 
-      const canvas = await createVerseCard(verse, reference, src);
+      const { canvas, file, url } = await createVerseCard(verse, reference, src);
 
       expect(canvas).toBe(mockCanvas);
       expect(mockCanvas.width).toBe(1080);
@@ -230,6 +231,11 @@ describe('Canvas Helper Functions', () => {
 
       expect(mockContext.font).toContain('Noto Sans KR');
       expect(mockContext.textAlign).toBe('center');
+
+      expect(file).toBeInstanceOf(File);
+
+      expect(url).toBe('blob:http://mock-url/12345');
+      expect(mockCreateObjectURL).toHaveBeenCalledTimes(1);
     });
 
     it('should throw error if canvas context is not available', async () => {
@@ -237,14 +243,6 @@ describe('Canvas Helper Functions', () => {
       await expect(createVerseCard('v', 'r', 's')).rejects.toThrow(
         'Canvas context is not available'
       );
-    });
-  });
-
-  describe('createVerseCardUrl', () => {
-    it('should return a blob URL', async () => {
-      const url = await createVerseCardUrl('V', 'R', 'S');
-      expect(url).toBe('blob:http://mock-url/12345');
-      expect(mockCreateObjectURL).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -262,28 +260,20 @@ describe('Canvas Helper Functions', () => {
     });
   });
 
-  describe('shareVerseCard', () => {
+  describe('shareCard', () => {
     it('should use navigator.share if available and supported', async () => {
       mockCanShare.mockReturnValue(true);
-      await shareVerseCard('V', 'R', 'S');
+      await shareCard('Verse', 'Reference', mockCanvas, testFile);
 
       expect(mockShare).toHaveBeenCalledTimes(1);
       expect(mockShare).toHaveBeenCalledWith(
         expect.objectContaining({
-          files: [expect.any(File)],
-          title: expect.any(String),
-          text: expect.any(String)
+          files: [testFile],
+          title: location.origin,
+          text: `Verse\n- Reference -`
         })
       );
-      expect(mockLinkClick).not.toHaveBeenCalled();
-    });
-
-    it('should fallback to downloadImage if navigator.share is not available', async () => {
-      mockCanShare.mockReturnValue(false);
-      await shareVerseCard('V', 'R', 'S');
-
-      expect(mockShare).not.toHaveBeenCalled();
-      expect(mockLinkClick).toHaveBeenCalledTimes(1);
+      expect(createElementSpy).not.toHaveBeenCalledWith('a');
     });
 
     it('should log error if navigator.share fails (not AbortError)', async () => {
@@ -291,7 +281,8 @@ describe('Canvas Helper Functions', () => {
       mockShare.mockRejectedValueOnce(new Error('Share failed'));
       const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      await shareVerseCard('V', 'R', 'S');
+      await shareCard('Verse', 'Reference', mockCanvas, testFile);
+
       expect(consoleErrorSpy).toHaveBeenCalledWith('이미지 공유 중 오류 발생:', expect.any(Error));
       consoleErrorSpy.mockRestore();
     });
