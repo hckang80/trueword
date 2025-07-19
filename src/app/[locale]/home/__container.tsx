@@ -94,14 +94,18 @@ export default function MainContainer({
                     <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
                       {photoData.results.map(async ({ urls, alt_description }) => {
                         return (
-                          <div className="snap-center shrink-0" key={urls.regular}>
+                          <button
+                            className="snap-center shrink-0"
+                            key={urls.regular}
+                            onClick={() => shareVerseCard(verse.text, verse.name, urls.regular)}
+                          >
                             <Image
                               src={await createVerseCardUrl(verse.text, verse.name, urls.regular)}
                               width={216}
                               height={216}
                               alt={alt_description}
                             />
-                          </div>
+                          </button>
                         );
                       })}
                     </div>
