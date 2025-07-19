@@ -30,14 +30,20 @@ export async function POST(request: NextRequest) {
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-    const promptLocales: Record<string, string> = {
-      ko: '다음 게시글의 주요 내용을 간결하게 요약해주세요. HTML 시맨틱 마크업으로 출력해주세요. :',
-      en: 'Summarize the following article concisely, including the main content. Output in semantic HTML markup. Respond in English only:'
-    };
+    const promptText = `
+      당신은 크리스천 뉴스 전문 요약가입니다.
+      다음 게시글의 주요 내용을 **간결하게 요약**해주세요.
+      요약에는 다음 사항이 포함되어야 합니다:
 
-    const promptText = `${promptLocales[locale]}
+      1.  **요약 언어는 ${locale.toLocaleUpperCase()}**
+      2.  **가장 중요한 핵심 사건이나 주제**.
+      3.  **해당 뉴스 기사가 기독교 공동체나 신앙에 미치는 영향**.
+      4.  **기사에서 강조하는 영적 또는 신학적 시사점** (있을 경우).
 
-    ${content}`;
+      출력은 HTML 시맨틱 태그(<body> 내부의 <section> 또는 <article>을 활용)로 마크업하여 <p>, <ul>, <ol> 등을 적절히 사용해 구조화해주세요.     
+
+      ${content}
+    `;
 
     const generationConfig = {
       temperature: 0.2,
