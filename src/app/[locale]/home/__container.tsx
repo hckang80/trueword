@@ -108,8 +108,8 @@ export default function MainContainer({
                                   })
                                 ).url
                               }
-                              width={216}
-                              height={216}
+                              width={324}
+                              height={324}
                               alt={alt_description}
                             />
                           </button>
