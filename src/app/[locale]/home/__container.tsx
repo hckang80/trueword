@@ -24,7 +24,7 @@ import {
   DrawerTrigger
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
-import { ChevronRight, EllipsisVertical, Share2 } from 'lucide-react';
+import { ChevronRight, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -70,21 +70,10 @@ export default function MainContainer({
             {verse.name}
           </CardDescription>
           <CardAction className="flex gap-1">
-            <Button
-              size="icon"
-              onClick={() => shareVerseCard(verse.text, verse.name, verseBackground.urls.regular)}
-            >
-              <Share2 />
-            </Button>
-            <Button size="icon" asChild>
-              <Link href={moreTodayWordPath} title={t('viewFullContext')}>
-                <ChevronRight />
-              </Link>
-            </Button>
             <Drawer>
               <DrawerTrigger asChild>
                 <Button size="icon">
-                  <EllipsisVertical />
+                  <Share2 />
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
@@ -113,6 +102,11 @@ export default function MainContainer({
                 </DrawerHeader>
               </DrawerContent>
             </Drawer>
+            <Button size="icon" asChild>
+              <Link href={moreTodayWordPath} title={t('viewFullContext')}>
+                <ChevronRight />
+              </Link>
+            </Button>
           </CardAction>
         </CardHeader>
         <CardContent className="relative">
