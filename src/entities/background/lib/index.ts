@@ -23,7 +23,10 @@ export async function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
  * @param filenamePrefix - 파일 이름에 붙을 접두사 (예: 'todays-verse')
  * @returns File Promise
  */
-async function getCanvasAsFile(canvas: HTMLCanvasElement, filenamePrefix: string): Promise<File> {
+export async function getCanvasAsFile(
+  canvas: HTMLCanvasElement,
+  filenamePrefix: string
+): Promise<File> {
   const blob = await canvasToBlob(canvas);
   const filename = `${filenamePrefix}_${getTodaysDate()}.png`;
   return new File([blob], filename, { type: 'image/png' });
@@ -34,7 +37,7 @@ async function getCanvasAsFile(canvas: HTMLCanvasElement, filenamePrefix: string
  * @param src - 이미지 소스 URL
  * @returns HTMLImageElement Promise
  */
-function loadImage(src: string): Promise<HTMLImageElement> {
+export function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = 'anonymous';
@@ -51,7 +54,7 @@ function loadImage(src: string): Promise<HTMLImageElement> {
  * @param targetHeight - 캔버스의 목표 높이
  * @returns 리사이징된 이미지가 그려진 HTMLCanvasElement
  */
-function resizeImage(
+export function resizeImage(
   img: HTMLImageElement,
   targetWidth: number,
   targetHeight: number
@@ -94,7 +97,7 @@ function resizeImage(
  * @param maxWidth - 최대 너비
  * @returns 줄바꿈된 텍스트 배열
  */
-function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+export function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
   const words = text.split(' ');
   const lines: string[] = [];
   let currentLine = '';
@@ -187,7 +190,7 @@ export async function createVerseCardUrl(
  * @param canvas - 다운로드할 이미지가 그려진 HTMLCanvasElement
  * @param filename - 다운로드될 파일명
  */
-async function downloadImage(canvas: HTMLCanvasElement, filename: string): Promise<void> {
+export async function downloadImage(canvas: HTMLCanvasElement, filename: string): Promise<void> {
   const blob = await canvasToBlob(canvas);
   const link = document.createElement('a');
   link.download = filename;
