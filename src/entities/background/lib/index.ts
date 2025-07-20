@@ -222,7 +222,7 @@ export async function shareCard({
       await navigator.share({
         files: [file],
         title: location.origin,
-        text: `${verse}\n- ${reference} -`
+        text: `${verse}\n- ${reference} -\n${location.origin}`
       });
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
