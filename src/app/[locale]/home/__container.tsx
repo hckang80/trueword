@@ -81,41 +81,44 @@ export default function MainContainer({
                 <DrawerHeader>
                   <DrawerTitle>말씀 카드 공유</DrawerTitle>
                   <DrawerDescription asChild>
-                    <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
-                      {photoData.results.map(async ({ urls, alt_description }) => {
-                        return (
-                          <button
-                            className="snap-center shrink-0"
-                            key={urls.regular}
-                            onClick={async () =>
-                              shareCard({
-                                verse: verse.text,
-                                reference: verse.name,
-                                ...(await createVerseCard({
+                    <div>
+                      <p>이미지를 클릭하여 말씀을 공유할 수 있습니다.</p>
+                      <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
+                        {photoData.results.map(async ({ urls, alt_description }) => {
+                          return (
+                            <button
+                              className="snap-center shrink-0"
+                              key={urls.regular}
+                              onClick={async () =>
+                                shareCard({
                                   verse: verse.text,
                                   reference: verse.name,
-                                  src: urls.regular
-                                }))
-                              })
-                            }
-                          >
-                            <Image
-                              src={
-                                (
-                                  await createVerseCard({
+                                  ...(await createVerseCard({
                                     verse: verse.text,
                                     reference: verse.name,
                                     src: urls.regular
-                                  })
-                                ).url
+                                  }))
+                                })
                               }
-                              width={(PHOTO_SIZE / 10) * 3}
-                              height={(PHOTO_SIZE / 10) * 3}
-                              alt={alt_description}
-                            />
-                          </button>
-                        );
-                      })}
+                            >
+                              <Image
+                                src={
+                                  (
+                                    await createVerseCard({
+                                      verse: verse.text,
+                                      reference: verse.name,
+                                      src: urls.regular
+                                    })
+                                  ).url
+                                }
+                                width={(PHOTO_SIZE / 10) * 3}
+                                height={(PHOTO_SIZE / 10) * 3}
+                                alt={alt_description}
+                              />
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </DrawerDescription>
                 </DrawerHeader>
