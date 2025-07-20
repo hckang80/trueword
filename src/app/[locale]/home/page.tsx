@@ -13,7 +13,6 @@ const MainPage = async ({ params }: RouteProps) => {
     query: 'river natural empty center',
     page: 1,
     perPage: PHOTO_LIST_SIZE,
-    color: 'black_and_white',
     orientation: 'landscape'
   } satisfies PhotoParams;
 
