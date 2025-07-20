@@ -23,8 +23,7 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
-  Loading
+  DrawerTrigger
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -75,13 +74,19 @@ export default function MainContainer({
             {verse.name}
           </CardDescription>
           <CardAction className="flex gap-1">
-            <Drawer>
-              <DrawerTrigger asChild>
+            <Suspense
+              fallback={
                 <Button size="icon">
-                  <Share2 />
+                  <Share2 className="animate-spin" />
                 </Button>
-              </DrawerTrigger>
-              <Suspense fallback={<Loading />}>
+              }
+            >
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <Button size="icon">
+                    <Share2 />
+                  </Button>
+                </DrawerTrigger>
                 <DrawerContent>
                   <DrawerHeader>
                     <DrawerTitle>{t('shareDialog.title')}</DrawerTitle>
@@ -102,8 +107,8 @@ export default function MainContainer({
                     </DrawerDescription>
                   </DrawerHeader>
                 </DrawerContent>
-              </Suspense>
-            </Drawer>
+              </Drawer>
+            </Suspense>
             <Button size="icon" asChild>
               <Link href={moreTodayWordPath} title={t('viewFullContext')}>
                 <ChevronRight />
