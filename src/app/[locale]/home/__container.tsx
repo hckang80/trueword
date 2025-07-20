@@ -79,10 +79,10 @@ export default function MainContainer({
               </DrawerTrigger>
               <DrawerContent>
                 <DrawerHeader>
-                  <DrawerTitle>말씀 카드 공유</DrawerTitle>
+                  <DrawerTitle>{t('shareDialog.title')}</DrawerTitle>
                   <DrawerDescription asChild>
                     <div>
-                      <p>이미지를 클릭하여 말씀을 공유할 수 있습니다.</p>
+                      <p>{t('shareDialog.description')}</p>
                       <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
                         {photoData.results.map(async ({ urls, alt_description }) => {
                           return (

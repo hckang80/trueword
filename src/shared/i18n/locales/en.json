@@ -18,7 +18,11 @@
     "newsDescription": "Daily updates on faith, culture, and the world.",
     "todaysVerse": "Today's Verse",
     "viewFullContext": "View Full Context",
-    "more": "See More"
+    "more": "See More",
+    "shareDialog": {
+      "title": "Share Verse Card",
+      "description": "Tap the image to share the verse."
+    }
   },
   "News": {
     "viewFullArticle": "View Full Article",

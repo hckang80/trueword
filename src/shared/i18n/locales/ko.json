@@ -18,7 +18,11 @@
     "newsDescription": "믿음, 문화, 세상에 대한 매일의 소식을 전합니다.",
     "todaysVerse": "오늘의 말씀",
     "viewFullContext": "전체 맥락 보기",
-    "more": "더보기"
+    "more": "더보기",
+    "shareDialog": {
+      "title": "말씀 카드 공유",
+      "description": "이미지를 클릭하여 말씀을 공유할 수 있습니다."
+    }
   },
   "News": {
     "viewFullArticle": "기사 원문 보기",
