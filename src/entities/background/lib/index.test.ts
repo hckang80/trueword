@@ -9,6 +9,7 @@ import {
   createVerseCard,
   shareCard
 } from '.';
+import { PHOTO_SIZE } from '../model';
 
 const MOCK_DATE = '20250719';
 vi.mock('@/shared', () => ({
@@ -224,8 +225,8 @@ describe('Canvas Helper Functions', () => {
       const { canvas, file, url } = await createVerseCard({ verse, reference, src });
 
       expect(canvas).toBe(mockCanvas);
-      expect(mockCanvas.width).toBe(1080);
-      expect(mockCanvas.height).toBe(1080);
+      expect(mockCanvas.width).toBe(PHOTO_SIZE);
+      expect(mockCanvas.height).toBe(PHOTO_SIZE);
       expect(mockDrawImage).toHaveBeenCalledTimes(2);
       expect(mockFillRect).toHaveBeenCalledTimes(1);
       expect(mockFillText).toHaveBeenCalledTimes(3);

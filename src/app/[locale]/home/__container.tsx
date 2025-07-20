@@ -2,6 +2,7 @@
 
 import {
   createVerseCard,
+  PHOTO_SIZE,
   type PhotoParams,
   shareCard,
   useBackgroundPhoto
@@ -108,8 +109,8 @@ export default function MainContainer({
                                   })
                                 ).url
                               }
-                              width={324}
-                              height={324}
+                              width={(PHOTO_SIZE / 10) * 3}
+                              height={(PHOTO_SIZE / 10) * 3}
                               alt={alt_description}
                             />
                           </button>

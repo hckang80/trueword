@@ -1,4 +1,5 @@
 import { getTodaysDate } from '@/shared';
+import { PHOTO_SIZE } from '../model';
 
 /**
  * 캔버스에서 Blob을 생성하여 반환하는 유틸리티 함수
@@ -146,8 +147,8 @@ export async function createVerseCard({
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas context is not available');
 
-  canvas.width = 1080;
-  canvas.height = 1080;
+  canvas.width = PHOTO_SIZE;
+  canvas.height = PHOTO_SIZE;
 
   const img = await loadImage(src);
   const optimizedImg = resizeImage({ img, targetWidth: canvas.width, targetHeight: canvas.height });
