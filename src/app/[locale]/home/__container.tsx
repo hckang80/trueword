@@ -23,13 +23,15 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger
+  DrawerTrigger,
+  Loading
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { Suspense } from 'react';
 
 export default function MainContainer({
   backgroundPhotoParams,
@@ -79,26 +81,28 @@ export default function MainContainer({
                   <Share2 />
                 </Button>
               </DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>{t('shareDialog.title')}</DrawerTitle>
-                  <DrawerDescription asChild>
-                    <div>
-                      <p>{t('shareDialog.description')}</p>
-                      <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
-                        {photoData.results.map((photo) => (
-                          <VerseCardItem
-                            key={photo.urls.regular}
-                            photo={photo}
-                            verse={verse}
-                            callback={shareCard}
-                          />
-                        ))}
+              <Suspense fallback={<Loading />}>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle>{t('shareDialog.title')}</DrawerTitle>
+                    <DrawerDescription asChild>
+                      <div>
+                        <p>{t('shareDialog.description')}</p>
+                        <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
+                          {photoData.results.map((photo) => (
+                            <VerseCardItem
+                              key={photo.urls.regular}
+                              photo={photo}
+                              verse={verse}
+                              callback={shareCard}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </DrawerDescription>
-                </DrawerHeader>
-              </DrawerContent>
+                    </DrawerDescription>
+                  </DrawerHeader>
+                </DrawerContent>
+              </Suspense>
             </Drawer>
             <Button size="icon" asChild>
               <Link href={moreTodayWordPath} title={t('viewFullContext')}>
