@@ -78,7 +78,7 @@ export default function MainContainer({
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
-                <DrawerHeader className="p-0">
+                <DrawerHeader>
                   <DrawerTitle>말씀 카드 공유</DrawerTitle>
                   <DrawerDescription asChild>
                     <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
