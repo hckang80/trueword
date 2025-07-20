@@ -87,10 +87,12 @@ export interface TodayVerse {
   lang: Locale;
   abbreviation: string;
   bookNumber: number;
-  verse: {
-    chapter: number;
-    verse: number;
-    name: string;
-    text: string;
-  };
+  verse: TodayVerseItem;
+}
+
+export interface TodayVerseItem {
+  chapter: number;
+  verse: number;
+  name: string;
+  text: string;
 }

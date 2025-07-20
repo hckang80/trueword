@@ -1,13 +1,14 @@
 'use client';
 
 import {
+  type BackGroundPhoto,
   createVerseCard,
   PHOTO_SIZE,
   type PhotoParams,
   shareCard,
   useBackgroundPhoto
 } from '@/entities/background';
-import { useBibleToday } from '@/features/bible';
+import { type TodayVerseItem, useBibleToday } from '@/features/bible';
 import { HomeNewsItem, useNews } from '@/features/news';
 import {
   Button,
@@ -25,6 +26,7 @@ import {
   DrawerTrigger
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -84,40 +86,14 @@ export default function MainContainer({
                     <div>
                       <p>{t('shareDialog.description')}</p>
                       <div className="snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3">
-                        {photoData.results.map(async ({ urls, alt_description }) => {
-                          return (
-                            <button
-                              className="snap-center shrink-0"
-                              key={urls.regular}
-                              onClick={async () =>
-                                shareCard({
-                                  verse: verse.text,
-                                  reference: verse.name,
-                                  ...(await createVerseCard({
-                                    verse: verse.text,
-                                    reference: verse.name,
-                                    src: urls.regular
-                                  }))
-                                })
-                              }
-                            >
-                              <Image
-                                src={
-                                  (
-                                    await createVerseCard({
-                                      verse: verse.text,
-                                      reference: verse.name,
-                                      src: urls.regular
-                                    })
-                                  ).url
-                                }
-                                width={(PHOTO_SIZE / 10) * 3}
-                                height={(PHOTO_SIZE / 10) * 3}
-                                alt={alt_description}
-                              />
-                            </button>
-                          );
-                        })}
+                        {photoData.results.map((photo) => (
+                          <VerseCardItem
+                            key={photo.urls.regular}
+                            photo={photo}
+                            verse={verse}
+                            callback={shareCard}
+                          />
+                        ))}
                       </div>
                     </div>
                   </DrawerDescription>
@@ -159,5 +135,49 @@ export default function MainContainer({
         &copy; {new Date().getFullYear()} TrueWord. All rights reserved.
       </footer>
     </div>
+  );
+}
+
+function VerseCardItem({
+  photo,
+  verse,
+  callback
+}: {
+  photo: BackGroundPhoto;
+  verse: TodayVerseItem;
+  callback: typeof shareCard;
+}) {
+  const { data: cardData, error } = useSuspenseQuery({
+    queryKey: ['verseCard', photo.urls.regular],
+    queryFn: async () => {
+      return await createVerseCard({
+        verse: verse.text,
+        reference: verse.name,
+        src: photo.urls.regular
+      });
+    }
+  });
+
+  if (error) throw new Error('말씀카드 생성 실패');
+
+  return (
+    <button
+      className="snap-center shrink-0"
+      key={photo.urls.regular}
+      onClick={() =>
+        callback({
+          ...cardData,
+          verse: verse.text,
+          reference: verse.name
+        })
+      }
+    >
+      <Image
+        src={cardData.url}
+        width={(PHOTO_SIZE / 10) * 3}
+        height={(PHOTO_SIZE / 10) * 3}
+        alt={photo.alt_description}
+      />
+    </button>
   );
 }
