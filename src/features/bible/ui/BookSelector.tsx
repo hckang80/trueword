@@ -98,7 +98,7 @@ function BookSelector({
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
-          <DrawerTitle className="hidden">Bible</DrawerTitle>
+          <DrawerTitle className="sr-only">Bible</DrawerTitle>
           <DrawerDescription asChild>
             <div className="text-left">
               <div className="inline-flex gap-1 sticky top-0 left-full p-3">

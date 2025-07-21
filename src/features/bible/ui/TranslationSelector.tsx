@@ -76,7 +76,7 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="p-0">
-          <DrawerTitle className="hidden">Translations</DrawerTitle>
+          <DrawerTitle className="sr-only">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <div>
               {translationVersions.map(({ id, language, translations }, index) => (
