@@ -40,41 +40,110 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     icons: {
       icon: '/favicon.ico',
       other: [
+        // iPhone 5/SE (1세대)
         {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '32x32',
-          url: '/icons/favicon-32x32.png'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-640-1136.png',
+          media:
+            '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
         },
+        // iPhone 6/7/8/SE (2,3세대)
         {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '16x16',
-          url: '/icons/favicon-16x16.png'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-750-1334.png',
+          media:
+            '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
         },
+        // iPhone 6/7/8 Plus
         {
-          rel: 'apple-touch-icon',
-          url: '/icons/touch-icon-iphone.png'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1242-2208.png',
+          media:
+            '(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
         },
+        // iPhone X/XS/11 Pro
         {
-          rel: 'apple-touch-icon',
-          sizes: '152x152',
-          url: '/icons/touch-icon-ipad.png'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1125-2436.png',
+          media:
+            '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
         },
+        // iPhone XR/11
         {
-          rel: 'apple-touch-icon',
-          sizes: '180x180',
-          url: '/icons/touch-icon-iphone-retina.png'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-828-1792.png',
+          media:
+            '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
         },
+        // iPhone XS Max/11 Pro Max
         {
-          rel: 'apple-touch-icon',
-          sizes: '167x167',
-          url: '/icons/touch-icon-ipad-retina.png'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1242-2688.png',
+          media:
+            '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
         },
+        // iPhone 12 mini/13 mini/12/12 Pro/13/13 Pro/14
         {
-          rel: 'mask-icon',
-          url: '/icons/safari-pinned-tab.svg',
-          color: '#5bbad5'
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1170-2532.png', // 실제 픽셀 해상도
+          media:
+            '(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        },
+        // iPhone 12 Pro Max/13 Pro Max/14 Plus
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1284-2778.png', // 실제 픽셀 해상도
+          media:
+            '(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        },
+        // iPhone 14 Pro
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1179-2556.png',
+          media:
+            '(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        },
+        // iPhone 14 Pro Max
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1290-2796.png',
+          media:
+            '(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        },
+        // iPad (일반)
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1536-2048.png',
+          media:
+            '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+        },
+        // iPad Pro 10.5인치
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1668-2224.png',
+          media:
+            '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+        },
+        // iPad Pro 11인치 (1세대 이후)
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-1668-2388.png',
+          media:
+            '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+        },
+        // iPad Pro 12.9인치
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-2048-2732.png',
+          media:
+            '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+        },
+        // iPad (일반) 가로 모드
+        {
+          rel: 'apple-touch-startup-image',
+          url: '/icons/apple-splash-2048-1536.png',
+          media:
+            '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)'
         }
       ]
     },
