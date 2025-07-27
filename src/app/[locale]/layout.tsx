@@ -166,6 +166,7 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <ErrorBoundary>
