@@ -164,6 +164,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+      </head>
       <body className="antialiased" suppressHydrationWarning>
         <ErrorBoundary>
           <ThemeProvider
