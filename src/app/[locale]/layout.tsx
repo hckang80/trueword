@@ -21,7 +21,6 @@ export async function generateMetadata(): Promise<Metadata> {
     formatDetection: {
       telephone: false
     },
-    themeColor: '#000000',
     manifest: '/manifest.json',
 
     appleWebApp: {
@@ -139,6 +138,12 @@ export async function generateMetadata(): Promise<Metadata> {
         }
       ]
     }
+  };
+}
+
+export function generateViewport() {
+  return {
+    themeColor: '#000000'
   };
 }
 
