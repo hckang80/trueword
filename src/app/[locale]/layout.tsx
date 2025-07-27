@@ -41,7 +41,6 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     },
 
     icons: {
-      icon: '/favicon.ico',
       other: [
         // iPhone 5/SE (1세대)
         {
