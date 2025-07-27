@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import Providers from './QueryProvider';
 import { NextIntlClientProvider } from 'next-intl';
@@ -17,6 +18,8 @@ import ErrorBoundary from './ErrorBoundary';
 
 export async function generateMetadata({ params }: RouteProps): Promise<Metadata> {
   const t = await getTranslations('Meta');
+  const headersList = await headers();
+  const host = headersList.get('host');
   const { locale } = await params;
 
   return {
@@ -152,7 +155,7 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
       card: 'summary',
       title: t('title'),
       description: t('description'),
-      images: 'https://trueword.vercel.app/icons/android-chrome-192x192.png',
+      images: '/icons/android-chrome-192x192.png',
       creator: '@Sky'
     },
 
@@ -161,8 +164,8 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
       title: t('title'),
       description: t('description'),
       siteName: t('title'),
-      url: `https://trueword.vercel.app/${locale}`,
-      images: ['https://trueword.vercel.app/icons/apple-touch-icon.png']
+      url: `https://${host}/${locale}`,
+      images: ['/icons/apple-touch-icon.png']
     }
   };
 }
