@@ -4,3 +4,7 @@ pnpm-lock.yaml
 yarn.lock
 README.md
 src/components/system/*
+
+# next.js
+/.next/
+/out/
