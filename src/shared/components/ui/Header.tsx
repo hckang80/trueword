@@ -28,13 +28,7 @@ export function Header() {
   return (
     <header className="guide-line-layout flex justify-end gap-[4px] pl-[var(--global-inset)] pr-[var(--global-inset)] pt-[10px] pb-[10px]">
       <h1 className="mr-auto uppercase text-3xl font-bold shimmer-text whitespace-nowrap">
-        <Image
-          src="/logo.jpeg"
-          width="100"
-          height="100"
-          alt="true word"
-          className="sr-only"
-        ></Image>
+        <Image src="/logo.png" width="100" height="100" alt="true word" className="sr-only"></Image>
         <Link href="/home">True Word</Link>
       </h1>
       <Select value={locale} onValueChange={handleChange}>
