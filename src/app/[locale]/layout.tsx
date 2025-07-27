@@ -88,14 +88,14 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
         // iPhone 12 mini/13 mini/12/12 Pro/13/13 Pro/14
         {
           rel: 'apple-touch-startup-image',
-          url: '/icons/apple-splash-1170-2532.png', // 실제 픽셀 해상도
+          url: '/icons/apple-splash-1170-2532.png',
           media:
             '(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
         },
         // iPhone 12 Pro Max/13 Pro Max/14 Plus
         {
           rel: 'apple-touch-startup-image',
-          url: '/icons/apple-splash-1284-2778.png', // 실제 픽셀 해상도
+          url: '/icons/apple-splash-1284-2778.png',
           media:
             '(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
         },
@@ -149,23 +149,6 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
             '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)'
         }
       ]
-    },
-
-    twitter: {
-      card: 'summary',
-      title: t('title'),
-      description: t('description'),
-      images: '/icons/android-chrome-192x192.png',
-      creator: '@Sky'
-    },
-
-    openGraph: {
-      type: 'website',
-      title: t('title'),
-      description: t('description'),
-      siteName: t('title'),
-      url: `https://${host}/${locale}`,
-      images: ['/icons/apple-touch-icon.png']
     }
   };
 }
