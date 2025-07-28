@@ -1,5 +1,5 @@
-import type { SearchOrderBy, ColorId, Plus, Language, ContentFilter } from 'unsplash-js';
-import type { PaginationParams, OrientationParam } from 'unsplash-js/dist/types/request';
+import type { ColorId, ContentFilter, Language, Plus, SearchOrderBy } from 'unsplash-js';
+import type { OrientationParam, PaginationParams } from 'unsplash-js/dist/types/request';
 
 export interface BackGroundPhotoInstance {
   results: BackGroundPhoto[];

@@ -1,9 +1,5 @@
 'use client';
 
-import { Button, Loading } from '@/shared';
-import { Link } from '@/shared/i18n/routing';
-import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
-import sanitizeHtml from 'sanitize-html';
 import {
   NewsHeader,
   NewsImage,
@@ -11,9 +7,13 @@ import {
   useScrapedContent,
   useSummary
 } from '@/features/news';
+import { Button, Loading } from '@/shared';
+import { Link } from '@/shared/i18n/routing';
+import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { unstable_ViewTransition as ViewTransition } from 'react';
-import { useTranslations } from 'next-intl';
+import sanitizeHtml from 'sanitize-html';
 
 export default function NewsIdContainer() {
   const t = useTranslations();

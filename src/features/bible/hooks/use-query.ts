@@ -1,12 +1,12 @@
 import { bibleKeys, Locale, translationsKeys } from '@/shared';
-import { useQuery, useSuspenseQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import {
   fetchBibleInstance,
+  fetchBibleToday,
   fetchTranslationBooks,
-  fetchYouTubeVideos,
   fetchTranslationVersions,
-  type YouTubeVideo,
-  fetchBibleToday
+  fetchYouTubeVideos,
+  type YouTubeVideo
 } from '..';
 
 export const bibleChapterInstanceQueryOptions = (params: string[]) => ({

@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
 import { DEFAULT_LOCALE } from '@/shared';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const acceptLanguage = (await headers()).get('accept-language') || DEFAULT_LOCALE;

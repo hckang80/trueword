@@ -1,10 +1,9 @@
+import { backgroundPhotoQueryOptions, type PhotoParams } from '@/entities/background';
 import { bibleTodayQueryOptions } from '@/features/bible';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import React from 'react';
-import Container from './__container';
 import { newsQueryOptions } from '@/features/news';
 import type { RouteProps } from '@/shared';
-import { backgroundPhotoQueryOptions, type PhotoParams } from '@/entities/background';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import Container from './__container';
 
 const MainPage = async ({ params }: RouteProps) => {
   const PHOTO_LIST_SIZE = 10;

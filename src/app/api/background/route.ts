@@ -1,7 +1,7 @@
 import type { PhotoParams } from '@/entities/background';
+import { Redis } from '@upstash/redis';
 import { type NextRequest, NextResponse } from 'next/server';
 import { createApi } from 'unsplash-js';
-import { Redis } from '@upstash/redis';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

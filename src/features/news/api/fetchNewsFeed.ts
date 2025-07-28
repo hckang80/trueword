@@ -1,9 +1,9 @@
-import type { NewsItemType } from '../model';
-import type { RSSInstance, RSSInstanceItem, RSSFeed } from '@/entities/rss';
-import axios from 'axios';
-import Parser from 'rss-parser';
+import type { RSSFeed, RSSInstance, RSSInstanceItem } from '@/entities/rss';
 import { extractThumbnail } from '@/features/news/lib';
 import { extractUniqId } from '@/shared';
+import axios from 'axios';
+import Parser from 'rss-parser';
+import type { NewsItemType } from '../model';
 
 export async function fetchNewsFeed({
   url: feedUrl,

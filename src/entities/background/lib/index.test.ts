@@ -1,13 +1,13 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   canvasToBlob,
+  createVerseCard,
   downloadImage,
   getCanvasAsFile,
   loadImage,
   resizeImage,
-  wrapText,
-  createVerseCard,
-  shareCard
+  shareCard,
+  wrapText
 } from '.';
 import { PHOTO_SIZE } from '../model';
 

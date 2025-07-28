@@ -1,5 +1,5 @@
-import Container from '../news/__container';
 import type { Metadata, ResolvingMetadata } from 'next';
+import Container from '../news/__container';
 
 export async function generateMetadata(
   _props: unknown,

@@ -1,5 +1,5 @@
-import { axiosInstance, type Locale, toReadableDate } from '@/shared';
 import { getNewsItem, type NewsItemType } from '@/features/news';
+import { axiosInstance, type Locale, toReadableDate } from '@/shared';
 
 export * from './fetchNewsFeed';
 

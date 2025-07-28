@@ -3,8 +3,8 @@
 import { InfiniteScrollTrigger } from '@/shared';
 import type { InfiniteData, UseSuspenseInfiniteQueryResult } from '@tanstack/react-query';
 import { memo } from 'react';
-import type { NewsInstance } from '../model';
 import { NewsItem } from '.';
+import type { NewsInstance } from '../model';
 
 type NewsListProps = UseSuspenseInfiniteQueryResult<InfiniteData<NewsInstance, unknown>, Error>;
 

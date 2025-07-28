@@ -1,20 +1,20 @@
 'use client';
 
 import {
-  cn,
   Button,
+  cn,
   Drawer,
-  DrawerTrigger,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription
+  DrawerTrigger
 } from '@/shared';
 import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
-import { type BibleBook, BibleChapterInstance } from '../model';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { type BibleBook, BibleChapterInstance } from '../model';
 
 function BookSelector({
   books,

@@ -1,8 +1,8 @@
-import { fetchNewsFeed, NewsItemType } from '@/features/news';
-import { NextResponse } from 'next/server';
-import { Redis } from '@upstash/redis';
 import { RSS_FEEDS } from '@/entities/rss';
+import { fetchNewsFeed, NewsItemType } from '@/features/news';
 import { getTodaysDate } from '@/shared';
+import { Redis } from '@upstash/redis';
+import { NextResponse } from 'next/server';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
