@@ -85,6 +85,7 @@ export default function MainContainer({
                 <DrawerTrigger asChild>
                   <Button size="icon">
                     <Share2 />
+                    <span className="sr-only">{t('viewVerseCard')}</span>
                   </Button>
                 </DrawerTrigger>
                 <DrawerContent>
