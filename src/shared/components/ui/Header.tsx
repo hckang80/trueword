@@ -32,7 +32,7 @@ export function Header() {
         <Link href="/home">True Word</Link>
       </h1>
       <Select value={locale} onValueChange={handleChange}>
-        <SelectTrigger className="w-[80px]">
+        <SelectTrigger className="w-[80px]" title={locale.toUpperCase()}>
           <SelectValue placeholder="Select a language" />
         </SelectTrigger>
         <SelectContent>
