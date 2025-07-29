@@ -3,7 +3,8 @@ import {
   Header,
   isSupportedLocale,
   ProgressBar,
-  PWAInstallPrompt
+  PWAInstallPrompt,
+  Toaster
 } from '@/shared';
 import { routing } from '@/shared/i18n/routing';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -190,6 +191,7 @@ export default async function LocaleLayout({
                 <main className="guide-line-layout">{children}</main>
                 <BottomNavigation />
                 <PWAInstallPrompt />
+                <Toaster position="top-center" />
               </NextIntlClientProvider>
             </Providers>
           </ThemeProvider>
