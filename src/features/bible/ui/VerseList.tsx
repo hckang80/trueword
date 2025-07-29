@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/shared';
-import { useLayoutEffect, useRef } from 'react';
-import sanitizeHtml from 'sanitize-html';
+import { useRef, useLayoutEffect } from 'react';
 import type { Verse } from '../model';
+import { cn } from '@/shared';
+import sanitizeHtml from 'sanitize-html';
 
 function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: boolean }) {
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
