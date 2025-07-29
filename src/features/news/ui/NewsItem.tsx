@@ -1,11 +1,12 @@
 'use client';
 
-import { Card, CardContent } from '@/shared';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { memo, unstable_ViewTransition as ViewTransition } from 'react';
+import { memo } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { NewsItemType } from '../model';
+import { Card, CardContent } from '@/shared';
 
 const NewsItem = ({ item }: { item: NewsItemType }) => (
   <li>

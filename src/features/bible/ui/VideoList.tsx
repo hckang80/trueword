@@ -1,20 +1,20 @@
 'use client';
 
-import { VIDEO_LENGTH } from '@/features/news';
+import { useState } from 'react';
 import {
   Button,
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
+  DrawerDescription,
   DrawerTrigger,
   Skeleton
 } from '@/shared';
 import { Video } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useState } from 'react';
+import { VIDEO_LENGTH } from '@/features/news';
+import { useTranslations } from 'next-intl';
 import { type YouTubeVideo, useYouTubeVideos } from '..';
 
 function VideoList({ chapterName }: { chapterName: string }) {

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { availableTranslationVersions, type TransitionVersion } from '..';
 
 function createTransitionVersion(overrides: Partial<TransitionVersion>): TransitionVersion {

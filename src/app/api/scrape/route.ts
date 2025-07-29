@@ -1,7 +1,7 @@
-import { Redis } from '@upstash/redis';
-import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
+import axios from 'axios';
 import { parse } from 'node-html-parser';
+import { Redis } from '@upstash/redis';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

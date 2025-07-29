@@ -1,7 +1,7 @@
-import { DEFAULT_LOCALE } from '@/shared';
+import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Redis } from '@upstash/redis';
-import { NextRequest, NextResponse } from 'next/server';
+import { DEFAULT_LOCALE } from '@/shared';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

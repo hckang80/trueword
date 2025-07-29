@@ -1,9 +1,10 @@
 'use client';
 
-import { Link } from '@/shared/i18n/routing';
-import { memo, unstable_ViewTransition as ViewTransition } from 'react';
+import { memo } from 'react';
 import { NewsImage } from '.';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import type { NewsItemType } from '../model';
+import { Link } from '@/shared/i18n/routing';
 
 const HomeNewsItem = ({ item }: { item: NewsItemType }) => (
   <li>

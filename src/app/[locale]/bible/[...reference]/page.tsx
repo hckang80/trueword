@@ -1,14 +1,14 @@
+import Container from './__container';
+import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import {
   bibleChapterInstanceQueryOptions,
-  getLanguageFullName,
   translationBooksQueryOptions,
-  translationVersionsQueryOptions
+  translationVersionsQueryOptions,
+  getLanguageFullName
 } from '@/features/bible';
-import { isSupportedLocale, Loading, type RouteProps } from '@/shared';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';
-import Container from './__container';
+import { isSupportedLocale, Loading, type RouteProps } from '@/shared';
 
 type Props = RouteProps & {
   params: Promise<{ reference: string[] }>;
