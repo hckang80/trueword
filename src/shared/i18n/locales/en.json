@@ -26,7 +26,7 @@
     },
     "pwa": {
       "iosTitle": "Add to Home Screen to use as an app!",
-      "iosDescription": "Tap the ↗⬆️ Share button at the bottom and select 'Add to Home Screen'.",
+      "iosDescription": "Tap the ⬆️ Share button at the bottom and select 'Add to Home Screen'.",
       "androidDescription": "Install the app for a more convenient experience!",
       "install": "Install"
     }
