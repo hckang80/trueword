@@ -1,13 +1,13 @@
+import { BottomNavigation, Header, isSupportedLocale, ProgressBar, Toaster } from '@/shared';
+import { routing } from '@/shared/i18n/routing';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
-import Providers from './QueryProvider';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { routing } from '@/shared/i18n/routing';
-import { BottomNavigation, Header, isSupportedLocale, ProgressBar } from '@/shared';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import { ThemeProvider } from './ThemeProvider';
 import ErrorBoundary from './ErrorBoundary';
+import Providers from './QueryProvider';
+import { ThemeProvider } from './ThemeProvider';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta');
@@ -183,6 +183,7 @@ export default async function LocaleLayout({
                 <Header />
                 <main className="guide-line-layout">{children}</main>
                 <BottomNavigation />
+                <Toaster position="top-center" />
               </NextIntlClientProvider>
             </Providers>
           </ThemeProvider>
