@@ -1,8 +1,8 @@
 'use client';
 
-import { useLocale } from 'next-intl';
-import { useRouter } from 'nextjs-toploader/app';
 import { getLanguageFullName } from '../lib';
+import { useRouter } from 'nextjs-toploader/app';
+import { useLocale } from 'next-intl';
 
 export const useBibleLanguage = () => {
   const locale = useLocale();

@@ -1,8 +1,8 @@
 import { newsBySourceQueryOptions } from '@/features/news';
-import type { RouteProps } from '@/shared';
 import { QueryClient } from '@tanstack/react-query';
-import type { Metadata, ResolvingMetadata } from 'next';
 import Container from './__container';
+import type { Metadata, ResolvingMetadata } from 'next';
+import type { RouteProps } from '@/shared';
 
 type Props = RouteProps & { params: Promise<{ source: string[] }> };
 

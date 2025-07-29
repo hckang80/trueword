@@ -1,7 +1,7 @@
+import { type NextRequest, NextResponse } from 'next/server';
+import axios from 'axios';
 import { VIDEO_LENGTH } from '@/features/news';
 import { Redis } from '@upstash/redis';
-import axios from 'axios';
-import { type NextRequest, NextResponse } from 'next/server';
 
 interface VideoItem {
   kind: string;
