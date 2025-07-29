@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -16,6 +17,8 @@ export function PWAInstallPrompt() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+  const t = useTranslations('Home');
 
   useEffect(() => {
     if (isStandalone) {
@@ -69,17 +72,17 @@ export function PWAInstallPrompt() {
   }
 
   if (isIOS && isSafari) {
-    toast.info('홈 화면에 추가하여 앱처럼 사용해보세요!', {
-      description: '하단의 ↗️ 공유 버튼을 누르고 "홈 화면에 추가"를 선택해주세요',
-      duration: 10 * 1000
+    toast.info(t('pwa.iosTitle'), {
+      description: t('pwa.iosDescription'),
+      duration: 30 * 1000
     });
     return null;
   }
 
   toast.info('', {
-    description: '저희 앱을 설치하고 더 편리하게 사용해보세요!',
+    description: t('pwa.androidDescription'),
     action: {
-      label: 'Download',
+      label: t('pwa.install'),
       onClick: () => handleInstallClick()
     },
     duration: 10 * 1000
