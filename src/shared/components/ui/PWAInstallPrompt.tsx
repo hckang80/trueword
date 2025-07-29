@@ -13,7 +13,7 @@ export function PWAInstallPrompt() {
   const [isPwaInstalled, setIsPwaInstalled] = useState(false);
   const [showInstallMessage, setShowInstallMessage] = useState(false);
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
