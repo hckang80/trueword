@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
-import axios from 'axios';
-import { parse } from 'node-html-parser';
 import { Redis } from '@upstash/redis';
+import axios from 'axios';
+import { NextRequest, NextResponse } from 'next/server';
+import { parse } from 'node-html-parser';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
-const CACHE_TTL = 24 * 60 * 60;
+const CACHE_TTL = 3 * 24 * 60 * 60;
 
 const MIN_CONTENT_LENGTH = 100;
 

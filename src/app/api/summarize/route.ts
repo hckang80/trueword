@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { DEFAULT_LOCALE } from '@/shared';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Redis } from '@upstash/redis';
-import { DEFAULT_LOCALE } from '@/shared';
+import { NextRequest, NextResponse } from 'next/server';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN
 });
 
-const CACHE_TTL = 24 * 60 * 60;
+const CACHE_TTL = 3 * 24 * 60 * 60;
 
 export async function POST(request: NextRequest) {
   try {
