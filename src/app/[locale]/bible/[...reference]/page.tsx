@@ -1,14 +1,14 @@
-import Container from './__container';
-import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import {
   bibleChapterInstanceQueryOptions,
+  getLanguageFullName,
   translationBooksQueryOptions,
-  translationVersionsQueryOptions,
-  getLanguageFullName
+  translationVersionsQueryOptions
 } from '@/features/bible';
+import { isSupportedLocale, OverlayLoading, type RouteProps } from '@/shared';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';
-import { isSupportedLocale, Loading, type RouteProps } from '@/shared';
+import Container from './__container';
 
 type Props = RouteProps & {
   params: Promise<{ reference: string[] }>;
@@ -42,7 +42,7 @@ export default async function BiblePage({ params }: Props) {
   ]);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<OverlayLoading />}>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Container reference={reference} />
       </HydrationBoundary>
