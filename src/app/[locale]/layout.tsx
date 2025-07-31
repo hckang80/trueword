@@ -166,6 +166,7 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         {/* TODO: Metadata 설정으로 적용이 안되서 수동으록 추가 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
       </head>
