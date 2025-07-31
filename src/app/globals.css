@@ -133,11 +133,12 @@
   }
 
   main:has(+ .global-nav) {
-    margin-bottom: var(--navbar-height);
+    margin-bottom: calc(var(--navbar-height) + env(safe-area-inset-bottom));
   }
 
   .global-nav {
     view-transition-name: nav;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   ::view-transition-group(nav) {
