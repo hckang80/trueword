@@ -15,7 +15,6 @@ export function PWAInstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [isClient, setIsClient] = useState(false);
-
   const t = useTranslations('Home');
 
   useEffect(() => {
@@ -28,15 +27,13 @@ export function PWAInstallPrompt() {
 
   const handleInstallClick = useCallback(async () => {
     if (!deferredPrompt) return;
-
     setShowInstallMessage(false);
     await deferredPrompt.prompt();
-
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
       toast(t('pwa.success'));
+      setIsStandalone(true);
     }
-
     setDeferredPrompt(null);
   }, [deferredPrompt, setShowInstallMessage, setDeferredPrompt, t]);
 
