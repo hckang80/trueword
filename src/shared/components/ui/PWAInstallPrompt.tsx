@@ -49,7 +49,7 @@ export function PWAInstallPrompt() {
       setIsPwaInstalled(true);
       setShowInstallMessage(false);
       setDeferredPrompt(null);
-      toast('PWA가 설치되었습니다! 이제 앱처럼 사용해보세요.');
+      toast(t('pwa.success'));
     };
 
     if (isIOS && isSafari) {

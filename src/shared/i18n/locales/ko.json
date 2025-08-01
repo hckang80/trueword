@@ -28,7 +28,8 @@
       "iosTitle": "홈 화면에 추가하여 앱처럼 사용해보세요!",
       "iosDescription": "↗️ 공유 버튼을 누르고 '홈 화면에 추가'를 선택해주세요",
       "androidDescription": "앱을 설치하고 더 편리하게 사용해보세요!",
-      "install": "설치"
+      "install": "설치",
+      "success": "PWA가 설치되었습니다! 이제 앱처럼 사용해보세요."
     }
   },
   "News": {
