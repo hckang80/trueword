@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface BeforeInstallPromptEvent extends Event {
@@ -11,11 +11,8 @@ interface BeforeInstallPromptEvent extends Event {
 
 export function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isPwaInstalled, setIsPwaInstalled] = useState(false);
   const [showInstallMessage, setShowInstallMessage] = useState(false);
-
   const [isIOS, setIsIOS] = useState(false);
-  const [isSafari, setIsSafari] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -23,21 +20,28 @@ export function PWAInstallPrompt() {
 
   useEffect(() => {
     setIsClient(true);
-
     if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
       setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream);
-      setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
       setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
     }
   }, []);
 
-  useEffect(() => {
-    if (!isClient) return;
+  const handleInstallClick = useCallback(async () => {
+    if (!deferredPrompt) return;
 
-    if (isStandalone) {
-      setIsPwaInstalled(true);
-      return;
+    setShowInstallMessage(false);
+    await deferredPrompt.prompt();
+
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      toast(t('pwa.success'));
     }
+
+    setDeferredPrompt(null);
+  }, [deferredPrompt, setShowInstallMessage, setDeferredPrompt, t]);
+
+  useEffect(() => {
+    if (!isClient || isStandalone) return;
 
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
@@ -46,13 +50,13 @@ export function PWAInstallPrompt() {
     };
 
     const handleAppInstalled = () => {
-      setIsPwaInstalled(true);
       setShowInstallMessage(false);
       setDeferredPrompt(null);
       toast(t('pwa.success'));
+      setIsStandalone(true);
     };
 
-    if (isIOS && isSafari) {
+    if (isIOS) {
       setShowInstallMessage(true);
     } else {
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -60,48 +64,32 @@ export function PWAInstallPrompt() {
     }
 
     return () => {
-      if (!isIOS || !isSafari) {
+      if (!isIOS) {
         window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         window.removeEventListener('appinstalled', handleAppInstalled);
       }
     };
-  }, [isClient, isStandalone, isIOS, isSafari, deferredPrompt]);
+  }, [isClient, isStandalone, isIOS, deferredPrompt, t]);
 
-  const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+  useEffect(() => {
+    if (!showInstallMessage || isStandalone) return;
 
-    setShowInstallMessage(false);
-    await deferredPrompt.prompt();
-
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === 'accepted') {
-      setIsPwaInstalled(true);
+    if (isIOS) {
+      toast.info(t('pwa.iosTitle'), {
+        description: t('pwa.iosDescription'),
+        duration: 30 * 1000
+      });
+    } else {
+      toast.info('', {
+        description: t('pwa.androidDescription'),
+        action: {
+          label: t('pwa.install'),
+          onClick: handleInstallClick
+        },
+        duration: 10 * 1000
+      });
     }
-
-    setDeferredPrompt(null);
-  };
-
-  if (!isClient || isPwaInstalled || !showInstallMessage) {
-    return null;
-  }
-
-  if (isIOS && isSafari) {
-    toast.info(t('pwa.iosTitle'), {
-      description: t('pwa.iosDescription'),
-      duration: 30 * 1000
-    });
-    return null;
-  }
-
-  toast.info('', {
-    description: t('pwa.androidDescription'),
-    action: {
-      label: t('pwa.install'),
-      onClick: () => handleInstallClick()
-    },
-    duration: 10 * 1000
-  });
+  }, [showInstallMessage, isIOS, handleInstallClick, t, isStandalone]);
 
   return null;
 }
