@@ -14,13 +14,26 @@ export function PWAInstallPrompt() {
   const [isPwaInstalled, setIsPwaInstalled] = useState(false);
   const [showInstallMessage, setShowInstallMessage] = useState(false);
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  const [isIOS, setIsIOS] = useState(false);
+  const [isSafari, setIsSafari] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const t = useTranslations('Home');
 
   useEffect(() => {
+    setIsClient(true);
+
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+      setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream);
+      setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+      setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     if (isStandalone) {
       setIsPwaInstalled(true);
       return;
@@ -36,7 +49,7 @@ export function PWAInstallPrompt() {
       setIsPwaInstalled(true);
       setShowInstallMessage(false);
       setDeferredPrompt(null);
-      alert('PWA가 설치되었습니다! 이제 앱처럼 사용해보세요.');
+      toast('PWA가 설치되었습니다! 이제 앱처럼 사용해보세요.');
     };
 
     if (isIOS && isSafari) {
@@ -47,10 +60,12 @@ export function PWAInstallPrompt() {
     }
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
+      if (!isIOS || !isSafari) {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        window.removeEventListener('appinstalled', handleAppInstalled);
+      }
     };
-  }, [isStandalone, isIOS, isSafari]);
+  }, [isClient, isStandalone, isIOS, isSafari, deferredPrompt]);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
@@ -67,7 +82,7 @@ export function PWAInstallPrompt() {
     setDeferredPrompt(null);
   };
 
-  if (isPwaInstalled || !showInstallMessage) {
+  if (!isClient || isPwaInstalled || !showInstallMessage) {
     return null;
   }
 
@@ -87,4 +102,6 @@ export function PWAInstallPrompt() {
     },
     duration: 10 * 1000
   });
+
+  return null;
 }
