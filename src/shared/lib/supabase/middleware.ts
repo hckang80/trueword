@@ -1,7 +1,12 @@
+import { DEFAULT_LOCALE } from '@/shared/config';
 import { createServerClient } from '@supabase/ssr';
+import { headers } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
+  const acceptLanguage = (await headers()).get('accept-language') || DEFAULT_LOCALE;
+  const [userLang] = acceptLanguage.split(',');
+
   let supabaseResponse = NextResponse.next({
     request
   });
@@ -36,15 +41,15 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user }
   } = await supabase.auth.getUser();
-
+  console.log({ user });
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
+    !request.nextUrl.pathname.startsWith(`/${userLang.slice(0, 2)}/login`) &&
     !request.nextUrl.pathname.startsWith('/auth')
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = `/${userLang.slice(0, 2)}/login`;
     return NextResponse.redirect(url);
   }
 
