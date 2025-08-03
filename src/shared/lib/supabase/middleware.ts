@@ -47,7 +47,6 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith(`/${userLang.slice(0, 2)}/login`) &&
     !request.nextUrl.pathname.startsWith('/auth')
   ) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = `/${userLang.slice(0, 2)}/login`;
     return NextResponse.redirect(url);
