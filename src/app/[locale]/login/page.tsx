@@ -1,8 +1,11 @@
+import { generateNonce } from '@/shared';
 import Script from 'next/script';
 import LoginContainer from './__container';
 import { login, signup } from './actions';
 
 export default async function LoginPage() {
+  const [nonce, hashedNonce] = await generateNonce();
+
   return (
     <>
       <form>
@@ -14,7 +17,7 @@ export default async function LoginPage() {
         <button formAction={signup}>Sign up</button>
       </form>
 
-      <LoginContainer />
+      <LoginContainer nonce={nonce} hashedNonce={hashedNonce} />
 
       <Script src="https://accounts.google.com/gsi/client" async defer />
     </>

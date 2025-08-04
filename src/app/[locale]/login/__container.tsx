@@ -6,7 +6,13 @@ import { User } from '@supabase/supabase-js';
 import { CredentialResponse } from 'google-one-tap';
 import { useEffect, useState } from 'react';
 
-export default function LoginContainer() {
+export default function LoginContainer({
+  nonce,
+  hashedNonce
+}: {
+  nonce: string;
+  hashedNonce: string;
+}) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +43,8 @@ export default function LoginContainer() {
       console.log({ response });
       const { error } = await supabase.auth.signInWithIdToken({
         provider: 'google',
-        token: response.credential
+        token: response.credential,
+        nonce
       });
       if (error) {
         console.error('Google One Tap login error:', error);
@@ -70,7 +77,7 @@ export default function LoginContainer() {
         data-context="signin"
         data-ux_mode="popup"
         data-callback="handleSignInWithGoogle"
-        data-nonce=""
+        data-nonce={hashedNonce}
         data-auto_select="true"
         data-itp_support="true"
         data-use_fedcm_for_prompt="true"
