@@ -2,12 +2,14 @@
 
 import { Button } from '@/shared';
 import { createClient } from '@/shared/lib/supabase/client';
+import type { User } from '@supabase/supabase-js';
+import type { CredentialResponse } from 'google-one-tap';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { login, signup } from './actions';
 
 export default function LoginPage() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   const supabase = createClient();
@@ -32,13 +34,12 @@ export default function LoginPage() {
     });
 
     // Google One Tap 콜백 함수를 window 객체에 전역적으로 등록합니다.
-    window.handleSignInWithGoogle = async (response) => {
+    window.handleSignInWithGoogle = async (response: CredentialResponse) => {
       // Google에서 받은 credential을 사용하여 Supabase에 로그인합니다.
       console.log({ response });
       const { error } = await supabase.auth.signInWithIdToken({
         provider: 'google',
-        token: response.credential,
-        nonce: response.nonce
+        token: response.credential
       });
       if (error) {
         console.error('Google One Tap login error:', error);
