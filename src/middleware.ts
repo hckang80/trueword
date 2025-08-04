@@ -1,8 +1,25 @@
-import createMiddleware from 'next-intl/middleware';
 import { routing } from '@/shared/i18n/routing';
+import createMiddleware from 'next-intl/middleware';
+import type { NextRequest } from 'next/server';
+import { locales } from './shared';
+import { updateSession } from './shared/lib/supabase/middleware';
 
-export default createMiddleware(routing);
+const privatePages = [''];
+
+const handleI18nRouting = createMiddleware(routing);
+
+export default function middleware(request: NextRequest) {
+  const privatePathnameRegex = RegExp(
+    `^(/(${locales.join('|')}))?(${privatePages
+      .flatMap((p) => (p === '/' ? ['', '/'] : p))
+      .join('|')})/?$`,
+    'i'
+  );
+  const isPrivatePage = privatePathnameRegex.test(request.nextUrl.pathname);
+
+  return isPrivatePage ? updateSession(request) : handleI18nRouting(request);
+}
 
 export const config = {
-  matcher: [`/(en|ko)/:path*`] // TODO: en|ko -> locales를 이용해 동적삽입 필요
+  matcher: ['/', '/(en|ko)/:path*']
 };
