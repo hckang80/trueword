@@ -14,7 +14,6 @@ export default function LoginContainer({
   hashedNonce: string;
 }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const supabase = createClient();
 
@@ -24,7 +23,6 @@ export default function LoginContainer({
         data: { user }
       } = await supabase.auth.getUser();
       setUser(user);
-      setLoading(false);
     };
 
     checkUser();
