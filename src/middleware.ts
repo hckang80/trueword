@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import { locales } from './shared';
 import { updateSession } from './shared/lib/supabase/middleware';
 
-const privatePages = [''];
+const privatePages = ['/private'];
 
 const handleI18nRouting = createMiddleware(routing);
 
