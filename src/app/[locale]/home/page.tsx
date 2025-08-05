@@ -5,7 +5,7 @@ import { PWAInstallPrompt, type RouteProps } from '@/shared';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 
-const MainPage = async ({ params }: RouteProps) => {
+const HomePage = async ({ params }: RouteProps) => {
   const PHOTO_LIST_SIZE = 10;
   const { locale } = await params;
   const backgroundPhotoParams = {
@@ -36,4 +36,4 @@ const MainPage = async ({ params }: RouteProps) => {
   );
 };
 
-export default MainPage;
+export default HomePage;
