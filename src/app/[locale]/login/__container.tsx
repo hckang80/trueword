@@ -3,8 +3,28 @@
 import { Button } from '@/shared';
 import { createClient } from '@/shared/lib/supabase/client';
 import { User } from '@supabase/supabase-js';
-import { CredentialResponse } from 'google-one-tap';
 import { useEffect, useState } from 'react';
+
+const GoogleIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-6 h-6">
+    <path
+      fill="#FFC107"
+      d="M43.611 20.083H42V20H24v8h11.303c-1.615 4.965-6.197 8.527-11.303 8.527-7.33 0-13.3-5.933-13.3-13.256s5.97-13.256 13.3-13.256c3.151 0 5.86 1.157 8.016 3.013l5.656-5.656C34.046 6.096 29.412 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20c11.045 0 20-8.955 20-20z"
+    />
+    <path
+      fill="#FF3D00"
+      d="M6.306 14.691L11.758 19.1c1.378-2.607 4.14-4.598 7.242-4.598C22.614 14.502 26.1 16.7 28 19.689L34.1 13.596C30.672 10.377 26.046 8.5 20.732 8.5C14.004 8.5 8.243 12.396 6.306 14.691z"
+    />
+    <path
+      fill="#4CAF50"
+      d="M24 44c5.111 0 9.873-1.872 13.486-5.198L31.621 32.61a13.313 13.313 0 01-7.621 2.392c-5.11 0-9.45-3.327-11.238-8.156L4.764 36.314C7.947 40.85 15.65 44 24 44z"
+    />
+    <path
+      fill="#1976D2"
+      d="M43.611 20.083H42V20H24v8h11.303c-1.615 4.965-6.197 8.527-11.303 8.527-7.33 0-13.3-5.933-13.3-13.256s5.97-13.256 13.3-13.256c3.151 0 5.86 1.157 8.016 3.013l5.656-5.656C34.046 6.096 29.412 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20c11.045 0 20-8.955 20-20z"
+    />
+  </svg>
+);
 
 export default function LoginContainer({
   nonce,
@@ -14,8 +34,21 @@ export default function LoginContainer({
   hashedNonce: string;
 }) {
   const [user, setUser] = useState<User | null>(null);
-
   const supabase = createClient();
+
+  // Google OAuth 로그인 핸들러
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      // provider: 'google',
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/api/auth/callback`
+      }
+    });
+    if (error) {
+      console.error('Google OAuth login error:', error);
+    }
+  };
 
   useEffect(() => {
     const checkUser = async () => {
@@ -24,10 +57,8 @@ export default function LoginContainer({
       } = await supabase.auth.getUser();
       setUser(user);
     };
-
     checkUser();
 
-    // onAuthStateChange 리스너를 설정하여 실시간으로 인증 상태 변화를 감지합니다.
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((event, session) => {
@@ -35,25 +66,8 @@ export default function LoginContainer({
       setUser(session?.user ?? null);
     });
 
-    // Google One Tap 콜백 함수를 window 객체에 전역적으로 등록합니다.
-    window.handleSignInWithGoogle = async (response: CredentialResponse) => {
-      // Google에서 받은 credential을 사용하여 Supabase에 로그인합니다.
-      console.log({ response });
-      const { error } = await supabase.auth.signInWithIdToken({
-        provider: 'google',
-        token: response.credential,
-        nonce
-      });
-      if (error) {
-        console.error('Google One Tap login error:', error);
-        console.log('로그인에 실패했습니다. 콘솔을 확인해주세요.');
-      }
-    };
-
-    // 컴포넌트 언마운트 시 리스너와 전역 콜백 함수를 해제합니다.
     return () => {
       subscription.unsubscribe();
-      delete window.handleSignInWithGoogle;
     };
   }, []);
 
@@ -68,29 +82,17 @@ export default function LoginContainer({
   };
 
   return (
-    <>
-      <div
-        id="g_id_onload"
-        data-client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-        data-context="signin"
-        data-ux_mode="popup"
-        data-callback="handleSignInWithGoogle"
-        data-nonce={hashedNonce}
-        data-auto_select="true"
-        data-itp_support="true"
-        data-use_fedcm_for_prompt="true"
-      ></div>
-      <div
-        className="g_id_signin"
-        data-type="standard"
-        data-shape="pill"
-        data-theme="outline"
-        data-text="signin_with"
-        data-size="large"
-        data-logo_alignment="left"
-      ></div>
+    <div>
+      <button
+        onClick={handleGoogleLogin}
+        className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border border-gray-300 rounded-lg shadow-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        <GoogleIcon />
+        Google로 로그인
+      </button>
+
       <Button onClick={handleLogout}>LOGOUT</Button>
       <pre>{JSON.stringify(user, null, 2)}</pre>
-    </>
+    </div>
   );
 }
