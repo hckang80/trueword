@@ -1,9 +1,8 @@
 'use client';
 
-import { Home, Book, Newspaper } from 'lucide-react';
 import { Link, usePathname } from '@/shared/i18n/routing';
-import { useLocale, useTranslations } from 'next-intl';
-import { translationVersionCode } from '@/features/bible';
+import { Home, Newspaper } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface NavItemProps {
   href: string;
@@ -27,7 +26,6 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
 };
 
 export const BottomNavigation = () => {
-  const locale = useLocale();
   const t = useTranslations('Common');
   const pathname = usePathname();
 
@@ -43,14 +41,6 @@ export const BottomNavigation = () => {
           icon={<Home size={24} className={isActive('/home') ? 'text-primary' : 'text-gray-400'} />}
           text={t('home')}
           isActive={isActive('/home')}
-        />
-        <NavItem
-          href={`/bible/${translationVersionCode[locale]}/1/1`}
-          icon={
-            <Book size={24} className={isActive('/bible') ? 'text-primary' : 'text-gray-400'} />
-          }
-          text={t('bible')}
-          isActive={isActive('/bible')}
         />
         <NavItem
           href="/news"
