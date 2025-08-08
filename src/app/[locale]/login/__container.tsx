@@ -2,7 +2,7 @@
 
 import { Button, GoogleIcon } from '@/shared';
 import { createClient } from '@/shared/lib/supabase/client';
-import { Flex } from '@radix-ui/themes';
+import { Flex, Grid } from '@radix-ui/themes';
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
@@ -62,7 +62,8 @@ export default function LoginContainer({
   };
 
   return (
-    <div>
+    <Grid gap="2">
+      {user?.user_metadata.full_name}
       <button
         onClick={handleGoogleLogin}
         className="w-full flex items-center justify-center gap-3 px-6 py-3 dark:bg-white bg-black dark:text-black text-white rounded-sm shadow-sm font-semibold"
@@ -70,12 +71,12 @@ export default function LoginContainer({
         <GoogleIcon />
         Sign in with Google
       </button>
+
       <Flex justify="center">
         <Button variant="link" onClick={handleLogout}>
           LOGOUT
         </Button>
       </Flex>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </div>
+    </Grid>
   );
 }
