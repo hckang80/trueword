@@ -1,4 +1,4 @@
-import type { Verse } from '@/features/bible';
+import type { NewVerseInstance } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -10,10 +10,18 @@ export async function GET(
   const [abbr, bookNumber, chapterNumber] = source;
 
   try {
-    const { data } = await axios.get<{ data: Verse[] }>(
-      `${process.env.BIBLE_API_URL}/get-chapter/${abbr}/${bookNumber}/${chapterNumber}`
+    // https://api.biblesupersearch.com/api/books
+    const { data } = await axios.get<{ data: NewVerseInstance }>(
+      `${process.env.BIBLE_API_URL}/api`,
+      {
+        params: {
+          bible: abbr,
+          reference: `${'Gen'} ${chapterNumber}`
+        }
+        // /${abbr}/${bookNumber}/${chapterNumber}
+      }
     );
-
+    console.log({ data });
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching translations:', error);

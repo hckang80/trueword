@@ -3,9 +3,9 @@
 import { cn } from '@/shared';
 import { useLayoutEffect, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
-import type { Verse } from '../model';
+import type { NewVerse } from '../model';
 
-function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: boolean }) {
+function VerseList({ selectedVerses, isRTL }: { selectedVerses: NewVerse[]; isRTL: boolean }) {
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
 
   useLayoutEffect(() => {

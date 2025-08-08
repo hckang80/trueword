@@ -1,6 +1,6 @@
-import { type BibleBook, type TodayVerse, type Verse, type YouTubeVideo } from '@/features/bible';
+import { type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
-import type { NewBibleLanguage } from '..';
+import type { NewBibleLanguage, NewVerse, NewVerseInstance } from '..';
 
 export async function fetchTranslationVersions() {
   const {
@@ -11,21 +11,23 @@ export async function fetchTranslationVersions() {
     id,
     language: item.lang_short,
     translations: {
-      short_name: item.shortname,
+      short_name: item.module,
       full_name: item.name,
       ...(item.rtl && { dir: 'rtl' })
     }
   }));
 }
 
-export async function fetchBibleInstance(params: string[]) {
+export async function fetchBibleInstance(params: string[]): Promise<NewVerse[]> {
   const [abbreviation, bookNumber, chapterNumber] = params;
 
-  const { data } = await axiosInstance<Verse[]>(
+  const {
+    data: { results }
+  } = await axiosInstance<NewVerseInstance>(
     `/translations/${abbreviation}/${bookNumber}/${chapterNumber}`
   );
 
-  return data;
+  return Object.values(results[0].verses[abbreviation][chapterNumber]);
 }
 
 export async function fetchTranslationBooks(translation: string) {

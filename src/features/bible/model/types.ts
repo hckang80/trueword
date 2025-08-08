@@ -39,6 +39,29 @@ export interface Chapter {
   verses: Verse[];
 }
 
+export interface NewVerseInstance {
+  hash: string;
+  disambiguation: unknown[];
+  strongs: unknown[];
+  paging: unknown[];
+  errors: unknown[];
+  error_level: number;
+  results: NewVerses[];
+}
+
+export interface NewVerses {
+  verses: Record<string, Record<string, NewVerse>>;
+}
+export interface NewVerse {
+  book: number;
+  chapter: number;
+  claimed: boolean;
+  id: number;
+  italics: string;
+  text: string;
+  verse: number;
+}
+
 export interface Verse {
   pk: number;
   verse: number;
