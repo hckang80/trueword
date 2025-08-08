@@ -5,6 +5,7 @@ import { createClient } from '@/shared/lib/supabase/client';
 import { Flex, Grid } from '@radix-ui/themes';
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 export default function LoginContainer() {
   const [user, setUser] = useState<User | null>(null);
@@ -48,7 +49,7 @@ export default function LoginContainer() {
     if (error) {
       console.error('Logout error:', error);
     } else {
-      console.log('로그아웃 되었습니다.');
+      toast.info('You have been logged out.');
     }
   };
 
