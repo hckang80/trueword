@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { Home, Newspaper } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 interface NavItemProps {
   href: string;
@@ -26,7 +26,6 @@ const NavItem = ({ href, icon, text, isActive }: NavItemProps) => {
 };
 
 export const BottomNavigation = () => {
-  const locale = useLocale();
   const t = useTranslations('Common');
   const pathname = usePathname();
 
