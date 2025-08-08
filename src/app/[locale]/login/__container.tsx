@@ -54,23 +54,25 @@ export default function LoginContainer() {
   };
 
   return (
-    <Grid gap="2">
-      <span className="sr-only">{user?.user_metadata.full_name}</span>
-      <button
-        onClick={handleGoogleLogin}
-        className="w-full flex items-center justify-center gap-3 px-6 py-3 dark:bg-white bg-black dark:text-black text-white rounded-sm shadow-sm font-semibold"
-      >
-        <GoogleIcon />
-        Sign in with Google
-      </button>
+    <div className="center-absolute">
+      <Grid gap="2">
+        <span className="sr-only">{user?.user_metadata.full_name}</span>
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-3 px-6 py-3 dark:bg-white bg-black dark:text-black text-white rounded-sm shadow-sm font-semibold"
+        >
+          <GoogleIcon />
+          Sign in with Google
+        </button>
 
-      {!!user && (
-        <Flex justify="center">
-          <Button variant="link" onClick={handleLogout}>
-            LOGOUT
-          </Button>
-        </Flex>
-      )}
-    </Grid>
+        {!!user && (
+          <Flex justify="center">
+            <Button variant="link" onClick={handleLogout}>
+              LOGOUT
+            </Button>
+          </Flex>
+        )}
+      </Grid>
+    </div>
   );
 }
