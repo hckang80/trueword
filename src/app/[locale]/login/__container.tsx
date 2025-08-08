@@ -6,23 +6,24 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
 const GoogleIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-6 h-6">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-6 h-6">
     <path
-      fill="#FFC107"
-      d="M43.611 20.083H42V20H24v8h11.303c-1.615 4.965-6.197 8.527-11.303 8.527-7.33 0-13.3-5.933-13.3-13.256s5.97-13.256 13.3-13.256c3.151 0 5.86 1.157 8.016 3.013l5.656-5.656C34.046 6.096 29.412 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20c11.045 0 20-8.955 20-20z"
-    />
+      fill="#EA4335"
+      d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+    ></path>
     <path
-      fill="#FF3D00"
-      d="M6.306 14.691L11.758 19.1c1.378-2.607 4.14-4.598 7.242-4.598C22.614 14.502 26.1 16.7 28 19.689L34.1 13.596C30.672 10.377 26.046 8.5 20.732 8.5C14.004 8.5 8.243 12.396 6.306 14.691z"
-    />
+      fill="#4285F4"
+      d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+    ></path>
     <path
-      fill="#4CAF50"
-      d="M24 44c5.111 0 9.873-1.872 13.486-5.198L31.621 32.61a13.313 13.313 0 01-7.621 2.392c-5.11 0-9.45-3.327-11.238-8.156L4.764 36.314C7.947 40.85 15.65 44 24 44z"
-    />
+      fill="#FBBC05"
+      d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+    ></path>
     <path
-      fill="#1976D2"
-      d="M43.611 20.083H42V20H24v8h11.303c-1.615 4.965-6.197 8.527-11.303 8.527-7.33 0-13.3-5.933-13.3-13.256s5.97-13.256 13.3-13.256c3.151 0 5.86 1.157 8.016 3.013l5.656-5.656C34.046 6.096 29.412 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20c11.045 0 20-8.955 20-20z"
-    />
+      fill="#34A853"
+      d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+    ></path>
+    <path fill="none" d="M0 0h48v48H0z"></path>
   </svg>
 );
 
@@ -85,10 +86,10 @@ export default function LoginContainer({
     <div>
       <button
         onClick={handleGoogleLogin}
-        className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border border-gray-300 rounded-lg shadow-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="w-full flex items-center justify-center gap-3 px-6 py-3 dark:bg-white bg-black dark:text-black text-white rounded-sm shadow-sm font-semibold"
       >
         <GoogleIcon />
-        Google로 로그인
+        Sign in with Google
       </button>
 
       <Button onClick={handleLogout}>LOGOUT</Button>
