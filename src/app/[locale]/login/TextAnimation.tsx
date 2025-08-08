@@ -30,24 +30,8 @@ export function TextAnimation() {
   }, []);
 
   return (
-    <>
-      <script src="https://cdn.tailwindcss.com"></script>
-      <style>
-        {`
-                @keyframes fadeInOut {
-                    0% { opacity: 0; transform: scale(0.95); }
-                    10% { opacity: 1; transform: scale(1); }
-                    90% { opacity: 1; transform: scale(1); }
-                    100% { opacity: 0; transform: scale(0.95); }
-                }
-                .animate-text {
-                    animation: fadeInOut 4s infinite;
-                }
-                `}
-      </style>
-      <h1 key={key} className="text-center text-8xl font-bold animate-text min-h-25 mb-4">
-        {currentGreeting}
-      </h1>
-    </>
+    <h2 key={key} className="text-center text-8xl font-bold animate-text min-h-25 mb-4">
+      {currentGreeting}
+    </h2>
   );
 }
