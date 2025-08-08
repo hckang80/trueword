@@ -16,14 +16,39 @@ const redis = new Redis({
 
 const CACHE_TTL = 24 * 60 * 60;
 
-const utcDateKey = new Date().toISOString().split('T')[0];
+const utcDateKey = '2025-08-08';
 
 export async function GET(request: NextRequest) {
   try {
     const locale = request.headers.get('Accept-Language') || DEFAULT_LOCALE;
 
+    const todayVerse: Record<string, unknown> = {
+      ['todayVerse:en:2025-08-08']: {
+        lang: 'en',
+        abbreviation: 'YLT',
+        bookNumber: 63,
+        verse: {
+          chapter: 1,
+          verse: 9,
+          name: '2 John 1:9',
+          text: 'every one who is transgressing, and is not remaining in the teaching of the Christ, hath not God; he who is remaining in the teaching of the Christ, this one hath both the Father and the Son;'
+        }
+      },
+      ['todayVerse:ko:2025-08-08']: {
+        lang: 'ko',
+        abbreviation: 'KRV',
+        bookNumber: 30,
+        verse: {
+          chapter: 7,
+          verse: 4,
+          name: '아모스서 7:4',
+          text: '주 여호와께서 또 내게 보이신 것이 이러하니라 주 여호와께서 명하여 불로 징벌하게 하시니 불이 큰 바다를 삼키고 육지까지 먹으려 하는지라'
+        }
+      }
+    };
+
     const key = `todayVerse:${locale}:${utcDateKey}`;
-    const cached = await redis.get<string>(key);
+    const cached = todayVerse[key];
 
     if (cached) return NextResponse.json(cached);
 
