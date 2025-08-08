@@ -64,11 +64,13 @@ export default function LoginContainer() {
         Sign in with Google
       </button>
 
-      <Flex justify="center">
-        <Button variant="link" onClick={handleLogout}>
-          LOGOUT
-        </Button>
-      </Flex>
+      {!!user && (
+        <Flex justify="center">
+          <Button variant="link" onClick={handleLogout}>
+            LOGOUT
+          </Button>
+        </Flex>
+      )}
     </Grid>
   );
 }
