@@ -27,7 +27,7 @@ import {
 } from '@/shared';
 import { Link } from '@/shared/i18n/routing';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { ChevronRight, Share2 } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Suspense } from 'react';
@@ -110,11 +110,11 @@ export default function MainContainer({
                 </DrawerContent>
               </Drawer>
             </Suspense>
-            <Button size="icon" asChild>
+            {/* <Button size="icon" asChild>
               <Link href={moreTodayWordPath} title={t('viewFullContext')}>
                 <ChevronRight />
               </Link>
-            </Button>
+            </Button> */}
           </CardAction>
         </CardHeader>
         <CardContent className="relative">
