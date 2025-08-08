@@ -42,8 +42,10 @@ export default function MainContainer({
   const locale = useLocale();
 
   const {
-    data: { verse }
+    data: { verse, abbreviation, bookNumber }
   } = useBibleToday(locale);
+
+  const moreTodayWordPath = `/bible/${abbreviation}/${bookNumber}/${verse.chapter}#${verse.verse}`;
 
   const t = useTranslations('Home');
 
@@ -108,6 +110,11 @@ export default function MainContainer({
                 </DrawerContent>
               </Drawer>
             </Suspense>
+            {/* <Button size="icon" asChild>
+              <Link href={moreTodayWordPath} title={t('viewFullContext')}>
+                <ChevronRight />
+              </Link>
+            </Button> */}
           </CardAction>
         </CardHeader>
         <CardContent className="relative">
