@@ -1,14 +1,21 @@
-import { type Verse, type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
+import { type BibleBook, type TodayVerse, type Verse, type YouTubeVideo } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
-import type { BibleLanguage } from '..';
+import type { NewBibleLanguage } from '..';
 
 export async function fetchTranslationVersions() {
-  const { data } = await axiosInstance<BibleLanguage[]>('/api/translations');
+  const {
+    data: { results }
+  } = await axiosInstance<NewBibleLanguage>('/api/translations');
 
-  return data.map((item) => {
-    const [id] = item.language.split(' ');
-    return { ...item, id };
-  });
+  return Object.entries(results).map(([id, item]) => ({
+    id,
+    language: item.lang_short,
+    translations: {
+      short_name: item.shortname,
+      full_name: item.name,
+      ...(item.rtl && { dir: 'rtl' })
+    }
+  }));
 }
 
 export async function fetchBibleInstance(params: string[]) {

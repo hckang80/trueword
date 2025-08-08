@@ -1,15 +1,15 @@
 'use client';
 
 import {
-  useUpdateBibleParams,
-  useBibleChapterInstance,
-  useTranslationBooks,
+  BibleNavigator,
   BookSelector,
   TranslationSelector,
+  useBibleChapterInstance,
+  useTranslationBooks,
+  useTranslationVersions,
+  useUpdateBibleParams,
   VerseList,
-  VideoList,
-  BibleNavigator,
-  useTranslationVersions
+  VideoList
 } from '@/features/bible';
 
 export default function Container({ reference }: { reference: string[] }) {

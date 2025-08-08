@@ -57,6 +57,36 @@ export interface TransitionVersion {
   translation: string;
 }
 
+export interface NewBibleLanguage {
+  errors: unknown[];
+  error_level: number;
+  results: Record<string, NewBibleTransition>;
+}
+
+export interface NewBibleTransition {
+  name: string;
+  shortname: string;
+  module: string;
+  year: string;
+  owner: any;
+  description: string;
+  lang: string;
+  lang_short: string;
+  copyright: number;
+  italics: number;
+  strongs: number;
+  red_letter: number;
+  paragraph: number;
+  rank: number;
+  research: number;
+  restrict: number;
+  copyright_id: number;
+  copyright_statement: string;
+  rtl: number;
+  lang_native: string;
+  downloadable: boolean;
+}
+
 export interface BibleLanguage {
   id: string;
   language: string;

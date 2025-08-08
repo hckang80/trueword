@@ -1,11 +1,11 @@
-import type { BibleLanguage } from '@/features/bible';
+import type { NewBibleLanguage } from '@/features/bible';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const { data } = await axios.get<{ data: BibleLanguage[] }>(
-      `${process.env.BIBLE_API_URL}/static/bolls/app/views/languages.json`
+    const { data } = await axios.get<{ data: NewBibleLanguage[] }>(
+      `${process.env.BIBLE_API_URL}/api/bibles`
     );
 
     return NextResponse.json(data);
