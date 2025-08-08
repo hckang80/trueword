@@ -1,6 +1,8 @@
 import { BottomNavigation, Header, isSupportedLocale, ProgressBar, Toaster } from '@/shared';
 import { routing } from '@/shared/i18n/routing';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Theme } from '@radix-ui/themes';
+import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -184,10 +186,12 @@ export default async function LocaleLayout({
             <ProgressBar color="var(--color-foreground)" showSpinner={false} />
             <Providers>
               <NextIntlClientProvider messages={messages}>
-                <Header />
-                <main className="guide-line-layout">{children}</main>
-                <BottomNavigation />
-                <Toaster position="top-center" />
+                <Theme>
+                  <Header />
+                  <main className="guide-line-layout">{children}</main>
+                  <BottomNavigation />
+                  <Toaster position="top-center" />
+                </Theme>
               </NextIntlClientProvider>
             </Providers>
           </ThemeProvider>

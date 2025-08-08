@@ -2,6 +2,7 @@
 
 import { Button, GoogleIcon } from '@/shared';
 import { createClient } from '@/shared/lib/supabase/client';
+import { Flex } from '@radix-ui/themes';
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
@@ -69,8 +70,11 @@ export default function LoginContainer({
         <GoogleIcon />
         Sign in with Google
       </button>
-
-      <Button onClick={handleLogout}>LOGOUT</Button>
+      <Flex justify="center">
+        <Button variant="link" onClick={handleLogout}>
+          LOGOUT
+        </Button>
+      </Flex>
       <pre>{JSON.stringify(user, null, 2)}</pre>
     </div>
   );
