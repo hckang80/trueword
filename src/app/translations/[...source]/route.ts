@@ -1,4 +1,4 @@
-import type { NewVerses } from '@/features/bible';
+import { BookId, type NewVerses } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -10,15 +10,13 @@ export async function GET(
   const [abbr, bookNumber, chapterNumber] = source;
 
   try {
-    // https://api.biblesupersearch.com/api/books
     const {
       data: { results }
     } = await axios.get<{ results: NewVerses[] }>(`${process.env.BIBLE_API_URL}/api`, {
       params: {
         bible: abbr,
-        reference: `${'Gen'} ${chapterNumber}`
+        reference: `${BookId[+bookNumber]} ${chapterNumber}`
       }
-      // /${abbr}/${bookNumber}/${chapterNumber}
     });
 
     return NextResponse.json(results);
