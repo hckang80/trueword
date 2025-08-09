@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
     const abbreviation = localizedTranslationVersion.translations[0].short_name;
     const bookNumber = getRandomPositiveInt(Object.keys(CHAPTER_LENGTH).length);
     const chapterNumber = getRandomPositiveInt(CHAPTER_LENGTH[bookNumber]);
-    const [verses, books] = await Promise.all([
+    const [{ verses }, books] = await Promise.all([
       fetchBibleInstance([abbreviation, '' + bookNumber, '' + chapterNumber]),
       fetchTranslationBooks(abbreviation)
     ]);

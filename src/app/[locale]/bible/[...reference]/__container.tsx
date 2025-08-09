@@ -15,7 +15,7 @@ import { useLocale } from 'next-intl';
 
 export default function Container({ reference }: { reference: string[] }) {
   const locale = useLocale();
-  const [getTranslationVersionId, getBookNumber, getChapterNumber] = reference;
+  const [getTranslationVersionId, , getChapterNumber] = reference;
   const { data: translationVersions } = useTranslationVersions();
   const translationVersion = translationVersions
     .map(({ translations }) => translations)
