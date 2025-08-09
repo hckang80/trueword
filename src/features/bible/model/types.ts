@@ -47,7 +47,7 @@ export interface TransitionVersion {
 }
 
 export interface BibleLanguage {
-  id: string;
+  locale: string;
   language: string;
   translations: BibleTransition[];
 }

@@ -14,11 +14,11 @@ export async function fetchTranslationVersions() {
   );
   const groupedByLanguage = Object.groupBy(Object.values(data), ({ lang_short }) => lang_short);
 
-  return Object.entries(groupedByLanguage).map(([id, items]) => {
+  return Object.entries(groupedByLanguage).map(([locale, items]) => {
     if (!items) throw new Error('Grouped items not found');
 
     return {
-      id,
+      locale,
       language: items[0].lang_native,
       translations: items.map((item) => ({
         short_name: item.module,

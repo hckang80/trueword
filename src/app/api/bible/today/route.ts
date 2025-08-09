@@ -27,7 +27,9 @@ export async function GET(request: NextRequest) {
     if (cached) return NextResponse.json(cached);
 
     const translationVersions = await fetchTranslationVersions();
-    const localizedTranslationVersion = translationVersions.find(({ id }) => id === locale);
+    const localizedTranslationVersion = translationVersions.find(
+      (version) => version.locale === locale
+    );
     if (!localizedTranslationVersion)
       return NextResponse.json({ error: 'Failed to fetch translation versions' }, { status: 500 });
 

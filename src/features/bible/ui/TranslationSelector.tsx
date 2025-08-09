@@ -78,13 +78,13 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
           <DrawerTitle className="sr-only">Translations</DrawerTitle>
           <DrawerDescription asChild>
             <div>
-              {translationVersions.map(({ id, language, translations }, index) => (
+              {translationVersions.map(({ locale, language, translations }, index) => (
                 <details
                   name="translationVersions"
                   ref={(el) => {
                     detailsRefs.current[index] = el;
                   }}
-                  key={id}
+                  key={locale}
                   className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]"
                   onToggle={() => adjustPosition(index)}
                 >
