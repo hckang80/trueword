@@ -1,6 +1,6 @@
 'use client';
 
-import { translationVersionCode } from '@/features/bible';
+import { translationVersionCode } from '@/features/bible/model';
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { Book, Home, Newspaper } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
