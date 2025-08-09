@@ -11,12 +11,13 @@ export async function fetchTranslationVersions() {
 
     return {
       id,
-      language: items[0].lang_short,
+      language: items[0].lang_native,
       translations: items.map(
         (item) =>
           ({
             short_name: item.module,
             full_name: item.name,
+            year: item.year,
             ...(item.rtl && { dir: 'rtl' })
           } satisfies BibleTransition)
       )
