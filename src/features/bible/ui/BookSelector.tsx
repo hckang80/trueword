@@ -1,20 +1,20 @@
 'use client';
 
 import {
-  cn,
   Button,
+  cn,
   Drawer,
-  DrawerTrigger,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription
+  DrawerTrigger
 } from '@/shared';
 import { ChevronDown, ListOrdered, SortAsc } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
-import { type BibleBook, BibleChapterInstance } from '../model';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { type BibleBook, BibleChapterInstance } from '../model';
 
 function BookSelector({
   books,
@@ -125,7 +125,7 @@ function BookSelector({
                   ref={(el) => {
                     detailsRefs.current[index] = el;
                   }}
-                  key={book}
+                  key={bookNumber}
                   className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]"
                   onToggle={() => adjustPosition(index)}
                 >
