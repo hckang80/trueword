@@ -1,8 +1,8 @@
 import { Locale } from '@/shared';
 
 export const translationVersionCode: Record<Locale, string> = {
-  ko: 'KRV',
-  en: 'YLT'
+  ko: 'korean',
+  en: 'kjv'
 };
 
 export const CHAPTER_LENGTH: Record<string, number> = {
