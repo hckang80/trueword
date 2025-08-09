@@ -14,7 +14,7 @@ import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslationVersions, useUpdateBibleParams } from '../hooks';
-import { BibleTransition } from '../model';
+import type { BibleTransition } from '../model';
 
 function TranslationSelector({ getTranslationVersionId }: { getTranslationVersionId: string }) {
   const [open, setOpen] = useState(false);

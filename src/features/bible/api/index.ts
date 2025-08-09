@@ -1,6 +1,6 @@
 import { type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
-import type { NewBibleBook, NewBibleTransition, NewVerse, NewVerses } from '..';
+import type { BibleTransition, NewBibleBook, NewBibleTransition, NewVerse, NewVerses } from '..';
 
 export async function fetchTranslationVersions() {
   const { data } = await axiosInstance<Record<string, NewBibleTransition>>('/api/translations');
@@ -12,11 +12,14 @@ export async function fetchTranslationVersions() {
     return {
       id,
       language: items[0].lang_short,
-      translations: items.map((item) => ({
-        short_name: item.module,
-        full_name: item.name,
-        ...(item.rtl && { dir: 'rtl' })
-      }))
+      translations: items.map(
+        (item) =>
+          ({
+            short_name: item.module,
+            full_name: item.name,
+            ...(item.rtl && { dir: 'rtl' })
+          } satisfies BibleTransition)
+      )
     };
   });
 }

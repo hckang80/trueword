@@ -128,7 +128,6 @@ export interface BibleLanguage {
 export interface BibleTransition {
   short_name: string;
   full_name: string;
-  updated: number;
   dir?: 'rtl';
 }
 
