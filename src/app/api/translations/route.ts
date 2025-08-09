@@ -1,4 +1,4 @@
-import type { NewBibleTransition } from '@/features/bible';
+import type { BibleTransitionResponse } from '@/features/bible';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const {
       data: { results }
-    } = await axios.get<{ results: Record<string, NewBibleTransition> }>(
+    } = await axios.get<{ results: Record<string, BibleTransitionResponse> }>(
       `${process.env.BIBLE_API_URL}/api/bibles`
     );
 

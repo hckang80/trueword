@@ -1,9 +1,17 @@
 import { type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
 import { axiosInstance, type Locale } from '@/shared';
-import type { BibleTransition, NewBibleBook, NewBibleTransition, NewVerse, NewVerses } from '..';
+import type {
+  BibleBookResponse,
+  BibleLanguage,
+  BibleTransitionResponse,
+  Verse,
+  VerseResponse
+} from '..';
 
 export async function fetchTranslationVersions() {
-  const { data } = await axiosInstance<Record<string, NewBibleTransition>>('/api/translations');
+  const { data } = await axiosInstance<Record<string, BibleTransitionResponse>>(
+    '/api/translations'
+  );
   const groupedByLanguage = Object.groupBy(Object.values(data), ({ lang_short }) => lang_short);
 
   return Object.entries(groupedByLanguage).map(([id, items]) => {
@@ -12,24 +20,21 @@ export async function fetchTranslationVersions() {
     return {
       id,
       language: items[0].lang_native,
-      translations: items.map(
-        (item) =>
-          ({
-            short_name: item.module,
-            full_name: item.name,
-            year: item.year,
-            ...(item.rtl && { dir: 'rtl' })
-          } satisfies BibleTransition)
-      )
-    };
+      translations: items.map((item) => ({
+        short_name: item.module,
+        full_name: item.name,
+        year: item.year,
+        ...(item.rtl && { dir: 'rtl' })
+      }))
+    } satisfies BibleLanguage;
   });
 }
 
 export async function fetchBibleInstance(
   params: string[]
-): Promise<{ book: BibleBook; verses: NewVerse[] }> {
+): Promise<{ book: BibleBook; verses: Verse[] }> {
   const [abbreviation, bookNumber, chapterNumber] = params;
-  const { data } = await axiosInstance<NewVerses[]>(
+  const { data } = await axiosInstance<VerseResponse[]>(
     `/translations/${abbreviation}/${bookNumber}/${chapterNumber}`
   );
   const [{ book_id, book_name, chapter_verse, verses }] = data;
@@ -45,7 +50,7 @@ export async function fetchBibleInstance(
 }
 
 export async function fetchTranslationBooks(locale: Locale) {
-  const { data } = await axiosInstance<NewBibleBook[]>(`/translations/${locale}`);
+  const { data } = await axiosInstance<BibleBookResponse[]>(`/translations/${locale}`);
   return data.map((item) => ({ ...item, bookid: item.id }));
 }
 

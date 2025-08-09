@@ -1,4 +1,4 @@
-import { BookId, type NewVerses } from '@/features/bible';
+import { BookId, type VerseResponse } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -12,7 +12,7 @@ export async function GET(
   try {
     const {
       data: { results }
-    } = await axios.get<{ results: NewVerses[] }>(`${process.env.BIBLE_API_URL}/api`, {
+    } = await axios.get<{ results: VerseResponse[] }>(`${process.env.BIBLE_API_URL}/api`, {
       params: {
         bible: abbr,
         reference: `${BookId[+bookNumber]} ${chapterNumber}`

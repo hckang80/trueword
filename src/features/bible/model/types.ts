@@ -1,19 +1,6 @@
 import type { Locale } from '@/shared';
 
-export interface TranslationBookInstance {
-  translation: string;
-  abbreviation: string;
-  lang: Locale;
-  language: string;
-  direction: string;
-  encoding: string;
-  nr: number;
-  name: string;
-  url: string;
-  sha: string;
-}
-
-export interface NewBibleBook {
+export interface BibleBookResponse {
   id: number;
   name: string;
   chapters: number;
@@ -34,49 +21,17 @@ export interface BibleChapterInstance {
   name: string;
 }
 
-export interface Book {
-  name: string;
-  nr: number;
-  chapters: Chapter[];
-}
-
-export interface Chapter {
-  chapter: number;
-  name: string;
-  verses: Verse[];
-}
-
-export interface NewVerseInstance {
-  hash: string;
-  disambiguation: unknown[];
-  strongs: unknown[];
-  paging: unknown[];
-  errors: unknown[];
-  error_level: number;
-  results: NewVerses[];
-}
-
-export interface NewVerses {
+export interface VerseResponse {
   book_id: number;
   book_name: string;
   book_raw: string;
   chapter_verse: string;
-  verses: Record<string, Record<string, NewVerse>>;
-}
-export interface NewVerse {
-  book: number;
-  chapter: number;
-  claimed: boolean;
-  id: number;
-  italics: string;
-  text: string;
-  verse: number;
+  verses: Record<string, Record<string, Verse>>;
 }
 
 export interface Verse {
-  pk: number;
-  verse: number;
   text: string;
+  verse: number;
 }
 
 export interface TransitionVersion {
@@ -91,13 +46,13 @@ export interface TransitionVersion {
   translation: string;
 }
 
-export interface NewBibleLanguage {
-  errors: unknown[];
-  error_level: number;
-  results: Record<string, NewBibleTransition>;
+export interface BibleLanguage {
+  id: string;
+  language: string;
+  translations: BibleTransition[];
 }
 
-export interface NewBibleTransition {
+export interface BibleTransitionResponse {
   name: string;
   shortname: string;
   module: string;
@@ -120,24 +75,11 @@ export interface NewBibleTransition {
   lang_native: string;
   downloadable: boolean;
 }
-
-export interface BibleLanguage {
-  id: string;
-  language: string;
-  translations: BibleTransition[];
-}
-
 export interface BibleTransition {
   short_name: string;
   full_name: string;
   year: string;
   dir?: 'rtl';
-}
-
-export interface SelectedBook {
-  bookNumber: number;
-  book: string;
-  chapter: number;
 }
 
 export interface YouTubeVideo {
