@@ -119,7 +119,8 @@
     text-rendering: optimizeSpeed;
     font: 16px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
       sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-    @apply bg-background text-foreground;
+    background-color: car(--color-background);
+    color: var(--color-foreground);
   }
 
   a,
