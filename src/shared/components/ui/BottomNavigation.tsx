@@ -1,9 +1,9 @@
 'use client';
 
-import { translationVersionCode } from '@/features/bible';
-import { Link, usePathname } from '@/shared/i18n/routing';
 import { Book, Home, Newspaper } from 'lucide-react';
+import { Link, usePathname } from '@/shared/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
+import { translationVersionCode } from '@/features/bible';
 
 interface NavItemProps {
   href: string;
