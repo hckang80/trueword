@@ -11,14 +11,11 @@ export async function GET(
   try {
     const {
       data: { results }
-    } = await axios.get<{ results: { results: NewBibleBook[] } }>(
-      `${process.env.BIBLE_API_URL}/api/books`,
-      {
-        params: {
-          language: locale
-        }
+    } = await axios.get<{ results: NewBibleBook[] }>(`${process.env.BIBLE_API_URL}/api/books`, {
+      params: {
+        language: locale
       }
-    );
+    });
 
     return NextResponse.json(results);
   } catch (error) {
