@@ -1,4 +1,4 @@
-import type { NewVerseInstance } from '@/features/bible';
+import type { NewVerses } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -11,18 +11,17 @@ export async function GET(
 
   try {
     // https://api.biblesupersearch.com/api/books
-    const { data } = await axios.get<{ data: NewVerseInstance }>(
-      `${process.env.BIBLE_API_URL}/api`,
-      {
-        params: {
-          bible: abbr,
-          reference: `${'Gen'} ${chapterNumber}`
-        }
-        // /${abbr}/${bookNumber}/${chapterNumber}
+    const {
+      data: { results }
+    } = await axios.get<{ results: NewVerses[] }>(`${process.env.BIBLE_API_URL}/api`, {
+      params: {
+        bible: abbr,
+        reference: `${'Gen'} ${chapterNumber}`
       }
-    );
-    console.log({ data });
-    return NextResponse.json(data);
+      // /${abbr}/${bookNumber}/${chapterNumber}
+    });
+
+    return NextResponse.json(results);
   } catch (error) {
     console.error('Error fetching translations:', error);
     return NextResponse.json({ error: 'Failed to fetch translations' }, { status: 500 });
