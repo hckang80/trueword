@@ -17,6 +17,8 @@ export interface NewBibleBook {
   id: number;
   name: string;
   chapters: number;
+  shortname: string;
+  chapter_verses: Record<number, number>;
 }
 
 export interface BibleBook {
