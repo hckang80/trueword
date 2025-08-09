@@ -22,18 +22,18 @@ export async function fetchBibleInstance(
   params: string[]
 ): Promise<{ book: BibleBook; verses: NewVerse[] }> {
   const [abbreviation, bookNumber, chapterNumber] = params;
-
   const { data } = await axiosInstance<NewVerses[]>(
     `/translations/${abbreviation}/${bookNumber}/${chapterNumber}`
   );
+  const [{ book_id, book_name, chapter_verse, verses }] = data;
 
   return {
     book: {
-      bookid: data[0].book_id,
-      name: data[0].book_name,
-      chapters: +data[0].chapter_verse
+      bookid: book_id,
+      name: book_name,
+      chapters: +chapter_verse
     },
-    verses: Object.values(data[0].verses[abbreviation][chapterNumber])
+    verses: Object.values(verses[abbreviation][chapterNumber])
   };
 }
 
