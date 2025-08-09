@@ -1,18 +1,18 @@
 'use client';
 
 import {
-  cn,
   Button,
+  cn,
   Drawer,
-  DrawerTrigger,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription
+  DrawerTrigger
 } from '@/shared';
 import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslationVersions, useUpdateBibleParams } from '../hooks';
 import { BibleTransition } from '../model';
 
@@ -29,7 +29,7 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
   const abbreviation = searchParams.get('abbreviation') || getTranslationVersionId;
 
   const { data: translationVersions } = useTranslationVersions();
-
+  console.log({ translationVersions });
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
 

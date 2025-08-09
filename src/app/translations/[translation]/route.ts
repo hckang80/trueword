@@ -1,4 +1,4 @@
-import type { BibleBook } from '@/features/bible';
+import type { NewBibleBook } from '@/features/bible';
 import axios from 'axios';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -6,14 +6,21 @@ export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ translation: string }> }
 ) {
-  const { translation } = await params;
+  const { translation: locale } = await params;
 
   try {
-    const { data } = await axios.get<{ data: BibleBook[] }>(
-      `${process.env.BIBLE_API_URL}/get-books/${translation}`
+    const {
+      data: { results }
+    } = await axios.get<{ results: { results: NewBibleBook[] } }>(
+      `${process.env.BIBLE_API_URL}/api/books`,
+      {
+        params: {
+          language: locale
+        }
+      }
     );
 
-    return NextResponse.json(data);
+    return NextResponse.json(results);
   } catch (error) {
     console.error('Error fetching translations:', error);
     return NextResponse.json({ error: 'Failed to fetch translations' }, { status: 500 });

@@ -11,8 +11,10 @@ import {
   VerseList,
   VideoList
 } from '@/features/bible';
+import { useLocale } from 'next-intl';
 
 export default function Container({ reference }: { reference: string[] }) {
+  const locale = useLocale();
   const [getTranslationVersionId, getBookNumber, getChapterNumber] = reference;
   const { data: translationVersions } = useTranslationVersions();
   const translationVersion = translationVersions
@@ -24,15 +26,18 @@ export default function Container({ reference }: { reference: string[] }) {
     throw new Error(`Translation version with id ${getTranslationVersionId} not found`);
   }
 
-  const { data: verses } = useBibleChapterInstance(reference);
-  const { data: books } = useTranslationBooks(getTranslationVersionId);
-  const getCurrentBook = books.find(({ bookid }) => bookid === +getBookNumber);
+  const {
+    data: { book: getCurrentBook, verses }
+  } = useBibleChapterInstance(reference);
+  const { data: books } = useTranslationBooks(locale);
+  console.log({ getCurrentBook });
+  // const getCurrentBook = books.find(({ bookid }) => bookid === +getBookNumber);
 
-  if (!getCurrentBook) {
-    throw new Error(
-      `Book with id ${getBookNumber} not found in translation ${getTranslationVersionId}`
-    );
-  }
+  // if (!getCurrentBook) {
+  //   throw new Error(
+  //     `Book with id ${getBookNumber} not found in translation ${getTranslationVersionId}`
+  //   );
+  // }
 
   const bibleChapterInstance = {
     abbreviation: getTranslationVersionId,

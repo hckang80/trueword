@@ -13,10 +13,15 @@ export interface TranslationBookInstance {
   sha: string;
 }
 
+export interface NewBibleBook {
+  id: number;
+  name: string;
+  chapters: number;
+}
+
 export interface BibleBook {
   bookid: number;
   name: string;
-  chronorder: number;
   chapters: number;
 }
 
@@ -50,6 +55,10 @@ export interface NewVerseInstance {
 }
 
 export interface NewVerses {
+  book_id: number;
+  book_name: string;
+  book_raw: string;
+  chapter_verse: string;
   verses: Record<string, Record<string, NewVerse>>;
 }
 export interface NewVerse {
