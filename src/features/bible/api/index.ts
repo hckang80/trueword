@@ -6,15 +6,16 @@ export async function fetchTranslationVersions() {
   const {
     data: { results }
   } = await axiosInstance<NewBibleLanguage>('/api/translations');
+  const groupedByLanguage = Object.groupBy(Object.values(results), ({ lang_short }) => lang_short);
 
-  return Object.entries(results).map(([id, item]) => ({
+  return Object.entries(groupedByLanguage).map(([id, items]) => ({
     id,
-    language: item.lang_short,
-    translations: {
+    language: items?.[0].lang_short,
+    translations: items?.map((item) => ({
       short_name: item.module,
       full_name: item.name,
       ...(item.rtl && { dir: 'rtl' })
-    }
+    }))
   }));
 }
 

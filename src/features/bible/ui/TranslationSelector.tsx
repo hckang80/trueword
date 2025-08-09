@@ -29,7 +29,6 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
   const abbreviation = searchParams.get('abbreviation') || getTranslationVersionId;
 
   const { data: translationVersions } = useTranslationVersions();
-  console.log({ translationVersions });
   const detailsRefs = useRef<Record<number, HTMLDetailsElement | null>>({});
   const timeoutRefs = useRef<Record<number, NodeJS.Timeout | null>>({});
 

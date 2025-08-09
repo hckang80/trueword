@@ -3,6 +3,7 @@
 import {
   BibleNavigator,
   BookSelector,
+  TranslationSelector,
   useBibleChapterInstance,
   useTranslationBooks,
   useTranslationVersions,
@@ -29,14 +30,6 @@ export default function Container({ reference }: { reference: string[] }) {
     data: { book: getCurrentBook, verses }
   } = useBibleChapterInstance(reference);
   const { data: books } = useTranslationBooks(locale);
-  console.log({ getCurrentBook });
-  // const getCurrentBook = books.find(({ bookid }) => bookid === +getBookNumber);
-
-  // if (!getCurrentBook) {
-  //   throw new Error(
-  //     `Book with id ${getBookNumber} not found in translation ${getTranslationVersionId}`
-  //   );
-  // }
 
   const bibleChapterInstance = {
     abbreviation: getTranslationVersionId,
@@ -65,7 +58,7 @@ export default function Container({ reference }: { reference: string[] }) {
           bibleChapterInstance={bibleChapterInstance}
           changeBookChapter={changeBookChapter}
         />
-        {/* <TranslationSelector getTranslationVersionId={getTranslationVersionId} /> */}
+        <TranslationSelector getTranslationVersionId={getTranslationVersionId} />
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
       <VerseList selectedVerses={verses} isRTL={isRTL} />
