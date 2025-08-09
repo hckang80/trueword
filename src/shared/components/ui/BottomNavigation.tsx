@@ -1,9 +1,15 @@
 'use client';
 
-import { Book, Home, Newspaper } from 'lucide-react';
+import { Locale } from '@/shared/config';
+// import { translationVersionCode } from '@/features/bible';
 import { Link, usePathname } from '@/shared/i18n/routing';
+import { Book, Home, Newspaper } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { translationVersionCode } from '@/features/bible';
+
+export const translationVersionCode: Record<Locale, string> = {
+  ko: 'KRV',
+  en: 'YLT'
+};
 
 interface NavItemProps {
   href: string;
