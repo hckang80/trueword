@@ -6,15 +6,19 @@ export async function fetchTranslationVersions() {
   const { data } = await axiosInstance<Record<string, NewBibleTransition>>('/api/translations');
   const groupedByLanguage = Object.groupBy(Object.values(data), ({ lang_short }) => lang_short);
 
-  return Object.entries(groupedByLanguage).map(([id, items]) => ({
-    id,
-    language: items?.[0].lang_short,
-    translations: items?.map((item) => ({
-      short_name: item.module,
-      full_name: item.name,
-      ...(item.rtl && { dir: 'rtl' })
-    }))
-  }));
+  return Object.entries(groupedByLanguage).map(([id, items]) => {
+    if (!items) throw new Error('Grouped items not found');
+
+    return {
+      id,
+      language: items[0].lang_short,
+      translations: items.map((item) => ({
+        short_name: item.module,
+        full_name: item.name,
+        ...(item.rtl && { dir: 'rtl' })
+      }))
+    };
+  });
 }
 
 export async function fetchBibleInstance(
