@@ -100,7 +100,7 @@ export interface NewBibleTransition {
   shortname: string;
   module: string;
   year: string;
-  owner: any;
+  owner: unknown;
   description: string;
   lang: string;
   lang_short: string;
