@@ -3,7 +3,6 @@
 import {
   BibleNavigator,
   BookSelector,
-  TranslationSelector,
   useBibleChapterInstance,
   useTranslationBooks,
   useTranslationVersions,
@@ -66,7 +65,7 @@ export default function Container({ reference }: { reference: string[] }) {
           bibleChapterInstance={bibleChapterInstance}
           changeBookChapter={changeBookChapter}
         />
-        <TranslationSelector getTranslationVersionId={getTranslationVersionId} />
+        {/* <TranslationSelector getTranslationVersionId={getTranslationVersionId} /> */}
         <VideoList chapterName={bibleChapterInstance.name} />
       </div>
       <VerseList selectedVerses={verses} isRTL={isRTL} />
