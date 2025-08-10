@@ -188,7 +188,7 @@ export default async function LocaleLayout({
               <NextIntlClientProvider messages={messages}>
                 <Theme>
                   <Header />
-                  <main className="guide-line-layout">{children}</main>
+                  <main className="guide-line-layout p-[var(--global-inset)]">{children}</main>
                   <BottomNavigation />
                   <Toaster position="top-center" />
                 </Theme>

@@ -1,15 +1,15 @@
 'use client';
 
 import {
-  useUpdateBibleParams,
-  useBibleChapterInstance,
-  useTranslationBooks,
+  BibleNavigator,
   BookSelector,
   TranslationSelector,
+  useBibleChapterInstance,
+  useTranslationBooks,
+  useTranslationVersions,
+  useUpdateBibleParams,
   VerseList,
-  VideoList,
-  BibleNavigator,
-  useTranslationVersions
+  VideoList
 } from '@/features/bible';
 
 export default function Container({ reference }: { reference: string[] }) {
@@ -54,7 +54,7 @@ export default function Container({ reference }: { reference: string[] }) {
   const isRTL = translationVersion.dir === 'rtl';
 
   return (
-    <div className="p-[var(--global-inset)]">
+    <>
       <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
         <BookSelector
           books={books}
@@ -66,6 +66,6 @@ export default function Container({ reference }: { reference: string[] }) {
       </div>
       <VerseList selectedVerses={verses} isRTL={isRTL} />
       <BibleNavigator changeBookChapter={changeBookChapter} />
-    </div>
+    </>
   );
 }
