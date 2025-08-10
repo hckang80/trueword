@@ -57,7 +57,7 @@ export default function MainContainer({
   const verseBackground = photoData.results[randomBackgroundPhotoIndex];
 
   return (
-    <div className="flex flex-col gap-4 p-[var(--global-inset)]">
+    <div className="flex flex-col gap-4">
       <Card className="relative overflow-hidden">
         <Image
           src={verseBackground.urls.regular}
