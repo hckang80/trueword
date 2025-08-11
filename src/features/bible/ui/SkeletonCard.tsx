@@ -1,6 +1,6 @@
 'use client';
 
-import { Skeleton } from '@/shared';
+import { Skeleton } from '@/shared/components';
 
 function SkeletonCard() {
   return (

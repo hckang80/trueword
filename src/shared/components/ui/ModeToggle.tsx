@@ -1,9 +1,8 @@
 'use client';
 
-import * as React from 'react';
+import { Button } from '@/shared/components';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { Button } from '@/shared';
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();

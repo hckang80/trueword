@@ -2,14 +2,14 @@
 
 import {
   Button,
-  locales,
   ModeToggle,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/shared';
+} from '@/shared/components';
+import { locales } from '@/shared/config';
 import { Link, usePathname } from '@/shared/i18n/routing';
 import { Mail } from 'lucide-react';
 import { useLocale } from 'next-intl';

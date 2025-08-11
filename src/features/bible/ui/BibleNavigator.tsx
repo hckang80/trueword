@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@/shared';
+import { Button } from '@/shared/components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { CHAPTER_LENGTH } from '..';
 import { useParams } from 'next/navigation';
+import { CHAPTER_LENGTH } from '..';
 
 function BibleNavigator({
   changeBookChapter

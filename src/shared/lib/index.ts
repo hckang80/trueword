@@ -3,7 +3,7 @@ export * from './query-keys';
 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { DEFAULT_LOCALE } from '..';
+import { DEFAULT_LOCALE } from '../config';
 
 export function toReadableDate(
   date: Date,

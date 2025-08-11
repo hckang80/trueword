@@ -7,7 +7,7 @@ import {
   useScrapedContent,
   useSummary
 } from '@/features/news';
-import { Button, Loading } from '@/shared';
+import { Button, Loading } from '@/shared/components';
 import { Link } from '@/shared/i18n/routing';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/shared';
+import { Button } from '@/shared/components';
 import { isAxiosError } from 'axios';
 import { RefreshCw, Undo2 } from 'lucide-react';
 import React from 'react';

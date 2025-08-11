@@ -1,18 +1,18 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   canvasToBlob,
+  createVerseCard,
   downloadImage,
   getCanvasAsFile,
   loadImage,
   resizeImage,
-  wrapText,
-  createVerseCard,
-  shareCard
+  shareCard,
+  wrapText
 } from '.';
 import { PHOTO_SIZE } from '../model';
 
 const MOCK_DATE = '20250719';
-vi.mock('@/shared', () => ({
+vi.mock('@/shared/lib', () => ({
   getTodaysDate: vi.fn(() => MOCK_DATE)
 }));
 

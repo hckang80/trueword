@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from '@/shared';
+import { DEFAULT_LOCALE } from '@/shared/config';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';

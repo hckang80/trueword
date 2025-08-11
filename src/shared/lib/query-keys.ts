@@ -1,5 +1,5 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import { type Locale } from '..';
+import type { Locale } from '../config';
 
 export const bibleKeys = createQueryKeys('bible', {
   data: ([id, nr, chapter]: string[]) => [id, nr, chapter]

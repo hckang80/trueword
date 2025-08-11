@@ -1,4 +1,5 @@
-import { BottomNavigation, Header, isSupportedLocale, ProgressBar, Toaster } from '@/shared';
+import { BottomNavigation, Header, ProgressBar, Toaster } from '@/shared/components';
+import { isSupportedLocale } from '@/shared/config';
 import { routing } from '@/shared/i18n/routing';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Theme } from '@radix-ui/themes';

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/shared';
+import { cn } from '@/shared/lib';
 import { useLayoutEffect, useRef } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import type { Verse } from '../model';

@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared';
+import { axiosInstance } from '@/shared/config';
 import type { BackGroundPhotoInstance, PhotoParams } from '..';
 
 export async function fetchBackgroundPhoto(params: PhotoParams) {

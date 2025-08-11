@@ -1,5 +1,5 @@
 import { translationVersionCode } from '@/features/bible';
-import type { RouteProps } from '@/shared';
+import type { RouteProps } from '@/shared/types';
 import { redirect } from 'next/navigation';
 
 export default async function Bible({ params }: RouteProps) {

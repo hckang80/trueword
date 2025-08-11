@@ -1,6 +1,7 @@
 'use client';
 
-import { Button, GoogleIcon } from '@/shared';
+import { GoogleIcon } from '@/shared/assets';
+import { Button } from '@/shared/components';
 import { createClient } from '@/shared/lib/supabase/client';
 import { Flex } from '@radix-ui/themes';
 import { User } from '@supabase/supabase-js';
