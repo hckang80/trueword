@@ -4,7 +4,9 @@ import {
   translationBooksQueryOptions,
   translationVersionsQueryOptions
 } from '@/features/bible';
-import { isSupportedLocale, OverlayLoading, type RouteProps } from '@/shared';
+import { OverlayLoading } from '@/shared/components';
+import { isSupportedLocale } from '@/shared/config';
+import type { RouteProps } from '@/shared/types';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Suspense } from 'react';

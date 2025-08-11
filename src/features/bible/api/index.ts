@@ -1,5 +1,5 @@
-import { type Verse, type BibleBook, type TodayVerse, type YouTubeVideo } from '@/features/bible';
-import { axiosInstance, type Locale } from '@/shared';
+import { type BibleBook, type TodayVerse, type Verse, type YouTubeVideo } from '@/features/bible';
+import { axiosInstance, type Locale } from '@/shared/config';
 import type { BibleLanguage } from '..';
 
 export async function fetchTranslationVersions() {

@@ -1,5 +1,5 @@
 import axios, { type AxiosError } from 'axios';
-import type { ErrorResponse } from '..';
+import type { ErrorResponse } from '../types';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.API_BASE_URL,

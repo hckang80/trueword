@@ -1,4 +1,4 @@
-import type { Locale } from '@/shared';
+import type { Locale } from '@/shared/config';
 
 export interface NewsItemType {
   title: string;

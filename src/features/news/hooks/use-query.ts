@@ -1,5 +1,6 @@
-import { type Locale, newsKeys } from '@/shared';
-import { useSuspenseInfiniteQuery, useSuspenseQuery, useQuery } from '@tanstack/react-query';
+import { type Locale } from '@/shared/config';
+import { newsKeys } from '@/shared/lib';
+import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 import {
   fetchNews,
   fetchNewsItem,

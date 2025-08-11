@@ -1,18 +1,18 @@
 'use client';
 
 import {
-  cn,
   Button,
   Drawer,
-  DrawerTrigger,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription
-} from '@/shared';
+  DrawerTrigger
+} from '@/shared/components';
+import { cn } from '@/shared/lib';
 import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslationVersions, useUpdateBibleParams } from '../hooks';
 import { BibleTransition } from '../model';
 

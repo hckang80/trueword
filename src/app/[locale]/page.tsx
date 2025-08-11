@@ -1,7 +1,8 @@
 import { backgroundPhotoQueryOptions, type PhotoParams } from '@/entities/background';
 import { bibleTodayQueryOptions } from '@/features/bible';
 import { newsQueryOptions } from '@/features/news';
-import { PWAInstallPrompt, type RouteProps } from '@/shared';
+import { PWAInstallPrompt } from '@/shared/components';
+import type { RouteProps } from '@/shared/types';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import Container from './__container';
 

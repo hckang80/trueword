@@ -1,4 +1,4 @@
-import { Locale } from '@/shared';
+import type { Locale } from '@/shared/config';
 
 export const translationVersionCode: Record<Locale, string> = {
   ko: 'KRV',

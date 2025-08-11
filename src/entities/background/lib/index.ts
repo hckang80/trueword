@@ -1,4 +1,4 @@
-import { getTodaysDate } from '@/shared';
+import { getTodaysDate } from '@/shared/lib';
 import { PHOTO_SIZE } from '../model';
 
 /**

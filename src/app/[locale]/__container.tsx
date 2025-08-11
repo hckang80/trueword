@@ -24,7 +24,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/shared';
+} from '@/shared/components';
 import { Link } from '@/shared/i18n/routing';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, Share2 } from 'lucide-react';

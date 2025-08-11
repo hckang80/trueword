@@ -1,6 +1,6 @@
 'use client';
 
-import { InfiniteScrollTrigger } from '@/shared';
+import { InfiniteScrollTrigger } from '@/shared/components';
 import type { InfiniteData, UseSuspenseInfiniteQueryResult } from '@tanstack/react-query';
 import { memo } from 'react';
 import { NewsItem } from '.';

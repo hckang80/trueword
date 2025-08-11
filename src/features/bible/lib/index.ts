@@ -1,5 +1,5 @@
 import { TransitionVersion } from '@/features/bible';
-import { DEFAULT_LOCALE, isSupportedLocale, type Locale, translateLocales } from '@/shared';
+import { DEFAULT_LOCALE, isSupportedLocale, type Locale, translateLocales } from '@/shared/config';
 
 export function getLanguageFullName(langCode: Locale, locale: Locale = DEFAULT_LOCALE) {
   if (!langCode) throw Error('langCode가 빈 문자열입니다.');

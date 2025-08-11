@@ -1,6 +1,6 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { newsQueryOptions } from '@/features/news';
-import type { RouteProps } from '@/shared';
+import type { RouteProps } from '@/shared/types';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 export default async function NewsLayout({ children, params }: RouteProps) {
   const { locale } = await params;

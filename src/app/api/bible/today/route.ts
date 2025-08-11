@@ -5,7 +5,8 @@ import {
   fetchTranslationVersions,
   getLanguageFullName
 } from '@/features/bible';
-import { DEFAULT_LOCALE, getRandomPositiveInt } from '@/shared';
+import { DEFAULT_LOCALE } from '@/shared/config';
+import { getRandomPositiveInt } from '@/shared/lib';
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
 
