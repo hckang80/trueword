@@ -1,4 +1,4 @@
-import { BottomNavigation, Header, isSupportedLocale, ProgressBar, Toaster } from '@/shared';
+import { Header, isSupportedLocale, ProgressBar, Toaster } from '@/shared';
 import { routing } from '@/shared/i18n/routing';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Theme } from '@radix-ui/themes';
@@ -189,7 +189,7 @@ export default async function LocaleLayout({
                 <Theme>
                   <Header />
                   <main className="guide-line-layout p-[var(--global-inset)]">{children}</main>
-                  <BottomNavigation />
+                  {/* <BottomNavigation /> */}
                   <Toaster position="top-center" />
                 </Theme>
               </NextIntlClientProvider>
