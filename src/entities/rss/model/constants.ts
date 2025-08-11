@@ -18,6 +18,22 @@ export const RSS_FEEDS: RSSFeed[] = [
     locale: 'en'
   },
   {
+    url: 'https://www.thegospelcoalition.org/feed/',
+    imageUrl: 'media.thegospelcoalition.org',
+    name: {
+      global: 'thegospelcoalition'
+    },
+    locale: 'en'
+  },
+  {
+    url: 'https://www.gospeltoday.co.kr/rss/allArticle.xml',
+    name: {
+      native: '가스펠투데이',
+      global: 'gospeltoday'
+    },
+    locale: 'ko'
+  },
+  {
     url: 'https://www.christiantoday.co.kr/rss',
     imageUrl: 'images.christiantoday.co.kr',
     name: {
@@ -33,7 +49,7 @@ export const RSS_FEEDS: RSSFeed[] = [
       global: 'newsnjoy'
     },
     locale: 'ko'
-  } // 서버에서 바로 못불러옴 - 로컬 환경에서 불러서 캐시에 저장 후 사용 중
+  }
   // {
   //   url: 'https://www.christiandaily.co.kr/rss/archives/all.xml',
   //   imageUrl: 'images.christiandaily.co.kr',
