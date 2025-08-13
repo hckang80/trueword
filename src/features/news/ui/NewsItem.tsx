@@ -2,18 +2,15 @@
 
 import { Card, CardContent } from '@/shared/components';
 import { cn } from '@/shared/lib';
-import { useLocalStorage } from '@uidotdev/usehooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { memo, unstable_ViewTransition as ViewTransition } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
+import { useVisited } from '../hooks';
 import type { NewsItemType } from '../model';
 
 const NewsItem = ({ item }: { item: NewsItemType }) => {
-  const [news, saveNews] = useLocalStorage<string[]>('visitedNews', []);
-  const isVisited = (reference: string) => {
-    return news.includes(reference);
-  };
+  const { isVisited } = useVisited();
 
   return (
     <li>
@@ -21,7 +18,6 @@ const NewsItem = ({ item }: { item: NewsItemType }) => {
         <CardContent>
           <Link
             href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
-            onClick={() => saveNews((prev) => [...prev, `${item.sourceEng}/${item.guid}`])}
             className={cn(
               'group flex items-center justify-between gap-2',
               isVisited(`${item.sourceEng}/${item.guid}`) && 'text-gray-300 dark:text-gray-600'

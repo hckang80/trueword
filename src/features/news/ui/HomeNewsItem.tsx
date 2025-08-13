@@ -2,22 +2,18 @@
 
 import { Link } from '@/shared/i18n/routing';
 import { cn } from '@/shared/lib';
-import { useLocalStorage } from '@uidotdev/usehooks';
 import { memo, unstable_ViewTransition as ViewTransition } from 'react';
 import { NewsImage } from '.';
+import { useVisited } from '../hooks';
 import type { NewsItemType } from '../model';
 
 const HomeNewsItem = ({ item }: { item: NewsItemType }) => {
-  const [news, saveNews] = useLocalStorage<string[]>('visitedNews', []);
-  const isVisited = (reference: string) => {
-    return news.includes(reference);
-  };
+  const { isVisited } = useVisited();
 
   return (
     <li>
       <Link
         href={`/news/${item.sourceEng}/${item.guid}`}
-        onClick={() => saveNews((prev) => [...prev, `${item.sourceEng}/${item.guid}`])}
         className={cn(
           'group flex flex-col gap-2 rounded-lg',
           isVisited(`${item.sourceEng}/${item.guid}`) && 'text-gray-300 dark:text-gray-600'
