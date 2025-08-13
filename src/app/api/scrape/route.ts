@@ -1,3 +1,4 @@
+import { USER_AGENT } from '@/shared/constants';
 import { Redis } from '@upstash/redis';
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     const { data: html } = await axios.get(url, {
       headers: {
-        'User-Agent': globalThis.navigator.userAgent
+        'User-Agent': USER_AGENT
       }
     });
 
