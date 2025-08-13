@@ -1,23 +1,16 @@
 'use client';
 
 import { Link } from '@/shared/i18n/routing';
-import { cn } from '@/shared/lib';
 import { memo, unstable_ViewTransition as ViewTransition } from 'react';
 import { NewsImage } from '.';
-import { useVisited } from '../hooks';
 import type { NewsItemType } from '../model';
 
 const HomeNewsItem = ({ item }: { item: NewsItemType }) => {
-  const { isVisited } = useVisited();
-
   return (
     <li>
       <Link
         href={`/news/${item.sourceEng}/${item.guid}`}
-        className={cn(
-          'group flex flex-col gap-2 rounded-lg',
-          isVisited(`${item.sourceEng}/${item.guid}`) && 'text-gray-300 dark:text-gray-600'
-        )}
+        className="group flex flex-col gap-2 visited:text-gray-300 dark:visited:text-gray-600 rounded-lg"
       >
         <ViewTransition name={`news-header-${item.sourceEng}-${item.guid}`}>
           {item.thumbnail && (
