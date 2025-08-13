@@ -2,18 +2,15 @@
 
 import { Card, CardContent } from '@/shared/components';
 import { cn } from '@/shared/lib';
-import { useLocalStorage } from '@uidotdev/usehooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { memo, unstable_ViewTransition as ViewTransition } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
+import { useVisited } from '../hooks';
 import type { NewsItemType } from '../model';
 
 const NewsItem = ({ item }: { item: NewsItemType }) => {
-  const [news] = useLocalStorage<string[]>('visitedNews', []);
-  const isVisited = (reference: string) => {
-    return news.includes(reference);
-  };
+  const { isVisited } = useVisited();
 
   return (
     <li>

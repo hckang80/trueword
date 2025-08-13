@@ -2,16 +2,13 @@
 
 import { Link } from '@/shared/i18n/routing';
 import { cn } from '@/shared/lib';
-import { useLocalStorage } from '@uidotdev/usehooks';
 import { memo, unstable_ViewTransition as ViewTransition } from 'react';
 import { NewsImage } from '.';
+import { useVisited } from '../hooks';
 import type { NewsItemType } from '../model';
 
 const HomeNewsItem = ({ item }: { item: NewsItemType }) => {
-  const [news] = useLocalStorage<string[]>('visitedNews', []);
-  const isVisited = (reference: string) => {
-    return news.includes(reference);
-  };
+  const { isVisited } = useVisited();
 
   return (
     <li>
