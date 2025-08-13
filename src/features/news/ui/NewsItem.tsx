@@ -1,27 +1,20 @@
 'use client';
 
 import { Card, CardContent } from '@/shared/components';
-import { cn } from '@/shared/lib';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { memo, unstable_ViewTransition as ViewTransition } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
-import { useVisited } from '../hooks';
 import type { NewsItemType } from '../model';
 
 const NewsItem = ({ item }: { item: NewsItemType }) => {
-  const { isVisited } = useVisited();
-
   return (
     <li>
       <Card>
         <CardContent>
           <Link
             href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
-            className={cn(
-              'group flex items-center justify-between gap-2',
-              isVisited(`${item.sourceEng}/${item.guid}`) && 'text-gray-300 dark:text-gray-600'
-            )}
+            className="group flex items-center justify-between gap-2 visited:text-gray-300 dark:visited:text-gray-600"
           >
             <ViewTransition name={`news-header-${item.sourceEng}-${item.guid}`}>
               <div>

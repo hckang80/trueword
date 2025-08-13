@@ -9,22 +9,16 @@ import {
 } from '@/features/news';
 import { Button, Loading } from '@/shared/components';
 import { Link } from '@/shared/i18n/routing';
-import { useLocalStorage } from '@uidotdev/usehooks';
 import { SquareArrowOutUpRight, Undo2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useEffect, unstable_ViewTransition as ViewTransition } from 'react';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import sanitizeHtml from 'sanitize-html';
 
 export default function NewsIdContainer() {
   const t = useTranslations();
   const { locale, source: sources } = useParams<{ locale: string; source: string[] }>();
   const { data: news } = useNewsBySource(sources, locale);
-  const [, saveNews] = useLocalStorage<string[]>('visitedNews', []);
-
-  useEffect(() => {
-    saveNews((prev) => [...prev, sources.join('/')]);
-  }, []);
 
   if (!news) throw Error(t('News.noNews'));
 
