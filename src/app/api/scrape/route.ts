@@ -1,3 +1,4 @@
+import { USER_AGENT } from '@/shared/constants';
 import { Redis } from '@upstash/redis';
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
@@ -29,9 +30,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(cached);
     }
 
+    const isEnoughContent = description && description.length >= MIN_CONTENT_LENGTH;
+
+    if (isEnoughContent) {
+      const result = { content: description.replace(/\s+/g, ' ').replace(/\n+/g, '\n').trim() };
+      await redis.set(key, result, { ex: CACHE_TTL });
+
+      return NextResponse.json(result);
+    }
+
     const { data: html } = await axios.get(url, {
       headers: {
-        'User-Agent': globalThis.navigator.userAgent
+        'User-Agent': USER_AGENT
       }
     });
 

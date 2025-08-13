@@ -1,5 +1,6 @@
 import type { RSSFeed, RSSInstance, RSSInstanceItem } from '@/entities/rss';
 import { extractThumbnail } from '@/features/news/lib';
+import { USER_AGENT } from '@/shared/constants';
 import { extractUniqId } from '@/shared/lib';
 import axios from 'axios';
 import Parser from 'rss-parser';
@@ -13,7 +14,7 @@ export async function fetchNewsFeed({
   try {
     const response = await axios.get<string>(feedUrl, {
       headers: {
-        'User-Agent': globalThis.navigator.userAgent
+        'User-Agent': USER_AGENT
       }
     });
 
