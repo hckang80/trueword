@@ -10,7 +10,7 @@ import { NewsImage, NewsItemMeta } from '.';
 import type { NewsItemType } from '../model';
 
 const NewsItem = ({ item }: { item: NewsItemType }) => {
-  const [news, saveNews] = useLocalStorage<string[]>('visitedNews', []);
+  const [news] = useLocalStorage<string[]>('visitedNews', []);
   const isVisited = (reference: string) => {
     return news.includes(reference);
   };
@@ -21,7 +21,6 @@ const NewsItem = ({ item }: { item: NewsItemType }) => {
         <CardContent>
           <Link
             href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
-            onClick={() => saveNews((prev) => [...prev, `${item.sourceEng}/${item.guid}`])}
             className={cn(
               'group flex items-center justify-between gap-2',
               isVisited(`${item.sourceEng}/${item.guid}`) && 'text-gray-300 dark:text-gray-600'
