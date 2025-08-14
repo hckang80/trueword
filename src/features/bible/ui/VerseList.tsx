@@ -1,12 +1,13 @@
 'use client';
 
 import { cn } from '@/shared/lib';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import type { Verse } from '../model';
 
 function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: boolean }) {
   const verseRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
+  const [currentHash, setCurrentHash] = useState('');
 
   useLayoutEffect(() => {
     const { hash } = window.location;
@@ -14,6 +15,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
 
     const [, verseNumber] = hash.split('#');
     const verseEl = verseRefs.current[Number(verseNumber)];
+    setCurrentHash(verseNumber);
     if (!verseEl) return;
 
     verseEl.scrollIntoView({
@@ -35,7 +37,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
           ref={(el) => {
             verseRefs.current[verse] = el;
           }}
-          className="scroll-mt-20"
+          className={cn('scroll-mt-20', +currentHash === verse && 'underline decoration-dashed')}
         >
           <sup>{verse}</sup> <span dangerouslySetInnerHTML={sanitizedData(text)} />
         </p>
