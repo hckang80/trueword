@@ -1,29 +1,29 @@
-#-- .github/workflows/main.yml
-name: AI Code Reviewer
+---
+name: Lint
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-permissions:
-  contents: read
-  pull-requests: write
+  push: null
+  pull_request: null
+
+permissions: {}
+
 jobs:
-  review:
+  build:
+    name: Lint
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
     steps:
-      - uses: anc95/ChatGPT-CodeReview@main
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v8.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          LANGUAGE: Korean
-          MODEL: gpt-4o
-          PROMPT: |
-            당신은 전문 시니어 개발자입니다. 다음의 기준에 따라 PR의 코드를 엄격하게 검토해주세요:
-            - 잠재적인 버그나 로직 오류를 찾아주세요.
-            - 보안 취약점(예: SQL Injection, XSS)은 없는지 확인해주세요.
-            - 코드 가독성, 유지보수성, 성능 개선 방안을 제시해주세요.
-            - 코드 스타일(포맷팅, 명명 규칙)을 지키고 있는지 확인해주세요.
-            - 리뷰 코멘트는 항상 구체적인 코드 라인을 언급하며 작성해주세요.
-            - 만약 모든 부분이 완벽하다면 "LGTM (Looks Good To Me)"를 남겨도 좋습니다.
