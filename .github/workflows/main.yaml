@@ -57,7 +57,6 @@ jobs:
           FIX_JSCPD: true
           FIX_MARKDOWN: true
           FIX_MARKDOWN_PRETTIER: true
-          FIX_TSX: true
           FIX_TYPESCRIPT_ES: true
           FIX_TYPESCRIPT_PRETTIER: true
           # https://github.com/super-linter/super-linter/blob/main/docs/run-linter-locally.md#share-environment-variables-between-environments
