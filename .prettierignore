@@ -1,10 +1,20 @@
-# Package Managers
+# 패키지 매니저 파일
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# 문서 및 시스템 컴포넌트
 README.md
 src/components/system/*
 
-# next.js
-/.next/
-/out/
+# Next.js 빌드 결과물
+.next/
+out/
+dist/
+coverage/
+public/
+node_modules/
+
+# 환경설정 파일
+*.config.js
+*.config.mjs
