@@ -1,29 +1,78 @@
-#-- .github/workflows/main.yml
-name: AI Code Reviewer
+name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
-    types:
-      - opened
-      - synchronize
-permissions:
-  contents: read
-  pull-requests: write
+    branches: [main]
+
 jobs:
-  review:
+  test:
+    name: Test & Build
     runs-on: ubuntu-latest
+
     steps:
-      - uses: anc95/ChatGPT-CodeReview@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          LANGUAGE: Korean
-          MODEL: gpt-4o
-          PROMPT: |
-            당신은 전문 시니어 개발자입니다. 다음의 기준에 따라 PR의 코드를 엄격하게 검토해주세요:
-            - 잠재적인 버그나 로직 오류를 찾아주세요.
-            - 보안 취약점(예: SQL Injection, XSS)은 없는지 확인해주세요.
-            - 코드 가독성, 유지보수성, 성능 개선 방안을 제시해주세요.
-            - 코드 스타일(포맷팅, 명명 규칙)을 지키고 있는지 확인해주세요.
-            - 리뷰 코멘트는 항상 구체적인 코드 라인을 언급하며 작성해주세요.
-            - 만약 모든 부분이 완벽하다면 "LGTM (Looks Good To Me)"를 남겨도 좋습니다.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js and PNPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run type checking
+        run: pnpm run type-check
+
+      - name: Run ESLint
+        run: pnpm run lint
+
+      - name: Check Prettier formatting
+        run: pnpm run format:check
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Build application
+        run: pnpm run build
+
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Setup Node.js and PNPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run security audit
+        run: pnpm audit
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

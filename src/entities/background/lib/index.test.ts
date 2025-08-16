@@ -275,7 +275,7 @@ describe('Canvas Helper Functions', () => {
         expect.objectContaining({
           files: [testFile],
           title: location.origin,
-          text: `Verse\n- Reference -`
+          text: `Verse\n- Reference -\n${location.origin}`
         })
       );
       expect(createElementSpy).not.toHaveBeenCalledWith('a');
