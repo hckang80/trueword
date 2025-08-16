@@ -18,8 +18,10 @@ jobs:
       - name: Setup Node.js and PNPM
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: '22'
+
+      - name: Install pnpm globally
+        run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
