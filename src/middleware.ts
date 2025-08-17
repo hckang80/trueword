@@ -12,7 +12,7 @@ export default async function middleware(request: NextRequest) {
   let response = handleI18nRouting(request);
 
   const pathname = request.nextUrl.pathname;
-  const isPrivatePage = privatePages.some((page) => pathname.startsWith(page));
+  const isPrivatePage = privatePages.some(page => pathname.startsWith(page));
 
   if (isPrivatePage && response.status === 200) {
     response = await updateSession(request, response);

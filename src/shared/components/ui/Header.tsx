@@ -26,27 +26,27 @@ export function Header() {
   };
 
   return (
-    <header className="guide-line-layout flex justify-end gap-[4px] pl-[var(--global-inset)] pr-[var(--global-inset)] pt-[10px] pb-[10px]">
-      <h1 className="mr-auto uppercase text-3xl font-bold shimmer-text whitespace-nowrap">
-        <Image src="/logo.png" width="100" height="100" alt="true word" className="sr-only"></Image>
-        <Link href="/">True Word</Link>
+    <header className='guide-line-layout flex justify-end gap-[4px] pl-[var(--global-inset)] pr-[var(--global-inset)] pt-[10px] pb-[10px]'>
+      <h1 className='mr-auto uppercase text-3xl font-bold shimmer-text whitespace-nowrap'>
+        <Image src='/logo.png' width='100' height='100' alt='true word' className='sr-only'></Image>
+        <Link href='/'>True Word</Link>
       </h1>
       <Select value={locale} onValueChange={handleChange}>
-        <SelectTrigger className="w-[80px]" title={locale.toUpperCase()}>
-          <SelectValue placeholder="Select a language" />
+        <SelectTrigger className='w-[80px]' title={locale.toUpperCase()}>
+          <SelectValue placeholder='Select a language' />
         </SelectTrigger>
         <SelectContent>
-          {locales.map((language) => (
+          {locales.map(language => (
             <SelectItem value={language} key={language}>
               {language.toUpperCase()}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-      <Button variant="outline" size="icon" asChild>
-        <a href="mailto:hckang80@gmail.com">
+      <Button variant='outline' size='icon' asChild>
+        <a href='mailto:hckang80@gmail.com'>
           <Mail />
-          <span className="sr-only">Send mail</span>
+          <span className='sr-only'>Send mail</span>
         </a>
       </Button>
       <ModeToggle />

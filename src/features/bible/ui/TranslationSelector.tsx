@@ -72,21 +72,21 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">{abbreviation}</Button>
+        <Button variant='outline'>{abbreviation}</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="p-0">
-          <DrawerTitle className="sr-only">Translations</DrawerTitle>
+        <DrawerHeader className='p-0'>
+          <DrawerTitle className='sr-only'>Translations</DrawerTitle>
           <DrawerDescription asChild>
             <div>
               {translationVersions.map(({ id, language, translations }, index) => (
                 <details
-                  name="translationVersions"
-                  ref={(el) => {
+                  name='translationVersions'
+                  ref={el => {
                     detailsRefs.current[index] = el;
                   }}
                   key={id}
-                  className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]"
+                  className='group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]'
                   onToggle={() => adjustPosition(index)}
                 >
                   <summary
@@ -105,14 +105,14 @@ function TranslationSelector({ getTranslationVersionId }: { getTranslationVersio
                     >
                       {language}
                     </span>
-                    <ChevronDown size={20} className="transition group-open:rotate-180" />
+                    <ChevronDown size={20} className='transition group-open:rotate-180' />
                   </summary>
-                  <div className="grid gap-[4px] px-[10px]">
+                  <div className='grid gap-[4px] px-[10px]'>
                     {translations.map(({ short_name, full_name }) => (
                       <Button
-                        className="items-start flex-col text-left whitespace-normal h-auto"
+                        className='items-start flex-col text-left whitespace-normal h-auto'
                         key={short_name}
-                        variant="outline"
+                        variant='outline'
                         disabled={selectedTranslationVersionItem(short_name)}
                         onClick={() => {
                           handleTranslationVersionChange(short_name);

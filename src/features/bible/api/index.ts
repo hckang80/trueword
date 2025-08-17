@@ -5,7 +5,7 @@ import type { BibleLanguage } from '..';
 export async function fetchTranslationVersions() {
   const { data } = await axiosInstance<BibleLanguage[]>('/api/translations');
 
-  return data.map((item) => {
+  return data.map(item => {
     const [id] = item.language.split(' ');
     return { ...item, id };
   });

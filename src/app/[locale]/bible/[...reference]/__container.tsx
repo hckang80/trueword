@@ -55,7 +55,7 @@ export default function Container({ reference }: { reference: string[] }) {
 
   return (
     <>
-      <div className="flex gap-[4px] mb-[20px] sticky top-[20px]">
+      <div className='flex gap-[4px] mb-[20px] sticky top-[20px]'>
         <BookSelector
           books={books}
           bibleChapterInstance={bibleChapterInstance}

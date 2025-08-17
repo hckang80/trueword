@@ -34,7 +34,7 @@ function VerseList({ selectedVerses, isRTL }: { selectedVerses: Verse[]; isRTL: 
         <p
           id={`${verse}`}
           key={verse}
-          ref={(el) => {
+          ref={el => {
             verseRefs.current[verse] = el;
           }}
           className={cn('scroll-mt-20', +currentHash === verse && 'underline decoration-dashed')}

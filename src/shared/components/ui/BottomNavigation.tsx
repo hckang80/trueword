@@ -35,9 +35,9 @@ export const BottomNavigation = () => {
   };
 
   return (
-    <nav className="global-nav fixed bottom-0 left-0 right-0 bg-[var(--color-background)] border-t border-gray-200 shadow-lg">
-      <div className="guide-line-layout flex items-center justify-around">
-        <NavItem href="/" icon={<Home size={24} />} text={t('home')} isActive={isActive('/')} />
+    <nav className='global-nav fixed bottom-0 left-0 right-0 bg-[var(--color-background)] border-t border-gray-200 shadow-lg'>
+      <div className='guide-line-layout flex items-center justify-around'>
+        <NavItem href='/' icon={<Home size={24} />} text={t('home')} isActive={isActive('/')} />
         <NavItem
           href={`/bible/${translationVersionCode[locale]}/1/1`}
           icon={<Book size={24} />}
@@ -45,7 +45,7 @@ export const BottomNavigation = () => {
           isActive={isActive('/bible')}
         />
         <NavItem
-          href="/news"
+          href='/news'
           icon={<Newspaper size={24} />}
           text={t('news')}
           isActive={isActive('/news')}

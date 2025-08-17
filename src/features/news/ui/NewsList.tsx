@@ -9,10 +9,10 @@ import type { NewsInstance } from '../model';
 type NewsListProps = UseSuspenseInfiniteQueryResult<InfiniteData<NewsInstance, unknown>, Error>;
 
 const NewsList = ({ data, fetchNextPage, hasNextPage, isFetchingNextPage }: NewsListProps) => (
-  <div className="grid gap-4">
+  <div className='grid gap-4'>
     {data.pages.map((page, pageIndex) => (
       <ul key={pageIndex} style={{ display: 'contents' }}>
-        {page.documents.map((news) => (
+        {page.documents.map(news => (
           <NewsItem key={news.guid} item={news} />
         ))}
       </ul>

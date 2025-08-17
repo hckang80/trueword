@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
           .querySelectorAll(
             'script, style, nav, header, footer, .comments, .sidebar, .ad, .advertisement'
           )
-          .forEach((el) => el.remove());
+          .forEach(el => el.remove());
         content = element.text.trim();
       }
 
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     if (!content || content.length < MIN_CONTENT_LENGTH) {
       const body = root.querySelector('body');
       if (body) {
-        body.querySelectorAll('script, style, nav, header, footer').forEach((el) => el.remove());
+        body.querySelectorAll('script, style, nav, header, footer').forEach(el => el.remove());
         content = body.text.trim();
       }
     }

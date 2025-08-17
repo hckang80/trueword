@@ -31,7 +31,7 @@ export async function fetchNewsFeed({
 
     const feed = await parser.parseString(response.data);
 
-    return feed.items.map((item) => {
+    return feed.items.map(item => {
       const { title, link, fullContent = '', description = '', pubDate, guid, postId } = item;
 
       const parsedDate = pubDate ? new Date(pubDate.replace('KST', '')) : undefined;

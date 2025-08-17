@@ -54,6 +54,6 @@ export const generateNonce = async (): Promise<string[]> => {
   const encodedNonce = encoder.encode(nonce);
   const hashBuffer = await crypto.subtle.digest('SHA-256', encodedNonce);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashedNonce = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  const hashedNonce = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   return [nonce, hashedNonce];
 };

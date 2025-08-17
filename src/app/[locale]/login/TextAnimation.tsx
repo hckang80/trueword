@@ -44,21 +44,21 @@ export function TextAnimation() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentGreeting((prevIndex) => (prevIndex + 1) % greetings.length);
+      setCurrentGreeting(prevIndex => (prevIndex + 1) % greetings.length);
     }, 3000);
 
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <h2 className="text-5xl md:text-7xl font-bold mb-4 text-center">
-      <AnimatePresence mode="wait">
+    <h2 className='text-5xl md:text-7xl font-bold mb-4 text-center'>
+      <AnimatePresence mode='wait'>
         <motion.span
           key={currentGreeting}
           variants={textVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
+          initial='initial'
+          animate='animate'
+          exit='exit'
         >
           {greetings[currentGreeting]}
         </motion.span>
