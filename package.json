@@ -9,9 +9,10 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "vitest"
+    "format": "prettier --config .prettierrc --write .",
+    "format:check": "prettier --config .prettierrc --check .",
+    "ci": "bun run type-check && bun run lint && bun run format:check && bun run build",
+    "ci:fix": "bun run lint:fix && bun run format && bun run type-check"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
