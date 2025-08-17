@@ -19,7 +19,7 @@ vi.mock('@/shared/lib', () => ({
 const mockDrawImage = vi.fn();
 const mockFillRect = vi.fn();
 const mockFillText = vi.fn();
-const mockMeasureText = vi.fn((text) => ({ width: text.length * 10 }));
+const mockMeasureText = vi.fn(text => ({ width: text.length * 10 }));
 
 const mockContext = {
   drawImage: mockDrawImage,
@@ -202,7 +202,7 @@ describe('Canvas Helper Functions', () => {
     });
 
     it('should throw an error if blob is not available', async () => {
-      mockToBlob.mockImplementationOnce((callback) => callback(null));
+      mockToBlob.mockImplementationOnce(callback => callback(null));
       await expect(canvasToBlob(mockCanvas)).rejects.toThrow('Blob is not available');
     });
   });

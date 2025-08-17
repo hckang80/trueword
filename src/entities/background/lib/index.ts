@@ -8,7 +8,7 @@ import { PHOTO_SIZE } from '../model';
  */
 export async function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blobResult) => {
+    canvas.toBlob(blobResult => {
       if (blobResult) {
         resolve(blobResult);
       } else {
@@ -111,7 +111,7 @@ export function wrapText({
   const lines: string[] = [];
   let currentLine = '';
 
-  words.forEach((word) => {
+  words.forEach(word => {
     const testLine = currentLine + word + ' ';
     const metrics = ctx.measureText(testLine);
 

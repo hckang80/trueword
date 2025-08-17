@@ -172,32 +172,32 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         {/* TODO: Metadata 설정으로 적용이 안되서 수동으록 추가 */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
+        <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <link rel='apple-touch-icon' href='/icons/apple-icon.png' />
       </head>
-      <body className="antialiased" suppressHydrationWarning>
+      <body className='antialiased' suppressHydrationWarning>
         <ErrorBoundary>
           <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
+            attribute='class'
+            defaultTheme='system'
             enableSystem
             disableTransitionOnChange
           >
-            <ProgressBar color="var(--color-foreground)" showSpinner={false} />
+            <ProgressBar color='var(--color-foreground)' showSpinner={false} />
             <Providers>
               <NextIntlClientProvider messages={messages}>
                 <Theme>
                   <Header />
-                  <main className="guide-line-layout p-[var(--global-inset)]">{children}</main>
+                  <main className='guide-line-layout p-[var(--global-inset)]'>{children}</main>
                   <BottomNavigation />
-                  <Toaster position="top-center" />
+                  <Toaster position='top-center' />
                 </Theme>
               </NextIntlClientProvider>
             </Providers>
           </ThemeProvider>
         </ErrorBoundary>
-        {process.env.NODE_ENV === 'production' && <GoogleAnalytics gaId="G-P43JHSZ9K8" />}
+        {process.env.NODE_ENV === 'production' && <GoogleAnalytics gaId='G-P43JHSZ9K8' />}
       </body>
     </html>
   );

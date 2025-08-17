@@ -77,7 +77,7 @@ function BookSelector({
     const timeouts = { ...timeoutRefs.current };
 
     return () => {
-      Object.values(timeouts).forEach((timeout) => {
+      Object.values(timeouts).forEach(timeout => {
         if (timeout) clearTimeout(timeout);
       });
     };
@@ -97,13 +97,13 @@ function BookSelector({
         <Button>{selectedChapterName}</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="p-0">
-          <DrawerTitle className="sr-only">Bible</DrawerTitle>
+        <DrawerHeader className='p-0'>
+          <DrawerTitle className='sr-only'>Bible</DrawerTitle>
           <DrawerDescription asChild>
-            <div className="text-left">
-              <div className="inline-flex gap-1 sticky top-0 left-full p-3">
+            <div className='text-left'>
+              <div className='inline-flex gap-1 sticky top-0 left-full p-3'>
                 <Button
-                  variant="outline"
+                  variant='outline'
                   disabled={order === 'book'}
                   onClick={() => setOrder('book')}
                 >
@@ -111,7 +111,7 @@ function BookSelector({
                   {t('bookOrder')}
                 </Button>
                 <Button
-                  variant="outline"
+                  variant='outline'
                   disabled={order === 'asc'}
                   onClick={() => setOrder('asc')}
                 >
@@ -121,12 +121,12 @@ function BookSelector({
               </div>
               {sortedBooks.map(({ name: book, bookid: bookNumber, chapters }, index) => (
                 <details
-                  name="books"
-                  ref={(el) => {
+                  name='books'
+                  ref={el => {
                     detailsRefs.current[index] = el;
                   }}
                   key={book}
-                  className="group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]"
+                  className='group transition-[max-height] duration-400 ease-in-out max-h-[80px] open:max-h-[8000px]'
                   onToggle={() => adjustPosition(index)}
                 >
                   <summary
@@ -136,13 +136,13 @@ function BookSelector({
                     )}
                   >
                     {book}
-                    <ChevronDown size={20} className="transition group-open:rotate-180" />
+                    <ChevronDown size={20} className='transition group-open:rotate-180' />
                   </summary>
-                  <div className="grid grid-cols-5 gap-[4px] px-[10px]">
+                  <div className='grid grid-cols-5 gap-[4px] px-[10px]'>
                     {Array.from({ length: chapters }, (_, i) => (
                       <Button
                         key={i}
-                        variant="outline"
+                        variant='outline'
                         disabled={selectedChapterItem(book, i + 1)}
                         onClick={() => {
                           changeBookChapter(bookNumber, i + 1);

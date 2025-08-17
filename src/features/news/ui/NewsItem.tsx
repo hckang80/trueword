@@ -14,18 +14,18 @@ const NewsItem = ({ item }: { item: NewsItemType }) => {
         <CardContent>
           <Link
             href={`${usePathname()}/${item.sourceEng}/${item.guid}`}
-            className="group flex items-center justify-between gap-2 visited:text-gray-300 dark:visited:text-gray-600"
+            className='group flex items-center justify-between gap-2 visited:text-gray-300 dark:visited:text-gray-600'
           >
             <ViewTransition name={`news-header-${item.sourceEng}-${item.guid}`}>
               <div>
-                <h2 className="font-semibold mb-2 group-hover:underline">
+                <h2 className='font-semibold mb-2 group-hover:underline'>
                   <strong>{item.title}</strong>
                 </h2>
                 <NewsItemMeta source={item.source} pubDate={item.pubDate} />
               </div>
               {item.thumbnail && (
-                <div className="relative aspect-video basis-[120px] shrink-0 rounded-lg overflow-hidden bg-primary/10">
-                  <NewsImage src={item.thumbnail} alt="" />
+                <div className='relative aspect-video basis-[120px] shrink-0 rounded-lg overflow-hidden bg-primary/10'>
+                  <NewsImage src={item.thumbnail} alt='' />
                 </div>
               )}
             </ViewTransition>

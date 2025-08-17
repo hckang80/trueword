@@ -10,15 +10,15 @@ const HomeNewsItem = ({ item }: { item: NewsItemType }) => {
     <li>
       <Link
         href={`/news/${item.sourceEng}/${item.guid}`}
-        className="group flex flex-col gap-2 visited:text-gray-300 dark:visited:text-gray-600 rounded-lg"
+        className='group flex flex-col gap-2 visited:text-gray-300 dark:visited:text-gray-600 rounded-lg'
       >
         <ViewTransition name={`news-header-${item.sourceEng}-${item.guid}`}>
           {item.thumbnail && (
-            <div className="relative aspect-video basis-[120px] shrink-0 rounded-lg overflow-hidden bg-primary/10">
-              <NewsImage src={item.thumbnail} alt="" />
+            <div className='relative aspect-video basis-[120px] shrink-0 rounded-lg overflow-hidden bg-primary/10'>
+              <NewsImage src={item.thumbnail} alt='' />
             </div>
           )}
-          <p className="text-sm group-hover:underline line-clamp-2 break-words">{item.title}</p>
+          <p className='text-sm group-hover:underline line-clamp-2 break-words'>{item.title}</p>
         </ViewTransition>
       </Link>
     </li>

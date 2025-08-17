@@ -17,7 +17,7 @@ export const InfiniteScrollTrigger = ({
     if (!observerRef.current || !enabled) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         if (entries[0].isIntersecting) {
           onIntersect();
         }

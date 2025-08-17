@@ -28,21 +28,21 @@ function BibleNavigator({
   }
 
   return (
-    <div className="flex justify-between sticky bottom-18 mt-4">
+    <div className='flex justify-between sticky bottom-18 mt-4'>
       <Button
         disabled={isFirstChapter && getBookNumber === '1'}
-        title="Previous Chapter"
-        variant="outline"
-        size="icon"
+        title='Previous Chapter'
+        variant='outline'
+        size='icon'
         onClick={() => prevChapter(+getBookNumber, +getChapterNumber - 1)}
       >
         <ChevronLeft />
       </Button>
       <Button
         disabled={isLastChapter && getBookNumber === '66'}
-        title="Next Chapter"
-        variant="outline"
-        size="icon"
+        title='Next Chapter'
+        variant='outline'
+        size='icon'
         onClick={() => nextChapter(+getBookNumber, +getChapterNumber + 1)}
       >
         <ChevronRight />

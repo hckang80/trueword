@@ -20,7 +20,7 @@ export function newsQueryOptions(locale: Locale) {
 export function useNews(locale: Locale) {
   return useSuspenseQuery<NewsItemType[]>({
     ...newsQueryOptions(locale),
-    select: (news) => news.filter((item) => item.locale === locale)
+    select: news => news.filter(item => item.locale === locale)
   });
 }
 
@@ -49,7 +49,7 @@ export function useNewsBySource(sources: string[], locale: Locale) {
 
   return useSuspenseQuery({
     ...newsQueryOptions(locale),
-    select: (news) => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
+    select: news => news.find(({ guid, sourceEng }) => guid === id && sourceEng === source)
   });
 }
 

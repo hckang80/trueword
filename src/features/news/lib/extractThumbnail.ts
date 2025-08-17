@@ -18,7 +18,7 @@ function extractFirstImageUrl(htmlContent: string): string | undefined {
 
 export const extractThumbnail = (item: RSSInstanceItem): string | undefined => {
   if (item.media?.length) {
-    const mediaImages = item.media.filter((m) => m.type.startsWith('image/'));
+    const mediaImages = item.media.filter(m => m.type.startsWith('image/'));
 
     if (mediaImages.length) {
       return mediaImages[0].url;
