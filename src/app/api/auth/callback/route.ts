@@ -21,7 +21,9 @@ export async function GET(request: Request) {
       const isLocalEnv = process.env.NODE_ENV === 'development';
       console.log({ isLocalEnv, origin, next, forwardedHost });
 
-      return NextResponse.redirect(`https://${forwardedHost}${next}`);
+      return NextResponse.redirect(
+        `https://trueword-pnetl0i7u-hckang80s-projects.vercel.app${next}`
+      );
     }
   }
 
