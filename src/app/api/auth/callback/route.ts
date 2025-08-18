@@ -1,4 +1,5 @@
 import { createClient } from '@/shared/lib/supabase/server';
+import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 // The client you created from the Server-Side Auth instructions
 
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host'); // original origin before load balancer
+      const forwardedHost = (await headers()).get('origin');
       const isLocalEnv = process.env.NODE_ENV === 'development';
       console.log({ isLocalEnv, origin, next, forwardedHost });
 
