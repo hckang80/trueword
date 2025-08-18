@@ -62,6 +62,7 @@ export default function LoginContainer() {
       gap='2'
       className='absolute guide-line-layout inset-y-0'
     >
+      {process.env.NODE_ENV}
       <TextAnimation />
       <span className='sr-only'>{user?.user_metadata.full_name}</span>
       <button
