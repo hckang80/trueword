@@ -6,8 +6,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue
+  SelectTrigger
 } from '@/shared/components';
 import { locales } from '@/shared/config';
 import { Link, usePathname } from '@/shared/i18n/routing';
@@ -32,9 +31,7 @@ export function Header() {
         <Link href='/'>True Word</Link>
       </h1>
       <Select value={locale} onValueChange={handleChange}>
-        <SelectTrigger className='w-[80px]' title={locale.toUpperCase()}>
-          <SelectValue placeholder='Select a language' />
-        </SelectTrigger>
+        <SelectTrigger className='w-[80px]'>{locale.toUpperCase()}</SelectTrigger>
         <SelectContent>
           {locales.map(language => (
             <SelectItem value={language} key={language}>
