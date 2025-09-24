@@ -149,6 +149,14 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  .bible-nav {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    margin-top: 1rem;
+  }
+
   ::view-transition-group(nav) {
     z-index: 100;
   }

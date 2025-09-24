@@ -28,7 +28,7 @@ function BibleNavigator({
   }
 
   return (
-    <div className='flex justify-between sticky bottom-18 mt-4'>
+    <div className='bible-nav'>
       <Button
         disabled={isFirstChapter && getBookNumber === '1'}
         title='Previous Chapter'
