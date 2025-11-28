@@ -2,14 +2,14 @@ import { RSSFeed } from './types';
 
 // config 설정과도 연관이 있으므로 업데이트 후 편집기를 재실행해야 반영됩니다.
 export const RSS_FEEDS: RSSFeed[] = [
-  {
-    url: 'https://relevantmagazine.com/feed',
-    imageUrl: 'i0.wp.com',
-    name: {
-      global: 'relevantmagazine'
-    },
-    locale: 'en'
-  },
+  // {
+  //   url: 'https://relevantmagazine.com/feed',
+  //   imageUrl: 'i0.wp.com',
+  //   name: {
+  //     global: 'relevantmagazine'
+  //   },
+  //   locale: 'en'
+  // },
   {
     url: 'https://www.christianitytoday.com/rss',
     name: {
@@ -26,14 +26,14 @@ export const RSS_FEEDS: RSSFeed[] = [
   //   },
   //   locale: 'en'
   // },
-  {
-    url: 'https://www.gospeltoday.co.kr/rss/allArticle.xml',
-    name: {
-      native: '가스펠투데이',
-      global: 'gospeltoday'
-    },
-    locale: 'ko'
-  },
+  // {
+  //   url: 'https://www.gospeltoday.co.kr/rss/allArticle.xml',
+  //   name: {
+  //     native: '가스펠투데이',
+  //     global: 'gospeltoday'
+  //   },
+  //   locale: 'ko'
+  // },
   {
     url: 'https://www.christiantoday.co.kr/rss',
     imageUrl: 'images.christiantoday.co.kr',
@@ -42,15 +42,15 @@ export const RSS_FEEDS: RSSFeed[] = [
       global: 'christiantoday'
     },
     locale: 'ko'
-  },
-  {
-    url: 'http://www.newsnjoy.or.kr/rss/allArticle.xml',
-    name: {
-      native: '뉴스앤조이',
-      global: 'newsnjoy'
-    },
-    locale: 'ko'
   }
+  // {
+  //   url: 'http://www.newsnjoy.or.kr/rss/allArticle.xml',
+  //   name: {
+  //     native: '뉴스앤조이',
+  //     global: 'newsnjoy'
+  //   },
+  //   locale: 'ko'
+  // }
   // {
   //   url: 'https://www.christiandaily.co.kr/rss/archives/all.xml',
   //   imageUrl: 'images.christiandaily.co.kr',
