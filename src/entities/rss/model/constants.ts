@@ -10,13 +10,13 @@ export const RSS_FEEDS: RSSFeed[] = [
     },
     locale: 'en'
   },
-  {
-    url: 'https://www.christianitytoday.com/rss',
-    name: {
-      global: 'christianitytoday'
-    },
-    locale: 'en'
-  },
+  // {
+  //   url: 'https://www.christianitytoday.com/rss',
+  //   name: {
+  //     global: 'christianitytoday'
+  //   },
+  //   locale: 'en'
+  // },
   // // 403 이슈로 인해 일시 제외
   // {
   //   url: 'https://www.thegospelcoalition.org/feed/',
