@@ -38,6 +38,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'videos.files.wordpress.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org'
       }
     ],
     minimumCacheTTL: 60,
