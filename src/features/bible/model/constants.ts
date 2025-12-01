@@ -2,7 +2,7 @@ import type { Locale } from '@/shared/config';
 
 export const translationVersionCode: Record<Locale, string> = {
   ko: 'KRV',
-  en: 'YLT'
+  en: 'NIV'
 };
 
 export const CHAPTER_LENGTH: Record<string, number> = {
