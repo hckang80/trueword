@@ -1,4 +1,4 @@
-import { BottomNavigation, Header, ProgressBar, Toaster } from '@/shared/components';
+import { Header, ProgressBar, Toaster } from '@/shared/components';
 import { isSupportedLocale } from '@/shared/config';
 import { routing } from '@/shared/i18n/routing';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -190,7 +190,6 @@ export default async function LocaleLayout({
                 <Theme>
                   <Header />
                   <main className='guide-line-layout p-[var(--global-inset)]'>{children}</main>
-                  <BottomNavigation />
                   <Toaster position='top-center' />
                 </Theme>
               </NextIntlClientProvider>
