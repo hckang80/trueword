@@ -1,4 +1,3 @@
-import { Flex } from '@radix-ui/themes';
 import './globals.css';
 
 export default function RootLayout({
@@ -6,9 +5,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <Flex direction='column' height='100dvh'>
-      {children}
-    </Flex>
-  );
+  return <>{children}</>;
 }
