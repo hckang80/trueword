@@ -1,7 +1,7 @@
 'use client';
 
 import { Link } from '@/shared/i18n/routing';
-import { memo, unstable_ViewTransition as ViewTransition } from 'react';
+import { memo, ViewTransition } from 'react';
 import { NewsImage } from '.';
 import type { NewsItemType } from '../model';
 

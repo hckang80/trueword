@@ -3,7 +3,7 @@
 import { Card, CardContent } from '@/shared/components';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { memo, unstable_ViewTransition as ViewTransition } from 'react';
+import { memo, ViewTransition } from 'react';
 import { NewsImage, NewsItemMeta } from '.';
 import type { NewsItemType } from '../model';
 
