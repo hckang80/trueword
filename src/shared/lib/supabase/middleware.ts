@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE } from '@/shared/config';
+import { SupabaseCookie } from '@/shared/types';
 import { createServerClient } from '@supabase/ssr';
 import { headers } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';
@@ -15,7 +16,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: SupabaseCookie[]) {
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
           );
