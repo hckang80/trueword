@@ -115,7 +115,13 @@ export default function MainContainer({
             </CardAction>
           </CardHeader>
           <CardContent className='relative grow place-content-center'>
-            <Text as='p' weight='bold' size='5' align='center' className='custom-text-shadow-black'>
+            <Text
+              as='p'
+              weight='bold'
+              size='5'
+              align='center'
+              className='custom-text-shadow-black text-white'
+            >
               {verse.text}
             </Text>
           </CardContent>
