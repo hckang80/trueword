@@ -9,7 +9,6 @@ import {
   useBackgroundPhoto
 } from '@/entities/background';
 import { type TodayVerseItem, useBibleToday } from '@/features/bible';
-import { HomeNewsItem, useNews } from '@/features/news';
 import {
   Button,
   Card,
@@ -48,10 +47,6 @@ export default function MainContainer({
   const moreTodayWordPath = `/bible/${abbreviation}/${bookNumber}/${verse.chapter}#${verse.verse}`;
 
   const t = useTranslations('Home');
-
-  const { data: news } = useNews(locale);
-  const MAX_NEWS_ITEMS = 6;
-  const filteredNews = news.filter(({ thumbnail }) => thumbnail).slice(0, MAX_NEWS_ITEMS);
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
   const verseBackground = photoData.results[randomBackgroundPhotoIndex];
@@ -119,25 +114,6 @@ export default function MainContainer({
         </CardHeader>
         <CardContent className='relative'>
           <p className='text-white font-semibold custom-text-shadow-black'>{verse.text}</p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('news')}</CardTitle>
-          <CardDescription>{t('newsDescription')}</CardDescription>
-          <CardAction>
-            <Button size='sm' asChild>
-              <Link href='/news'>{t('more')}</Link>
-            </Button>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <ul className='grid grid-cols-2 gap-4'>
-            {filteredNews.map(item => (
-              <HomeNewsItem key={item.guid} item={item} />
-            ))}
-          </ul>
         </CardContent>
       </Card>
 
