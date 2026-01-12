@@ -2,7 +2,7 @@
 
 import { translationVersionCode } from '@/features/bible/model';
 import { Link, usePathname } from '@/shared/i18n/routing';
-import { Book, Home, Newspaper } from 'lucide-react';
+import { Book, Home } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 interface NavItemProps {
@@ -49,12 +49,12 @@ export const BottomNavigation = () => {
           text={t('bible')}
           isActive={isActive('/bible')}
         />
-        <NavItem
+        {/* <NavItem
           href='/news'
           icon={<Newspaper size={24} />}
           text={t('news')}
           isActive={isActive('/news')}
-        />
+        /> */}
       </div>
     </nav>
   );
