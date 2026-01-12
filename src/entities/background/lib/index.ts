@@ -1,4 +1,5 @@
 import { getTodaysDate } from '@/shared/lib';
+import { toast } from 'sonner';
 import { PHOTO_SIZE } from '../model';
 
 /**
@@ -226,7 +227,7 @@ export async function shareCard({
       });
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
-        console.log('이미지 공유가 취소되었습니다.');
+        toast.info('이미지 공유가 취소되었습니다.');
       } else {
         console.error('이미지 공유 중 오류 발생:', error);
       }
