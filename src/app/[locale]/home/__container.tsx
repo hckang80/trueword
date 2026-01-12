@@ -25,7 +25,7 @@ import {
   DrawerTrigger
 } from '@/shared/components';
 import { Link } from '@/shared/i18n/routing';
-import { Box, Flex } from '@radix-ui/themes';
+import { Box, Flex, Text } from '@radix-ui/themes';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -115,7 +115,9 @@ export default function MainContainer({
             </CardAction>
           </CardHeader>
           <CardContent className='relative grow place-content-center'>
-            <p className='text-white font-semibold custom-text-shadow-black'>{verse.text}</p>
+            <Text as='p' weight='bold' size='5' align='center' className='custom-text-shadow-black'>
+              {verse.text}
+            </Text>
           </CardContent>
         </Card>
       </Box>
