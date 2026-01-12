@@ -2,7 +2,7 @@ import { Header, ProgressBar, Toaster } from '@/shared/components';
 import { isSupportedLocale } from '@/shared/config';
 import { routing } from '@/shared/i18n/routing';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { Theme } from '@radix-ui/themes';
+import { Flex, Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
@@ -188,8 +188,12 @@ export default async function LocaleLayout({
             <Providers>
               <NextIntlClientProvider messages={messages}>
                 <Theme>
-                  <Header />
-                  <main className='guide-line-layout p-[var(--global-inset)]'>{children}</main>
+                  <Flex direction='column' height='100dvh'>
+                    <Header />
+                    <main className='guide-line-layout p-[var(--global-inset)] grow'>
+                      {children}
+                    </main>
+                  </Flex>
                   <Toaster position='top-center' />
                 </Theme>
               </NextIntlClientProvider>

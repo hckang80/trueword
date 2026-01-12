@@ -25,6 +25,7 @@ import {
   DrawerTrigger
 } from '@/shared/components';
 import { Link } from '@/shared/i18n/routing';
+import { Box, Flex } from '@radix-ui/themes';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, Share2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -52,75 +53,77 @@ export default function MainContainer({
   const verseBackground = photoData.results[randomBackgroundPhotoIndex];
 
   return (
-    <div className='flex flex-col gap-4'>
-      <Card className='relative overflow-hidden'>
-        <Image
-          src={verseBackground.urls.regular}
-          alt={verseBackground.alt_description}
-          fill
-          priority
-          sizes={`${verseBackground.width}px`}
-        />
-        <CardHeader className='relative'>
-          <CardTitle className='text-white font-semibold custom-text-shadow-black'>
-            {`${t('todaysVerse')} (🌍 UTC)`}
-          </CardTitle>
-          <CardDescription className='text-gray-300 custom-text-shadow-black'>
-            {verse.name}
-          </CardDescription>
-          <CardAction className='flex gap-1'>
-            <Suspense
-              fallback={
-                <Button size='icon'>
-                  <Share2 className='animate-spin' />
-                </Button>
-              }
-            >
-              <Drawer>
-                <DrawerTrigger asChild>
+    <Flex justify='center' direction='column' gap='4' height='100%'>
+      <Box flexGrow='1' className='place-content-center'>
+        <Card className='relative overflow-hidden h-full'>
+          <Image
+            src={verseBackground.urls.regular}
+            alt={verseBackground.alt_description}
+            fill
+            priority
+            sizes={`${verseBackground.width}px`}
+          />
+          <CardHeader className='relative'>
+            <CardTitle className='text-white font-semibold custom-text-shadow-black'>
+              {`${t('todaysVerse')} (🌍 UTC)`}
+            </CardTitle>
+            <CardDescription className='text-gray-300 custom-text-shadow-black'>
+              {verse.name}
+            </CardDescription>
+            <CardAction className='flex gap-1'>
+              <Suspense
+                fallback={
                   <Button size='icon'>
-                    <Share2 />
-                    <span className='sr-only'>{t('viewVerseCard')}</span>
+                    <Share2 className='animate-spin' />
                   </Button>
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>{t('shareDialog.title')}</DrawerTitle>
-                    <DrawerDescription asChild>
-                      <div>
-                        <p>{t('shareDialog.description')}</p>
-                        <div className='snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3'>
-                          {photoData.results.map(photo => (
-                            <VerseCardItem
-                              key={photo.urls.regular}
-                              photo={photo}
-                              verse={verse}
-                              callback={shareCard}
-                            />
-                          ))}
+                }
+              >
+                <Drawer>
+                  <DrawerTrigger asChild>
+                    <Button size='icon'>
+                      <Share2 />
+                      <span className='sr-only'>{t('viewVerseCard')}</span>
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle>{t('shareDialog.title')}</DrawerTitle>
+                      <DrawerDescription asChild>
+                        <div>
+                          <p>{t('shareDialog.description')}</p>
+                          <div className='snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3'>
+                            {photoData.results.map(photo => (
+                              <VerseCardItem
+                                key={photo.urls.regular}
+                                photo={photo}
+                                verse={verse}
+                                callback={shareCard}
+                              />
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    </DrawerDescription>
-                  </DrawerHeader>
-                </DrawerContent>
-              </Drawer>
-            </Suspense>
-            <Button size='icon' asChild>
-              <Link href={moreTodayWordPath} title={t('viewFullContext')}>
-                <ChevronRight />
-              </Link>
-            </Button>
-          </CardAction>
-        </CardHeader>
-        <CardContent className='relative'>
-          <p className='text-white font-semibold custom-text-shadow-black'>{verse.text}</p>
-        </CardContent>
-      </Card>
+                      </DrawerDescription>
+                    </DrawerHeader>
+                  </DrawerContent>
+                </Drawer>
+              </Suspense>
+              <Button size='icon' asChild>
+                <Link href={moreTodayWordPath} title={t('viewFullContext')}>
+                  <ChevronRight />
+                </Link>
+              </Button>
+            </CardAction>
+          </CardHeader>
+          <CardContent className='relative grow place-content-center'>
+            <p className='text-white font-semibold custom-text-shadow-black'>{verse.text}</p>
+          </CardContent>
+        </Card>
+      </Box>
 
       <footer className='text-xs text-center'>
         &copy; {new Date().getFullYear()} TrueWord. All rights reserved.
       </footer>
-    </div>
+    </Flex>
   );
 }
 
