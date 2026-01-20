@@ -114,6 +114,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  [lang='ko'],
+  [lang='cn'],
+  [lang='ja'] {
+    word-break: keep-all;
+  }
+
   body {
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
