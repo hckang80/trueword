@@ -44,7 +44,7 @@ export default function LoginContainer() {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase.auth]);
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
