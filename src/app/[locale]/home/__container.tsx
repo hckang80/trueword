@@ -50,11 +50,20 @@ export default function MainContainer({
   const t = useTranslations('Home');
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
-  const verseBackground = photoData.results[randomBackgroundPhotoIndex] || {
-    urls: { regular: '/background.jpg' },
-    alt_description: '',
-    width: 438
-  };
+  const photoDataItems = photoData.results.length
+    ? photoData.results
+    : [
+        {
+          alt_description: '',
+          links: {
+            download: ''
+          },
+          urls: { regular: '/background.jpg' },
+          width: 438,
+          height: 654
+        }
+      ];
+  const verseBackground = photoDataItems[randomBackgroundPhotoIndex] || photoDataItems[0];
 
   return (
     <Flex justify='center' direction='column' gap='4' height='100%'>
@@ -96,7 +105,7 @@ export default function MainContainer({
                         <div>
                           <p>{t('shareDialog.description')}</p>
                           <div className='snap-x snap-mandatory flex gap-3 overflow-x-auto mt-3'>
-                            {photoData.results.map(photo => (
+                            {photoDataItems.map(photo => (
                               <VerseCardItem
                                 key={photo.urls.regular}
                                 photo={photo}
