@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "audit": "bun run audit",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -44,7 +45,6 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "rss-parser": "^3.13.0",
-    "rss-to-json": "^2.1.1",
     "sanitize-html": "^2.17.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
