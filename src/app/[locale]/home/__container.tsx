@@ -76,6 +76,7 @@ export default function MainContainer({
           urls: { regular: '/background2.jpg' }
         }
       ];
+  // https://kr.freepik.com/search?format=search&img=1&last_filter=img&last_value=1&query=%EB%A7%90%EC%94%80%EB%B0%B0%EA%B2%BD&type=vector&item_id=14546108#uuid=07c28c26-8583-4643-9342-faf194ef5dad
   const verseBackground = photoDataItems[randomBackgroundPhotoIndex] || photoDataItems[0];
 
   return (
