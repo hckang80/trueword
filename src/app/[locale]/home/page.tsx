@@ -10,7 +10,7 @@ const HomePage = async ({ params }: RouteProps) => {
   const PHOTO_LIST_SIZE = 10;
   const { locale } = await params;
   const backgroundPhotoParams = {
-    query: 'river natural empty center',
+    query: 'river natural empty',
     page: 1,
     perPage: PHOTO_LIST_SIZE,
     orientation: 'landscape'
