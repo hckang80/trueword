@@ -49,36 +49,31 @@ export default function MainContainer({
 
   const t = useTranslations('Home');
 
+  const backgroundContext = {
+    alt_description: '',
+    links: {
+      download: ''
+    },
+    urls: { regular: '/background.jpg' },
+    width: 438,
+    height: 654
+  };
+
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
   const photoDataItems = photoData.results.length
     ? photoData.results
     : [
         {
-          alt_description: '',
-          links: {
-            download: ''
-          },
-          urls: { regular: '/background.jpg' },
-          width: 438,
-          height: 654
+          ...backgroundContext,
+          urls: { regular: '/background.jpg' }
         },
         {
-          alt_description: '',
-          links: {
-            download: ''
-          },
-          urls: { regular: '/background1.jpg' },
-          width: 438,
-          height: 654
+          ...backgroundContext,
+          urls: { regular: '/background1.jpg' }
         },
         {
-          alt_description: '',
-          links: {
-            download: ''
-          },
-          urls: { regular: '/background2.jpg' },
-          width: 438,
-          height: 654
+          ...backgroundContext,
+          urls: { regular: '/background2.jpg' }
         }
       ];
   const verseBackground = photoDataItems[randomBackgroundPhotoIndex] || photoDataItems[0];
