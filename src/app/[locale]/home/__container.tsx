@@ -51,18 +51,21 @@ export default function MainContainer({
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
   const verseBackground = photoData.results[randomBackgroundPhotoIndex];
+  const hasBackground = !!verseBackground;
 
   return (
     <Flex justify='center' direction='column' gap='4' height='100%'>
       <Box flexGrow='1' className='place-content-center'>
         <Card className='relative overflow-hidden h-full'>
-          <Image
-            src={verseBackground.urls.regular}
-            alt={verseBackground.alt_description}
-            fill
-            priority
-            sizes={`${verseBackground.width}px`}
-          />
+          {hasBackground && (
+            <Image
+              src={verseBackground.urls.regular}
+              alt={verseBackground.alt_description}
+              fill
+              priority
+              sizes={`${verseBackground.width}px`}
+            />
+          )}
           <CardHeader className='relative'>
             <CardTitle className='text-white font-semibold custom-text-shadow-black'>
               {`${t('todaysVerse')} (🌍 UTC)`}
@@ -80,7 +83,7 @@ export default function MainContainer({
               >
                 <Drawer>
                   <DrawerTrigger asChild>
-                    <Button size='icon'>
+                    <Button size='icon' disabled={!hasBackground}>
                       <Share2 />
                       <span className='sr-only'>{t('viewVerseCard')}</span>
                     </Button>
