@@ -50,22 +50,23 @@ export default function MainContainer({
   const t = useTranslations('Home');
 
   const { data: photoData } = useBackgroundPhoto(backgroundPhotoParams);
-  const verseBackground = photoData.results[randomBackgroundPhotoIndex];
-  const hasBackground = !!verseBackground;
+  const verseBackground = photoData.results[randomBackgroundPhotoIndex] || {
+    urls: { regular: '/background.jpg' },
+    alt_description: '',
+    width: 438
+  };
 
   return (
     <Flex justify='center' direction='column' gap='4' height='100%'>
       <Box flexGrow='1' className='place-content-center'>
         <Card className='relative overflow-hidden h-full'>
-          {hasBackground && (
-            <Image
-              src={verseBackground.urls.regular}
-              alt={verseBackground.alt_description}
-              fill
-              priority
-              sizes={`${verseBackground.width}px`}
-            />
-          )}
+          <Image
+            src={verseBackground.urls.regular}
+            alt={verseBackground.alt_description}
+            fill
+            priority
+            sizes={`${verseBackground.width}px`}
+          />
           <CardHeader className='relative'>
             <CardTitle className='text-white font-semibold custom-text-shadow-black'>
               {`${t('todaysVerse')} (🌍 UTC)`}
@@ -83,7 +84,7 @@ export default function MainContainer({
               >
                 <Drawer>
                   <DrawerTrigger asChild>
-                    <Button size='icon' disabled={!hasBackground}>
+                    <Button size='icon'>
                       <Share2 />
                       <span className='sr-only'>{t('viewVerseCard')}</span>
                     </Button>
@@ -159,7 +160,6 @@ function VerseCardItem({
   });
 
   if (error) throw new Error('말씀카드 생성 실패');
-
   return (
     <button
       className='snap-center shrink-0'
