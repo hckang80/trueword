@@ -61,6 +61,24 @@ export default function MainContainer({
           urls: { regular: '/background.jpg' },
           width: 438,
           height: 654
+        },
+        {
+          alt_description: '',
+          links: {
+            download: ''
+          },
+          urls: { regular: '/background1.jpg' },
+          width: 438,
+          height: 654
+        },
+        {
+          alt_description: '',
+          links: {
+            download: ''
+          },
+          urls: { regular: '/background2.jpg' },
+          width: 438,
+          height: 654
         }
       ];
   const verseBackground = photoDataItems[randomBackgroundPhotoIndex] || photoDataItems[0];
